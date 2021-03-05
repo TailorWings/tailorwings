@@ -1,0 +1,19 @@
+.c-msmt-standard-size {
+	@include flex(center, center, column);
+	padding-bottom: 7rem;
+	&__title {
+		@include font(fontBold, 3.6rem);
+		color: $solid-black-color;
+		text-align: center;
+		text-transform: capitalize;
+		margin-bottom: 4rem;
+	}
+	&__selection {
+		@include flex(center, center);
+		margin-bottom: 3.6rem;
+	}
+	&__image {
+		@include size(100%, 50rem);
+		background-color: $solid-gray-color;
+	}
+}

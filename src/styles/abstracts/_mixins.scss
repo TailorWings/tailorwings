@@ -1,0 +1,81 @@
+@mixin flex($justify: flex-start, $align: flex-start, $direction: row, $wrap: nowrap) {
+	display: flex;
+	flex-direction: $direction;
+	justify-content: $justify;
+	align-items: $align;
+	flex-wrap: $wrap;
+}
+
+@mixin size($width, $height: $width) {
+	width: $width;
+	height: $height;
+}
+
+@mixin bg($color: $primary-color) {
+	background-color: $color;
+}
+
+@mixin absoluteFull() {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+@mixin hide {
+	opacity: 0;
+	visibility: hidden;
+}
+
+@mixin show {
+	opacity: 1;
+	visibility: visible;
+}
+
+// Function: Use for font selection
+@mixin font($weight, $size) {
+	@if ($weight == 'fontNormal') {
+		font-family: SVN-Gilroy-Medium;
+	} @else if ($weight == 'fontHeavy') {
+		font-family: SVN-Gilroy-Heavy;
+	} @else if ($weight == 'fontBold') {
+		font-family: SVN-Gilroy-Bold;
+	} @else if ($weight == 'fontSemiBold') {
+		font-family: SVN-Gilroy-SemiBold;
+	} @else if ($weight == 'fontBlackItalic') {
+		font-family: SVN-Gilroy-Black-Italic;
+	} @else if ($weight == 'fontBlack') {
+		font-family: SVN-Gilroy-Black;
+	} @else if ($weight == 'fontBoldItalic') {
+		font-family: SVN-Gilroy-Bold-Italic;
+	} @else if ($weight == 'fontHeavyItalic') {
+		font-family: SVN-Gilroy-Heavy-Italic;
+	} @else if ($weight == 'fontItalic') {
+		font-family: SVN-Gilroy-Italic;
+	} @else if ($weight == 'fontLightItalic') {
+		font-family: SVN-Gilroy-Light-Italic;
+	} @else if ($weight == 'fontLight') {
+		font-family: SVN-Gilroy-Light;
+	} @else if ($weight == 'fontMediumItalic') {
+		font-family: SVN-Gilroy-Medium-Italic;
+	} @else if ($weight == 'fontRegular') {
+		font-family: SVN-Gilroy-Regular;
+	} @else if ($weight == 'fontSemiBoldItalic') {
+		font-family: SVN-Gilroy-SemiBold-Italic;
+	} @else if ($weight == 'fontThinItalic') {
+		font-family: SVN-Gilroy-Thin-Italic;
+	} @else if ($weight == 'fontThin') {
+		font-family: SVN-Gilroy-Thin;
+	} @else if ($weight == 'fontXBold') {
+		font-family: SVN-Gilroy-XBold;
+	} @else if ($weight == 'fontXBoldItalic') {
+		font-family: SVN-Gilroy-XBold-Italic;
+	} @else if ($weight == 'fontXlight-Italic') {
+		font-family: SVN-Gilroy-Xlight-Italic;
+	} @else if ($weight == 'fontXlight') {
+		font-family: SVN-Gilroy-Xlight;
+	}
+	font-size: $size;
+}
+// END

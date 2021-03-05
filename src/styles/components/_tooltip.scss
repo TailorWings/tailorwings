@@ -1,0 +1,21 @@
+.c-tooltip {
+	padding: 4rem;
+	background-color: white;
+	color: $medium-black-color;
+	border: 1px solid $medium-gray-color;
+	border-radius: 10px;
+	&__title {
+		@include font(fontBold, 3.2rem);
+		margin-bottom: 1.5rem;
+	}
+	&__content {
+		@include font(fontMedium, 1.4rem);
+	}
+	&__label {
+		@include font(fontSemiBold, 1.8rem);
+		color: $solid-black-color;
+	}
+	&__item {
+		margin-bottom: 2rem;
+	}
+}

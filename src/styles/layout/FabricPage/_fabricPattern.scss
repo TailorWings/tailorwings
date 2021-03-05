@@ -1,0 +1,37 @@
+.c-fabric-pattern {
+	@include flex(flex-start, center, column);
+	margin-bottom: 10rem;
+	&__title {
+		// padding: 0 20.8rem;
+		margin-bottom: 4rem;
+	}
+	&-collection {
+		@include flex(center, center);
+		margin-bottom: 4rem;
+		& > div:not(:last-child) {
+			margin-right: 1.6rem;
+		}
+	}
+	&-slider {
+		@include flex(space-between, center);
+		@include size(100%, auto);
+		&__left,
+		&__right {
+			@include size(1.5rem, 2.9rem);
+		}
+		&__list {
+			@include flex(flex-start, center, row, wrap);
+			width: 84.5rem;
+			margin-right: -2rem;
+			margin-bottom: -2.2rem;
+		}
+		&__item {
+			@include size(calc(20% - 2rem), 15.3rem);
+			min-height: 15.3rem;
+			margin-right: 2rem;
+			margin-bottom: 2.2rem;
+			background-color: $solid-gray-color;
+			border-radius: 20px;
+		}
+	}
+}

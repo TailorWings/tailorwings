@@ -1,0 +1,55 @@
+.c-msmt-method {
+	@include flex(center, center, column);
+	@include size(100%, auto);
+	padding: 2rem;
+	background-color: white;
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+	border-radius: 20px;
+	border: 2px solid white;
+	transition: all 0.3s ease-in-out;
+	outline: none;
+	cursor: pointer;
+	&:hover {
+		box-shadow: 0px 0px 8px $primary-color;
+	}
+	&__icon {
+		@include flex(center, center);
+		@include size(11rem);
+		background-color: $medium-gray-color;
+		border-radius: 50%;
+		margin-bottom: 1.5rem;
+		transition: all 0.3s ease-in-out;
+		& > img {
+			@include size(2rem);
+		}
+	}
+	&__name {
+		@include font(fontBold, 2rem);
+		color: $solid-black-color;
+		text-transform: capitalize;
+		text-align: center;
+		margin-bottom: 1.5rem;
+		transition: all 0.3s ease-in-out;
+	}
+	&__desc {
+		@include font(semiBold, 1.4rem);
+		height: 10rem;
+		text-align: center;
+		color: $light-black-color;
+		margin-bottom: 1.5rem;
+		transition: all 0.2s ease-in-out;
+	}
+	&--active {
+		background-color: $subthird-color;
+		border: 2px solid $primary-color;
+		& .c-msmt-method {
+			&__icon {
+				background-color: $primary-color;
+			}
+			&__name,
+			&__desc {
+				color: $primary-color;
+			}
+		}
+	}
+}

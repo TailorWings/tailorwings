@@ -1,0 +1,17 @@
+.c-summary-content {
+	padding-bottom: 10rem;
+	&__title {
+		padding: 0 12rem;
+		margin: 3rem 0 2rem;
+	}
+	&__rqmt {
+		margin-bottom: 5rem;
+	}
+	&__msmt {
+		margin-bottom: 5rem;
+		padding-bottom: 7rem;
+	}
+	&__input {
+		margin-bottom: 3rem;
+	}
+}

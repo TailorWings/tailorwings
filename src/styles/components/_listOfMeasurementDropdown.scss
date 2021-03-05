@@ -1,0 +1,14 @@
+.c-list-of-msmt-dropdown {
+	@include flex(center, center);
+	padding: 1rem 2rem;
+	border: 2px solid $primary-color;
+	border-radius: 10px;
+	color: $primary-color;
+	&__text {
+		@include font(fontSemiBold, 1.4rem);
+		margin-right: 4.5rem;
+	}
+	&__icon {
+		@include size(1.2rem, 1rem);
+	}
+}

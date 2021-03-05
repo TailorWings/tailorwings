@@ -1,0 +1,34 @@
+.c-accordion {
+	@include flex(stretch, center, column);
+	@include size(100%, auto);
+	&__header {
+		@include flex(space-between, center);
+		@include size(100%, auto);
+		padding: 1.2rem 3rem;
+		background: $medium-gray-color;
+		border-radius: 15px;
+		transition: background-color 0.3s linear;
+		&:hover {
+			background-color: $solid-gray-color;
+		}
+	}
+	&__title {
+		@include font(fontBold, 1.6rem);
+		color: $light-black-color;
+		text-transform: capitalize;
+	}
+	&__icon {
+		@include size(2.4rem);
+		transition: transform 0.4s ease;
+		transform: rotate(-90deg);
+		&--rotate {
+			transform: rotate(0deg);
+		}
+	}
+	&__content {
+		width: 100%;
+		height: auto;
+		overflow: hidden;
+		transition: max-height 0.4s ease-in-out;
+	}
+}

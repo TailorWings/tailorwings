@@ -1,0 +1,27 @@
+.c-msmt-online {
+	padding-bottom: 9rem;
+	&-guideline {
+		margin-bottom: 6.6rem;
+		&-slider {
+			@include flex(center, center);
+			margin-bottom: 2rem;
+			&__left,
+			&__right {
+				@include size(1.5rem, 2.9rem);
+			}
+			&__item {
+				@include size(85.4rem, 48rem);
+				margin: 0 5.1rem;
+				background-color: $subthird-color;
+			}
+		}
+		&-bottom {
+			@include flex(space-between, center);
+			padding: 0 8.2rem;
+			&__count {
+				@include font(fontSemiBold, 1.8rem);
+				color: $solid-black-color;
+			}
+		}
+	}
+}

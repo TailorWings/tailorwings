@@ -1,0 +1,8 @@
+.c-star {
+	@include flex();
+	margin-right: 0.6rem;
+	& > img {
+		@include size(1.8rem);
+		margin-right: 0.6rem;
+	}
+}

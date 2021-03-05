@@ -1,0 +1,37 @@
+.c-account-sidebar {
+	display: inline-block;
+	@include size(32rem, 100%);
+	max-width: 32rem;
+	padding: 3rem 3rem 0 3rem;
+	&-list {
+		@include flex(flex-start, flex-start, column);
+		@include size(100%);
+	}
+	&-item {
+		@include flex(center, center);
+		border-radius: 14px;
+		padding: 1.5rem;
+		margin-bottom: 2.5rem;
+		&__icon {
+			@include size(2.4rem);
+			margin-right: 2rem;
+		}
+		&__text {
+			@include font(fontSemiBold, 1.6rem);
+			color: $medium-black-color;
+			transition: color 0.2s ease-in-out;
+		}
+		&--active {
+			& > span {
+				color: $primary-color;
+			}
+		}
+	}
+	&__sign-out {
+		width: 100%;
+		margin-top: 8rem;
+		& > .c-medium-button {
+			width: 100%;
+		}
+	}
+}

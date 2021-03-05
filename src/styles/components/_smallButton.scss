@@ -1,0 +1,39 @@
+.c-small-button {
+	@include font(fontSemiBold, 1.3rem);
+	@include size(100%, auto);
+	display: inline-block;
+	padding: 0.4rem 3rem;
+	border: 2px solid $primary-color;
+	border-radius: 36px;
+	cursor: pointer;
+
+	&__container {
+		@include flex(center, center);
+		@include size(auto, 3.5rem);
+		max-height: 3.5rem;
+		min-width: 7rem;
+		text-align: center;
+	}
+
+	&__text {
+		color: $primary-color;
+		text-transform: capitalize;
+		transition: color 0.3s linear;
+	}
+
+	&__icon {
+		@include size(1.2rem, 1rem);
+		display: none;
+	}
+
+	&--active {
+		background-color: $primary-color;
+		& .c-small-button__text {
+			color: white;
+			margin-right: 0.5rem;
+		}
+		& .c-small-button__icon {
+			display: inline;
+		}
+	}
+}

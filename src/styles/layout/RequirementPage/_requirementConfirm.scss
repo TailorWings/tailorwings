@@ -1,0 +1,9 @@
+.c-rq-confirm {
+	@include flex(space-between, center);
+	margin-bottom: 12.8rem;
+	&__text {
+		@include font(fontSemiBold, 1.3rem);
+		max-width: 31rem;
+		color: $light-black-color;
+	}
+}

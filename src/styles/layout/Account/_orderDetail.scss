@@ -1,0 +1,28 @@
+.c-order-detail {
+	padding: 3rem;
+	margin-bottom: 5.4rem;
+	&__header {
+		@include flex(flex-start, center);
+		margin-bottom: 6.5rem;
+	}
+	&__title {
+		@include font(fontBold, 3.6rem);
+		margin-left: 2.7rem;
+	}
+	&__offer {
+		margin-bottom: 5.5rem;
+	}
+	&__summary {
+		margin-bottom: 1.5rem;
+	}
+	&__shipping-info {
+		margin-bottom: 5rem;
+	}
+	&__button {
+		@include flex(center, center);
+		& > div {
+			width: fit-content;
+			text-transform: capitalize;
+		}
+	}
+}

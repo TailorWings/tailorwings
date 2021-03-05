@@ -1,0 +1,60 @@
+.c-profile-content {
+	padding: 3rem;
+	&__header {
+		@include flex(space-between, flex-start);
+		margin-bottom: 7rem;
+	}
+	&-basic-info {
+		@include flex(center, center);
+		&__avatar {
+			@include size(12.5rem);
+			margin-right: 2rem;
+			border-radius: 50%;
+			background-color: $solid-gray-color;
+		}
+		&__text {
+			@include flex(center, flex-start, column);
+			@include size(auto, 100%);
+		}
+		&__name {
+			@include font(fontBold, 2.4rem);
+			color: $solid-black-color;
+			margin-bottom: 1rem;
+		}
+		&__pw-change {
+			@include font(fontMedium, 1.8rem);
+			color: $light-black-color;
+		}
+	}
+	&-button {
+		@include flex();
+		& .c-medium-button__text {
+			min-width: auto;
+		}
+		&__edit {
+			margin-right: 1rem;
+		}
+	}
+	&__content {
+		margin-bottom: -5.3rem;
+	}
+	&-main-info {
+		margin-bottom: 5.3rem;
+		&__title {
+			@include font(fontBold, 2.4rem);
+			margin-bottom: 3.7rem;
+			color: $solid-black-color;
+			text-transform: capitalize;
+		}
+		&__wrapper {
+			@include flex(flex-start, flex-start, row, wrap);
+			margin-right: -2.2rem;
+			margin-bottom: -4.5rem;
+		}
+		&__input {
+			@include size(calc(50% - 2.2rem), auto);
+			margin-right: 2.2rem;
+			margin-bottom: 4.5rem;
+		}
+	}
+}

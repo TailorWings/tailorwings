@@ -1,0 +1,62 @@
+.c-order-item {
+	@include flex(flex-start, center);
+	width: calc(50% - 16.4rem);
+	min-width: calc(50% - 16.4rem);
+	margin-right: 16.4rem;
+	margin-bottom: 2rem;
+	cursor: pointer;
+	&__image {
+		@include size(12.5rem, 19rem);
+		background-color: $solid-gray-color;
+		border-radius: 20px;
+		margin-right: 2rem;
+	}
+	&__content {
+		@include flex(center, flex-start, column);
+	}
+
+	&-info {
+		@include flex(flex-start, center);
+		@include font(fontSemiBold, 1.4rem);
+		margin-bottom: 1.5rem;
+		&__title {
+			margin-right: 1rem;
+			&--finding {
+				color: $primary-color;
+			}
+			&--tailoring {
+				color: $secondary-color;
+			}
+			&--history {
+				color: $light-black-color;
+			}
+		}
+		&__value {
+			border-radius: 4px;
+			padding: 0.5rem;
+			&--finding {
+				color: $primary-color;
+				background-color: $subthird-color;
+			}
+			&--tailoring {
+				color: $secondary-color;
+				background-color: $subsecondary-color;
+			}
+			&--history {
+				color: $light-black-color;
+				background-color: $light-gray-color;
+			}
+		}
+		&__price {
+			@include font(fontSemiBold, 1.8rem);
+			color: $solid-black-color;
+			text-align-last: left;
+			margin-bottom: 1.5rem;
+		}
+	}
+	&__button {
+		& > .c-medium-button {
+			text-transform: none;
+		}
+	}
+}

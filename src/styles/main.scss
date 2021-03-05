@@ -1,0 +1,58 @@
+@import './abstracts/varialbles';
+@import './abstracts/mixins';
+@import './base/reset';
+@import './base/typography';
+
+// Components
+@import './components/navbar';
+@import './components/footer';
+@import './components/title';
+@import './components/textInput';
+@import './components/largeButton';
+@import './components/smallButton';
+@import './components/mediumButton';
+@import './components/avatarDropdown';
+@import './components/listOfMeasurementDropdown';
+@import './components/pageLoader';
+@import './components/tooltip';
+@import './components/processAction';
+@import './components/measurementForm';
+@import './components/menu';
+@import './components/requirementSummary';
+@import './components/appointmentForm';
+@import './components/accordion';
+@import './components/star';
+@import './components/popup';
+@import './components/thankyouContent';
+
+//Layouts
+@import './layout/general';
+@import './layout/HomePage/banner';
+@import './layout/HomePage/howItWork';
+
+@import './layout/RequirementPage/requirementTitle';
+@import './layout/RequirementPage/requirementClotheStyles';
+@import './layout/RequirementPage/requirementImageUpload';
+@import './layout/RequirementPage/requirementConfirm';
+
+@import './layout/FabricPage/fabricMaterials';
+@import './layout/FabricPage/fabricPattern';
+
+@import './layout/MeasurementPage/msmtOptions';
+@import './layout/MeasurementPage/msmtMethod';
+@import './layout/MeasurementPage/onlineMethod';
+@import './layout/MeasurementPage/offlineMethod';
+@import './layout/MeasurementPage/standardSizeMethod';
+
+@import './layout/Summary/summaryContent';
+@import './layout/Summary/offlineMeasurement';
+
+@import './layout/Account/accountSidebar';
+@import './layout/Account/accountContent';
+@import './layout/Account/orderManagement';
+@import './layout/Account/orderList';
+@import './layout/Account/orderItem';
+@import './layout/Account/orderDetail';
+@import './layout/Account/orderOffer';
+@import './layout/Account/profileContent';
+@import './layout/Account/measurementContent';

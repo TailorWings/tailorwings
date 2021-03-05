@@ -1,0 +1,8 @@
+.c-account-content {
+	@include size(calc(100% - 32rem), 100%);
+	display: inline-block;
+	min-height: 100vh;
+	margin: 3rem 3rem 0 0;
+	background-color: white;
+	margin-bottom: 6.4rem;
+}

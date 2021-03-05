@@ -1,0 +1,28 @@
+.c-msmt-offline {
+	padding-bottom: 10rem;
+	&__header {
+		margin-bottom: 4rem;
+	}
+	&__title {
+		@include font(fontBold, 2.4rem);
+		color: $solid-black-color;
+		text-align: left;
+	}
+	&__desc {
+		@include font(fontMedium, 1.6rem);
+		color: $medium-black-color;
+		text-align-last: left;
+	}
+	&__input {
+		margin-bottom: 4rem;
+	}
+	&-estimated-sizes {
+		@include flex(flex-start, flex-start, column);
+		&__text {
+			@include font(fontMedium, 1.6rem);
+			color: $medium-black-color;
+			text-align-last: left;
+			margin-bottom: 1rem;
+		}
+	}
+}

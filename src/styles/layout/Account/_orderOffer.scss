@@ -1,0 +1,59 @@
+.c-tailor-offer {
+	@include flex(flex-start, flex-start, column);
+	&__item {
+		@include flex(space-between, center);
+		@include size(100%, auto);
+		padding: 1.5rem 2rem;
+	}
+	&__index {
+		@include flex(center, center);
+		@include size(2.4rem);
+		@include font(fontBold, 1.1rem);
+		border-radius: 10px;
+		background-color: $solid-gray-color;
+		color: $light-black-color;
+		&--active {
+			background-color: $primary-color;
+			color: white;
+		}
+	}
+	&__avatar {
+		@include size(5rem);
+		border-radius: 50%;
+		background-color: $solid-gray-color;
+	}
+	&-tailor {
+		@include flex(center, flex-start, column);
+		@include size(11.4rem, auto);
+		&__name {
+			@include font(fontSemiBold, 1.6rem);
+			color: $solid-black-color;
+			margin-bottom: 0.2rem;
+		}
+	}
+	&-estimate {
+		@include flex(center, center);
+		@include size(19rem, auto);
+		@include font(fontSemiBold, 1.4rem);
+		color: $secondary-color;
+		&__title {
+			margin-right: 1rem;
+		}
+		&__value {
+			padding: 0.5rem;
+			background: #d5f2ea;
+			border-radius: 4px;
+		}
+	}
+	&__price {
+		@include size(12.5rem, auto);
+		@include font(fontSemiBold, 1.8rem);
+		color: $medium-black-color;
+	}
+	&__button {
+		@include size(19.7rem, auto);
+		& > div {
+			text-transform: capitalize;
+		}
+	}
+}

@@ -1,0 +1,14 @@
+.c-home-how-it-work {
+	@include flex(flex-start, center, column);
+	padding: 5rem 0 22rem;
+
+	&__video {
+		@include size(85.4rem, 48rem);
+		background-color: $solid-gray-color;
+	}
+
+	&__title {
+		padding: 0 18rem;
+		margin: 3rem 0 2.5rem;
+	}
+}

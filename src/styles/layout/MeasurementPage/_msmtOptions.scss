@@ -1,0 +1,15 @@
+.c-msmt-options {
+	&__title {
+		padding: 0 20.8rem;
+		margin: 3rem 0 4rem;
+	}
+	&-method {
+		@include flex(flex-start, center);
+		margin-bottom: 6rem;
+		margin-right: -2rem;
+		&__item {
+			width: calc(33.33% - 2rem);
+			margin-right: 2rem;
+		}
+	}
+}

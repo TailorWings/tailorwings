@@ -1,0 +1,43 @@
+.c-footer {
+	@include flex(flex-start, center, column);
+	@include size(100%, 22.7rem);
+	min-height: 22.7rem;
+	padding: 3rem 0;
+	background-color: $primary-color;
+
+	&__menu {
+		margin-right: -2.5rem;
+		margin-bottom: 3rem;
+		& > li {
+			display: inline;
+			@include font(semiBold, 1.8rem);
+			margin-right: 2.5rem;
+			color: $main-bg-color;
+		}
+	}
+
+	&__social-media {
+		@include flex(center, center);
+		margin-bottom: 3.4rem;
+
+		& img:first-child {
+			@include size(3.3rem);
+		}
+		& img:nth-child(2) {
+			@include size(3.6rem);
+			margin: 0 3.4rem;
+		}
+		& img:last-child {
+			@include size(3.7rem, 2.6rem);
+		}
+	}
+
+	&__business-code {
+		@include flex(flex-start, center, column);
+		color: $main-bg-color;
+		& span:first-child {
+			@include font(fontMedium, 1.8rem);
+			margin-bottom: 1rem;
+		}
+	}
+}
