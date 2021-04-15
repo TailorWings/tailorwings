@@ -1,0 +1,9 @@
+.c-material-alert {
+	& > .MuiSnackbar-root > .MuiAlert-root > .MuiAlert-message {
+		@include textStyle(caption);
+		@include flex(center, center);
+	}
+	& > .MuiSnackbar-root > .MuiAlert-root > .MuiAlert-action > button > span > svg {
+		font-size: 2rem;
+	}
+}

@@ -1,5 +1,5 @@
-$wrapper: 1280px;
-$container: 1060px;
+$wrapper: 128rem;
+$container: 106rem;
 $primary-color: #f68729;
 $subprimary-color: #ffebd8;
 $secondary-color: #00c48c;
@@ -14,3 +14,19 @@ $solid-gray-color: #bdbdbd;
 $medium-gray-color: #e0e0e0;
 $light-gray-color: #f2f2f2;
 $main-bg-color: #fbfbfb;
+
+$cubic: cubic-bezier(0.56, 0.19, 0.2, 0.96);
+
+/*GRID - media queries breakpoints*/
+// $xxs-min: 576px; // CÓ THỂ TÙY CHỈNH
+$xxs-min: 320px; // CÓ THỂ TÙY CHỈNH
+$xs-min: 768px; // KHÔNG THAY ĐỔI
+$sm-min: 992px; // KHÔNG THAY ĐỔI
+$md-min: 1200px; // KHÔNG THAY ĐỔI
+$lg-min: 1600px; // CÓ THỂ TÙY CHỈNH
+
+$xxs-max: ($xxs-min - 1); // Small Mobile
+$xs-max: ($xs-min - 1); // Mobile
+$sm-max: ($sm-min - 1); // Tablet
+$md-max: ($md-min - 1); // Desktop
+$lg-max: ($lg-min - 1); // Large Desktop

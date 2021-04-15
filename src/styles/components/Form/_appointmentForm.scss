@@ -1,0 +1,12 @@
+.c-appoinment-form {
+	&__content {
+		@include flex(flex-start, center, row, wrap);
+		margin-right: -1.6rem;
+		margin-bottom: -3.2rem;
+	}
+	&__input {
+		@include size(calc(50% - 1.6rem), auto);
+		margin-right: 1.6rem;
+		margin-bottom: 3.2rem;
+	}
+}

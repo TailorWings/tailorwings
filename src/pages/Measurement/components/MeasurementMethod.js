@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import SmallButton from '../../../components/Button/SmallButton';
+import SmallButton1 from '../../../components/Button/SmallButton1';
 import whiteStarIcon from '../../../assets/icons/white-star.svg';
 import grayStarIcon from '../../../assets/icons/gray-star.svg';
 import classNames from 'classnames';
@@ -30,7 +30,9 @@ function MeasurementMethod(props) {
 			</div>
 			<p className="c-msmt-method__name">{name}</p>
 			<p className="c-msmt-method__desc">{desc}</p>
-			<SmallButton text={buttonText} isActive={isActive} />
+			<div className="c-msmt-method__button">
+				<SmallButton1 text={buttonText} isActive={isActive} />
+			</div>
 		</div>
 	);
 }

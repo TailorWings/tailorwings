@@ -5,10 +5,6 @@
 		&-slider {
 			@include flex(center, center);
 			margin-bottom: 2rem;
-			&__left,
-			&__right {
-				@include size(1.5rem, 2.9rem);
-			}
 			&__item {
 				@include size(85.4rem, 48rem);
 				margin: 0 5.1rem;
@@ -23,5 +19,8 @@
 				color: $solid-black-color;
 			}
 		}
+	}
+	&-input {
+		margin-bottom: 6.4rem;
 	}
 }

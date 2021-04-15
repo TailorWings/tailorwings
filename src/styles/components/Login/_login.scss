@@ -1,0 +1,185 @@
+.c-login {
+	/* Display & Box Model */
+	display: none;
+	@include size(100vw, 100vh);
+	overflow: hidden;
+	background-color: rgba(0, 0, 0, 1);
+	/* Color */
+
+	/* Text */
+
+	/* Positioning */
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	/* Others: transition & animations, ... */
+
+	&__content {
+		/* Display & Box Model */
+		// margin: auto;
+		@include size(25%, auto);
+		max-height: 80%;
+		box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+		border-radius: 35px;
+		/* Color */
+		background-color: white;
+		/* Text */
+
+		/* Positioning */
+
+		/* Others: transition & animations, ... */
+		position: relative;
+		animation-name: open;
+		animation-duration: 1s;
+	}
+
+	&__close {
+		/* Display & Box Model */
+		@include size(3rem);
+		cursor: pointer;
+		/* Color */
+
+		/* Text */
+
+		/* Positioning */
+		position: absolute;
+		top: 2.5rem;
+		right: 2.5rem;
+		z-index: 2;
+		/* Others: transition & animations, ... */
+	}
+
+	&__detail {
+		/* Display & Box Model */
+		@include size(100%);
+		padding: 6.6rem 4rem;
+		@include flex(center, center, column);
+		/* Color */
+
+		/* Text */
+
+		/* Positioning */
+
+		/* Others: transition & animations, ... */
+	}
+
+	&__picture {
+		/* Display & Box Model */
+		margin: 0 auto;
+		@include size(fit-content);
+		max-width: 80%;
+		max-height: 60%;
+		/* Color */
+
+		/* Text */
+
+		/* Positioning */
+
+		/* Others: transition & animations, ... */
+	}
+
+	&__user-photo {
+		/* Display & Box Model */
+		margin: 0 auto;
+		border-radius: 50%;
+		@include size(12.8rem);
+		/* Color */
+
+		/* Text */
+
+		/* Positioning */
+
+		/* Others: transition & animations, ... */
+	}
+
+	&__welcome {
+		/* Display & Box Model */
+		margin-top: 3.5rem;
+		/* Color */
+
+		/* Text */
+		@include font(fontSemiBold, 1.8rem);
+		/* Positioning */
+
+		/* Others: transition & animations, ... */
+	}
+
+	&__go-to-admin {
+		/* Display & Box Model */
+		margin-top: 2rem;
+		@include flex(center, center);
+		max-width: 22rem;
+		max-height: 4rem;
+		padding: 8px 16px;
+		text-align: center;
+		box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+			0 1px 5px 0 rgba(0, 0, 0, 0.12);
+		border-radius: 2px;
+		/* Color */
+
+		/* Text */
+
+		/* Positioning */
+
+		/* Others: transition & animations, ... */
+
+		& > img {
+			/* Display & Box Model */
+			@include size(18px);
+			/* Color */
+
+			/* Text */
+
+			/* Positioning */
+
+			/* Others: transition & animations, ... */
+		}
+
+		& > span {
+			/* Display & Box Model */
+			padding-left: 16px;
+			/* Color */
+
+			/* Text */
+			@include font(fontBold, 14px);
+			/* Positioning */
+
+			/* Others: transition & animations, ... */
+		}
+	}
+
+	&__logo {
+		/* Display & Box Model */
+		margin-top: auto;
+		@include size(20rem, auto);
+		/* Color */
+
+		/* Text */
+
+		/* Positioning */
+
+		/* Others: transition & animations, ... */
+	}
+
+	&--open {
+		/* Display & Box Model */
+		@include flex(center, center);
+		/* Color */
+
+		/* Text */
+
+		/* Positioning */
+
+		/* Others: transition & animations, ... */
+	}
+}
+
+@keyframes open {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}

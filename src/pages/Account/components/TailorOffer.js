@@ -2,21 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Star from '../../../components/Star';
 import MediumButton from '../../../components/Button/MediumButton';
-import SmallButton from '../../../components/Button/SmallButton';
+import SmallButton1 from '../../../components/Button/SmallButton1';
 import classNames from 'classnames';
+import Label from '../../../components/Label';
 
 TailorOffer.propTypes = {
 	offerInfo: PropTypes.array,
+	onTailorPick: PropTypes.func,
 };
 
 TailorOffer.defaultProps = {
 	offerInfo: null,
+	onTailorPick: null,
 };
 
 function TailorOffer(props) {
-	const { offerInfo } = props;
-
-	if (!offerInfo) return <div>TailorOffer</div>;
+	const { offerInfo, onTailorPick } = props;
+	console.log('offerInfo :>> ', offerInfo);
+	if (!offerInfo || offerInfo.length < 1) return <div>Waiting for tailors</div>;
 	return (
 		<div className="c-tailor-offer">
 			{offerInfo.map((offer, index) => {
@@ -37,19 +40,26 @@ function TailorOffer(props) {
 							<Star number={5} />
 						</div>
 						<div className="c-tailor-offer-estimate">
-							<span className="c-tailor-offer-estimate__title">Est.time</span>
-							<span className="c-tailor-offer-estimate__value">{`${offer.time} days`}</span>
+							<Label
+								title="Est.time"
+								value={`${offer.time} days`}
+								color={offer.time > 6 ? 'primary' : 'secondary'}
+							/>
+							{/* <span className="c-tailor-offer-estimate__title">Est.time</span>
+							<span className="c-tailor-offer-estimate__value">{`${offer.time} days`}</span> */}
 						</div>
 						<div className="c-tailor-offer__price">
 							<span>{`${offer.price} vnđ`}</span>
 						</div>
-						<div className="c-tailor-offer__button">
-							{offer.picked ? (
-								<SmallButton text="Picked" isActive={true} />
-							) : (
+						{offer.picked ? (
+							<div className="c-tailor-offer__button">
+								<SmallButton1 text="Picked" isActive={true} />
+							</div>
+						) : (
+							<div className="c-tailor-offer__button" onClick={() => onTailorPick(index)}>
 								<MediumButton text="Pick this tailor" />
-							)}
-						</div>
+							</div>
+						)}
 					</div>
 				);
 			})}

@@ -1,0 +1,39 @@
+.c-contact-info-form {
+	@include size(100%, auto);
+	&-text-input {
+		@include flex(space-between, center, row, wrap);
+		margin-right: -1.6rem;
+		&__field {
+			@include size(calc(50% - 1.6rem), auto);
+			margin-right: 1.6rem;
+			margin-bottom: 2.4rem;
+		}
+	}
+	&__select {
+		@include flex(space-between, center);
+	}
+	&-sex-input {
+		@include size(calc(33.33% - 1.6rem), auto);
+		margin-right: 1.6rem;
+	}
+	&-birthday-input {
+		@include size(100%, auto);
+		@include flex(space-between, flex-start);
+		&__title {
+			@include size(12.8rem, auto);
+			@include textStyle(body);
+			color: $primary-color;
+			margin-right: 1.6rem;
+			text-align: right;
+		}
+		&-content {
+			@include flex(space-between, center);
+			@include size(100%, auto);
+			margin-right: -1.6rem;
+			&__field {
+				@include size(calc(33.33% - 1.6rem), auto);
+				margin-right: 1.6rem;
+			}
+		}
+	}
+}

@@ -1,0 +1,21 @@
+.c-small-button-2 {
+	@include textStyle(btnCaption);
+	display: inline-block;
+	padding: 0.8rem 1rem;
+	border: 2px solid $primary-color;
+	border-radius: 10px;
+	cursor: pointer;
+
+	&__text {
+		color: $primary-color;
+		text-transform: capitalize;
+		transition: color 0.3s linear;
+	}
+
+	&--active {
+		background-color: $primary-color;
+		& > span {
+			color: white;
+		}
+	}
+}

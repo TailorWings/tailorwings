@@ -17,41 +17,167 @@ export const RQPAGE_SUBTITLE =
 export const STYLES_OF_CLOTHE = ['dress', 'shirts', 'pants', 'skirts', 'ao dai'];
 
 // Fabric page
-export const FABRIC_MATERIAL_TITLE = 'Choose the fabric type for your design';
-export const FABRIC_MATERIAL_SUBTITLE =
-	'Here you can find all of our available fabrics (more will be added by time). Just click on the fabric for more detail and selection to continue. If you have a fabric already, choose "My Own" and follow the instructions after your order.';
-export const FABRIC_MATERIALS = new Array(6).fill({ src: null });
-export const FABRIC_TOOLTIP_TITLE = 'Information';
-export const FABRIC_TOOLTIP_CONTENT = [
+export const FABRIC_TYPE_TITLE = 'Choose the fabric type for your design';
+export const FABRIC_TYPE_SUBTITLE =
+	'Here you can find all of our available fabrics (more will be added by time). Just click on the fabric for more detail and selection to continue.';
+export const FABRIC_TYPES = [
 	{
-		label: 'FABRIC TYPE',
-		value: 'COTTON - Premium quality cotton fabrics',
+		id: 'chiffon',
+		name: 'chiffon',
+		image: null,
+		price: 0,
+		info: [
+			{
+				label: 'FABRIC TYPE',
+				value: 'COTTON - Premium quality cotton fabrics',
+			},
+			{
+				label: 'SUITABLE COSTUME',
+				value: 'Dress, Shirt',
+			},
+			{
+				label: 'DETAIL',
+				value: `Thickness : 01- Weight : 230 gr / m
+				Price:  US $ 10 per metter
+				Composition : 100% Cotton`,
+			},
+		],
 	},
 	{
-		label: 'SUITABLE COSTUME',
-		value: 'Dress, Shirt',
+		id: 'satin',
+		name: 'satin',
+		image: null,
+		price: 1,
+		info: [
+			{
+				label: 'FABRIC TYPE',
+				value: 'COTTON - Premium quality cotton fabrics',
+			},
+			{
+				label: 'SUITABLE COSTUME',
+				value: 'Dress, Shirt',
+			},
+			{
+				label: 'DETAIL',
+				value: `Thickness : 01- Weight : 230 gr / m
+				Price:  US $ 10 per metter
+				Composition : 100% Cotton`,
+			},
+		],
 	},
 	{
-		label: 'DETAIL',
-		value:
-			'Thickness : 01- Weight : 230 gr / m- Price:  US $ 10 per metter- Composition : 100% Cotton',
+		id: 'silk',
+		name: 'silk',
+		image: null,
+		price: 2,
+		info: [
+			{
+				label: 'FABRIC TYPE',
+				value: 'COTTON - Premium quality cotton fabrics',
+			},
+			{
+				label: 'SUITABLE COSTUME',
+				value: 'Dress, Shirt',
+			},
+			{
+				label: 'DETAIL',
+				value: `Thickness : 01- Weight : 230 gr / m
+				Price:  US $ 10 per metter
+				Composition : 100% Cotton`,
+			},
+		],
+	},
+	{
+		id: 'linen',
+		name: 'Linen',
+		image: null,
+		price: 3,
+		info: [
+			{
+				label: 'FABRIC TYPE',
+				value: 'COTTON - Premium quality cotton fabrics',
+			},
+			{
+				label: 'SUITABLE COSTUME',
+				value: 'Dress, Shirt',
+			},
+			{
+				label: 'DETAIL',
+				value: `Thickness : 01- Weight : 230 gr / m
+				Price:  US $ 10 per metter
+				Composition : 100% Cotton`,
+			},
+		],
+	},
+	{
+		id: 'stretch',
+		name: 'stretch',
+		image: null,
+		price: 4,
+		info: [
+			{
+				label: 'FABRIC TYPE',
+				value: 'COTTON - Premium quality cotton fabrics',
+			},
+			{
+				label: 'SUITABLE COSTUME',
+				value: 'Dress, Shirt',
+			},
+			{
+				label: 'DETAIL',
+				value: `Thickness : 01- Weight : 230 gr / m
+				Price:  US $ 10 per metter
+				Composition : 100% Cotton`,
+			},
+		],
+	},
+	{
+		id: 'cashmere',
+		name: 'cashmere',
+		image: null,
+		price: 5,
+		info: [
+			{
+				label: 'FABRIC TYPE',
+				value: 'COTTON - Premium quality cotton fabrics',
+			},
+			{
+				label: 'SUITABLE COSTUME',
+				value: 'Dress, Shirt',
+			},
+			{
+				label: 'DETAIL',
+				value: `Thickness : 01- Weight : 230 gr / m
+				Price:  US $ 10 per metter
+				Composition : 100% Cotton`,
+			},
+		],
 	},
 ];
+export const FABRIC_TOOLTIP_TITLE = 'Information';
 export const FABRIC_PATTERN_TITLE = 'What colour or pattern do you want?';
 export const FABRIC_PATTERN_SUBTITLE =
-	'Use the filter to choose the available selection and choose the one that suits you best.';
-
+	'Use the filter to choose the available selection and continue with the one that suits you best.';
+export const PATTERN_COLLECTIONS = [
+	{ name: 'all', id: 'all' },
+	{ name: 'floral', id: 'hoala' },
+	{ name: 'animal', id: 'dongvat' },
+	{ name: 'people', id: 'connguoi' },
+	{ name: 'things', id: 'dovat' },
+	{ name: 'plain', id: 'tron' },
+	{ name: 'stripe', id: 'kesoc' },
+];
 // Measurement page
 export const MSMT_OPTION_TITLE = 'Your measurement';
 export const MSMT_OPTION_SUBTITLE = `Build a personalized measurement profile in minutes. Whether you are dressing for work or that style blog side hustle, get ready to be spoiled by the best fit of your life.`;
 export const MSMT_METHODS = [
-	{
-		name: 'offline',
-		desc:
-			'If you are unable to measure yourself, you can schedule an appointment with our nearest tailor. This option will incur additional charges.',
-		buttonText: 'Make An Appointment',
-		link: '/offline',
-	},
+	// {
+	// 	name: 'offline',
+	// 	desc:
+	// 		'If you are unable to measure yourself, you can schedule an appointment with our nearest tailor. This option will incur additional charges.',
+	// 	buttonText: 'Make An Appointment',
+	// 	link: '/offline',
+	// },
 	{
 		name: 'online',
 		desc: 'Taking your measurements is quick and easy with our instruction.',
@@ -66,6 +192,374 @@ export const MSMT_METHODS = [
 		link: '/standard-size',
 	},
 ];
+export const ONLINE_MEASUREMENTS = [
+	{
+		style: 'dress',
+		msmts: [
+			{
+				id: 'height',
+				label: 'Height',
+			},
+			{
+				id: 'neck',
+				label: 'Neck',
+			},
+			{
+				id: 'shoulder',
+				label: 'Shoulder',
+			},
+			{
+				id: 'bust',
+				label: 'Bust',
+			},
+			{
+				id: 'waist',
+				label: 'Waist',
+			},
+			{
+				id: 'hip',
+				label: 'Hip',
+			},
+			{
+				id: 'upperbust',
+				label: 'Upper Bust',
+			},
+			{
+				id: 'upperhip',
+				label: 'Upper Hip',
+			},
+			{
+				id: 'frontbodice',
+				label: 'Front bodice',
+			},
+			{
+				id: 'backbodice',
+				label: 'Back bodice',
+			},
+			{
+				id: 'waisttoknee',
+				label: 'Waist to knee',
+			},
+			{
+				id: 'waisttoankle',
+				label: 'Waist to ankle',
+			},
+			{
+				id: 'longdress',
+				label: 'Long Dress',
+			},
+			{
+				id: 'longsleeve',
+				label: 'Long Sleeve',
+			},
+		],
+	},
+	{
+		style: 'shirts',
+		msmts: [
+			{
+				id: 'height',
+				label: 'Height',
+			},
+			{
+				id: 'neck',
+				label: 'Neck',
+			},
+			{
+				id: 'shoulder',
+				label: 'Shoulder',
+			},
+			{
+				id: 'bust',
+				label: 'Bust',
+			},
+			{
+				id: 'waist',
+				label: 'Waist',
+			},
+			{
+				id: 'hip',
+				label: 'Hip',
+			},
+			{
+				id: 'upperbust',
+				label: 'Upper Bust',
+			},
+			{
+				id: 'upperhip',
+				label: 'Upper Hip',
+			},
+			{
+				id: 'frontbodice',
+				label: 'Front bodice',
+			},
+			{
+				id: 'backbodice',
+				label: 'Back bodice',
+			},
+			{
+				id: 'waisttoknee',
+				label: 'Waist to knee',
+			},
+			{
+				id: 'waisttoankle',
+				label: 'Waist to ankle',
+			},
+			{
+				id: 'longdress',
+				label: 'Long Dress',
+			},
+			{
+				id: 'longsleeve',
+				label: 'Long Sleeve',
+			},
+		],
+	},
+	{
+		style: 'pants',
+		msmts: [
+			{
+				id: 'height',
+				label: 'Height',
+			},
+			{
+				id: 'neck',
+				label: 'Neck',
+			},
+			{
+				id: 'shoulder',
+				label: 'Shoulder',
+			},
+			{
+				id: 'bust',
+				label: 'Bust',
+			},
+			{
+				id: 'waist',
+				label: 'Waist',
+			},
+			{
+				id: 'hip',
+				label: 'Hip',
+			},
+			{
+				id: 'upperbust',
+				label: 'Upper Bust',
+			},
+			{
+				id: 'upperhip',
+				label: 'Upper Hip',
+			},
+			{
+				id: 'frontbodice',
+				label: 'Front bodice',
+			},
+			{
+				id: 'backbodice',
+				label: 'Back bodice',
+			},
+			{
+				id: 'waisttoknee',
+				label: 'Waist to knee',
+			},
+			{
+				id: 'waisttoankle',
+				label: 'Waist to ankle',
+			},
+			{
+				id: 'longdress',
+				label: 'Long Dress',
+			},
+			{
+				id: 'longsleeve',
+				label: 'Long Sleeve',
+			},
+		],
+	},
+	{
+		style: 'skirts',
+		msmts: [
+			{
+				id: 'height',
+				label: 'Height',
+			},
+			{
+				id: 'neck',
+				label: 'Neck',
+			},
+			{
+				id: 'shoulder',
+				label: 'Shoulder',
+			},
+			{
+				id: 'bust',
+				label: 'Bust',
+			},
+			{
+				id: 'waist',
+				label: 'Waist',
+			},
+			{
+				id: 'hip',
+				label: 'Hip',
+			},
+			{
+				id: 'upperbust',
+				label: 'Upper Bust',
+			},
+			{
+				id: 'upperhip',
+				label: 'Upper Hip',
+			},
+			{
+				id: 'frontbodice',
+				label: 'Front bodice',
+			},
+			{
+				id: 'backbodice',
+				label: 'Back bodice',
+			},
+			{
+				id: 'waisttoknee',
+				label: 'Waist to knee',
+			},
+			{
+				id: 'waisttoankle',
+				label: 'Waist to ankle',
+			},
+			{
+				id: 'longdress',
+				label: 'Long Dress',
+			},
+			{
+				id: 'longsleeve',
+				label: 'Long Sleeve',
+			},
+		],
+	},
+	{
+		style: 'ao dai',
+		msmts: [
+			{
+				id: 'height',
+				label: 'Height',
+			},
+			{
+				id: 'neck',
+				label: 'Neck',
+			},
+			{
+				id: 'shoulder',
+				label: 'Shoulder',
+			},
+			{
+				id: 'bust',
+				label: 'Bust',
+			},
+			{
+				id: 'waist',
+				label: 'Waist',
+			},
+			{
+				id: 'hip',
+				label: 'Hip',
+			},
+			{
+				id: 'upperbust',
+				label: 'Upper Bust',
+			},
+			{
+				id: 'upperhip',
+				label: 'Upper Hip',
+			},
+			{
+				id: 'frontbodice',
+				label: 'Front bodice',
+			},
+			{
+				id: 'backbodice',
+				label: 'Back bodice',
+			},
+			{
+				id: 'waisttoknee',
+				label: 'Waist to knee',
+			},
+			{
+				id: 'waisttoankle',
+				label: 'Waist to ankle',
+			},
+			{
+				id: 'longdress',
+				label: 'Long Dress',
+			},
+			{
+				id: 'longsleeve',
+				label: 'Long Sleeve',
+			},
+		],
+	},
+	{
+		style: 'dress',
+		msmts: [
+			{
+				id: 'height',
+				label: 'Height',
+			},
+			{
+				id: 'neck',
+				label: 'Neck',
+			},
+			{
+				id: 'shoulder',
+				label: 'Shoulder',
+			},
+			{
+				id: 'bust',
+				label: 'Bust',
+			},
+			{
+				id: 'waist',
+				label: 'Waist',
+			},
+			{
+				id: 'hip',
+				label: 'Hip',
+			},
+			{
+				id: 'upperbust',
+				label: 'Upper Bust',
+			},
+			{
+				id: 'upperhip',
+				label: 'Upper Hip',
+			},
+			{
+				id: 'frontbodice',
+				label: 'Front bodice',
+			},
+			{
+				id: 'backbodice',
+				label: 'Back bodice',
+			},
+			{
+				id: 'waisttoknee',
+				label: 'Waist to knee',
+			},
+			{
+				id: 'waisttoankle',
+				label: 'Waist to ankle',
+			},
+			{
+				id: 'longdress',
+				label: 'Long Dress',
+			},
+			{
+				id: 'longsleeve',
+				label: 'Long Sleeve',
+			},
+		],
+	},
+];
 export const STANDARD_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
 // Summary page
@@ -78,24 +572,24 @@ export const NOTE_SUM_SUBTITLE =
 
 // Account page
 export const ACCOUNT_SIDEBAR_ITEMS = [
-	{
-		text: 'Profile information',
-		path: '/account/profile',
-		activeIcon: activeProfileIcon,
-		passiveIcon: passiveProfileIcon,
-	},
+	// {
+	// 	text: 'Profile information',
+	// 	path: '/account/profile',
+	// 	activeIcon: activeProfileIcon,
+	// 	passiveIcon: passiveProfileIcon,
+	// },
 	{
 		text: 'Order management',
 		path: '/account/order',
 		activeIcon: activeBagIcon,
 		passiveIcon: passiveBagIcon,
 	},
-	{
-		text: 'Body measurment',
-		path: '/account/measurement',
-		activeIcon: activeStarIcon,
-		passiveIcon: passiveStarIcon,
-	},
+	// {
+	// 	text: 'Body measurment',
+	// 	path: '/account/measurement',
+	// 	activeIcon: activeStarIcon,
+	// 	passiveIcon: passiveStarIcon,
+	// },
 ];
 
 export const TEST_ORDER_INFO = [

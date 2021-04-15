@@ -8,6 +8,8 @@ ProcessAction.propTypes = {
 	nextLink: PropTypes.string,
 	backText: PropTypes.string,
 	nextText: PropTypes.string,
+	onNextClick: PropTypes.func,
+	formID: PropTypes.string,
 };
 
 ProcessAction.defaultProps = {
@@ -15,20 +17,28 @@ ProcessAction.defaultProps = {
 	nextLink: null,
 	backText: 'back',
 	nextText: 'next',
+	onNextClick: null,
+	formID: '',
 };
 
 function ProcessAction(props) {
-	const { backLink, nextLink, backText, nextText } = props;
+	const { backLink, nextLink, onNextClick, backText, nextText, formID } = props;
 
-	if (!backLink || !nextLink) return <Fragment />;
+	if (!backLink) return <Fragment />;
 	return (
 		<div className="c-process-action">
 			<Link to={backLink}>
 				<MediumButton text={backText} isActive={false} />
 			</Link>
-			<Link to={nextLink}>
-				<MediumButton text={nextText} isActive={true} />
-			</Link>
+			{nextLink ? (
+				<Link to={nextLink}>
+					<MediumButton text={nextText} isActive={true} />
+				</Link>
+			) : (
+				<button onClick={onNextClick || null} type="submit" form={formID}>
+					<MediumButton text={nextText} isActive={true} />
+				</button>
+			)}
 		</div>
 	);
 }

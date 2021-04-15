@@ -1,0 +1,53 @@
+.c-account-dropdown {
+	@include size(4.7rem);
+	// background-color: white;
+	border-radius: 50%;
+	padding-bottom: 1rem;
+	outline: none;
+	position: relative;
+	cursor: pointer;
+	img {
+		border-radius: 50%;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	ul {
+		@include font(fontSemiBold, 1.6rem);
+		padding: 15px 0;
+		width: 15rem;
+		min-width: fit-content;
+
+		position: absolute;
+		top: 110%;
+		right: 0;
+		border-radius: 5px;
+		background-color: rgba(0, 0, 0, 0.3);
+
+		visibility: hidden;
+		transition: all 0.2s;
+		transform: scale(0.8) translate(20px, -30px);
+		opacity: 0;
+
+		li {
+			padding: 10px 15px;
+			text-align: left;
+			text-transform: capitalize;
+			color: white;
+			background-color: transparent;
+			transition: all 0.3s;
+			&:hover {
+				background-color: $primary-color;
+				transition: all 0.3s;
+			}
+		}
+		&.--open {
+			display: block;
+			visibility: visible;
+			opacity: 1;
+			transform: scale(1) translate(0, 0);
+			transition: all 0.2s;
+		}
+	}
+}

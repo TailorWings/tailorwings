@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Menu from '../../../components/Menu';
+import React, { Fragment } from 'react';
+import Picker from '../../../components/Picker';
 
 StandardSizeMeasurement.propTypes = {
 	standardSizeInfo: PropTypes.array,
@@ -18,7 +18,8 @@ function StandardSizeMeasurement(props) {
 	if (!standardSizeInfo) return <Fragment />;
 	return (
 		<div className="c-standard-size-msmt-sum">
-			<Menu list={standardSizeInfo} onItemClick={onStandardSizeClick} />
+			<p className="c-standard-size-msmt-sum__title">Your Standard Size</p>
+			<Picker list={standardSizeInfo} onItemClick={onStandardSizeClick} />
 		</div>
 	);
 }

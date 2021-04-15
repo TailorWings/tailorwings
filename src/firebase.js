@@ -1,5 +1,8 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firebase-functions';
+import 'firebase/firestore';
+import 'firebase/storage';
 
 const {
 	REACT_APP_FIREBASE_API_KEY: apiKey,
@@ -24,7 +27,7 @@ var config = {
 };
 
 firebase.initializeApp(config);
-// export const database = firebase.firestore();
-// export const storage = firebase.storage();
+export const database = firebase.firestore();
+export const storage = firebase.storage();
 // export const functions = firebase.functions();
 export default firebase;

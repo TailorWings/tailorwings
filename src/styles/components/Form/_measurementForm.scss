@@ -1,0 +1,27 @@
+.c-msmt-form {
+	@include flex(flex-start, flex-start, column);
+	&__title {
+		@include size(100%, auto);
+		@include flex(space-between, center);
+		@include textStyle(h3);
+		color: $solid-black-color;
+		margin-bottom: 2.4rem;
+
+		&-sync {
+			@include textStyle(caption);
+			color: $primary-color;
+			text-decoration: underline;
+			cursor: pointer;
+		}
+	}
+	&__list {
+		@include flex(flex-start, flex-start, row, wrap);
+		margin-right: -2rem;
+		margin-bottom: -4rem;
+	}
+	&__item {
+		width: calc(25% - 2rem);
+		margin-right: 2rem;
+		margin-bottom: 4rem;
+	}
+}

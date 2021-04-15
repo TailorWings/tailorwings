@@ -1,7 +1,9 @@
+import { indigo } from '@material-ui/core/colors';
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import MediumButton from '../../../components/Button/MediumButton';
+import Label from '../../../components/Label';
 
 OrderItem.propTypes = {
 	info: PropTypes.object,
@@ -25,15 +27,15 @@ function OrderItem(props) {
 					renderElement = (
 						<div className="c-order-item__content">
 							<div className="c-order-item-info">
-								<span className="c-order-item-info__title c-order-item-info__title--finding">
-									Order date
-								</span>
-								<span className="c-order-item-info__value c-order-item-info__value--finding">
-									{info.orderDate}
-								</span>
+								<Label value={info.orderDate} title="Order date" color="primary" />
 							</div>
 							<div className="c-order-item__button">
-								<MediumButton text={`${info.offer.length} tailors available`} isActive={true} />
+								<MediumButton
+									text={`${info.offer ? info.offer.length : 0} tailor offer${
+										info.offer ? 's' : ''
+									}`}
+									isActive={true}
+								/>
 							</div>
 						</div>
 					);
@@ -44,23 +46,17 @@ function OrderItem(props) {
 					renderElement = (
 						<div className="c-order-item__content">
 							<div className="c-order-item-info">
-								<span className="c-order-item-info__title c-order-item-info__title--tailoring">
-									Receive date
-								</span>
-								<span className="c-order-item-info__value c-order-item-info__value--tailoring">
-									{info.receiveDate}
-								</span>
+								<Label value={info.orderDate} title="Order date" color="secondary" />
 							</div>
 							<div className="c-order-item-info">
-								<span className="c-order-item-info__title c-order-item-info__title--tailoring">
-									Tailor
-								</span>
-								<span className="c-order-item-info__value c-order-item-info__value--tailoring">
-									{tailoringPickedOffer && tailoringPickedOffer.tailor.name}
-								</span>
+								<Label
+									value={tailoringPickedOffer && tailoringPickedOffer.tailor.name}
+									title="Tailor"
+									color="secondary"
+								/>
 							</div>
 							<div className="c-order-item__button">
-								<MediumButton text="View order details" isActive={false} />
+								<MediumButton text="Order Details" isActive={false} />
 							</div>
 						</div>
 					);
@@ -71,24 +67,18 @@ function OrderItem(props) {
 					renderElement = (
 						<div className="c-order-item__content">
 							<div className="c-order-item-info">
-								<span className="c-order-item-info__title c-order-item-info__title--history">
-									Finish date
-								</span>
-								<span className="c-order-item-info__value c-order-item-info__value--history">
-									{info.finishDate}
-								</span>
+								<Label value={info.orderDate} title="Order date" color="gray" />
 							</div>
 							<div className="c-order-item-info">
-								<span className="c-order-item-info__title c-order-item-info__title--history">
-									Tailor
-								</span>
-								<span className="c-order-item-info__value c-order-item-info__value--history">
-									{finishPickedOffer && finishPickedOffer.tailor.name}
-								</span>
+								<Label
+									value={finishPickedOffer && finishPickedOffer.tailor.name}
+									title="Tailor"
+									color="gray"
+								/>
 							</div>
 							<p className="c-order-item-info__price">{`${finishPickedOffer.price} vnđ`}</p>
 							<div className="c-order-item__button">
-								<MediumButton text="View order details" isActive={false} />
+								<MediumButton text="Order Details" isActive={false} />
 							</div>
 						</div>
 					);
@@ -104,9 +94,16 @@ function OrderItem(props) {
 	/************_END_****************/
 
 	if (!info) return <Fragment />;
+
 	return (
 		<Link className="c-order-item" to={`/account/detail?id=${info.id}`}>
-			<div className="c-order-item__image"></div>
+			<div className="c-order-item__image">
+				{info.designFiles && info.designFiles.length > 0 ? (
+					<img src={info.designFiles[0]} alt="design" />
+				) : (
+					<Fragment />
+				)}
+			</div>
 			{handleContentRender()}
 		</Link>
 	);

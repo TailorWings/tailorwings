@@ -3,19 +3,8 @@
 	&__header {
 		margin-bottom: 4rem;
 	}
-	&__title {
-		@include font(fontBold, 2.4rem);
-		text-transform: capitalize;
-		text-align: left;
-		margin-bottom: 1rem;
-	}
-	&__subtitle {
-		@include font(fontMedium, 1.6rem);
-		text-align: left;
-		color: $medium-black-color;
-	}
 	&__desc {
-		@include font(fontMedium, 1.6rem);
+		@include textStyle(h3);
 		color: $medium-black-color;
 		margin-bottom: 1rem;
 		text-align: left;

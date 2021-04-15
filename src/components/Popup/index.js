@@ -13,7 +13,7 @@ Popup.defaultProps = {
 };
 
 function Popup(props) {
-	const { show, setPopupShow, onConfirm } = props;
+	const { show, setPopupShow } = props;
 
 	/*********************************
 	 *  Description: close popup when click on backdrop
@@ -28,7 +28,7 @@ function Popup(props) {
 	return (
 		<div
 			className={classNames('c-popup', { 'c-popup--show': show })}
-			onClick={onBackdropClick && onBackdropClick}
+			onClick={setPopupShow && onBackdropClick}
 		>
 			<div className="c-popup__content">{props.children}</div>
 		</div>

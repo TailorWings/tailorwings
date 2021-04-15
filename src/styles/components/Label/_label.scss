@@ -1,0 +1,35 @@
+.c-label {
+	@include flex(center, center);
+	@include font(fontSemiBold, 1.4rem);
+	line-height: 19px;
+	&__title {
+		margin-right: 1rem;
+	}
+	&--primary {
+		color: $primary-color;
+		& > span:last-child {
+			padding: 0.5rem;
+			text-align: center;
+			background-color: $subprimary-color;
+			border-radius: 4px;
+		}
+	}
+	&--secondary {
+		color: $secondary-color;
+		& > span:last-child {
+			padding: 0.5rem;
+			text-align: center;
+			background-color: $subsecondary-color;
+			border-radius: 4px;
+		}
+	}
+	&--gray {
+		color: $light-black-color;
+		& > span:last-child {
+			padding: 0.5rem;
+			text-align: center;
+			background-color: $light-gray-color;
+			border-radius: 4px;
+		}
+	}
+}

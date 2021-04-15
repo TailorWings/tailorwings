@@ -24,58 +24,282 @@
 }
 
 @mixin hide {
-	opacity: 0;
-	visibility: hidden;
+	// opacity: 0;
+	// visibility: hidden;
+	display: none;
 }
 
 @mixin show {
-	opacity: 1;
-	visibility: visible;
+	// opacity: 1;
+	// visibility: visible;
+	display: block;
 }
 
 // Function: Use for font selection
 @mixin font($weight, $size) {
 	@if ($weight == 'fontNormal') {
-		font-family: SVN-Gilroy-Medium;
+		font-family: SVN-GilroyMedium;
 	} @else if ($weight == 'fontHeavy') {
-		font-family: SVN-Gilroy-Heavy;
+		font-family: SVN-GilroyHeavy;
 	} @else if ($weight == 'fontBold') {
-		font-family: SVN-Gilroy-Bold;
+		font-family: SVN-GilroyBold;
 	} @else if ($weight == 'fontSemiBold') {
-		font-family: SVN-Gilroy-SemiBold;
+		font-family: SVN-GilroySemiBold;
 	} @else if ($weight == 'fontBlackItalic') {
-		font-family: SVN-Gilroy-Black-Italic;
+		font-family: SVN-GilroyBlackItalic;
 	} @else if ($weight == 'fontBlack') {
-		font-family: SVN-Gilroy-Black;
+		font-family: SVN-GilroyBlack;
 	} @else if ($weight == 'fontBoldItalic') {
-		font-family: SVN-Gilroy-Bold-Italic;
+		font-family: SVN-GilroyBoldItalic;
 	} @else if ($weight == 'fontHeavyItalic') {
-		font-family: SVN-Gilroy-Heavy-Italic;
+		font-family: SVN-GilroyHeavyItalic;
 	} @else if ($weight == 'fontItalic') {
-		font-family: SVN-Gilroy-Italic;
+		font-family: SVN-GilroyItalic;
 	} @else if ($weight == 'fontLightItalic') {
-		font-family: SVN-Gilroy-Light-Italic;
+		font-family: SVN-GilroyLightItalic;
 	} @else if ($weight == 'fontLight') {
-		font-family: SVN-Gilroy-Light;
+		font-family: SVN-GilroyLight;
 	} @else if ($weight == 'fontMediumItalic') {
-		font-family: SVN-Gilroy-Medium-Italic;
+		font-family: SVN-GilroyMediumItalic;
 	} @else if ($weight == 'fontRegular') {
-		font-family: SVN-Gilroy-Regular;
+		font-family: SVN-GilroyRegular;
 	} @else if ($weight == 'fontSemiBoldItalic') {
-		font-family: SVN-Gilroy-SemiBold-Italic;
+		font-family: SVN-GilroySemiBoldItalic;
 	} @else if ($weight == 'fontThinItalic') {
-		font-family: SVN-Gilroy-Thin-Italic;
+		font-family: SVN-GilroyThinItalic;
 	} @else if ($weight == 'fontThin') {
-		font-family: SVN-Gilroy-Thin;
+		font-family: SVN-GilroyThin;
 	} @else if ($weight == 'fontXBold') {
-		font-family: SVN-Gilroy-XBold;
+		font-family: SVN-GilroyXBold;
 	} @else if ($weight == 'fontXBoldItalic') {
-		font-family: SVN-Gilroy-XBold-Italic;
-	} @else if ($weight == 'fontXlight-Italic') {
-		font-family: SVN-Gilroy-Xlight-Italic;
+		font-family: SVN-GilroyXBoldItalic;
+	} @else if ($weight == 'fontXlightItalic') {
+		font-family: SVN-GilroyXlightItalic;
 	} @else if ($weight == 'fontXlight') {
-		font-family: SVN-Gilroy-Xlight;
+		font-family: SVN-GilroyXlight;
 	}
 	font-size: $size;
 }
 // END
+
+@mixin textStyle($style) {
+	@if ($style == 'caption') {
+		@include font(fontMedium, 1.4rem);
+	} @else if ($style == 'body') {
+		@include font(fontMedium, 1.6rem);
+	} @else if ($style == 'h4') {
+		@include font(fontSemiBold, 1.8rem);
+	} @else if ($style == 'h3') {
+		@include font(fontSemiBold, 2rem);
+	} @else if ($style == 'h2') {
+		@include font(fontBold, 2.4rem);
+	} @else if ($style == 'h1') {
+		@include font(fontBold, 3rem);
+	} @else if ($style == 'bigTitle') {
+		@include font(fontBold, 3.6rem);
+	} @else if ($style == 'btnCaption') {
+		@include font(fontSemiBold, 1.2rem);
+	} @else if ($style == 'btnSmall') {
+		@include font(fontSemiBold, 1.4rem);
+	} @else if ($style == 'btnMedium') {
+		@include font(fontSemiBold, 1.6rem);
+	} @else if ($style == 'btnLarge') {
+		@include font(fontSemiBold, 2rem);
+	}
+}
+
+// MIXINS
+// large desktop
+@mixin lg {
+	@media screen and (max-width: $lg-max) {
+		@content;
+	}
+}
+// desktop
+@mixin md {
+	@media screen and (max-width: $md-max) {
+		@content;
+	}
+}
+// tablet
+@mixin sm {
+	@media screen and (max-width: $sm-max) {
+		@content;
+	}
+}
+// mobile
+@mixin xs {
+	@media screen and (max-width: $xs-max) {
+		@content;
+	}
+}
+// small mobile
+@mixin xxs {
+	@media (max-width: $xxs-max) {
+		@content;
+	}
+}
+// desktop landscape
+@mixin mdX {
+	@media screen and (max-width: $md-max) and (orientation: landscape) {
+		@content;
+	}
+}
+// tablet landscape
+@mixin smX {
+	@media screen and (max-width: $sm-max) and (orientation: landscape) {
+		@content;
+	}
+}
+// mobile landscape
+@mixin xsX {
+	@media screen and (max-width: $xs-max) and (orientation: landscape) {
+		@content;
+	}
+}
+
+@mixin maxW($args) {
+	@media (max-width: $args) {
+		@content;
+	}
+}
+@mixin minW($args) {
+	@media (min-width: $args) {
+		@content;
+	}
+}
+@mixin minH($args) {
+	@media (min-height: $args) {
+		@content;
+	}
+}
+@mixin maxH($args) {
+	@media (max-height: $args) {
+		@content;
+	}
+}
+
+@mixin keyframes($animation-name) {
+	@-webkit-keyframes #{$animation-name} {
+		@content;
+	}
+	@-moz-keyframes #{$animation-name} {
+		@content;
+	}
+	@-ms-keyframes #{$animation-name} {
+		@content;
+	}
+	@-o-keyframes #{$animation-name} {
+		@content;
+	}
+	@keyframes #{$animation-name} {
+		@content;
+	}
+}
+
+@mixin animation($str) {
+	animation: #{$str};
+	-webkit-animation: #{$str};
+	-moz-animation: #{$str};
+	-ms-animation: #{$str};
+	-o-animation: #{$str};
+}
+@mixin transform($args) {
+	transform: $args;
+	-webkit-transform: $args;
+	-moz-transform: $args;
+	-ms-transform: $args;
+	-o-transform: $args;
+}
+
+@mixin transform-origin($args) {
+	transform-origin: $args;
+	-webkit-transform-origin: $args;
+	-moz-transform-origin: $args;
+	-ms-transform-origin: $args;
+	-o-transform-origin: $args;
+}
+@mixin transition-delay($args) {
+	transition-delay: $args;
+	-webkit-transition-delay: $args;
+	-moz-transition-delay: $args;
+	-ms-transition-delay: $args;
+	-o-transition-delay: $args;
+}
+
+@mixin transition($args) {
+	transition: $args;
+	-webkit-transition: $args;
+	-moz-transition: $args;
+	-ms-transition: $args;
+	-o-transition: $args;
+}
+
+@mixin mid($type: flx) {
+	@if $type == abs {
+		top: 50%;
+		left: 50%;
+		@include transform(translate(-50%, -50%));
+		position: absolute;
+	} @else if $type == flx {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	} @else if $type == mr {
+		display: block;
+		margin: auto;
+	}
+}
+
+@mixin midImg($maxwidth: initial) {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	@include mid(abs);
+}
+
+@mixin fullscreen($fixed: false) {
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	@if $fixed {
+		position: fixed;
+	} @else {
+		position: absolute;
+	}
+}
+
+@mixin visible($param: 1) {
+	@if $param == 1 {
+		opacity: 1;
+		pointer-events: auto;
+	} @else {
+		opacity: 0;
+		pointer-events: none;
+	}
+}
+@mixin br($radius) {
+	border-radius: $radius;
+	background-clip: padding-box;
+}
+
+@mixin overtext($lines) {
+	display: -webkit-inline-box;
+	-webkit-line-clamp: $lines;
+	-webkit-box-orient: vertical;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+@mixin customscroll($width: 5px, $bgTrack: #000, $bgThumb: #ddd) {
+	&::-webkit-scrollbar {
+		width: $width;
+	}
+	&::-webkit-scrollbar-track {
+		background: $bgTrack;
+	}
+	&::-webkit-scrollbar-thumb {
+		background: $bgThumb;
+	}
+}

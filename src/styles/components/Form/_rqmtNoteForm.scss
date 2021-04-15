@@ -1,0 +1,10 @@
+.c-rqmt-note-form {
+	@include flex(space-between, center, row, wrap);
+	margin-right: -1.6rem;
+	margin-bottom: -1.6rem;
+	&__input {
+		@include size(calc(50% - 1.6rem), auto);
+		margin-right: 1.6rem;
+		margin-bottom: 1.6rem;
+	}
+}

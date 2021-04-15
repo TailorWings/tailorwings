@@ -1,0 +1,12 @@
+.c-large-button {
+	display: inline-block;
+	padding: 1.5rem 3.2rem;
+	background-color: $primary-color;
+	border-radius: 10px;
+	cursor: pointer;
+	&__text {
+		color: white;
+		text-align: center;
+		text-transform: uppercase;
+	}
+}

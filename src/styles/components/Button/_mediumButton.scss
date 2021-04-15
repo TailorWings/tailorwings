@@ -1,0 +1,21 @@
+.c-medium-button {
+	@include size(100%, auto);
+	display: inline-block;
+	padding: 1.2rem 1.6rem;
+	color: $primary-color;
+	background-color: white;
+	border: 2px solid $primary-color;
+	border-radius: 10px;
+	text-transform: capitalize;
+	cursor: pointer;
+	&__text {
+		@include textStyle(btnMedium);
+		line-height: 2.4rem;
+		min-width: 9.6rem;
+		text-align: center;
+	}
+	&--active {
+		background-color: $primary-color;
+		color: white;
+	}
+}

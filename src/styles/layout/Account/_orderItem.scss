@@ -10,43 +10,26 @@
 		background-color: $solid-gray-color;
 		border-radius: 20px;
 		margin-right: 2rem;
+		overflow: hidden;
+		position: relative;
+		& > img {
+			@include size(100%);
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			object-fit: cover;
+		}
 	}
 	&__content {
-		@include flex(center, flex-start, column);
+		@include flex(center, center, column);
+		flex-grow: 1;
 	}
 
 	&-info {
 		@include flex(flex-start, center);
 		@include font(fontSemiBold, 1.4rem);
 		margin-bottom: 1.5rem;
-		&__title {
-			margin-right: 1rem;
-			&--finding {
-				color: $primary-color;
-			}
-			&--tailoring {
-				color: $secondary-color;
-			}
-			&--history {
-				color: $light-black-color;
-			}
-		}
-		&__value {
-			border-radius: 4px;
-			padding: 0.5rem;
-			&--finding {
-				color: $primary-color;
-				background-color: $subthird-color;
-			}
-			&--tailoring {
-				color: $secondary-color;
-				background-color: $subsecondary-color;
-			}
-			&--history {
-				color: $light-black-color;
-				background-color: $light-gray-color;
-			}
-		}
 		&__price {
 			@include font(fontSemiBold, 1.8rem);
 			color: $solid-black-color;
@@ -55,8 +38,11 @@
 		}
 	}
 	&__button {
+		width: 100%;
 		& > .c-medium-button {
-			text-transform: none;
+			padding: 1.2rem 4rem;
+			text-transform: capitalize;
+			white-space: nowrap;
 		}
 	}
 }

@@ -12,11 +12,30 @@
 	&__offer {
 		margin-bottom: 5.5rem;
 	}
-	&__summary {
+	&-summary {
 		margin-bottom: 1.5rem;
+		&__rqmt {
+			margin: 2.4rem 0;
+			& > .c-rqmt-sum {
+				padding: 0;
+			}
+		}
+		&__msmt {
+			margin-bottom: 3.65rem;
+		}
+		&__note {
+			&-title {
+				@include textStyle(h3);
+				margin-bottom: 2.4rem;
+				color: $medium-black-color;
+			}
+		}
 	}
-	&__shipping-info {
+	&-shipping-info {
 		margin-bottom: 5rem;
+		&__form {
+			padding: 2.4rem 0 3.2rem;
+		}
 	}
 	&__button {
 		@include flex(center, center);

@@ -1,17 +1,27 @@
 .c-summary-content {
 	padding-bottom: 10rem;
 	&__title {
-		padding: 0 12rem;
-		margin: 3rem 0 2rem;
+		@include flex(center, center);
+		margin: 3.2rem 0;
 	}
 	&__rqmt {
-		margin-bottom: 5rem;
+		margin-bottom: 5.8rem;
 	}
 	&__msmt {
 		margin-bottom: 5rem;
 		padding-bottom: 7rem;
 	}
-	&__input {
-		margin-bottom: 3rem;
+	&-note {
+		@include flex(center, center, column);
+		margin-bottom: 5rem;
+		&__title {
+			margin-bottom: 3.2em;
+			& .c-title {
+				@include size(84.6rem, auto);
+			}
+		}
+		&__form {
+			@include size(100%, auto);
+		}
 	}
 }

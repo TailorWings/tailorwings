@@ -1,0 +1,42 @@
+.c-fabric-popup-content {
+	@include flex(center, center, column);
+	@include size(50rem, 43rem);
+	padding: 2rem;
+	background-color: white;
+	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+	border-radius: 30px;
+	&__title {
+		@include font(fontSemiBold, 2.3rem);
+		margin: 2rem;
+		color: $solid-black-color;
+	}
+	&__subtitle {
+		@include size(fontMedium, 1.4rem);
+		margin-bottom: 5rem;
+		color: $light-black-color;
+		text-align: center;
+	}
+	&__online,
+	&__offline {
+		padding: 1rem 0;
+		@include flex(center, center);
+		& .c-medium-button {
+			width: 100%;
+			text-transform: capitalize;
+			padding: 1rem 1.5rem;
+			&__text {
+				@include textStyle(btnSmall);
+			}
+		}
+	}
+	&__back {
+		margin-top: 1rem;
+		@include textStyle(caption);
+		color: $light-black-color;
+		@include transition(0.3s);
+		:hover {
+			color: $primary-color;
+			@include transition(0.3s);
+		}
+	}
+}

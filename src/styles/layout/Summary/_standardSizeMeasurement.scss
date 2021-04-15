@@ -1,0 +1,14 @@
+.c-standard-size-msmt-sum {
+	padding: 0 8.7rem;
+	&__title {
+		@include textStyle(h3);
+		color: $medium-black-color;
+		margin-bottom: 2.4rem;
+	}
+	& .c-picker {
+		@include flex(space-between, center);
+		&__item {
+			opacity: 0.5;
+		}
+	}
+}

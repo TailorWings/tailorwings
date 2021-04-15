@@ -1,6 +1,7 @@
 .c-msmt-method {
 	@include flex(center, center, column);
 	@include size(100%, auto);
+	min-height: 334px;
 	padding: 2rem;
 	background-color: white;
 	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
@@ -38,6 +39,9 @@
 		color: $light-black-color;
 		margin-bottom: 1.5rem;
 		transition: all 0.2s ease-in-out;
+	}
+	&__button {
+		margin-top: auto;
 	}
 	&--active {
 		background-color: $subthird-color;

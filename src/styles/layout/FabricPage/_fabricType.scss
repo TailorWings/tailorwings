@@ -1,0 +1,15 @@
+.c-fabric-type {
+	@include flex(center, center, column);
+	@include size(100%, auto);
+	margin-bottom: 6.1rem;
+	&__title {
+		margin: 3.2rem 0 4.8rem;
+	}
+	&__gallery {
+		@include size(100%, auto);
+		margin-bottom: 3.1rem;
+	}
+	&__tooltip {
+		@include size(100%, auto);
+	}
+}

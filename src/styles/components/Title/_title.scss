@@ -1,0 +1,34 @@
+.c-title {
+	@include size(67.4rem, auto);
+	text-align: center;
+	color: $solid-black-color;
+	&__title {
+		@include textStyle(h2);
+		margin-bottom: 1.2rem;
+		line-height: 102%;
+		letter-spacing: 0.5px;
+	}
+	&__subtitle {
+		@include textStyle(body);
+		line-height: 135%;
+		letter-spacing: 0.3px;
+		color: $medium-black-color;
+	}
+	&-big-center {
+		&__title {
+			@include textStyle(bigTitle);
+			margin-bottom: 1.2rem;
+			line-height: 102%;
+			letter-spacing: 0.5px;
+		}
+	}
+	&-small-left {
+		text-align: left;
+		&__title {
+			@include textStyle(h3);
+			margin-bottom: 1.2rem;
+			line-height: 102%;
+			letter-spacing: 0.5px;
+		}
+	}
+}

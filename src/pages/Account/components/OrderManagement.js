@@ -1,24 +1,43 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import Accordion from '../../../components/Accordion';
+import ComponentLoader from '../../../components/ComponentLoader';
 import OrderList from './OrderList';
-import { TEST_ORDER_INFO } from '../../../constants';
 
 OrderManagement.propTypes = {
 	findingOrders: PropTypes.array,
 	tailoringOrders: PropTypes.array,
-	historyOrders: PropTypes.array,
+	finishOrders: PropTypes.array,
 };
 
 OrderManagement.defaultProps = {
 	findingOrders: null,
 	tailoringOrders: null,
-	historyOrders: null,
+	finishOrders: null,
 };
 
 function OrderManagement(props) {
-	const { findingOrders, tailoringOrders, historyOrders } = props;
+	const { findingOrders, tailoringOrders, finishOrders } = props;
+	/*--------------*/
+	const [loading, setLoading] = useState(true);
+	/*--------------*/
+	useEffect(() => {
+		/*--------------*/
+		let timer = setTimeout(() => {
+			setLoading(false);
+		}, 500);
+		/*--------------*/
+		return () => {
+			clearTimeout(timer);
+		};
+	}, []);
 
+	if (loading)
+		return (
+			<div className="c-order-management">
+				<ComponentLoader />
+			</div>
+		);
 	return (
 		<div className="c-order-management">
 			<div className="c-order-management__title">Orders</div>
@@ -35,7 +54,7 @@ function OrderManagement(props) {
 				</div>
 				<div className="c-order-management__dropdown">
 					<Accordion title="history">
-						<OrderList orderList={historyOrders} />
+						<OrderList orderList={finishOrders} />
 					</Accordion>
 				</div>
 			</div>

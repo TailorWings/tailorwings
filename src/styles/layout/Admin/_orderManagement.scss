@@ -1,0 +1,83 @@
+.c-admin-order {
+	padding: 5rem 0;
+	&__status {
+		@include flex(center, center);
+		&-item {
+			margin: 0 0.5rem;
+		}
+	}
+	&__table {
+		margin-top: 5rem;
+		th {
+			max-width: 30rem;
+			@include textStyle(body);
+			text-transform: capitalize;
+			text-align: center;
+		}
+		td {
+			max-width: 30rem;
+			@include textStyle(caption);
+			text-transform: capitalize;
+			& > .image-wraper {
+				box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+				margin: 0 auto;
+				width: 10rem;
+				height: 15rem;
+				border-radius: 15px;
+				overflow: hidden;
+				position: relative;
+				& > img {
+					@include size(100%);
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					object-fit: cover;
+				}
+			}
+		}
+		tr {
+			cursor: pointer;
+		}
+		tbody {
+			max-height: 50rem;
+			overflow: hidden;
+		}
+	}
+	&__info {
+		margin-top: 3rem;
+		&.--title {
+			@include textStyle(h2);
+			text-transform: uppercase;
+			text-align: center;
+			padding: 1rem;
+			border-top: 1px solid rgba(0, 0, 0, 0.16);
+		}
+		&.--rqmt {
+			margin-top: 5rem;
+		}
+		&.--notes {
+			margin: 5rem 0;
+			& > p {
+				@include textStyle(h3);
+				margin-bottom: 15px;
+			}
+		}
+		&.--btn {
+			margin: 0 auto;
+			@include flex(center, center);
+			width: 50%;
+			& .--wrapper {
+				margin: 0 15px;
+			}
+			.c-medium-button {
+				opacity: 0.8;
+				transition: opacity 0.3s ease;
+				&:hover {
+					opacity: 1;
+					transition: opacity 0.3s ease;
+				}
+			}
+		}
+	}
+}

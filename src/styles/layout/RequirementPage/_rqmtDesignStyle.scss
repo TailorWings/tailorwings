@@ -1,0 +1,7 @@
+.c-rqmt-design-style {
+	@include flex(center, center, column);
+	margin: 3.2rem 0;
+	&__title {
+		margin-bottom: 3.2rem;
+	}
+}

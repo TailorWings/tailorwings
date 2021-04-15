@@ -1,0 +1,28 @@
+.c-online-msmt-popup {
+	width: 45%;
+	height: 0;
+	padding-bottom: 20%;
+	border-radius: 20px;
+
+	background: $main-bg-color;
+	position: relative;
+	&-content {
+		@include size(100%);
+		@include mid(abs);
+		@include flex(center, center, column);
+		padding: 4rem;
+		&__title {
+			@include textStyle(h2);
+			text-align: center;
+		}
+		&__subtitle {
+			@include textStyle(caption);
+			text-align: center;
+		}
+		&__button {
+			@include size(100%, auto);
+			@include flex(space-evenly, center, row);
+			margin-top: 5rem;
+		}
+	}
+}

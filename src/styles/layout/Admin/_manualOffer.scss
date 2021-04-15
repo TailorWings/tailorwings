@@ -1,0 +1,44 @@
+.c-admin-manual-offer {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	width: 80%;
+	max-height: 90%;
+	padding: 20px;
+
+	border-radius: 15px;
+	background: $main-bg-color;
+	overflow: hidden;
+	& > p {
+		@include textStyle(h3);
+		text-align: center;
+		margin-bottom: 50px;
+	}
+	&__input {
+		@include size(100%, auto);
+		margin-bottom: 20px;
+		& > p {
+			@include textStyle(body);
+		}
+		& .--wrapper {
+			@include flex(flex-start, center);
+			margin-right: -20px;
+			margin-bottom: -20px;
+			.c-text-input {
+				@include size(calc(25% - 20px), auto);
+				margin-right: 20px;
+				margin-bottom: 20px;
+				&__field {
+					height: 3rem;
+				}
+			}
+		}
+	}
+	&__btn {
+		display: block;
+		margin-top: 50px;
+		@include flex(space-between, center);
+	}
+}

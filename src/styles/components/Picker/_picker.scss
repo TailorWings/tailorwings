@@ -1,0 +1,13 @@
+.c-picker {
+	@include flex(center, center);
+	margin-right: -1.6rem;
+	&__item {
+		margin-right: 1.6rem;
+	}
+	& .--disabled {
+		opacity: 0.7;
+		& .c-small-button-1 {
+			cursor: default;
+		}
+	}
+}

@@ -1,0 +1,38 @@
+.c-rqmt-sum {
+	@include flex(center, center);
+	padding: 0 8.7rem;
+	&-product {
+		@include flex(center, center);
+		margin: 3.25rem;
+		&__image {
+			@include size(15.3rem, 23rem);
+			margin-right: 2rem;
+			border-radius: 20px;
+			background-color: $solid-gray-color;
+			overflow: hidden;
+			position: relative;
+			& > img {
+				@include midImg;
+			}
+		}
+		& div:last-child {
+			margin-right: 0rem;
+		}
+	}
+	&-fabric {
+		@include flex(center, center, column);
+		&__image {
+			@include size(15.3rem);
+			border-radius: 20px;
+			background-color: $solid-gray-color;
+			overflow: hidden;
+			position: relative;
+			& > img {
+				@include midImg;
+			}
+		}
+		& div:first-child {
+			margin-bottom: 1.4rem;
+		}
+	}
+}

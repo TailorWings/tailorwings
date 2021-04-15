@@ -1,0 +1,30 @@
+.c-slider {
+	@include flex(space-between, center);
+	@include size(100%, auto);
+	position: relative;
+	&__left,
+	&__right {
+		@include size(5rem, 5rem);
+		background: transparent;
+		position: absolute;
+		top: 50%;
+		@include transform(translateY(-50%));
+	}
+	&__left {
+		left: 0;
+	}
+	&__right {
+		right: 0;
+	}
+	&__content {
+		@include size(100%);
+		padding: 0 6rem;
+		overflow: hidden;
+		& .swiper-container {
+			border-radius: 20px;
+		}
+		& .c-list-loader {
+			height: 100%;
+		}
+	}
+}

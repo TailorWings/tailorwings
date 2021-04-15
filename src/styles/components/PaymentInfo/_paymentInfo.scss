@@ -1,0 +1,27 @@
+.c-payment-info {
+	@include flex(flex-start, center);
+	padding-bottom: 1rem;
+	&__method {
+		@include flex(center, center);
+		height: 5.2rem;
+		padding: 1.2rem;
+		margin-right: 2.5rem;
+		box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.05);
+		border-radius: 10px;
+		border: 2px solid $light-gray-color;
+		background-color: $main-bg-color;
+		& > button {
+			background-color: transparent;
+		}
+	}
+	&__icon {
+		@include size(2.4rem, 1.6rem);
+		margin-right: 1.6rem;
+	}
+	&__value {
+		@include textStyle(btnCaption);
+		color: $medium-black-color;
+		line-height: 100%;
+		margin-right: 2.3rem;
+	}
+}

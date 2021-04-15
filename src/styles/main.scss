@@ -4,38 +4,74 @@
 @import './base/typography';
 
 // Components
-@import './components/navbar';
-@import './components/footer';
-@import './components/title';
-@import './components/textInput';
-@import './components/largeButton';
-@import './components/smallButton';
-@import './components/mediumButton';
-@import './components/avatarDropdown';
+@import './components/Accordion/accordion';
+
+@import './components/Form/appointmentForm';
+@import './components/Form/contactInfoForm';
+@import './components/Form/measurementForm';
+@import './components/Form/rqmtNoteForm';
+@import './components/Form/shippingForm';
+
+@import './components/Dropdown/avatarDropdown';
+
+@import './components/Loader/componentLoader';
+@import './components/Loader/pageLoader';
+
+@import './components/Footer/footer';
+
+@import './components/Label/label';
+
+@import './components/Button/largeButton';
+@import './components/Button/mediumButton';
+@import './components/Button/smallButton1';
+@import './components/Button/smallButton2';
+
+@import './components/Upload/multipleFileUpload';
+@import './components/Upload/singleFileUpload';
+
+@import './components/Navbar/navbar';
+
+@import './components/PaymentInfo/paymentInfo';
+
+@import './components/Picker/picker';
+
+@import './components/Popup/popup';
+@import './components/Popup/thankyouContent';
+@import './components/Popup/fabricContent';
+@import './components/Popup/onlineMsmtContent';
+
+@import './components/RequirementSummary/requirementSummary';
+
+@import './components/Input/selectInput';
+@import './components/Input/textInput';
+
+@import './components/Slider/slider';
+
+@import './components/Star/star';
+
+@import './components/Title/title';
+
+@import './components/Tooltip/tooltip';
+
+@import './components/ProcessAction/processAction';
+
 @import './components/listOfMeasurementDropdown';
-@import './components/pageLoader';
-@import './components/tooltip';
-@import './components/processAction';
-@import './components/measurementForm';
-@import './components/menu';
-@import './components/requirementSummary';
-@import './components/appointmentForm';
-@import './components/accordion';
-@import './components/star';
-@import './components/popup';
-@import './components/thankyouContent';
+
+@import './components/MaterialAlert/materialAlert';
+
+@import './components/Login/login';
 
 //Layouts
 @import './layout/general';
 @import './layout/HomePage/banner';
 @import './layout/HomePage/howItWork';
 
-@import './layout/RequirementPage/requirementTitle';
-@import './layout/RequirementPage/requirementClotheStyles';
-@import './layout/RequirementPage/requirementImageUpload';
-@import './layout/RequirementPage/requirementConfirm';
+@import './layout/RequirementPage/rqmtDesignStyle';
+@import './layout/RequirementPage/rqmtDesignUpload';
+@import './layout/RequirementPage/rqmtFooter';
 
-@import './layout/FabricPage/fabricMaterials';
+@import './layout/FabricPage/fabricType';
+@import './layout/FabricPage/fabricTypeGallery';
 @import './layout/FabricPage/fabricPattern';
 
 @import './layout/MeasurementPage/msmtOptions';
@@ -46,6 +82,7 @@
 
 @import './layout/Summary/summaryContent';
 @import './layout/Summary/offlineMeasurement';
+@import './layout/Summary/standardSizeMeasurement';
 
 @import './layout/Account/accountSidebar';
 @import './layout/Account/accountContent';
@@ -56,3 +93,7 @@
 @import './layout/Account/orderOffer';
 @import './layout/Account/profileContent';
 @import './layout/Account/measurementContent';
+
+@import './layout/Admin/adminLayout';
+@import './layout/Admin/orderManagement';
+@import './layout/Admin/manualOffer';
