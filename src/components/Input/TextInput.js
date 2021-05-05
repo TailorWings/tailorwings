@@ -41,30 +41,39 @@ TextInput.propTypes = {
 	hasError: PropTypes.bool,
 	errors: PropTypes.string,
 	maxlength: PropTypes.string,
+	placeHolder: PropTypes.string,
+	suffix: PropTypes.string,
 };
 
 TextInput.defaultProps = {
 	label: '',
 	disabled: false,
 	maxlength: null,
+	placeHolder: null,
+	suffix: null,
 };
 
 function TextInput(props) {
-	const { label, disabled, onChange, value, errors, maxlength } = props;
+	const { label, disabled, onChange, value, errors, maxlength, placeHolder, suffix } = props;
+
 	return (
 		<div className="c-text-input">
 			<p className="c-text-input__error">{errors}</p>
-			<input
-				type="text"
-				required
-				className="c-text-input__field"
-				id="text-input"
-				disabled={disabled}
-				onChange={onChange}
-				value={value}
-				maxLength={maxlength || '1000'}
-			/>
-			<label htmlFor="text-input" className="c-text-input__label">
+			<label className="c-text-input__wrapper" htmlFor={`text-input-${label}`}>
+				{suffix && <span className="c-text-input__suffix">{suffix}</span>}
+				<input
+					type="text"
+					required
+					className="c-text-input__field"
+					id={`text-input-${label}`}
+					disabled={disabled}
+					onChange={onChange}
+					value={value}
+					maxLength={maxlength || '1000'}
+					placeholder={placeHolder ? `${placeHolder}` || '' : ''}
+				/>
+			</label>
+			<label htmlFor={`text-input-${label}`} className="c-text-input__label">
 				{label}
 			</label>
 		</div>

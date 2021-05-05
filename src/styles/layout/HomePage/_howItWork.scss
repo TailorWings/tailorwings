@@ -2,13 +2,22 @@
 	@include flex(flex-start, center, column);
 	padding: 5rem 0 12.6rem;
 
-	&__video {
-		@include size(84.6rem, 47.6rem);
-		background-color: $solid-gray-color;
-	}
-
 	&__title {
 		padding: 0 18rem;
 		margin: 3.2rem 0;
+	}
+
+	@include sm {
+		padding: 2rem 0 5rem;
+
+		&__video {
+			@include size(100%, auto);
+			padding: 10px;
+		}
+
+		&__title {
+			width: 100%;
+			padding: 0 16px;
+		}
 	}
 }

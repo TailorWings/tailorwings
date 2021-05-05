@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import SmallButton1 from '../Button/SmallButton1';
+import { FABRIC_TYPES } from '../../constants';
 
 RequiremmentSummary.propTypes = {
 	designStyle: PropTypes.string,
@@ -38,12 +39,22 @@ function RequiremmentSummary(props) {
 				})}
 			</div>
 			<div className="c-rqmt-sum-fabric">
-				<div className="c-rqmt-sum-fabric__image">
-					{fabricType?.image && <img src={fabricType.image} alt="fabric-type" />}
-				</div>
-				<div className="c-rqmt-sum-fabric__image">
-					{fabricPattern && <img src={fabricPattern.image.mockup} alt="fabric-pattern" />}
-				</div>
+				{fabricType && (
+					<div className="c-rqmt-sum-fabric__image">
+						<img
+							src={FABRIC_TYPES.find((type) => type.id === fabricType)?.image || ''}
+							alt="fabric-type"
+						/>
+
+						<div className="-overlay"></div>
+						<span>{FABRIC_TYPES.find((type) => type.id === fabricType)?.name || ''}</span>
+					</div>
+				)}
+				{fabricPattern && (
+					<div className="c-rqmt-sum-fabric__image">
+						<img src={fabricPattern.image.normal} alt="fabric-pattern" />
+					</div>
+				)}
 			</div>
 		</div>
 	);

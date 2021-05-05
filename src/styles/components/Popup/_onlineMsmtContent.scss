@@ -25,4 +25,19 @@
 			margin-top: 5rem;
 		}
 	}
+
+	@include xs {
+		width:90%;
+		height: 0;
+		padding-bottom: 70%;
+		&-content {
+			padding: 1rem;
+			&__title {
+				margin-bottom: 1rem;
+			}
+			&__button {
+				margin-top: 2rem;
+			}
+		}
+	}
 }

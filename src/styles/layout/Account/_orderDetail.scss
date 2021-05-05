@@ -36,12 +36,71 @@
 		&__form {
 			padding: 2.4rem 0 3.2rem;
 		}
+		&__payment {
+			display: none;
+		}
 	}
 	&__button {
 		@include flex(center, center);
-		& > div {
+		& .c-medium-button {
 			width: fit-content;
 			text-transform: capitalize;
+			&:first-child {
+				margin-right: 1.6rem;
+			}
+		}
+	}
+
+	@include xs {
+		padding: 2rem;
+		margin-bottom: 5rem;
+		&__header {
+			@include flex(flex-start, center, column-reverse);
+			margin-bottom: 5rem;
+		}
+		&__title {
+			width: 100%;
+			margin-left: 0;
+			@include font(fontBold, 2.8rem);
+			text-align: center;
+		}
+		&__offer {
+			@include flex();
+			margin-bottom: 5rem;
+			margin-right: -0.4rem;
+		}
+		&-summary {
+			margin-bottom: 1.5rem;
+			&__rqmt {
+				margin: 2.4rem 0;
+				& > .c-rqmt-sum {
+					padding: 0;
+				}
+			}
+			&__msmt {
+				margin-bottom: 3.65rem;
+			}
+			&__note {
+				&-title {
+					@include textStyle(h3);
+					margin-bottom: 2.4rem;
+					color: $medium-black-color;
+				}
+			}
+		}
+		&-shipping-info {
+			margin-bottom: 5rem;
+			&__form {
+				padding: 2.4rem 0 3.2rem;
+			}
+			
+		}
+		&__button {
+			@include flex(center, center);
+			& > div {
+				width: fit-content;
+				text-transform: capitalize;
+			}
 		}
 	}
 }

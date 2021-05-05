@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
 import AdminLayout from './components/AdminLayout';
 import { fetchAllRealTime } from '../../services/API/firebaseAPI';
+import { updateCustomers } from '../../app/ReduxSlices/adminSlice';
 
 AdminPage.propTypes = {};
 
@@ -12,6 +13,7 @@ function AdminPage(props) {
 	const [findingOrders, setFindingOrders] = useState([]);
 	const [tailoringOrders, setTailoringOrders] = useState([]);
 	const [finishOrders, setFinishOrders] = useState([]);
+	const dispatch = useDispatch();
 	/*--------------*/
 	useEffect(() => {
 		fetchAllRealTime('customers', (results) => {
@@ -35,6 +37,9 @@ function AdminPage(props) {
 				setTailoringOrders(tailorings);
 				setFinishOrders(finishs);
 			}
+			/*--------------*/
+			const action_updateCustomers = updateCustomers(customerWithOrder);
+			dispatch(action_updateCustomers);
 		});
 		return () => {
 			fetchAllRealTime('customers');

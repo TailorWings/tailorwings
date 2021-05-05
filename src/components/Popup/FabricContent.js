@@ -19,35 +19,28 @@ function FabricContent(props) {
 	return (
 		<div className="c-fabric-popup-content">
 			<div className="c-fabric-popup-content__title">
-				<span>Do you have your favorite fabric?</span>
+				<span>Do you have your own fabric?</span>
 			</div>
-			<div className="c-fabric-popup-content__subtitle">
-				<p>
-					If you have your own fabric, we will contact with you later to get your fabric and send to
-					the tailor. Otherwise, you can select fabric collection of Tailor Wings.
-				</p>
-			</div>
-			<div className="c-fabric-popup-content__button">
+			<div className="c-fabric-popup-content__options">
 				<div
-					className="c-fabric-popup-content__online"
+					className="c-fabric-popup-content__option"
 					onClick={() => {
 						onSelectFabricOnline();
 					}}
 				>
-					<MediumButton text="I want select fabric" isActive={true} />
+					<span>No, I don't</span>
+					<p>You can select a lot of available fabric in next step</p>
 				</div>
 				<div
-					className="c-fabric-popup-content__offline"
+					className="c-fabric-popup-content__option"
 					onClick={() => {
 						onSendFabricOffline();
 					}}
 				>
-					<MediumButton text="I have my own fabric" />
+					<span>Yes, I have</span>
+					<p>We will contact to pick up your fabric after you place the order</p>
 				</div>
 			</div>
-			<Link to="/requirement" className="c-fabric-popup-content__back">
-				<span>Back</span>
-			</Link>
 		</div>
 	);
 }

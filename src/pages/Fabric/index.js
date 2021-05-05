@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router';
 import { setOrderDetail, setPatterns } from '../../app/ReduxSlices/commonSlice';
 import MaterialAlert from '../../components/MaterialAlert';
 import Popup from '../../components/Popup';
 import FabricContent from '../../components/Popup/FabricContent';
-import { FABRIC_TYPES, PATTERN_COLLECTIONS } from '../../constants';
+import ProcessAction from '../../components/ProcessAction';
+import { FABRIC_TYPES, PATTERN_COLLECTIONS, STYLE_ESTIMATE_PRICE } from '../../constants';
 import { fetchAll } from '../../services/API/firebaseAPI';
+import { estimatePriceCalc } from '../../services/Functions/commonFunctions';
+import FabricOptions from './components/FabricOptions';
 import FabricPattern from './components/FabricPattern';
 import FabricType from './components/FabricType';
 
 function FabricPage() {
 	/*--------------*/
-	const currentCustomer = useSelector((state) => state.common.currentCustomer);
 	const orderDetail = useSelector((state) => state.common.orderDetail);
 	const patterns = useSelector((state) => state.common.patterns);
 	const dispatch = useDispatch();
@@ -20,9 +22,9 @@ function FabricPage() {
 
 	/*--------------*/
 	const [alertOpen, setAlertOpen] = useState(false);
-	const [popupShow, setPopupShow] = useState(
-		orderDetail?.fabric ? !!!orderDetail.fabric?.isOnline : true
-	);
+	// const [popupShow, setPopupShow] = useState(
+	// 	orderDetail?.fabric ? !!!orderDetail.fabric?.isOnline : true
+	// );
 	/*--------------*/
 	const [fabricType, setFabricType] = useState(
 		FABRIC_TYPES.map((type) => {
@@ -35,7 +37,19 @@ function FabricPage() {
 		})
 	);
 	const [renderPatterns, setRenderPatterns] = useState(null);
+	const [estPrice, setEstPrice] = useState('');
+	const [isOnline, setIsOnline] = useState(!!orderDetail.fabric.isOnline);
 	/*--------------*/
+	const alertUser = (e) => {
+		e.preventDefault();
+		e.returnValue = '';
+	};
+	useEffect(() => {
+		window.addEventListener('beforeunload', alertUser);
+		return () => {
+			window.removeEventListener('beforeunload', alertUser);
+		};
+	}, []);
 	useEffect(() => {
 		window.scrollTo({
 			top: 0,
@@ -44,7 +58,7 @@ function FabricPage() {
 	}, []);
 	useEffect(() => {
 		if (!patterns) {
-			fetchAll('testPatterns').then((result) => {
+			fetchAll('patterns').then((result) => {
 				const action_setPatterns = setPatterns(result);
 				dispatch(action_setPatterns);
 			});
@@ -52,24 +66,22 @@ function FabricPage() {
 	}, [patterns, dispatch]);
 	useEffect(() => {
 		if (patterns) {
-			if (!orderDetail?.fabric.type) {
-				setRenderPatterns([...patterns]);
+			let initilRenderPatterns = patterns.map((pattern) => {
+				return { ...pattern, active: false };
+			});
+			if (!orderDetail.fabric.type) {
+				setRenderPatterns(initilRenderPatterns);
 			} else {
-				let initilRenderPatterns = patterns.map((pattern) => {
-					return { ...pattern, active: false };
-				});
 				let firstPattern = { ...initilRenderPatterns[0] };
-				let selectedPatternIndex =
-					initilRenderPatterns.findIndex((pattern) => {
-						return pattern.id === orderDetail.fabric.pattern;
-					}) || null;
-				if (selectedPatternIndex && selectedPatternIndex > 0) {
+				let selectedPatternIndex = initilRenderPatterns.findIndex((pattern) => {
+					return pattern.id === orderDetail.fabric.pattern.id;
+				});
+				if (selectedPatternIndex > 0) {
 					initilRenderPatterns[0] = { ...initilRenderPatterns[selectedPatternIndex], active: true };
 					initilRenderPatterns[selectedPatternIndex] = { ...firstPattern };
 				}
 				setRenderPatterns(initilRenderPatterns);
 				/*--------------*/
-
 				setFabricType(
 					fabricType.map((type) => {
 						return { ...type, active: type.id === orderDetail.fabric.type };
@@ -78,57 +90,26 @@ function FabricPage() {
 			}
 		}
 	}, [orderDetail, patterns]);
-	/*--------------*/
-	// useEffect(() => {
-	// 	window.scrollTo({
-	// 		top: 0,
-	// 		behavior: 'smooth',
-	// 	});
-	// 	/*--------------*/
-	// 	fetchAll('testPatterns').then((result) => {
-	// 		setPatterns(result || null);
-	// 		let selectedPatternId = orderDetail?.farbic?.pattern.id || null;
-	// 		let initilRenderPatterns = result.map((pattern) => {
-	// 			return {
-	// 				...pattern,
-	// 				active: selectedPatternId ? pattern.id === selectedPatternId : false,
-	// 			};
-	// 		});
-	// 		if (initilRenderPatterns?.length > 0) {
-	// 			if (orderDetail?.fabric.type) {
-	// 				let firstPattern = initilRenderPatterns[0];
-	// 				let selectedPatternIndex =
-	// 					initilRenderPatterns.findIndex((pattern) => {
-	// 						return pattern.active;
-	// 					}) || null;
-	// 				if (selectedPatternIndex) {
-	// 					initilRenderPatterns[0] = { ...initilRenderPatterns[selectedPatternIndex] };
-	// 					initilRenderPatterns[selectedPatternIndex] = { ...firstPattern };
-	// 				}
-	//
-	// 				setRenderPatterns(initilRenderPatterns);
-	// 				/*--------------*/
-	// 				console.log(
-	// 					'fabricType :>> ',
-	// 					fabricType.map((type) => {
-	// 						return { ...type, active: type.id === orderDetail.type.id };
-	// 					})
-	// 				);
-	// 				setFabricType(
-	// 					fabricType.map((type) => {
-	// 						return { ...type, active: type.id === orderDetail.type.id };
-	// 					})
-	// 				);
-	// 			} else {
-	// 				setRenderPatterns(initilRenderPatterns);
-	// 			}
-	// 		}
-
-	// 		// setRenderPatterns(result || null);
-	// 	});
-	// 	/*--------------*/
-	// }, []);
-	/*--------------*/
+	useEffect(() => {
+		handleCollectionStatus(0);
+	}, [fabricType]);
+	useEffect(() => {
+		let currentFabricType = fabricType.find((type) => type.active);
+		if (orderDetail.designStyle && currentFabricType) {
+			let designEstimate = STYLE_ESTIMATE_PRICE.find(
+				(price) => price.id === orderDetail.designStyle
+			);
+			console.log('designEstimate :>> ', designEstimate);
+			if (designEstimate) {
+				let currentEstPrice = estimatePriceCalc(
+					designEstimate.estPrice,
+					currentFabricType.price,
+					designEstimate.fabricLength
+				);
+				setEstPrice(currentEstPrice);
+			}
+		}
+	}, [fabricType]);
 	/*********************************
 	 *  Description: handle send fabric offline
 	 */
@@ -144,17 +125,10 @@ function FabricPage() {
 	}
 	/************_END_****************/
 	/*********************************
-	 *  Description: handle send fabric online
+	 *  Description: handle fabric type set
 	 */
-	function onSelectFabricOnline() {
-		let updatedOrderDetail = { ...orderDetail };
-		updatedOrderDetail.fabric = {
-			isOnline: true,
-		};
-		const action_setOrderDetail = setOrderDetail(updatedOrderDetail);
-		dispatch(action_setOrderDetail);
-		/*--------------*/
-		setPopupShow(false);
+	function onFabricTypeSet(thisFabricType) {
+		setFabricType(thisFabricType);
 	}
 	/************_END_****************/
 	/*********************************
@@ -166,11 +140,27 @@ function FabricPage() {
 		});
 		let newRenderPatterns = [];
 		if (patternCollection[updateIndex].id !== 'all') {
-			newRenderPatterns = patterns.filter((pattern) => {
-				return pattern.idPatternCollection.includes(patternCollection[updateIndex].id);
-			});
+			if (fabricType.find((type) => type.active)) {
+				newRenderPatterns = patterns.filter((pattern) => {
+					return (
+						pattern.idPatternCollection.includes(patternCollection[updateIndex].id) &&
+						pattern.idFabricType.includes(fabricType.find((type) => type.active)?.id)
+					);
+				});
+			} else {
+				newRenderPatterns = patterns.filter((pattern) => {
+					return pattern.idPatternCollection.includes(patternCollection[updateIndex].id);
+				});
+			}
 		} else {
-			newRenderPatterns = [...patterns];
+			let activeFabricType = fabricType.find((type) => type.active) || null;
+			if (activeFabricType) {
+				newRenderPatterns = patterns.filter((pattern) => {
+					return pattern.idFabricType.includes(activeFabricType.id);
+				});
+			} else {
+				newRenderPatterns = patterns ? [...patterns] : null;
+			}
 		}
 		if (newPatternCollectionStatus) {
 			setPatternCollection(newPatternCollectionStatus);
@@ -208,7 +198,7 @@ function FabricPage() {
 			let updatedOrderDetail = {
 				...orderDetail,
 				fabric: {
-					...orderDetail.fabric,
+					isOnline: true,
 					price: selectedFabricType.price || 0,
 					pattern: selectedPattern || null,
 					type: selectedFabricType.id.toString() || null,
@@ -217,35 +207,50 @@ function FabricPage() {
 			const action_setOrderDetail = setOrderDetail(updatedOrderDetail);
 			dispatch(action_setOrderDetail);
 			/*--------------*/
-			history.push('/measurement');
+			history.push('/measurement/online');
 		} else {
 			setAlertOpen(true);
 		}
 	}
 	/************_END_****************/
-	if (!currentCustomer) return <Redirect to="/" />;
+	if (!orderDetail.designStyle || !orderDetail.designFiles) return <Redirect to="/requirement" />;
 	return (
 		<div className="l-fabric container">
-			<FabricType fabricType={fabricType} setFabricType={setFabricType} />
-			<FabricPattern
-				collections={patternCollection}
-				patterns={renderPatterns}
-				onCollectionClick={handleCollectionStatus}
-				onPatternClick={handlePatternSelect}
-				onNextClick={handleConfirm}
-			/>
-			<MaterialAlert
-				open={alertOpen}
-				setOpen={setAlertOpen}
-				content="Please select fabric type and fabric pattern!"
-				serverity="error"
-			/>
-			<Popup show={popupShow}>
+			<FabricOptions setIsOnline={setIsOnline} isOnline={isOnline} />
+			{isOnline && (
+				<Fragment>
+					<FabricType fabricType={fabricType} setFabricType={onFabricTypeSet} />
+					{fabricType.find((type) => type.active) && (
+						<FabricPattern
+							collections={patternCollection}
+							patterns={renderPatterns}
+							onCollectionClick={handleCollectionStatus}
+							onPatternClick={handlePatternSelect}
+							onNextClick={handleConfirm}
+							estPrice={estPrice}
+						/>
+					)}
+
+					<MaterialAlert
+						open={alertOpen}
+						setOpen={setAlertOpen}
+						content="Please select fabric type and fabric pattern!"
+						serverity="error"
+					/>
+				</Fragment>
+			)}
+			{!isOnline && (
+				<div style={{ display: 'block', marginTop: '10%' }}>
+					<ProcessAction backLink="/requirement" onNextClick={onSendFabricOffline} />
+				</div>
+			)}
+
+			{/* <Popup show={popupShow}>
 				<FabricContent
 					onSendFabricOffline={onSendFabricOffline}
 					onSelectFabricOnline={onSelectFabricOnline}
 				/>
-			</Popup>
+			</Popup> */}
 		</div>
 	);
 }

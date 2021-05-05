@@ -75,13 +75,19 @@ function MeasurementForm(props) {
 								<TextInput
 									label={measurement.label || ''}
 									value={measurement.value || ''}
+									// placeHolder="(cm)"
+									suffix="(cm)"
 									disabled
+									maxlength="3"
 								/>
 							) : (
 								<InputField
 									name={removeWhiteSpace(measurement.label)}
 									label={measurement.label}
+									// placeHolder="(cm)"
+									suffix="(cm)"
 									form={form}
+									maxValue={999}
 								/>
 							)}
 						</div>

@@ -1,8 +1,10 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import commonReducer from './ReduxSlices/commonSlice';
+import adminReducer from './ReduxSlices/adminSlice';
 
 const rootReducer = {
 	common: commonReducer,
+	admin: adminReducer,
 };
 
 const store = configureStore({

@@ -21,14 +21,14 @@
 		@include flex(center, center);
 		margin-bottom: 3.4rem;
 
-		& img:first-child {
+		& a:first-child {
 			@include size(3.3rem);
 		}
-		& img:nth-child(2) {
+		& a:nth-child(2) {
 			@include size(3.6rem);
 			margin: 0 3.4rem;
 		}
-		& img:last-child {
+		& a:last-child {
 			@include size(3.7rem, 2.6rem);
 		}
 	}
@@ -40,6 +40,45 @@
 			@include textStyle(h4);
 			margin-bottom: 1rem;
 			line-height: 102%;
+		}
+	}
+
+	@include xs {
+		overflow: hidden;
+		&__menu {
+			margin-right: -1.6rem;
+			margin-bottom: 3rem;
+		}
+		&__item {
+			font-size: 1.4rem;
+			margin-right: 1.6rem;
+		}
+
+		&__social-media {
+			@include flex(center, center);
+			margin-bottom: 3rem;
+
+			& a:first-child {
+				@include size(3rem);
+			}
+			& a:nth-child(2) {
+				@include size(3.1rem);
+				margin: 0 3.4rem;
+			}
+			& a:last-child {
+				@include size(3.4rem, 2.3rem);
+			}
+		}
+
+		&__business-code {
+			padding: 0 15%;
+			& span {
+				font-size: 1.4rem;
+				text-align: center;
+			}
+			& span:first-child {
+				font-size: 1.6rem;
+			}
 		}
 	}
 }

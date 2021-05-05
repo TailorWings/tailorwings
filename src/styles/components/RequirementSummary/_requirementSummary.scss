@@ -30,9 +30,77 @@
 			& > img {
 				@include midImg;
 			}
+			&:first-child {
+				@include flex(center, center);
+				position: relative;
+				z-index: 1;
+				& .-overlay {
+					@include size(100%);
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					background: $solid-black-color;
+					opacity: 0.3;
+					
+					z-index: 2;
+				}
+				& span {
+					@include textStyle(h3);
+					color: white;
+					text-transform: uppercase;
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					z-index: 3;
+				}
+			}
 		}
 		& div:first-child {
 			margin-bottom: 1.4rem;
+		}
+	}
+
+	@include xs {
+		@include flex(center, center, column);
+		padding: 0 0;
+		&-product {
+			width: 100%;
+			@include flex(center, center);
+			margin: 3.25rem 0;
+			&__image {
+				@include size(33.33%, 0);
+				padding-bottom: 50%;
+				margin-right: 0.4rem;
+				border-radius: 20px;
+				background-color: $solid-gray-color;
+				overflow: hidden;
+				position: relative;
+				& > img {
+					@include midImg;
+				}
+			}
+			& div:last-child {
+				margin-right: 0rem;
+			}
+		}
+		&-fabric {
+			@include flex(center, center, row);
+			&__image {
+				@include size(12.5rem);
+				border-radius: 20px;
+				background-color: $solid-gray-color;
+				overflow: hidden;
+				position: relative;
+				& > img {
+					@include midImg;
+				}
+			}
+			& div:first-child {
+				margin-bottom: 0;
+				margin-right: 0.4rem;
+			}
 		}
 	}
 }

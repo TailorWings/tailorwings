@@ -25,16 +25,18 @@ function FabricType(props) {
 			<div className="c-fabric-type__title">
 				<Title title={FABRIC_TYPE_TITLE} subtitle={FABRIC_TYPE_SUBTITLE} />
 			</div>
-			<div className="c-fabric-type__gallery">
-				<FabricTypeGallery fabricType={fabricType} setFabricType={setFabricType} />
-			</div>
-			<div className="c-fabric-type__tooltip">
-				<Tooltip
-					title={FABRIC_TOOLTIP_TITLE}
-					content={
-						fabricType.find((type) => type.active) && fabricType.find((type) => type.active).info
-					}
-				/>
+			<div className="c-fabric-type__wrapper">
+				<div className="c-fabric-type__gallery">
+					<FabricTypeGallery fabricType={fabricType} setFabricType={setFabricType} />
+				</div>
+				<div className="c-fabric-type__tooltip">
+					<Tooltip
+						title={FABRIC_TOOLTIP_TITLE}
+						content={
+							fabricType.find((type) => type.active) && fabricType.find((type) => type.active).info
+						}
+					/>
+				</div>
 			</div>
 		</div>
 	);

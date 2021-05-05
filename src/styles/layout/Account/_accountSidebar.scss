@@ -20,6 +20,7 @@
 			@include font(fontSemiBold, 1.6rem);
 			color: $medium-black-color;
 			transition: color 0.2s ease-in-out;
+			text-transform: uppercase;
 		}
 		&--active {
 			& > span {
@@ -33,5 +34,9 @@
 		& > .c-medium-button {
 			width: 100%;
 		}
+	}
+	
+	@include xs {
+		display: none;
 	}
 }

@@ -17,7 +17,7 @@ function RqmtFooter(props) {
 	return (
 		<div className="c-rqmt-footer">
 			<p className="c-rqmt-footer__text">
-				Minimum image size 500 KB. The higher the quality, the higher the results.
+				Minimum image size 500 KB. The higher the quality, the better the results.
 			</p>
 			<div className="c-rqmt-footer__button" onClick={onNextClick}>
 				<MediumButton isActive={true} text="next" />

@@ -8,10 +8,12 @@ InputField.propTypes = {
 
 	label: PropTypes.string,
 	disabled: PropTypes.bool,
+	placeHolder: PropTypes.string,
+	suffix: PropTypes.string,
 };
 
 function InputField(props) {
-	const { form, name, label, disabled } = props;
+	const { form, name, label, disabled, placeHolder, suffix } = props;
 	const { register, errors, formState } = form;
 	const hasError = !!errors[name];
 	return (
@@ -26,7 +28,10 @@ function InputField(props) {
 					value={value}
 					register={register}
 					hasError={hasError}
-					errors={hasError ? 'Please input a positive number' : ''}
+					errors={hasError ? 'Please input a positive interger' : ''}
+					placeHolder={placeHolder}
+					suffix={suffix || null}
+					maxlength="3"
 				/>
 			)}
 		></Controller>

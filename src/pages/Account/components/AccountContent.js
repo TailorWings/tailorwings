@@ -1,40 +1,9 @@
-import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Route, Switch } from 'react-router-dom';
-import OrderManagement from './OrderManagement';
-import OrderDetail from './OrderDetail';
-import { TEST_ORDER_INFO } from '../../../constants';
-import ProfileContent from './ProfileContent';
-import MeasurementContent from './MeasurementContent';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { fetchDocument, fetchDocumentRealtime } from '../../../services/API/firebaseAPI';
-
-const TEST_SHIPPING_INFO = [
-	{
-		label: 'Name',
-		value: '',
-	},
-	{
-		label: 'Phone number',
-		value: '',
-	},
-	{
-		label: 'City',
-		value: '',
-	},
-	{
-		label: 'District',
-		value: '',
-	},
-	{
-		label: 'Ward',
-		value: '',
-	},
-	{
-		label: 'Address',
-		value: '',
-	},
-];
+import { Route, Switch } from 'react-router-dom';
+import OrderDetail from './OrderDetail';
+import OrderManagement from './OrderManagement';
 
 AccountContent.propTypes = {
 	match: PropTypes.object,
@@ -60,19 +29,6 @@ function AccountContent(props) {
 			if (currentCustomer?.orders?.toString() !== orders.toString()) {
 				setOrders(currentCustomer.orders || []);
 			}
-			// fetchDocumentRealtime('customers', currentCustomer.id, (customerInfo) => {
-			// 	if (customerInfo) {
-			//
-			// 		setOrders(customerInfo.orders || []);
-			// 	}
-			// 	if (currentCustomer.orders.toString() !== orders.toString()) {
-			//
-			// 		fetchDocument('customers', currentCustomer.id).then((customer) => {
-			//
-			// 			setOrders(customer.orders || []);
-			// 		});
-			// 	}
-			// });
 		}
 	}, [currentCustomer]);
 
@@ -112,11 +68,7 @@ function AccountContent(props) {
 				<Route
 					path={`${match.path}/detail`}
 					component={() => (
-						<OrderDetail
-							orderList={orders}
-							onPopupStatusChange={onPopupStatusChange}
-							shippingInfo={TEST_SHIPPING_INFO}
-						/>
+						<OrderDetail orderList={orders} onPopupStatusChange={onPopupStatusChange} />
 					)}
 				/>
 				{/* <Route path={`${match.path}/profile`} component={() => <ProfileContent />} /> */}

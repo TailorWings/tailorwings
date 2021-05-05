@@ -1,34 +1,44 @@
-import React, { useEffect, useState } from 'react';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
-import MediumButton from '../../../components/Button/MediumButton';
-import TailorOffer from './TailorOffer';
-import Accordion from '../../../components/Accordion';
-import { Link, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
+import Accordion from '../../../components/Accordion';
+import MediumButton from '../../../components/Button/MediumButton';
+import SmallButton2 from '../../../components/Button/SmallButton2';
 import ComponentLoader from '../../../components/ComponentLoader';
-import ShippingForm from '../../../components/Form/ShippingForm';
-import PaymentInfo from '../../../components/PaymentInfo';
-import RequirementSummary from '../../../components/RequirementSummary';
 import MeasurementForm from '../../../components/Form/MeasurementForm';
 import RqmtNoteForm from '../../../components/Form/RqmtNoteForm';
-import { ONLINE_MEASUREMENTS, STANDARD_SIZES } from '../../../constants';
+import ShippingForm from '../../../components/Form/ShippingForm';
+import MaterialAlert from '../../../components/MaterialAlert';
+import PageLoader from '../../../components/PageLoader';
+import PaymentInfo from '../../../components/PaymentInfo';
 import Picker from '../../../components/Picker';
+import RequirementSummary from '../../../components/RequirementSummary';
+import { ONLINE_MEASUREMENTS, SHIPPING_INFO, STANDARD_SIZES } from '../../../constants';
+import { setDocument, updateDocument } from '../../../services/API/firebaseAPI';
+import TailorOffer from './TailorOffer';
 
 OrderDetail.propTypes = {
 	orderList: PropTypes.array,
-	shippingInfo: PropTypes.array,
 	onPopupStatusChange: PropTypes.func,
 };
 
 OrderDetail.defaultProps = {
 	orderList: null,
-	shippingInfo: null,
 	onPopupStatusChange: null,
 };
 
 function OrderDetail(props) {
-	const { orderList, shippingInfo, onPopupStatusChange } = props;
+	const { orderList, onPopupStatusChange } = props;
+	const currentCustomer = useSelector((state) => state.common.currentCustomer);
 	/*--------------*/
+	const history = useHistory();
 	const location = useLocation();
 	const orderID = queryString.parse(location.search);
 	const [currentOrderDetail, setCurrentOrderDetail] = useState(null);
@@ -38,6 +48,14 @@ function OrderDetail(props) {
 			return { name: size, active: false };
 		})
 	);
+	const [shippingInfo, setShippingInfo] = useState(
+		SHIPPING_INFO.map((info) => {
+			return info;
+		})
+	);
+	const [alertOpen, setAlertOpen] = useState(false);
+	const [deleteOpen, setDeleteOpen] = useState(false);
+	const [isPageLoad, setIsPageLoad] = useState(false);
 	/*--------------*/
 	useEffect(() => {
 		/*--------------*/
@@ -52,13 +70,11 @@ function OrderDetail(props) {
 	/*--------------*/
 	useEffect(() => {
 		if (orderList) {
-			let newOrderDetail =
-				{
-					...orderList.find((order) => {
-						return order.id.toString() === orderID.id.toString();
-					}),
-				} || null;
-
+			let newOrderDetail = {
+				...orderList.find((order) => {
+					return order.id.toString() === orderID.id.toString();
+				}),
+			};
 			if (newOrderDetail) {
 				if (newOrderDetail.status !== 'finding') {
 					newOrderDetail.offer =
@@ -70,19 +86,19 @@ function OrderDetail(props) {
 				let msmtOfStyle = ONLINE_MEASUREMENTS.find(
 					(msmtInfo) => msmtInfo.style === newOrderDetail.designStyle
 				);
-				console.log('obnewOrderDetail.msmtject :>> ', newOrderDetail.msmt);
 				if (newOrderDetail.msmt) {
-					newOrderDetail.msmt = msmtOfStyle
+					let modifiedMsmt = msmtOfStyle
 						? msmtOfStyle.msmts.map((msmtInfo) => {
 								return {
 									...msmtInfo,
 									value:
 										newOrderDetail.msmt[msmtInfo.id] ||
-										newOrderDetail.msmt.find((elem) => elem.id === msmtInfo.id)?.value ||
+										// newOrderDetail.msmt.find((elem) => elem.id === msmtInfo.id)?.value ||
 										'',
 								};
 						  })
 						: [];
+					newOrderDetail.msmt = [...modifiedMsmt];
 				}
 				/*--------------*/
 				if (newOrderDetail.stdSize) {
@@ -92,20 +108,16 @@ function OrderDetail(props) {
 						})
 					);
 				}
+				/*--------------*/
+				if (newOrderDetail.shippingInfo) {
+					setShippingInfo(newOrderDetail.shippingInfo);
+				}
 			}
 			newOrderDetail && setCurrentOrderDetail(newOrderDetail);
 			/*--------------*/
 		}
 	}, [orderID.id, orderList]);
 
-	/*--------------*/
-	if (loading || !orderList || !currentOrderDetail)
-		return (
-			<div className="c-order-detail">
-				<ComponentLoader />
-			</div>
-		);
-	/*--------------*/
 	// if (!orderList || !currentOrderDetail)
 	// 	return (
 	// 		<div className="c-order-detail">
@@ -122,32 +134,113 @@ function OrderDetail(props) {
 	 *  Description: handle tailor picked
 	 */
 	function onOrderDetailChange(pickedIndex) {
-		let updatedOffers = currentOrderDetail.offer.map((order, index) => {
+		let updatedOffers = currentOrderDetail.offers.map((order, index) => {
 			return { ...order, picked: index === pickedIndex };
 		});
 		if (updatedOffers) {
-			setCurrentOrderDetail({ ...currentOrderDetail, offer: [...updatedOffers] });
+			setCurrentOrderDetail({ ...currentOrderDetail, offers: [...updatedOffers] });
 		}
 	}
 	/************_END_****************/
-	const { designFiles, designStyle, fabric, msmt, notes } = currentOrderDetail;
+	/*********************************
+	 *  Description: handle shipping info change
+	 */
+	function handleShippingInfoChange(id, e) {
+		let value = e.target.value;
+		let updatedShippingInfo = shippingInfo.map((info) => {
+			return { ...info, value: id === info.id ? value : info.value };
+		});
+		setShippingInfo(updatedShippingInfo);
+	}
+	/************_END_****************/
+	/*********************************
+	 *  Description: handle order confirm
+	 */
+	function handleOrderConfirm() {
+		let offerVerify = !!currentOrderDetail.offers.find((offer) => offer.picked);
+		if (offerVerify && shippingInfo[0].value && shippingInfo[1].value && shippingInfo[2].value) {
+			setLoading(true);
+			let updatedCustomer = {
+				...currentCustomer,
+				shippingInfo,
+				orders: currentCustomer.orders.map((order) => {
+					if (order.id === currentOrderDetail.id) {
+						return { ...currentOrderDetail, shippingInfo, status: 'tailoring' };
+					} else {
+						return { ...order };
+					}
+				}),
+			};
+			if (updatedCustomer) {
+				setDocument('customers', updatedCustomer, updatedCustomer.id).then(() => {
+					setLoading(false);
+					onPopupStatusChange && onPopupStatusChange(true);
+				}).catch((error) => {
+					console.log(`error`, error);
+					setLoading(false);
+				});
+			}
+		} else {
+			setAlertOpen(true);
+		}
+	}
+	/************_END_****************/
+	/*********************************
+	 *  Description: handle order delete
+	 */
+	function handleOrderDelete() {
+		setIsPageLoad(true);
+		let updatedCustomerData = { ...currentCustomer };
+		let updatedOrders = updatedCustomerData.orders.filter(
+			(order) => order.id !== currentOrderDetail.id
+		);
+		if (updatedOrders) {
+			updatedCustomerData.orders = [...updatedOrders];
+			updateDocument('customers', updatedCustomerData.id, 'orders', updatedCustomerData.orders)
+				.then(() => {
+					setIsPageLoad(false);
+					history.push('/account/order');
+				})
+				.catch(() => {
+					setIsPageLoad(false);
+				});
+		}
+	}
+	/************_END_****************/
 
+	if (isPageLoad) return <PageLoader />;
+	/*--------------*/
+	if (loading || !orderList)
+		return (
+			<div className="c-order-detail">
+				<ComponentLoader />
+			</div>
+		);
+	/*--------------*/
+	if (!currentOrderDetail) {
+		return <Redirect to="/account" />;
+	}
+	const { designFiles, designStyle, fabric, msmt, notes } = currentOrderDetail;
 	return (
 		<div className="c-order-detail">
 			<div className="c-order-detail__header">
 				<Link to="/account">
-					<MediumButton text="back" />
+					<MediumButton text="view all orders" />
 				</Link>
 				<p className="c-order-detail__title">Order Detail</p>
 			</div>
 			<div className="c-order-detail__offer">
 				<TailorOffer
-					offerInfo={currentOrderDetail && currentOrderDetail.offers}
-					onTailorPick={onOrderDetailChange}
+					offerInfo={
+						currentOrderDetail?.status !== 'finding'
+							? currentOrderDetail.offers.filter((elem) => elem.picked)
+							: currentOrderDetail.offers
+					}
+					onTailorPick={currentOrderDetail?.status !== 'finding' && onOrderDetailChange}
 				/>
 			</div>
 			<div className="c-order-detail-summary">
-				<Accordion title="summary">
+				<Accordion title="summary" isActive={false}>
 					<div className="c-order-detail-summary__rqmt">
 						<RequirementSummary
 							designFiles={designFiles || null}
@@ -172,7 +265,11 @@ function OrderDetail(props) {
 			<div className="c-order-detail-shipping-info">
 				<Accordion title="shipping information">
 					<div className="c-order-detail-shipping-info__form">
-						<ShippingForm shippingInfo={shippingInfo} />
+						<ShippingForm
+							shippingInfo={shippingInfo}
+							onInputChange={handleShippingInfoChange}
+							disabled={currentOrderDetail.status !== 'finding'}
+						/>
 					</div>
 					<div className="c-order-detail-shipping-info__payment">
 						<PaymentInfo buttonText="Choose" />
@@ -180,13 +277,44 @@ function OrderDetail(props) {
 				</Accordion>
 			</div>
 			{currentOrderDetail.status === 'finding' && (
-				<div
-					className="c-order-detail__button"
-					onClick={onPopupStatusChange && (() => onPopupStatusChange(true))}
-				>
-					<MediumButton text="Place Order" isActive={true} />
+				<div className="c-order-detail__button">
+					<div className="-wrapper" onClick={() => setDeleteOpen(true)}>
+						<MediumButton text="Delete" />
+					</div>
+					<div className="-wrapper" onClick={handleOrderConfirm}>
+						<MediumButton text="Place Order" isActive />
+					</div>
 				</div>
 			)}
+			<MaterialAlert
+				open={alertOpen}
+				setOpen={setAlertOpen}
+				content="Please pick a tailor and provide your shipping information"
+				serverity="error"
+			/>
+			<Dialog
+				open={deleteOpen}
+				onClose={() => setDeleteOpen(false)}
+				aria-labelledby="alert-dialog-title"
+				aria-describedby="alert-dialog-description"
+			>
+				<DialogTitle id="alert-dialog-title">{'Do you want delete this order?'}</DialogTitle>
+				<DialogContent>
+					<DialogContentText id="alert-dialog-description">
+						Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, dolores
+						exercitationem. Minima ipsum nemo earum tenetur! Illum quae ea quibusdam similique
+						pariatur doloremque dolor consequatur, exercitationem ipsam perspiciatis at? Alias?
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<div className="-delete-disagree" onClick={() => setDeleteOpen(false)}>
+						<SmallButton2 text="Disagree" isActive />
+					</div>
+					<div className="-delete-agree" onClick={handleOrderDelete}>
+						<SmallButton2 text="Agree" />
+					</div>
+				</DialogActions>
+			</Dialog>
 		</div>
 	);
 }

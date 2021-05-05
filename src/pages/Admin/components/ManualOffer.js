@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import TextInput from '../../../components/Input/TextInput';
 import MediumButton from '../../../components/Button/MediumButton';
@@ -6,32 +6,48 @@ import MediumButton from '../../../components/Button/MediumButton';
 ManualOffer.propTypes = {
 	onConfirm: PropTypes.func,
 	onCancel: PropTypes.func,
+	isReset: PropTypes.bool,
 };
 
 ManualOffer.defaultProps = {
 	onConfirm: null,
 	onCancel: null,
+	isReset: false,
 };
 
 function ManualOffer(props) {
-	const { onConfirm, onCancel } = props;
+	const { onConfirm, onCancel, isReset } = props;
 	/*--------------*/
 	const [offers, setOffers] = useState(
 		new Array(3).fill({
 			name: '',
-			price: '',
+			wage: '',
 			duration: '',
 			stars: '',
+			picked: false,
 		})
 	);
-
+	/*--------------*/
+	useEffect(() => {
+		if (isReset) {
+			setOffers(
+				new Array(3).fill({
+					name: '',
+					wage: '',
+					duration: '',
+					stars: '',
+					picked: false,
+				})
+			);
+		}
+	}, [isReset]);
 	/*********************************
 	 *  Description:
 	 */
 	function onInputChange(changedIndex, field, e) {
 		e.preventDefault();
 		let updatedOffers = [...offers];
-		let changedOffer = updatedOffers[changedIndex];
+		let changedOffer = { ...updatedOffers[changedIndex] };
 		changedOffer[field] = e.target.value;
 		updatedOffers[changedIndex] = { ...changedOffer };
 		setOffers(updatedOffers);
@@ -45,8 +61,8 @@ function ManualOffer(props) {
 			<div className="c-admin-manual-offer__form">
 				{offers.map((offer, index) => {
 					return (
-						<div className="c-admin-manual-offer__input">
-							<p>{index === 0 ? `Tailor ${index + 1}`}</p>
+						<div key={index} className="c-admin-manual-offer__input">
+							<p>{index === 0 ? 'Real Tailor' : `Tailor ${index}`}</p>
 							<div className="--wrapper">
 								<TextInput
 									label="name"
@@ -54,12 +70,12 @@ function ManualOffer(props) {
 									onChange={(e) => onInputChange(index, 'name', e)}
 								/>
 								<TextInput
-									label="wage"
+									label="wage (x1000vnd)"
 									value={offer.wage}
 									onChange={(e) => onInputChange(index, 'wage', e)}
 								/>
 								<TextInput
-									label="duration"
+									label="duration (days)"
 									value={offer.duration}
 									onChange={(e) => onInputChange(index, 'duration', e)}
 								/>

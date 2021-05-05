@@ -1,8 +1,6 @@
-import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import test1 from '../../../assets/images/test1.jpg';
-import test2 from '../../../assets/images/test2.jpg';
-import test3 from '../../../assets/images/test3.jpg';
+import React, { Fragment } from 'react';
+import SmallButton1 from '../../../components/Button/SmallButton1';
 
 FabricTypeGallery.propTypes = {
 	fabricType: PropTypes.array,
@@ -35,24 +33,20 @@ function FabricTypeGallery(props) {
 		<ul className="c-fabric-type-gallery__list">
 			{fabricType.map((type, index) => {
 				return (
-					<li
-						key={index}
-						className="c-fabric-type-gallery__item"
-						onClick={() => onFabricTypeClick(index)}
-					>
-						{type.image && <img src={type.image} alt={type.id} />}
+					<li key={index} className="c-fabric-type-gallery__item">
+						<div
+							key={index}
+							className="c-fabric-type-gallery__image"
+							onClick={() => onFabricTypeClick(index)}
+						>
+							{type.image && <img src={type.image} alt={type.id} />}
+						</div>
+						<div className="c-fabric-type-gallery__btn" onClick={() => onFabricTypeClick(index)}>
+							<SmallButton1 text={type.name} isActive={type.active} />
+						</div>
 					</li>
 				);
 			})}
-			{/* <li className="c-fabric-type-gallery__item">
-				<img src={test1} alt="test" />
-			</li>
-			<li className="c-fabric-type-gallery__item">
-				<img src={test2} alt="test" />
-			</li>
-			<li className="c-fabric-type-gallery__item">
-				<img src={test3} alt="test" />
-			</li> */}
 		</ul>
 	);
 }

@@ -30,7 +30,6 @@
 	&__back {
 		@include size(10rem, auto);
 		@include font(fontSemiBold, 1.4rem);
-		margin-right: 4rem;
 		color: $primary-color;
 		text-transform: capitalize;
 	}

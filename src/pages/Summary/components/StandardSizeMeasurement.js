@@ -16,10 +16,12 @@ function StandardSizeMeasurement(props) {
 	const { standardSizeInfo, onStandardSizeClick } = props;
 
 	if (!standardSizeInfo) return <Fragment />;
+	console.log('standardSizeInfo :>> ', standardSizeInfo);
+	let currentActiveSize = standardSizeInfo.find(size => size.active);
 	return (
 		<div className="c-standard-size-msmt-sum">
 			<p className="c-standard-size-msmt-sum__title">Your Standard Size</p>
-			<Picker list={standardSizeInfo} onItemClick={onStandardSizeClick} />
+			<Picker list={currentActiveSize ? new Array(1).fill(currentActiveSize) : []} onItemClick={onStandardSizeClick} />
 		</div>
 	);
 }

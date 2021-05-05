@@ -11,7 +11,18 @@ function MeasurementPage() {
 	const location = useLocation();
 	const subpage = location.pathname.split('/')[2];
 	const [methods, setMethods] = useState(null);
-	const currentCustomer = useSelector((state) => state.common.currentCustomer);
+	const orderDetail = useSelector((state) => state.common.orderDetail);
+	/*--------------*/
+	const alertUser = (e) => {
+		e.preventDefault();
+		e.returnValue = '';
+	};
+	useEffect(() => {
+		window.addEventListener('beforeunload', alertUser);
+		return () => {
+			window.removeEventListener('beforeunload', alertUser);
+		};
+	}, []);
 	/*--------------*/
 	useEffect(() => {
 		/*--------------*/
@@ -42,7 +53,8 @@ function MeasurementPage() {
 		}
 	}
 	/************_END_****************/
-	if (!currentCustomer) return <Redirect to="/" />;
+	// if (!currentCustomer) return <Redirect to="/" />;
+	if (orderDetail.fabric.isOnline === null) return <Redirect to="/requirement" />
 	return (
 		<div className="l-measurement container">
 			<MeasurementOptions match={match} methods={methods} onMethodClick={handleMethodChange} />

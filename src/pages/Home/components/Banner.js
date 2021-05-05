@@ -1,10 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import banner from '../../../assets/images/banner-home.png';
+import bannerMobile from '../../../assets/images/banner-mobile.png';
 
-HomeBanner.propTypes = {};
 
-function HomeBanner(props) {
-	return <div className="c-home-banner"></div>;
+function HomeBanner() {
+	let isMobile = window.innerWidth < 769;
+	return (
+		<div className="c-home-banner">
+			{
+				isMobile ? <img src={bannerMobile} alt="banner" /> :
+				<img src={banner} alt="banner" />
+			}
+		</div>
+	);
 }
 
 export default HomeBanner;

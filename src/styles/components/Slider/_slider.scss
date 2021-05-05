@@ -17,14 +17,34 @@
 		right: 0;
 	}
 	&__content {
+		@include flex(center, center);
 		@include size(100%);
 		padding: 0 6rem;
 		overflow: hidden;
 		& .swiper-container {
 			border-radius: 20px;
+			min-width: 100%;
 		}
 		& .c-list-loader {
 			height: 100%;
+		}
+	}
+
+	@include xs {
+		@include flex(space-between, center);
+		@include size(100%, auto);
+		position: relative;
+		&__left,
+		&__right {
+			display: none;
+		}
+		&__content {
+			@include size(100%);
+			padding: 0 0;
+			overflow: hidden;
+			& > .swiper-container {
+				width: 100vw;
+			}
 		}
 	}
 }

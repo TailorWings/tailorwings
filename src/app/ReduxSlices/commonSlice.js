@@ -9,7 +9,7 @@ const commonSlice = createSlice({
 			designFiles: [],
 			designStyle: null,
 			fabric: {
-				isOnline: null,
+				isOnline: true,
 				type: null,
 				pattern: null,
 				price: null,
@@ -37,22 +37,20 @@ const commonSlice = createSlice({
 			state.patterns = action.payload ? [...action.payload] : null;
 		},
 		resetState(state) {
-			state = {
-				isLoginOpen: false,
-				orderDetail: {
-					designFiles: [],
-					designStyle: null,
-					fabric: {
-						isOnline: null,
-						type: null,
-						pattern: null,
-						price: null,
-					},
-					msmt: null,
-					stdSize: null,
+			state.isLoginOpen = false;
+			state.orderDetail = {
+				designFiles: [],
+				designStyle: null,
+				fabric: {
+					isOnline: true,
+					type: null,
+					pattern: null,
+					price: null,
 				},
-				patterns: null,
+				msmt: null,
+				stdSize: null,
 			};
+			state.patterns = null;
 		},
 	},
 });

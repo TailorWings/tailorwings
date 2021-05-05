@@ -60,4 +60,33 @@
 			}
 		}
 	}
+
+	@include xs {
+		@include size(100%, auto);
+		&__wrapper {
+			@include size(100%, 30.4rem);
+		}
+		&-preview {
+			&__list {
+				@include flex(flex-start, center, row, wrap);
+				margin-top: 1.6rem;
+				margin-right: -1.6rem;
+			}
+			&__item {
+				@include flex(center, center, column);
+				@include size(calc(50% - 1.6rem), auto);
+				padding: 0.8rem;
+				margin-right: 1.6rem;
+				margin-bottom: 1.6rem;
+				background: #ffffff;
+				box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+				border-radius: 20px;
+				& > img {
+					@include size(100%, 23rem);
+					border-radius: 20px;
+					margin-bottom: 1.1rem;
+				}
+			}
+		}
+	}
 }

@@ -10,7 +10,7 @@
 
 	/* Positioning */
 	position: fixed;
-	z-index: 1;
+	z-index: 12;
 	top: 0;
 	left: 0;
 	/* Others: transition & animations, ... */
@@ -18,7 +18,7 @@
 	&__content {
 		/* Display & Box Model */
 		// margin: auto;
-		@include size(25%, auto);
+		@include size(40%, auto);
 		max-height: 80%;
 		box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
 		border-radius: 35px;
@@ -68,8 +68,8 @@
 		/* Display & Box Model */
 		margin: 0 auto;
 		@include size(fit-content);
-		max-width: 80%;
-		max-height: 60%;
+		max-width: 40%;
+		max-height: 40%;
 		/* Color */
 
 		/* Text */
@@ -99,7 +99,8 @@
 		/* Color */
 
 		/* Text */
-		@include font(fontSemiBold, 1.8rem);
+		@include font(fontSemiBold, 1.6rem);
+		text-align: center;
 		/* Positioning */
 
 		/* Others: transition & animations, ... */
@@ -109,8 +110,8 @@
 		/* Display & Box Model */
 		margin-top: 2rem;
 		@include flex(center, center);
-		max-width: 22rem;
-		max-height: 4rem;
+		// max-width: 22rem;
+		// max-height: 4rem;
 		padding: 8px 16px;
 		text-align: center;
 		box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
@@ -119,14 +120,14 @@
 		/* Color */
 
 		/* Text */
-
+		text-transform: uppercase;
 		/* Positioning */
 
 		/* Others: transition & animations, ... */
 
 		& > img {
 			/* Display & Box Model */
-			@include size(18px);
+			// @include size(18px);
 			/* Color */
 
 			/* Text */
@@ -138,7 +139,7 @@
 
 		& > span {
 			/* Display & Box Model */
-			padding-left: 16px;
+			// padding-left: 16px;
 			/* Color */
 
 			/* Text */
@@ -162,6 +163,16 @@
 		/* Others: transition & animations, ... */
 	}
 
+	&__button {
+		.firebaseui-id-page-phone-sign-in-start {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 2;
+		}
+	}
+
 	&--open {
 		/* Display & Box Model */
 		@include flex(center, center);
@@ -173,13 +184,29 @@
 
 		/* Others: transition & animations, ... */
 	}
-}
 
-@keyframes open {
-	from {
-		opacity: 0;
+	@keyframes open {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
 	}
-	to {
-		opacity: 1;
+
+	@include xs {
+		&__content {
+			/* Display & Box Model */
+			// margin: auto;
+			@include size(90%, auto);
+			max-height: 90%;
+		}
+		&__picture {
+			max-width: 50%;
+			max-height: 40%;
+		}
+		&__user-photo {
+			@include size(50%);
+		}
 	}
 }

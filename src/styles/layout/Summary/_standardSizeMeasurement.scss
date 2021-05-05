@@ -6,9 +6,33 @@
 		margin-bottom: 2.4rem;
 	}
 	& .c-picker {
-		@include flex(space-between, center);
+		justify-content: flex-start;
 		&__item {
-			opacity: 0.5;
+			opacity: 1 !important;
+		}
+	}
+
+	@include xs {
+		padding: 0 0;
+		&__title {
+			@include textStyle(h3);
+			font-size: 2.4rem;
+			color: $medium-black-color;
+			margin-bottom: 2.4rem;
+			text-align: center;
+		}
+		& .c-picker {
+			@include flex(center, center);
+			&__item {
+				margin-bottom: 0;
+				margin-right: 0;
+				& .c-small-button-1 {
+					display: none;
+				}
+				& .c-small-button-1--active {
+					display: inline-block;
+				}
+			}
 		}
 	}
 }

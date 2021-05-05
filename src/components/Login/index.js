@@ -2,15 +2,15 @@
 import classNames from 'classnames';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyledFirebaseAuth } from 'react-firebaseui';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { controlLogin, setCurrentCustomer } from '../../app/ReduxSlices/commonSlice';
-import closeButton from '../../assets/icons/login-close.svg';
 import BagIcon from '../../assets/icons/black-bag.svg';
+import closeButton from '../../assets/icons/login-close.svg';
+import userIcon from '../../assets/icons/user.svg';
 import loginPicture from '../../assets/images/login-picture.png';
-import { fetchDocument, fetchDocumentRealtime, setDocument } from '../../services/API/firebaseAPI';
+import { fetchDocumentRealtime, setDocument } from '../../services/API/firebaseAPI';
 
 function Login() {
 	/*--------------*/
@@ -21,7 +21,7 @@ function Login() {
 		// We will display Google and Facebook as auth providers.
 		signInOptions: [
 			firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-			firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+			// firebase.auth.FacebookAuthProvider.PROVIDER_ID,
 			firebase.auth.PhoneAuthProvider.PROVIDER_ID,
 		],
 		callbacks: {
@@ -50,11 +50,12 @@ function Login() {
 					if (user) {
 						const { displayName, email, phoneNumber, photoURL, uid } = user;
 						fetchDocumentRealtime('customers', uid, (result) => {
-							if (result) {
+							if (result.id) {
 								let newCustomer = { ...result };
 								delete newCustomer.timestamp; // remove timestamp to fix bug
 								const action_setCurrentCustomer = setCurrentCustomer(newCustomer);
 								dispatch(action_setCurrentCustomer);
+								/*--------------*/
 							} else {
 								let newCustomer = {
 									id: uid,
@@ -146,22 +147,23 @@ function Login() {
 				<div className="c-login__detail">
 					<div className="c-login__picture">
 						{currentUser ? (
-							<img className="c-login__user-photo" src={currentUser.photoURL} alt="login" />
+							<img className="c-login__user-photo" src={currentUser.photoURL ? currentUser.photoURL : userIcon} alt="login" />
 						) : (
 							<img src={loginPicture} alt="login" />
 						)}
 					</div>
 					<span className="c-login__welcome">
-						{currentUser ? `Hello, ${currentUser.displayName} !` : 'Welcome!'}
+						{currentUser
+							? (currentUser.displayName ? `We're glad you are here, ${currentUser.displayName} !` : `We're glad you are here!`)
+							: 'Please sign-in to save your work!'}
 					</span>
 					<div className="c-login__button">
 						{isLoggin ? (
-							<Link to="/requirement" onClick={onLoginClose}>
+							<div onClick={onLoginClose}>
 								<button className="c-login__go-to-admin">
-									<img src={BagIcon} alt="icon-bage" />
-									<span>Continue shopping</span>
+									<span>continue</span>
 								</button>
-							</Link>
+							</div>
 						) : (
 							<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
 						)}

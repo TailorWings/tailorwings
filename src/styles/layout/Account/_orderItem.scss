@@ -1,8 +1,8 @@
 .c-order-item {
 	@include flex(flex-start, center);
-	width: calc(50% - 16.4rem);
-	min-width: calc(50% - 16.4rem);
-	margin-right: 16.4rem;
+	width: calc(50% - 8.4rem);
+	min-width: calc(50% - 8.4rem);
+	margin-right: 8.4rem;
 	margin-bottom: 2rem;
 	cursor: pointer;
 	&__image {
@@ -43,6 +43,56 @@
 			padding: 1.2rem 4rem;
 			text-transform: capitalize;
 			white-space: nowrap;
+		}
+	}
+
+	@include xs {
+		@include flex(flex-start, center);
+		width: 100%;
+		min-width: 100%;
+		margin-right: 0;
+		margin-bottom: 2rem;
+		cursor: pointer;
+		&__image {
+			@include size(13rem, 19rem);
+			background-color: $solid-gray-color;
+			border-radius: 20px;
+			margin-right: 1rem;
+			overflow: hidden;
+			position: relative;
+			& > img {
+				@include size(100%);
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				object-fit: cover;
+			}
+		}
+		&__content {
+			@include flex(center, center, column);
+			flex-grow: 1;
+		}
+
+		&-info {
+			@include flex(flex-start, center);
+			@include font(fontSemiBold, 1.4rem);
+			margin-bottom: 1.5rem;
+			&__price {
+				@include font(fontSemiBold, 1.8rem);
+				color: $solid-black-color;
+				text-align-last: left;
+				margin-bottom: 1.5rem;
+			}
+		}
+		&__button {
+			width: 100%;
+			padding: 0 2rem;
+			& > .c-medium-button {
+				padding: 1rem 2rem;
+				text-transform: capitalize;
+				white-space: nowrap;
+			}
 		}
 	}
 }

@@ -5,19 +5,22 @@ import rightArrowIcon from '../../assets/icons/slider-arrow-right.png';
 
 Slider.propTypes = {
 	swiperRef: PropTypes.object,
+	onSlideChange: PropTypes.func,
 };
 
 Slider.defaultProps = {
 	swiperRef: null,
+	onSlideChange: null
 };
 
 function Slider(props) {
-	const { swiperRef } = props;
+	const { swiperRef, onSlideChange } = props;
 	/*--------------*/
 	const goNext = () => {
 		if (swiperRef) {
 			if (swiperRef.current && swiperRef.current.swiper) {
 				swiperRef.current.swiper.slideNext();
+				onSlideChange && onSlideChange();
 			}
 		}
 	};
@@ -25,6 +28,7 @@ function Slider(props) {
 		if (swiperRef) {
 			if (swiperRef.current && swiperRef.current.swiper) {
 				swiperRef.current.swiper.slidePrev();
+				onSlideChange && onSlideChange();
 			}
 		}
 	};

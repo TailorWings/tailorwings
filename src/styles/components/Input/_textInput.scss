@@ -1,6 +1,7 @@
 .c-text-input {
 	@include flex(flex-start, flex-start, column-reverse);
 	@include textStyle(caption);
+
 	&__label {
 		cursor: text;
 		padding-bottom: 1rem;
@@ -9,13 +10,19 @@
 		transition: color 0.3s linear;
 	}
 
-	&__field {
+	&__wrapper {
 		@include size(100%, 4.5rem);
+		position: relative;
+	}
+
+	&__field {
+		@include size(100%);
 		@include textStyle(body);
 		padding: 1.5rem 2rem;
 		border: 2px solid $light-black-color;
 		border-radius: 10px;
 		transition: border-color 0.3s linear;
+
 		&:focus {
 			outline: none;
 			border-color: $primary-color;
@@ -41,6 +48,27 @@
 			}
 			opacity: 0.5;
 		}
+		&::-webkit-input-placeholder {
+			/* Edge */
+			opacity: 0.5;
+		}
+
+		&:-ms-input-placeholder {
+			/* Internet Explorer 10-11 */
+			opacity: 0.5;
+		}
+
+		&::placeholder {
+			opacity: 0.5;
+		}
+	}
+	&__suffix {
+		@include textStyle(body);
+		color: $light-black-color;
+		position: absolute;
+		top: 50%;
+		right: 2rem;
+		transform: translateY(-50%);
 	}
 	&__error {
 		color: red;

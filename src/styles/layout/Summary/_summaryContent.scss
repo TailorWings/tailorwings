@@ -13,7 +13,7 @@
 	}
 	&-note {
 		@include flex(center, center, column);
-		margin-bottom: 5rem;
+		margin: 5rem 0;
 		&__title {
 			margin-bottom: 3.2em;
 			& .c-title {
@@ -22,6 +22,39 @@
 		}
 		&__form {
 			@include size(100%, auto);
+		}
+	}
+
+	@include xs {
+		&-note {
+			margin: 5rem 0;
+			&__title {
+				& .c-title {
+					@include size(100%, auto);
+				}
+			}
+			&__form {
+				& .c-rqmt-note-form {
+					margin-right: 0;
+					margin-bottom: -1.5rem;
+					&__input {
+						width: 100%;
+						margin-right: 0;
+						margin-bottom: 1.5rem;
+					}
+				}
+			}
+		}
+		&__title {
+			@include flex(center, center);
+			margin: 3.2rem 0;
+		}
+		&__rqmt {
+			margin-bottom: 5.8rem;
+		}
+		&__msmt {
+			margin-bottom: 4rem;
+			padding-bottom: 6rem;
 		}
 	}
 }

@@ -31,4 +31,41 @@
 			letter-spacing: 0.5px;
 		}
 	}
+
+	@include xs {
+		@include size(100%, auto);
+		padding: 1.6rem;
+		&__title {
+			@include textStyle(h2);
+			margin-bottom: 1.4rem;
+			line-height: 102%;
+			letter-spacing: 0.5px;
+		}
+		&__subtitle {
+			@include textStyle(body);
+			font-size: 1.6rem;
+			line-height: 135%;
+			letter-spacing: 0.3px;
+			color: $medium-black-color;
+		}
+		&-big-center {
+			width: 100%;
+			&__title {
+				@include textStyle(bigTitle);
+				font-size: 3.2rem;
+				margin-bottom: 1.2rem;
+				line-height: 102%;
+				letter-spacing: 0.5px;
+			}
+		}
+		&-small-left {
+			text-align: left;
+			&__title {
+				@include textStyle(h3);
+				margin-bottom: 1.2rem;
+				line-height: 102%;
+				letter-spacing: 0.5px;
+			}
+		}
+	}
 }

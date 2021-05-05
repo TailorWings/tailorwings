@@ -4,4 +4,8 @@
 	&__title {
 		margin-bottom: 3.2rem;
 	}
+
+	@include xs {
+		width: 100%;
+	}
 }

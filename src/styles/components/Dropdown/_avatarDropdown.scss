@@ -6,6 +6,7 @@
 	outline: none;
 	position: relative;
 	cursor: pointer;
+	z-index: 10;
 	img {
 		border-radius: 50%;
 		position: absolute;
@@ -23,7 +24,7 @@
 		top: 110%;
 		right: 0;
 		border-radius: 5px;
-		background-color: rgba(0, 0, 0, 0.3);
+		background-color: rgba(0, 0, 0, 0.8);
 
 		visibility: hidden;
 		transition: all 0.2s;
@@ -49,5 +50,9 @@
 			transform: scale(1) translate(0, 0);
 			transition: all 0.2s;
 		}
+	}
+
+	@include xs {
+		@include size(100%);
 	}
 }

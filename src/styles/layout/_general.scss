@@ -12,4 +12,16 @@
 
 .content {
 	min-height: 100vh;
+	overflow: hidden;
+}
+
+// lib
+
+.MuiDialog-root {
+	.MuiTypography-h6 {
+		@include textStyle(h2)
+	}
+	.MuiTypography-body1 {
+		@include textStyle(body);
+	}
 }

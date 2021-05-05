@@ -4,6 +4,7 @@ import imageUploadIcon from '../../assets/icons/image-upload.svg';
 import SmallButton2 from '../Button/SmallButton2';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import MaterialAlert from '../MaterialAlert';
 
 MultipleFileUpload.propTypes = {
 	setFiles: PropTypes.func,
@@ -18,18 +19,25 @@ function MultipleFileUpload(props) {
 	/*--------------*/
 	const designFiles = useSelector((state) => state.common.orderDetail?.designFiles);
 	const [tempFiles, setTempFiles] = useState(designFiles ? [...designFiles] : []);
+	const [alertOpen, setAlertOpen] = useState(false);
 
 	const { getRootProps, getInputProps } = useDropzone({
 		accept: 'image/jpeg, image/png, image/jpg',
 		onDrop: (acceptedFiles) => {
-			setTempFiles([
+			let totalFile = [
 				...tempFiles,
 				...acceptedFiles.map((file) =>
 					Object.assign(file, {
 						preview: URL.createObjectURL(file),
 					})
 				),
-			]);
+			];
+			if (totalFile.length > 10) {
+				setAlertOpen(true);
+			}
+			setTempFiles(
+				totalFile.splice(0, 10)
+			);
 		},
 	});
 	/*--------------*/
@@ -91,6 +99,12 @@ function MultipleFileUpload(props) {
 				</div>
 			</div>
 			<ul className="c-multiple-file-upload-preview__list">{previewThumbs}</ul>
+			<MaterialAlert
+				open={alertOpen}
+				setOpen={setAlertOpen}
+				content="Please upload maximum 10 design images!"
+				serverity="error"
+			/>
 		</div>
 	);
 }

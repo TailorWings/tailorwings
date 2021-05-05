@@ -18,6 +18,10 @@ import { ONLINE_MEASUREMENTS, STANDARD_SIZES } from '../../../constants';
 import Picker from '../../../components/Picker';
 import RqmtNoteForm from '../../../components/Form/RqmtNoteForm';
 import ManualOffer from './ManualOffer';
+import MaterialAlert from '../../../components/MaterialAlert';
+import { updateDocument } from '../../../services/API/firebaseAPI';
+import { useSelector } from 'react-redux';
+import TailorOffer from '../../Account/components/TailorOffer';
 
 OrderManagement.propTypes = {
 	orders: PropTypes.object,
@@ -54,6 +58,7 @@ const ORDER_STATUS = ['finding', 'tailoring', 'finish'];
 
 function OrderManagement(props) {
 	const { orders } = props;
+	const customers = useSelector((state) => state.admin.customers);
 	/*--------------*/
 	const [orderStatus, setOrderStatus] = useState(
 		ORDER_STATUS.map((status, index) => {
@@ -67,8 +72,8 @@ function OrderManagement(props) {
 			return { name: size, active: false };
 		})
 	);
-	const [popShow, setPopupShow] = useState(false);
-
+	const [popupShow, setPopupShow] = useState(false);
+	const [alertOpen, setAlertOpen] = useState(false);
 	/*-------------------------------------------------------ORDER STATUS------------------------------------------------------------*/
 	/*--------------*/
 	const useStyles = makeStyles({
@@ -90,7 +95,7 @@ function OrderManagement(props) {
 		if (orders) {
 			switch (currentStatus) {
 				case 'finding':
-					let rowContent =
+					let rowContentFinding =
 						orders?.finding.length > 0
 							? orders.finding.map((order) => {
 									const { designFiles, customer, orderDate, offers } = order;
@@ -120,7 +125,7 @@ function OrderManagement(props) {
 											</TableRow>
 										</TableHead>
 										<TableBody>
-											{rowContent.map((row, index) => (
+											{rowContentFinding.map((row, index) => (
 												<TableRow key={index} onClick={() => onRowClick(index, 'finding')}>
 													<TableCell align="center">{row.customer}</TableCell>
 													<TableCell align="center">
@@ -140,8 +145,65 @@ function OrderManagement(props) {
 						</div>
 					);
 					break;
-				// case 'finding':
-				// 	break;
+				case 'tailoring':
+					let rowContentTailoring =
+						orders?.tailoring.length > 0
+							? orders.tailoring.map((order) => {
+									let pickedOffer = order.offers.find((offer) => offer.picked);
+									const { designFiles, customer, orderDate } = order;
+									return {
+										image: designFiles[0],
+										customer: customer.displayName || customer.displayName,
+										orderDate,
+										tailor: pickedOffer.name,
+										duration: pickedOffer.duration,
+										fabricNumber: 0,
+										wage: pickedOffer.wage,
+										price: 0
+									};
+							  })
+							: [];
+
+					render = (
+						<div className="c-admin-order__table">
+							<Paper className={classes.root}>
+								<TableContainer className={classes.container}>
+									<Table stickyHeader aria-label="sticky table">
+										<TableHead>
+											<TableRow>
+												{TABLE_HEAD_TAILORING.map((header, index) => {
+													return (
+														<TableCell key={index} align="center">
+															{header}
+														</TableCell>
+													);
+												})}
+											</TableRow>
+										</TableHead>
+										<TableBody>
+											{rowContentTailoring.map((row, index) => (
+												<TableRow key={index} onClick={() => onRowClick(index, 'tailoring')}>
+													<TableCell align="center">{row.customer}</TableCell>
+													<TableCell align="center">
+														<div className="image-wraper">
+															<img src={row.image} alt="design file" />
+														</div>
+													</TableCell>
+													<TableCell align="center">{row.orderDate}</TableCell>
+													<TableCell align="center">{row.tailor}</TableCell>
+													<TableCell align="center">{row.duration}</TableCell>
+													<TableCell align="center">{row.fabricNumber}</TableCell>
+													<TableCell align="center">{row.wage}</TableCell>
+													<TableCell align="center">{row.price}</TableCell>
+												</TableRow>
+											))}
+										</TableBody>
+									</Table>
+								</TableContainer>
+							</Paper>
+						</div>
+					);
+					break;
 				// case 'finding':
 				// 	break;
 
@@ -195,14 +257,12 @@ function OrderManagement(props) {
 				case 'finding':
 					btnRender = (
 						<div className="c-admin-order__info --btn">
-							{clickedOrder.offers.length < 1 && (
-								<div className="--wrapper" onClick={() => setPopupShow(true)}>
-									<MediumButton text="Manual Offer" isActive />
-								</div>
-							)}
-							<div className="--wrapper">
-								<MediumButton text="start tailor" isActive />
+							<div className="--wrapper" onClick={() => setPopupShow(true)}>
+								<MediumButton text="Manual Offer" isActive />
 							</div>
+							{/* <div className="--wrapper">
+								<MediumButton text="start tailor" isActive />
+							</div> */}
 						</div>
 					);
 					break;
@@ -257,6 +317,13 @@ function OrderManagement(props) {
 							) : (
 								<Fragment />
 							)}
+							{clickedOrder.offers ? (
+								<div className="c-order-detail__offer">
+									<TailorOffer offerInfo={clickedOrder.offers} />
+								</div>
+							) : (
+								<Fragment />
+							)}
 							{btnRender}
 						</div>
 					) : (
@@ -273,9 +340,35 @@ function OrderManagement(props) {
 	 *  Description: handle manual offer
 	 */
 	function handleManualOffer(offers) {
-		console.log('offers :>> ', offers);
-		let updateOffers = offers.filter((offer) => offer.name);
-		console.log('updateOffers :>> ', updateOffers);
+		let updatedOffers = offers.filter((offer) => offer.name);
+		if (
+			updatedOffers.filter(
+				(offer) => isNaN(offer.wage) || isNaN(offer.duration) || isNaN(offer.stars)
+			).length > 0
+		) {
+			setAlertOpen(true);
+		} else {
+			if (clickedOrder) {
+				let updatedCustomer = {
+					...customers.find((customer) => customer.id === clickedOrder.customer.id),
+				};
+				let updatedOrders = updatedCustomer.orders.map((order) => {
+					if (order.id === clickedOrder.id) {
+						return { ...order, offers: [...updatedOffers] };
+					} else {
+						return { ...order };
+					}
+				});
+
+				if (updatedOrders) {
+					updateDocument('customers', clickedOrder?.customer?.id, 'orders', updatedOrders)
+						.then(() => {
+							setPopupShow(false);
+						})
+						.catch((error) => {});
+				}
+			}
+		}
 	}
 	/************_END_****************/
 
@@ -309,9 +402,19 @@ function OrderManagement(props) {
 			</div>
 			{handleTableRender()}
 			{handleOrderInfoRender()}
-			<Popup show={popShow} setPopupShow={setPopupShow}>
-				<ManualOffer onConfirm={handleManualOffer} onCancel={() => setPopupShow(false)} />
+			<Popup show={popupShow} setPopupShow={setPopupShow}>
+				<ManualOffer
+					onConfirm={handleManualOffer}
+					onCancel={() => setPopupShow(false)}
+					isReset={!popupShow}
+				/>
 			</Popup>
+			<MaterialAlert
+				open={alertOpen}
+				setOpen={setAlertOpen}
+				content="Xin hãy nhập số (Please input numbers)!"
+				serverity="error"
+			/>
 		</div>
 	);
 }

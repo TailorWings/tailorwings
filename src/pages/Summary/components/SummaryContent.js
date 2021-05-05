@@ -21,8 +21,10 @@ import OnlineMeasurement from './OnlineMeasurement';
 import StandardSizeMeasurement from './StandardSizeMeasurement';
 import moment from 'moment';
 import { formatLink } from '../../../services/Functions/commonFunctions';
-import { resetState, setOrderDetail } from '../../../app/ReduxSlices/commonSlice';
+import { resetState, setOrderDetail, controlLogin } from '../../../app/ReduxSlices/commonSlice';
 import { useHistory } from 'react-router';
+import Popup from '../../../components/Popup';
+import OrderConfirmContent from '../../../components/Popup/OrderConfirmContent';
 
 SummaryContent.propTypes = {
 	msmtMethod: PropTypes.object,
@@ -32,9 +34,16 @@ SummaryContent.defaultProps = {
 	msmtMethod: null,
 };
 
-const TEST_ESTIMATE_SIZE_SUM = STANDARD_SIZES.map((size) => {
-	return { name: size, active: size.toLowerCase() === 'm' };
-});
+// const TEST_ESTIMATE_SIZE_SUM = STANDARD_SIZES.map((size) => {
+// 	return { name: size, active: size.toLowerCase() === 'm' };
+// });
+
+const NOTE_PLACEHOLDER = [
+	'Ex: I want the neck 5cm deeper in comparison to the model ...',
+	"Ex: I want a comfortable fit, but not too loose",
+	'Ex: My arm is quite big, I want to hide it',
+	"Ex: Let's stitch a margin as big as possible just incase my body become bigger",
+];
 
 function SummaryContent(props) {
 	const history = useHistory();
@@ -49,6 +58,8 @@ function SummaryContent(props) {
 			return { name: size, active: false };
 		})
 	);
+	const [popupShow, setPopupShow] = useState(false);
+	const [isConfirmLoading, setIsConfirmLoading] = useState(false);
 	const dispatch = useDispatch();
 	/*--------------*/
 	useEffect(() => {
@@ -96,9 +107,9 @@ function SummaryContent(props) {
 			case 'online':
 				renderComponent = <OnlineMeasurement measurements={onlineMsmt} />;
 				break;
-			case 'offline':
-				renderComponent = <OfflineMeasurement estimatedSize={TEST_ESTIMATE_SIZE_SUM} />;
-				break;
+			// case 'offline':
+			// 	renderComponent = <OfflineMeasurement estimatedSize={TEST_ESTIMATE_SIZE_SUM} />;
+			// 	break;
 			case 'standard-size':
 				renderComponent = (
 					<StandardSizeMeasurement standardSizeInfo={standardSizes} onStandardSizeClick={null} />
@@ -129,16 +140,29 @@ function SummaryContent(props) {
 	}
 	/************_END_****************/
 	/*********************************
+	 *  Description: on notes change
+	 */
+	function handleNextClick() {
+		if (currentCustomer) {
+			setPopupShow(true);
+		} else {
+			const action_controlLogin = controlLogin(true);
+			dispatch(action_controlLogin);
+		}
+	}
+	/************_END_****************/
+	/*********************************
 	 *  Description: handle form confirm
 	 */
-	function onConfirm() {
+	function onConfirm(phoneNumber) {
 		if (orderDetail) {
+			setIsConfirmLoading(true);
 			const { designStyle, fabric, msmt, stdSize } = orderDetail;
 			let orderDetailId = uuidv4();
 			let currentOrderDetail = {
 				id: orderDetailId,
 				status: 'finding',
-				orderDate: moment().format('L') + moment().format('LT'),
+				orderDate: moment().format('L'),
 				receiveDate: null,
 				finishDate: null,
 				offers: [],
@@ -146,10 +170,12 @@ function SummaryContent(props) {
 				designStyle,
 				fabric: {
 					...fabric,
-					pattern: {
-						id: fabric.pattern.id,
-						image: fabric.pattern.image,
-					},
+					pattern: fabric.pattern
+						? {
+								id: fabric.pattern?.id || null,
+								image: fabric.pattern?.image || null,
+						  }
+						: null,
 				},
 				msmt,
 				stdSize,
@@ -170,21 +196,39 @@ function SummaryContent(props) {
 						uploadOrderDetail.push(currentOrderDetail);
 						updateDocument('customers', currentCustomer.id, 'orders', uploadOrderDetail);
 						/*--------------*/
+						// const action_resetState = resetState();
+						// dispatch(action_resetState);
+						/*--------------*/
+						if (phoneNumber) {
+							updateDocument('customers', currentCustomer.id, 'phoneNumber', phoneNumber);
+						}
+						/*--------------*/
+						setIsConfirmLoading(false);
+						history.push(`/account/detail?id=${orderDetailId}`);
 						const action_resetState = resetState();
 						dispatch(action_resetState);
-						/*--------------*/
-						history.push(`/account/detail?id=${orderDetailId}`);
 					})
-					.catch((error) => {
-						console.log('error :>> ', error);
-					});
+					.catch((error) => {});
 			}
+		} else {
 		}
 	}
 	/************_END_****************/
 	if (!msmtMethod || !orderDetail) return <Fragment />;
 	return (
 		<div className="c-summary-content">
+			<div className="c-summary-content-note">
+				<div className="c-summary-content-note__title">
+					<Title title={NOTE_SUM_TITLE} subtitle={NOTE_SUM_SUBTITLE} />
+				</div>
+				<div className="c-summary-content-note__form">
+					<RqmtNoteForm
+						notes={notes}
+						onNoteChange={handleNoteChange}
+						placeHolder={NOTE_PLACEHOLDER}
+					/>
+				</div>
+			</div>
 			<div className="c-summary-content__title">
 				<Title title={RQMT_SUM_TITLE} subtitle={RQMT_SUM_SUBTITLE} />
 			</div>
@@ -197,19 +241,20 @@ function SummaryContent(props) {
 				/>
 			</div>
 			<div className="c-summary-content__msmt">{handleMeasurementInfoRender()}</div>
-			<div className="c-summary-content-note">
-				<div className="c-summary-content-note__title">
-					<Title title={NOTE_SUM_TITLE} subtitle={NOTE_SUM_SUBTITLE} />
-				</div>
-				<div className="c-summary-content-note__form">
-					<RqmtNoteForm notes={notes} onNoteChange={handleNoteChange} />
-				</div>
-			</div>
+
 			<ProcessAction
 				backLink={`/measurement/${msmtMethod.method}`}
-				nextText="Find tailor"
-				onNextClick={onConfirm}
+				nextText="Next"
+				onNextClick={handleNextClick}
 			/>
+			<Popup show={popupShow} setPopupShow={setPopupShow}>
+				<OrderConfirmContent
+					setPopupShow={setPopupShow}
+					onFindTailor={onConfirm}
+					isPhoneRequired={!!!currentCustomer?.phoneNumber}
+					isLoading={isConfirmLoading}
+				/>
+			</Popup>
 		</div>
 	);
 }

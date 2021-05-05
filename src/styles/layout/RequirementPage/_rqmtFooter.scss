@@ -7,4 +7,11 @@
 		line-height: 135%;
 		color: $light-black-color;
 	}
+
+	@include xs {
+		&__text {
+			font-size: 1.3rem;
+			padding-right: 10%;
+		}
+	}
 }

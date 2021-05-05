@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
-import 'swiper/swiper.scss';
+// import 'swiper/swiper.scss';
 
 MultirowSwiper.propTypes = {};
 

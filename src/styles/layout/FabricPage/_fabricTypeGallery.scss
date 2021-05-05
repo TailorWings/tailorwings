@@ -1,27 +1,50 @@
 .c-fabric-type-gallery {
+	@include flex(center, center);
 	&__list {
-		@include flex(space-between, center, row, wrap);
+		@include flex(flex-start, center, row, wrap);
 		margin-right: -1.6rem;
 		margin-bottom: -1.6rem;
 	}
 	&__item {
 		@include size(calc(33.33% - 1.6rem), auto);
 		margin-right: 1.6rem;
-		margin-bottom: 1.6rem;
-
+		margin-bottom: 4rem;
+	}
+	&__image {
+		@include size(100%, 0);
 		position: relative;
-		padding-bottom: calc(33.33% - 1.6rem);
-		height: 0;
+		padding-bottom: 100%;
+		margin-bottom: 8px;
 
 		background-color: $solid-gray-color;
 		border-radius: 20px;
 		cursor: pointer;
+		overflow: hidden;
 		& > img {
 			position: absolute;
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
 			@include size(100%);
+		}
+	}
+	&__btn {
+		@include flex(center, center);
+		& .c-small-button-1 {
+			width: fit-content;
+			border-radius: 40px;
+		}
+	}
+
+	@include xs {
+		@include flex(center, center);
+		&__list {
+			@include flex(flex-start, center, row, wrap);
+			margin-right: -1.6rem;
+			margin-bottom: -1.6rem;
+		}
+		&__item {
+			@include size(calc(50% - 1.6rem), auto);
 		}
 	}
 }

@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 import Picker from '../../../components/Picker';
 import ProcessAction from '../../../components/ProcessAction';
+import standardSizeImg from '../../../assets/images/standard-size.jpg';
 
 StandardSizeMethod.propTypes = {
 	standardSizes: PropTypes.array,
@@ -25,7 +26,9 @@ function StandardSizeMethod(props) {
 			<div className="c-msmt-standard-size__selection">
 				<Picker list={standardSizes} onItemClick={onSizeClick} />
 			</div>
-			<div className="c-msmt-standard-size__image"></div>
+			<div className="c-msmt-standard-size__image">
+				<img src={standardSizeImg} alt="standard-size"/>
+			</div>
 			<ProcessAction
 				backLink="/fabric"
 				formID="msmt-form"

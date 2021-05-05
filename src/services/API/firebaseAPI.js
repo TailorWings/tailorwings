@@ -12,7 +12,6 @@ export const fetchAllRealTime = (collection, callback) => {
 			result.push(data);
 			// }
 		});
-		console.log('result :>> ', result);
 		callback && callback(result);
 	});
 };
@@ -118,6 +117,20 @@ export const updateDocument = (collection, docName, field, value) => {
 			// The document probably doesn't exist.
 		});
 };
+
+export const deleteDocument = (collection, docName) => {
+	return database
+		.collection(collection)
+		.doc(docName)
+		.delete()
+		.then(() => {
+			console.log('Document successfully deleted!');
+		})
+		.catch((error) => {
+			console.error('Error removing document: ', error);
+		});
+};
+
 // File upload
 // Upload file and metadata to the object 'images/mountains.jpg'
 export const fileUpload = (file, childRef) => {

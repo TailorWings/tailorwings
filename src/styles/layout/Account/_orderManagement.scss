@@ -12,4 +12,21 @@
 	&__dropdown {
 		margin-bottom: 2rem;
 	}
+
+	@include xs {
+		padding: 2rem;
+		&__title {
+			@include font(fontBold, 3.2rem);
+			color: $solid-black-color;
+			margin-bottom: 2.5rem;
+			text-align: center;
+		}
+		&__finding {
+			@include size(100%, auto);
+			margin-bottom: 5.6rem;
+		}
+		&__dropdown {
+			margin-bottom: 2rem;
+		}
+	}
 }

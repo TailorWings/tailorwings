@@ -16,12 +16,12 @@ function HomePage() {
 	 *  Description: hanle start
 	 */
 	function handleStart() {
-		if (currentCustomer) {
-			history.push('/requirement');
-		} else {
-			const action_controlLogin = controlLogin(true);
-			dispatch(action_controlLogin);
-		}
+		history.push('/requirement');
+		// if (currentCustomer) {
+		// } else {
+		// 	const action_controlLogin = controlLogin(true);
+		// 	dispatch(action_controlLogin);
+		// }
 	}
 	/************_END_****************/
 

@@ -3,13 +3,36 @@
 	@include size(100%, auto);
 	margin-bottom: 6.1rem;
 	&__title {
+		@include flex(center, center);
+		width: 100%;
 		margin: 3.2rem 0 4.8rem;
 	}
-	&__gallery {
+	&__wrapper {
 		@include size(100%, auto);
-		margin-bottom: 3.1rem;
+		@include flex(center, flex-start);
+	}
+	&__gallery {
+		@include size(calc(70% - 1.6rem), fit-content);
+		margin-right: 1.6rem;
 	}
 	&__tooltip {
-		@include size(100%, auto);
+		@include size(30%, 100%);
+		& .c-tooltip {
+			height: 100%;
+		}
+	}
+
+	@include xs {
+		&__wrapper {
+			@include size(100%, auto);
+			@include flex(center, flex-start, column);
+		}
+		&__gallery {
+			@include size(100%, fit-content);
+			margin-right: 1.6rem;
+		}
+		&__tooltip {
+			@include size(100%, 100%);
+		}
 	}
 }

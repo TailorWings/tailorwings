@@ -4,14 +4,18 @@ import TextInput from '../Input/TextInput';
 
 ShippingForm.propTypes = {
 	shippingInfo: PropTypes.array,
+	onInputChange: PropTypes.func,
+	disabled: PropTypes.bool,
 };
 
 ShippingForm.defaultProps = {
 	shippingInfo: null,
+	onInputChange: null,
+	disabled: false,
 };
 
 function ShippingForm(props) {
-	const { shippingInfo } = props;
+	const { shippingInfo, onInputChange, disabled } = props;
 
 	if (!shippingInfo) return <Fragment />;
 	return (
@@ -20,7 +24,12 @@ function ShippingForm(props) {
 				{shippingInfo.map((info, index) => {
 					return (
 						<div key={index} className="c-shipping-form__input">
-							<TextInput label={info.label} content={info.content} />
+							<TextInput
+								label={info.label}
+								value={info.value}
+								onChange={(e) => onInputChange(info.id, e)}
+								disabled={disabled}
+							/>
 						</div>
 					);
 				})}

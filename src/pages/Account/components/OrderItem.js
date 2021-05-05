@@ -12,7 +12,6 @@ OrderItem.propTypes = {
 OrderItem.defaultProps = {
 	info: null,
 };
-
 function OrderItem(props) {
 	const { info } = props;
 	/*--------------*/
@@ -31,8 +30,8 @@ function OrderItem(props) {
 							</div>
 							<div className="c-order-item__button">
 								<MediumButton
-									text={`${info.offer ? info.offer.length : 0} tailor offer${
-										info.offer ? 's' : ''
+									text={`${info.offers ? info.offers.length : 0} tailor offer${
+										info.offers.length > 1 ? 's' : ''
 									}`}
 									isActive={true}
 								/>
@@ -42,7 +41,7 @@ function OrderItem(props) {
 					break;
 
 				case 'tailoring':
-					let tailoringPickedOffer = info.offer.find((item) => item.picked) || null;
+					let tailoringPickedOffer = info.offers.find((item) => item.picked) || null;
 					renderElement = (
 						<div className="c-order-item__content">
 							<div className="c-order-item-info">
@@ -50,7 +49,7 @@ function OrderItem(props) {
 							</div>
 							<div className="c-order-item-info">
 								<Label
-									value={tailoringPickedOffer && tailoringPickedOffer.tailor.name}
+									value={tailoringPickedOffer && tailoringPickedOffer.name}
 									title="Tailor"
 									color="secondary"
 								/>

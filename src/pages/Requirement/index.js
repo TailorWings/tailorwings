@@ -8,17 +8,13 @@ import RqmtDesignStyle from './components/RqmtDesignStyle';
 import RqmtDesignUpload from './components/RqmtDesignUpload';
 import RqmtFooter from './components/RqmtFooter';
 
-function RequirementPage(props) {
+function RequirementPage() {
 	const history = useHistory();
 	const currentCustomer = useSelector((state) => state.common.currentCustomer);
 	const orderDetail = useSelector((state) => state.common.orderDetail);
 	const dispatch = useDispatch();
 	/*--------------*/
 	const [alertOpen, setAlertOpen] = useState(false);
-	const [alertInfo, setAlertInfo] = useState({
-		serverity: 'error',
-		content: 'Please select a style and upload at least an image of your design!',
-	});
 	const [designFiles, setDesignFiles] = useState([]);
 	const [styles, setStyles] = useState(
 		STYLES_OF_CLOTHE.map((style) => {
@@ -43,6 +39,17 @@ function RequirementPage(props) {
 			setDesignFiles([...orderDetail.designFiles]);
 		}
 	}, [orderDetail]);
+	/*--------------*/
+	const alertUser = (e) => {
+		e.preventDefault();
+		e.returnValue = '';
+	};
+	useEffect(() => {
+		window.addEventListener('beforeunload', alertUser);
+		return () => {
+			window.removeEventListener('beforeunload', alertUser);
+		};
+	}, []);
 	/*********************************
 	 *  Description: Handle styles click and change state of styles
 	 */
@@ -75,7 +82,7 @@ function RequirementPage(props) {
 		}
 	}
 	/************_END_****************/
-	if (!currentCustomer) return <Redirect to="/" />;
+	// if (!currentCustomer) return <Redirect to="/" />;
 	return (
 		<section className="l-requirement container">
 			<RqmtDesignStyle styles={styles} onStyleClick={handleStylesStatus} />
@@ -84,8 +91,8 @@ function RequirementPage(props) {
 			<MaterialAlert
 				open={alertOpen}
 				setOpen={setAlertOpen}
-				content={alertInfo.content}
-				serverity={alertInfo.serverity}
+				content="Please select a style and upload at least an image of your design!"
+				serverity="error"
 			/>
 		</section>
 	);

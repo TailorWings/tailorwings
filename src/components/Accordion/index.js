@@ -5,16 +5,18 @@ import classNames from 'classnames';
 
 Accordion.propTypes = {
 	title: PropTypes.string,
+	isActive: PropTypes.bool,
 };
 
 Accordion.defaultProps = {
 	title: 'title',
+	isActive: true
 };
 
 function Accordion(props) {
-	const { title } = props;
+	const { title, isActive } = props;
 	/*--------------*/
-	const [active, setActive] = useState(true);
+	const [active, setActive] = useState(isActive);
 	const contentRef = useRef(null);
 
 	useEffect(() => {

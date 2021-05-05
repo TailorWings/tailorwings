@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import PageLoader from './components/PageLoader';
 import './styles/main.scss';
@@ -8,6 +8,7 @@ import TestForm from './pages/TestForm';
 import TestDnDUpload from './pages/TestDnDUpload';
 import { fetchAll } from './services/API/firebaseAPI';
 import MultirowSwiper from './pages/TestMultiRow';
+import TestExcel from './pages/TestExcel';
 
 const HomePage = React.lazy(() => import('./pages/Home'));
 const RequirementPage = React.lazy(() => import('./pages/Requirement'));
@@ -19,9 +20,7 @@ const AdminPage = React.lazy(() => import('./pages/Admin'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFound'));
 
 function App() {
-	// useEffect(() => {
-	// 	fetchAll('testPatterns').then((result) => console.log('result :>> ', result));
-	// }, []);
+	const location = useLocation();
 	return (
 		<div className="App">
 			<Suspense fallback={<PageLoader />}>
@@ -62,12 +61,14 @@ function App() {
 						{/* TEST SWIPER */}
 						<Route path="/test-swiper" component={() => <MultirowSwiper />} />
 
+						{/* TEST SWIPER */}
+						<Route path="/test-excel" component={() => <TestExcel />} />
+
 						{/* NOT FOUND */}
 						<Route component={NotFoundPage} />
 					</Switch>
 				</div>
-
-				<Footer />
+				{location.pathname === '/' && <Footer />}
 			</Suspense>
 		</div>
 	);

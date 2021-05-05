@@ -46,9 +46,9 @@ function AccountSidebar(props) {
 					);
 				})}
 			</div>
-			<div className="c-account-sidebar__sign-out">
+			{/* <div className="c-account-sidebar__sign-out">
 				<MediumButton text="SIGN OUT" />
-			</div>
+			</div> */}
 		</div>
 	);
 }

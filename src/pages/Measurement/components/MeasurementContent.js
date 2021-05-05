@@ -1,17 +1,16 @@
-import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Route, Switch, useHistory } from 'react-router-dom';
-// import OfflineMethod from './OfflineMethod';
-import OnlineMethod from './OnlineMethod';
-import StandardSizeMethod from './StandardSizeMethod';
-import { ONLINE_MEASUREMENTS, STANDARD_SIZES } from '../../../constants';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { setOrderDetail } from '../../../app/ReduxSlices/commonSlice';
 import MaterialAlert from '../../../components/MaterialAlert';
 import Popup from '../../../components/Popup';
 import OnlineMsmtContent from '../../../components/Popup/OnlineMsmtContent';
+import { ONLINE_MEASUREMENTS, STANDARD_SIZES } from '../../../constants';
 import { updateDocument } from '../../../services/API/firebaseAPI';
-import { removeWhiteSpace } from '../../../services/Functions/commonFunctions';
+// import OfflineMethod from './OfflineMethod';
+import OnlineMethod from './OnlineMethod';
+import StandardSizeMethod from './StandardSizeMethod';
 
 MeasurementContent.propTypes = {
 	match: PropTypes.object,
@@ -22,25 +21,6 @@ MeasurementContent.defaultProps = {
 	match: null,
 	measurements: null,
 };
-
-// const TEST_APMT_INFO = [
-// 	{
-// 		label: 'Name',
-// 		value: '',
-// 	},
-// 	{
-// 		label: 'Phone number',
-// 		value: '',
-// 	},
-// 	{
-// 		label: 'Address',
-// 		value: '',
-// 	},
-// 	{
-// 		label: 'Your best time',
-// 		value: '',
-// 	},
-// ];
 
 function MeasurementContent(props) {
 	const { match } = props;
@@ -148,7 +128,16 @@ function MeasurementContent(props) {
 		const action_setOrderDetail = setOrderDetail({ ...orderDetail, msmt: { ...value } });
 		dispatch(action_setOrderDetail);
 		/*--------------*/
-		setPopupShow(true);
+		if (currentCustomer) {
+			setPopupShow(true);
+		} else {
+			history.push(`/summary?method=online`);
+		}
+		// if (JSON.stringify(value) !== JSON.stringify(currentCustomer.msmt)) {
+		// 	setPopupShow(true);
+		// } else {
+		// 	history.push(`/summary?method=online`);
+		// }
 	}
 	/************_END_****************/
 	/*********************************
@@ -173,9 +162,12 @@ function MeasurementContent(props) {
 	function handleMsmtSaving(isSave) {
 		if (isSave) {
 			if (currentCustomer) {
-				if (currentCustomer?.msmt?.toString() !== orderDetail.msmt.toString()) {
-					updateDocument('customers', currentCustomer.id, 'msmt', orderDetail.msmt);
-				}
+				// if (currentCustomer?.msmt?.toString() !== orderDetail.msmt.toString()) {
+				console.log('currentCustomer.msmt :>> ', currentCustomer.msmt);
+				console.log('orderDetail.msmt :>> ', orderDetail.msmt);
+				let updatedMsmt = { ...currentCustomer.msmt, ...orderDetail.msmt };
+				updateDocument('customers', currentCustomer.id, 'msmt', updatedMsmt);
+				// }
 			}
 		}
 		history.push(`/summary?method=online`);
@@ -222,8 +214,9 @@ function MeasurementContent(props) {
 						<OnlineMethod
 							match={match}
 							measurements={onlineMsmt}
+							designStyle={orderDetail.designStyle}
 							onMeasurementConfirm={handleOnlineConfirm}
-							onGetLatestMsmt={handleGetLatestMsmt}
+							onGetLatestMsmt={currentCustomer?.msmt && handleGetLatestMsmt}
 						/>
 					)}
 					exact

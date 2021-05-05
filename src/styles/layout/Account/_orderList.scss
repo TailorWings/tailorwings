@@ -1,5 +1,9 @@
 .c-order-list {
-	@include flex(flex-start, flex-start, row, wrap);
+	@include flex(flex-start, center, row, wrap);
 	padding-top: 2rem;
-	margin-right: -16.4rem;
+	margin-right: 0;
+
+	@include xs {
+		// width: 100%;
+	}
 }

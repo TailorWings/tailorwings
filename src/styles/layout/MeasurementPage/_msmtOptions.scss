@@ -13,4 +13,18 @@
 			margin-right: 2rem;
 		}
 	}
+
+	@include xs {
+		&__title {
+			padding: 0 0;
+		}
+		&-method {
+			margin-bottom: 2rem;
+			margin-right: -0.4rem;
+			&__item {
+				width: calc(50% - 0.4rem);
+				margin-right: 0.4rem;
+			}
+		}
+	}
 }

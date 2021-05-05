@@ -5,15 +5,17 @@ import TextInput from '../Input/TextInput';
 RqmtNoteForm.propTypes = {
 	notes: PropTypes.array,
 	onNoteChange: PropTypes.func,
+	placeHolder: PropTypes.array,
 };
 
 RqmtNoteForm.defaultProps = {
 	notes: null,
 	onNoteChange: null,
+	placeHolder: null,
 };
 
 function RqmtNoteForm(props) {
-	const { notes, onNoteChange } = props;
+	const { notes, onNoteChange, placeHolder } = props;
 
 	if (!notes) return <Fragment />;
 	return (
@@ -26,6 +28,7 @@ function RqmtNoteForm(props) {
 								label={`Note ${index + 1}`}
 								value={note}
 								onChange={(e) => onNoteChange(e, index)}
+								placeHolder={placeHolder ? placeHolder[index] : null}
 							/>
 						) : (
 							<TextInput

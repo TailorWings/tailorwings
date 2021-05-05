@@ -13,7 +13,7 @@ function LargeButton(props) {
 	const { text } = props;
 	return (
 		<div className="c-large-button">
-			<p className="c-large-button__text">{text}</p>
+			<span className="c-large-button__text">{text}</span>
 		</div>
 	);
 }

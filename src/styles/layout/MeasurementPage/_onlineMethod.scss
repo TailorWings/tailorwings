@@ -6,21 +6,52 @@
 			@include flex(center, center);
 			margin-bottom: 2rem;
 			&__item {
-				@include size(85.4rem, 48rem);
+				@include size(60%, auto);
 				margin: 0 5.1rem;
 				background-color: $subthird-color;
+				border-radius: 20px;
+				overflow: hidden
 			}
 		}
 		&-bottom {
-			@include flex(space-between, center);
+			@include flex(center, center);
 			padding: 0 8.2rem;
 			&__count {
 				@include font(fontSemiBold, 1.8rem);
 				color: $solid-black-color;
+				text-transform: capitalize;
 			}
 		}
 	}
 	&-input {
 		margin-bottom: 6.4rem;
+	}
+
+	@include xs {
+		padding-bottom: 9rem;
+		&-guideline {
+			margin-bottom: 6.6rem;
+			&-slider {
+				@include flex(center, center);
+				margin-bottom: 2rem;
+				&__item {
+					@include size(100%, auto);
+					margin: 0 0;
+					background-color: $subthird-color;
+				}
+			}
+			&-bottom {
+				@include flex(space-between, center);
+				padding: 0 0;
+				text-align: center;
+				&__count {
+					@include font(fontSemiBold, 1.8rem);
+					color: $solid-black-color;
+				}
+			}
+		}
+		&-input {
+			margin-bottom: 6.4rem;
+		}
 	}
 }

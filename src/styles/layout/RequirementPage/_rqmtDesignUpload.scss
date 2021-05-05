@@ -1,4 +1,8 @@
 .c-rqmt-design-upload {
 	@include size(84.7rem, auto);
 	margin: 0 auto 4.8rem;
+	
+	@include xs {
+		@include size(100%, auto);
+	}
 }

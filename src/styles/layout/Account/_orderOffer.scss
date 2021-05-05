@@ -1,5 +1,16 @@
 .c-tailor-offer {
 	@include flex(flex-start, flex-start, column);
+	&.--no-offer {
+		width: 100%;
+	}
+	&__annouce {
+		@include size(100%);
+		@include textStyle(h4);
+		padding: 5rem 8rem;
+		border-radius: 20px;
+		border: 2px dashed $primary-color;
+		text-align: center;
+	}
 	&__item {
 		@include flex(space-between, center);
 		@include size(100%, auto);
@@ -54,6 +65,75 @@
 		@include size(19.7rem, auto);
 		& > div {
 			text-transform: capitalize;
+		}
+	}
+
+	@include xs {
+		width: 100%;
+		@include flex(flex-start, flex-start, row, wrap);
+		overflow: hidden;
+		margin-right: -0.5rem;
+		margin-bottom: -0.5rem;
+		padding: 1rem;
+		&__annouce {
+			padding: 1rem 4rem;
+			border-radius: 20px;
+			border: 2px dashed $primary-color;
+			text-align: center;
+		}
+		&__item {
+			@include size(calc(50% - 0.5rem), auto);
+			@include flex(space-between, center, column);
+			border-radius: 20px;
+			box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+			padding: 1rem;
+			margin-right: 0.5rem;
+			margin-bottom: 0.5rem;
+		}
+		&__index {
+			display: none;
+		}
+		&-tailor {
+			@include flex(center, center, column);
+			@include size(100%, auto);
+			margin-bottom: 1rem;
+			&__name {
+				@include size(100%, auto);
+				text-align: center;
+			}
+			& > .c-star {
+				width: 100%;
+				@include flex(center, center);
+				margin-right: -0.6rem;
+			}
+		}
+		&-estimate {
+			@include flex(center, center);
+			@include size(100%, auto);
+			@include font(fontSemiBold, 1.4rem);
+			color: $secondary-color;
+			margin-bottom: 1rem;
+			&__title {
+				margin-right: 1rem;
+			}
+			&__value {
+				padding: 0.5rem;
+				background: #d5f2ea;
+				border-radius: 4px;
+			}
+		}
+		&__price {
+			@include size(100%, auto);
+			@include font(fontSemiBold, 1.8rem);
+			color: $medium-black-color;
+			text-align: center;
+			margin-bottom: 1rem;
+		}
+		&__button {
+			@include size(100%, auto);
+			& > div {
+				text-transform: capitalize;
+			}
 		}
 	}
 }

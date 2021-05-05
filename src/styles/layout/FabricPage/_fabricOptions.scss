@@ -1,0 +1,86 @@
+.c-fabric-options {
+	@include flex(center, center, column);
+	@include size(100%, auto);
+	padding: 2rem 0;
+    margin: 5rem 0;
+	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+	border-radius: 30px;
+	&__title {
+		@include textStyle(h2);
+		margin-bottom: 2rem;
+		color: $solid-black-color;
+		& > span {
+			line-height: 100%;
+		}
+	}
+	&__options {
+		@include flex(center, center);
+		@include size(100%, auto);
+	}
+	&__option {
+		@include flex(center, center, column);
+		@include size(calc(45% - 1.6rem), auto);
+		padding: 1rem 1rem;
+		min-height: 5rem;
+		margin-right: 1.6rem;
+		color: $primary-color;
+
+		border-radius: 20px;
+		border: 2px solid $primary-color;
+		cursor: pointer;
+		@include transition($t);
+		& > span {
+			@include textStyle(h3);
+			text-align: center;
+			margin-bottom: 1rem;
+		}
+		& > p {
+			@include textStyle(caption);
+            font-size: 1.4rem;
+			text-align: center;
+		}
+		&.--active {
+			background: $primary-color;
+			color: white;
+			@include transition($t);
+		}
+	}
+
+	@include xs {
+		@include flex(center, center, column);
+		@include size(100%, auto);
+		padding: 2rem;
+		background-color: white;
+		box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+		border-radius: 30px;
+		&__title {
+			@include textStyle(h3);
+			margin: 0 20px;
+			margin-bottom: 20px;
+			color: $solid-black-color;
+			text-align: center;
+		}
+		&__option {
+			@include flex(center, center, column);
+			@include size(calc(50% - 0.4rem), auto);
+			padding: 0 2rem;
+			min-height: 15rem;
+			margin-right: 0.4rem;
+			color: $primary-color;
+	
+			border-radius: 20px;
+			border: 2px solid $primary-color;
+			cursor: pointer;
+			@include transition($t);
+			& > span {
+				@include textStyle(h3);
+				text-align: center;
+				margin-bottom: 2rem;
+			}
+			& > p {
+				@include textStyle(caption);
+				text-align: center;
+			}
+		}
+	}
+}

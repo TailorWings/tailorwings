@@ -37,7 +37,7 @@ function MaterialAlert(props) {
 		<div className="c-material-alert">
 			<Snackbar
 				open={open}
-				autoHideDuration={3000}
+				autoHideDuration={2000}
 				onClose={handleClose}
 				anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
 			>

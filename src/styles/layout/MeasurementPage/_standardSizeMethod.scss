@@ -12,7 +12,7 @@
 		margin-bottom: 4.8rem;
 	}
 	&__image {
-		@include size(100%, 50rem);
+		@include size(100%, auto);
 		background-color: $solid-gray-color;
 		margin-bottom: 6.4rem;
 	}
