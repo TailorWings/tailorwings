@@ -9,30 +9,33 @@
 	}
 	&__wrapper {
 		@include size(100%, auto);
-		@include flex(center, flex-start);
+		// @include flex(center, flex-start);
+		@include flex(center, flex-start, column);
 	}
 	&__gallery {
-		@include size(calc(70% - 1.6rem), fit-content);
-		margin-right: 1.6rem;
+		@include size(100%, fit-content);
+		// margin-right: 1.6rem;
 	}
 	&__tooltip {
-		@include size(30%, 100%);
+		@include size(100%);
 		& .c-tooltip {
 			height: 100%;
 		}
 	}
 
 	@include xs {
+		&__title {
+			@include flex(center, center);
+			width: 100%;
+			margin: 2rem 0 2rem;
+		}
 		&__wrapper {
 			@include size(100%, auto);
-			@include flex(center, flex-start, column);
+			
 		}
 		&__gallery {
 			@include size(100%, fit-content);
-			margin-right: 1.6rem;
-		}
-		&__tooltip {
-			@include size(100%, 100%);
+			// margin-right: 1.6rem;
 		}
 	}
 }

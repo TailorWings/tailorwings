@@ -90,16 +90,17 @@ function FabricPage() {
 			}
 		}
 	}, [orderDetail, patterns]);
+	/*------------------------------*/
 	useEffect(() => {
 		handleCollectionStatus(0);
 	}, [fabricType]);
+	/*------------------------------*/
 	useEffect(() => {
 		let currentFabricType = fabricType.find((type) => type.active);
 		if (orderDetail.designStyle && currentFabricType) {
 			let designEstimate = STYLE_ESTIMATE_PRICE.find(
 				(price) => price.id === orderDetail.designStyle
 			);
-			console.log('designEstimate :>> ', designEstimate);
 			if (designEstimate) {
 				let currentEstPrice = estimatePriceCalc(
 					designEstimate.estPrice,
@@ -121,7 +122,7 @@ function FabricPage() {
 		const action_setOrderDetail = setOrderDetail(updatedOrderDetail);
 		dispatch(action_setOrderDetail);
 		/*--------------*/
-		history.push('/measurement/online');
+		history.push('/measurement/standard-size');
 	}
 	/************_END_****************/
 	/*********************************
@@ -129,6 +130,16 @@ function FabricPage() {
 	 */
 	function onFabricTypeSet(thisFabricType) {
 		setFabricType(thisFabricType);
+		// let widthScreen = window.innerWidth;
+		let patternSection = document.querySelector('.c-fabric-type .c-fabric-type__gallery');
+		// if (widthScreen < 769) {
+		if (patternSection) {
+			window.scrollTo({
+				top: patternSection.offsetTop - 40,
+				behavior: 'smooth',
+			});
+		}
+		// }
 	}
 	/************_END_****************/
 	/*********************************
@@ -207,7 +218,7 @@ function FabricPage() {
 			const action_setOrderDetail = setOrderDetail(updatedOrderDetail);
 			dispatch(action_setOrderDetail);
 			/*--------------*/
-			history.push('/measurement/online');
+			history.push('/measurement/standard-size');
 		} else {
 			setAlertOpen(true);
 		}

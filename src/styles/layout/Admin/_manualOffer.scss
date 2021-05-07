@@ -23,7 +23,7 @@
 			@include textStyle(body);
 		}
 		& .--wrapper {
-			@include flex(flex-start, center);
+			@include flex(flex-start, flex-start);
 			margin-right: -20px;
 			margin-bottom: -20px;
 			.c-text-input {
@@ -32,6 +32,30 @@
 				margin-bottom: 20px;
 				&__field {
 					height: 3rem;
+				}
+			}
+			& > .MuiFormControl-root {
+				@include size(calc(25% - 20px), auto);
+				min-width: auto;
+				margin: none;
+				margin-top: 0;
+				margin-left: 0;
+				margin-right: 20px;
+				margin-bottom: 20px;
+				& > label {
+					@include font(fontMedium, 22px);
+					font-family: SVN-GilroyMedium !important;
+					text-transform: capitalize;
+					color: $light-black-color;
+					line-height: 100%;
+				}
+				& > .MuiInput-formControl {
+					margin-top: 35px;
+				}
+				.MuiSelect-select {
+					@include font(fontMedium, 16px);
+					font-family: SVN-GilroyMedium !important;
+					color: $primary-color;
 				}
 			}
 		}

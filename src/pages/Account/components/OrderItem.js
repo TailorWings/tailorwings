@@ -62,7 +62,7 @@ function OrderItem(props) {
 					break;
 
 				case 'finish':
-					let finishPickedOffer = info.offer.find((item) => item.picked) || null;
+					let finishPickedOffer = info.offers?.find((item) => item.picked) || null;
 					renderElement = (
 						<div className="c-order-item__content">
 							<div className="c-order-item-info">
@@ -70,12 +70,14 @@ function OrderItem(props) {
 							</div>
 							<div className="c-order-item-info">
 								<Label
-									value={finishPickedOffer && finishPickedOffer.tailor.name}
+									value={finishPickedOffer && finishPickedOffer.name}
 									title="Tailor"
 									color="gray"
 								/>
 							</div>
-							<p className="c-order-item-info__price">{`${finishPickedOffer.price} vnđ`}</p>
+							<p className="c-order-item-info__price">{`${
+								finishPickedOffer.price ? finishPickedOffer.price * 1000 : "Error"
+							} vnđ`}</p>
 							<div className="c-order-item__button">
 								<MediumButton text="Order Details" isActive={false} />
 							</div>

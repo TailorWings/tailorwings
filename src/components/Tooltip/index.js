@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Fragment } from 'react';
 
 Tooltip.propTypes = {
 	title: PropTypes.string,
@@ -15,9 +16,10 @@ function Tooltip(props) {
 	const { title, content } = props;
 	if (!content)
 		return (
-			<div className="c-tooltip">
-				<p className="c-tooltip__title">{title}</p>
-			</div>
+			<Fragment />
+			// <div className="c-tooltip">
+			// 	<p className="c-tooltip__title">{title}</p>
+			// </div>
 		);
 	return (
 		<div className="c-tooltip">

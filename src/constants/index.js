@@ -68,7 +68,7 @@ export const STYLE_ESTIMATE_PRICE = [
 // Fabric page
 export const FABRIC_TYPE_TITLE = 'Choose the fabric type for your design';
 export const FABRIC_TYPE_SUBTITLE =
-	'Here you can find all of our available fabrics (more will be added by time). Just click on the fabric for more detail and selection to continue.';
+	'Here you can find all of our available fabrics (more will be added by time).';
 export const FABRIC_TYPES = [
 	{
 		id: 'COT',
@@ -86,7 +86,7 @@ export const FABRIC_TYPES = [
 			},
 			{
 				label: 'DETAIL',
-				value: `100% Cotton`,
+				value: `100% Cotton made organic fibers from the seeds of the cotton plant`,
 			},
 		],
 	},
@@ -223,7 +223,7 @@ export const MSMT_METHODS = [
 	{
 		name: 'standard size',
 		desc:
-			'You can also use standard sizes if you like. Use the table below for finding the right one.',
+			'Choose your right size bellow.',
 		buttonText: 'Pick Sizes',
 		link: '/standard-size',
 	},

@@ -109,14 +109,18 @@ function OrderDetail(props) {
 					);
 				}
 				/*--------------*/
-				if (newOrderDetail.shippingInfo) {
-					setShippingInfo(newOrderDetail.shippingInfo);
-				}
+				
 			}
 			newOrderDetail && setCurrentOrderDetail(newOrderDetail);
 			/*--------------*/
 		}
 	}, [orderID.id, orderList]);
+
+	useEffect(() => {
+		if (currentCustomer?.shippingInfo) {
+			setShippingInfo(currentCustomer.shippingInfo);
+		}
+	}, [currentCustomer])
 
 	// if (!orderList || !currentOrderDetail)
 	// 	return (
@@ -176,7 +180,6 @@ function OrderDetail(props) {
 					setLoading(false);
 					onPopupStatusChange && onPopupStatusChange(true);
 				}).catch((error) => {
-					console.log(`error`, error);
 					setLoading(false);
 				});
 			}
@@ -220,7 +223,7 @@ function OrderDetail(props) {
 	if (!currentOrderDetail) {
 		return <Redirect to="/account" />;
 	}
-	const { designFiles, designStyle, fabric, msmt, notes } = currentOrderDetail;
+	const { designFiles, designStyle, fabric, msmt, notes, status } = currentOrderDetail;
 	return (
 		<div className="c-order-detail">
 			<div className="c-order-detail__header">
@@ -233,10 +236,10 @@ function OrderDetail(props) {
 				<TailorOffer
 					offerInfo={
 						currentOrderDetail?.status !== 'finding'
-							? currentOrderDetail.offers.filter((elem) => elem.picked)
-							: currentOrderDetail.offers
+							? currentOrderDetail?.offers?.filter((elem) => elem.picked)
+							: currentOrderDetail?.offers
 					}
-					onTailorPick={currentOrderDetail?.status !== 'finding' && onOrderDetailChange}
+					onTailorPick={status === 'finding' ? onOrderDetailChange : null}
 				/>
 			</div>
 			<div className="c-order-detail-summary">

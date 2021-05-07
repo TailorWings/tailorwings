@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
 import AdminLayout from './components/AdminLayout';
 import { fetchAllRealTime } from '../../services/API/firebaseAPI';
-import { updateCustomers } from '../../app/ReduxSlices/adminSlice';
+import { updateCustomers, updateTailors } from '../../app/ReduxSlices/adminSlice';
 
 AdminPage.propTypes = {};
 
@@ -16,33 +16,41 @@ function AdminPage(props) {
 	const dispatch = useDispatch();
 	/*--------------*/
 	useEffect(() => {
-		fetchAllRealTime('customers', (results) => {
-			let customerWithOrder = results.filter((result) => result.orders) || [];
-			let orders = [];
-			if (customerWithOrder.length > 0) {
-				customerWithOrder.forEach((customer) => {
-					let thisCustomerOrders = customer.orders.map((order) => {
-						return { ...order, customer: { id: customer.id, displayName: customer.displayName } };
+		let isMounted = true;
+		if (isMounted) {
+			fetchAllRealTime('customers', (results) => {
+				let customerWithOrder = results.filter((result) => result.orders) || [];
+				let orders = [];
+				if (customerWithOrder.length > 0) {
+					customerWithOrder.forEach((customer) => {
+						let thisCustomerOrders = customer.orders.map((order) => {
+							return { ...order, customer: { id: customer.id, displayName: customer.displayName } };
+						});
+						orders = orders.concat(thisCustomerOrders);
 					});
-					orders = orders.concat(thisCustomerOrders);
-				});
-			}
-			/*--------------*/
-			if (orders.length > 0) {
-				let findings = orders.filter((order) => order.status === 'finding') || [];
-				let tailorings = orders.filter((order) => order.status === 'tailoring') || [];
-				let finishs = orders.filter((order) => order.status === 'finish') || [];
+				}
 				/*--------------*/
-				setFindingOrders(findings);
-				setTailoringOrders(tailorings);
-				setFinishOrders(finishs);
-			}
+				if (orders.length > 0) {
+					let findings = orders.filter((order) => order.status === 'finding') || [];
+					let tailorings = orders.filter((order) => order.status === 'tailoring') || [];
+					let finishs = orders.filter((order) => order.status === 'finish') || [];
+					/*--------------*/
+					setFindingOrders(findings);
+					setTailoringOrders(tailorings);
+					setFinishOrders(finishs);
+				}
+				/*--------------*/
+				const action_updateCustomers = updateCustomers(results);
+				dispatch(action_updateCustomers);
+			});
 			/*--------------*/
-			const action_updateCustomers = updateCustomers(customerWithOrder);
-			dispatch(action_updateCustomers);
-		});
+			fetchAllRealTime('tailors', (results) => {
+				const action_updateTailors = updateTailors(results);
+				dispatch(action_updateTailors);
+			});
+		}
 		return () => {
-			fetchAllRealTime('customers');
+			isMounted = false;
 		};
 	}, []);
 	/*--------------*/

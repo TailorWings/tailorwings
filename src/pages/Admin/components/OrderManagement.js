@@ -22,6 +22,7 @@ import MaterialAlert from '../../../components/MaterialAlert';
 import { updateDocument } from '../../../services/API/firebaseAPI';
 import { useSelector } from 'react-redux';
 import TailorOffer from '../../Account/components/TailorOffer';
+import moment from 'moment';
 
 OrderManagement.propTypes = {
 	orders: PropTypes.object,
@@ -31,10 +32,10 @@ OrderManagement.defaultProps = {
 	orders: null,
 };
 
-const TABLE_HEAD_FINDING = ['image', 'customer', 'order date', 'offers', 'picked'];
+const TABLE_HEAD_FINDING = ['customer', 'image', 'order date', 'offers', 'picked'];
 const TABLE_HEAD_TAILORING = [
-	'image',
 	'customer',
+	'image',
 	'order date',
 	'tailor',
 	'duration',
@@ -43,8 +44,8 @@ const TABLE_HEAD_TAILORING = [
 	'price',
 ];
 const TABLE_HEAD_FINISH = [
-	'image',
 	'customer',
+	'image',
 	'order date',
 	'finish date',
 	'tailor',
@@ -59,6 +60,7 @@ const ORDER_STATUS = ['finding', 'tailoring', 'finish'];
 function OrderManagement(props) {
 	const { orders } = props;
 	const customers = useSelector((state) => state.admin.customers);
+	const tailors = useSelector((state) => state.admin.tailors);
 	/*--------------*/
 	const [orderStatus, setOrderStatus] = useState(
 		ORDER_STATUS.map((status, index) => {
@@ -101,10 +103,10 @@ function OrderManagement(props) {
 									const { designFiles, customer, orderDate, offers } = order;
 									return {
 										image: designFiles[0],
-										customer: customer.displayName || customer.displayName,
+										customer: customer.displayName || customer.phone,
 										orderDate,
-										offers: offers.length,
-										picked: offers.length > 0 ? !!offers.find((offer) => offer.picked) : false,
+										offers: offers?.length,
+										picked: offers?.length > 0 ? !!offers?.find((offer) => offer.picked) : false,
 									};
 							  })
 							: [];
@@ -125,19 +127,27 @@ function OrderManagement(props) {
 											</TableRow>
 										</TableHead>
 										<TableBody>
-											{rowContentFinding.map((row, index) => (
-												<TableRow key={index} onClick={() => onRowClick(index, 'finding')}>
-													<TableCell align="center">{row.customer}</TableCell>
-													<TableCell align="center">
-														<div className="image-wraper">
-															<img src={row.image} alt="design file" />
-														</div>
+											{rowContentFinding.length > 0 ? (
+												rowContentFinding.map((row, index) => (
+													<TableRow key={index} onClick={() => onRowClick(index, 'finding')}>
+														<TableCell align="center">{row.customer}</TableCell>
+														<TableCell align="center">
+															<div className="image-wraper">
+																<img src={row.image} alt="design file" />
+															</div>
+														</TableCell>
+														<TableCell align="center">{row.orderDate}</TableCell>
+														<TableCell align="center">{row.offers}</TableCell>
+														<TableCell align="center">{row.picked}</TableCell>
+													</TableRow>
+												))
+											) : (
+												<TableRow>
+													<TableCell>
+														<p style={{ textAlign: 'center' }}>No order</p>
 													</TableCell>
-													<TableCell align="center">{row.orderDate}</TableCell>
-													<TableCell align="center">{row.offers}</TableCell>
-													<TableCell align="center">{row.picked}</TableCell>
 												</TableRow>
-											))}
+											)}
 										</TableBody>
 									</Table>
 								</TableContainer>
@@ -153,13 +163,13 @@ function OrderManagement(props) {
 									const { designFiles, customer, orderDate } = order;
 									return {
 										image: designFiles[0],
-										customer: customer.displayName || customer.displayName,
+										customer: customer.displayName || customer.phone,
 										orderDate,
 										tailor: pickedOffer.name,
 										duration: pickedOffer.duration,
-										fabricNumber: 0,
-										wage: pickedOffer.wage,
-										price: 0
+										fabricNumber: pickedOffer.fabricNumber,
+										wage: pickedOffer.wage && pickedOffer.wage * 1000,
+										price: pickedOffer.price && pickedOffer.price * 1000,
 									};
 							  })
 							: [];
@@ -181,22 +191,30 @@ function OrderManagement(props) {
 											</TableRow>
 										</TableHead>
 										<TableBody>
-											{rowContentTailoring.map((row, index) => (
-												<TableRow key={index} onClick={() => onRowClick(index, 'tailoring')}>
-													<TableCell align="center">{row.customer}</TableCell>
-													<TableCell align="center">
-														<div className="image-wraper">
-															<img src={row.image} alt="design file" />
-														</div>
+											{rowContentTailoring.length > 0 ? (
+												rowContentTailoring.map((row, index) => (
+													<TableRow key={index} onClick={() => onRowClick(index, 'tailoring')}>
+														<TableCell align="center">{row.customer}</TableCell>
+														<TableCell align="center">
+															<div className="image-wraper">
+																<img src={row.image} alt="design file" />
+															</div>
+														</TableCell>
+														<TableCell align="center">{row.orderDate}</TableCell>
+														<TableCell align="center">{row.tailor}</TableCell>
+														<TableCell align="center">{row.duration}</TableCell>
+														<TableCell align="center">{row.fabricNumber}</TableCell>
+														<TableCell align="center">{row.wage}</TableCell>
+														<TableCell align="center">{row.price}</TableCell>
+													</TableRow>
+												))
+											) : (
+												<TableRow>
+													<TableCell>
+														<p style={{ textAlign: 'center' }}>No order</p>
 													</TableCell>
-													<TableCell align="center">{row.orderDate}</TableCell>
-													<TableCell align="center">{row.tailor}</TableCell>
-													<TableCell align="center">{row.duration}</TableCell>
-													<TableCell align="center">{row.fabricNumber}</TableCell>
-													<TableCell align="center">{row.wage}</TableCell>
-													<TableCell align="center">{row.price}</TableCell>
 												</TableRow>
-											))}
+											)}
 										</TableBody>
 									</Table>
 								</TableContainer>
@@ -204,8 +222,75 @@ function OrderManagement(props) {
 						</div>
 					);
 					break;
-				// case 'finding':
-				// 	break;
+
+				case 'finish':
+					let rowContentFinish =
+						orders?.finish.length > 0
+							? orders.finish.map((order) => {
+									let pickedOffer = order.offers.find((offer) => offer.picked);
+									const { designFiles, customer, orderDate, finishDate } = order;
+									return {
+										image: designFiles[0],
+										customer: customer.displayName || customer.phone,
+										orderDate,
+										finishDate,
+										tailor: pickedOffer.name || '',
+										duration: pickedOffer.duration || 0,
+										fabricNumber: pickedOffer.fabricNumber || 0,
+										wage: pickedOffer.wage && pickedOffer.wage * 1000,
+										price: pickedOffer.price && pickedOffer.price * 1000,
+									};
+							  })
+							: [];
+					render = (
+						<div className="c-admin-order__table">
+							<Paper className={classes.root}>
+								<TableContainer className={classes.container}>
+									<Table stickyHeader aria-label="sticky table">
+										<TableHead>
+											<TableRow>
+												{TABLE_HEAD_FINISH.map((header, index) => {
+													return (
+														<TableCell key={index} align="center">
+															{header}
+														</TableCell>
+													);
+												})}
+											</TableRow>
+										</TableHead>
+										<TableBody>
+											{rowContentFinish.length > 0 ? (
+												rowContentFinish.map((row, index) => (
+													<TableRow key={index} onClick={() => onRowClick(index, 'tailoring')}>
+														<TableCell align="center">{row.customer}</TableCell>
+														<TableCell align="center">
+															<div className="image-wraper">
+																<img src={row.image} alt="design file" />
+															</div>
+														</TableCell>
+														<TableCell align="center">{row.orderDate}</TableCell>
+														<TableCell align="center">{row.finishDate}</TableCell>
+														<TableCell align="center">{row.tailor}</TableCell>
+														<TableCell align="center">{row.duration}</TableCell>
+														<TableCell align="center">{row.fabricNumber}</TableCell>
+														<TableCell align="center">{row.wage}</TableCell>
+														<TableCell align="center">{row.price}</TableCell>
+													</TableRow>
+												))
+											) : (
+												<TableRow>
+													<TableCell>
+														<p style={{ textAlign: 'center' }}>No order</p>
+													</TableCell>
+												</TableRow>
+											)}
+										</TableBody>
+									</Table>
+								</TableContainer>
+							</Paper>
+						</div>
+					);
+					break;
 
 				default:
 					break;
@@ -260,9 +345,6 @@ function OrderManagement(props) {
 							<div className="--wrapper" onClick={() => setPopupShow(true)}>
 								<MediumButton text="Manual Offer" isActive />
 							</div>
-							{/* <div className="--wrapper">
-								<MediumButton text="start tailor" isActive />
-							</div> */}
 						</div>
 					);
 					break;
@@ -270,7 +352,7 @@ function OrderManagement(props) {
 				case 'tailoring':
 					btnRender = (
 						<div className="c-admin-order__info --btn">
-							<div className="--wrapper">
+							<div className="--wrapper" onClick={handleFinishOrder}>
 								<MediumButton text="finish" isActive />
 							</div>
 						</div>
@@ -340,15 +422,33 @@ function OrderManagement(props) {
 	 *  Description: handle manual offer
 	 */
 	function handleManualOffer(offers) {
-		let updatedOffers = offers.filter((offer) => offer.name);
+		let updatedOffers = offers.filter((offer) => offer.tailor);
 		if (
 			updatedOffers.filter(
-				(offer) => isNaN(offer.wage) || isNaN(offer.duration) || isNaN(offer.stars)
+				(offer) => isNaN(offer.wage) || isNaN(offer.duration) || isNaN(offer.price)
 			).length > 0
 		) {
 			setAlertOpen(true);
 		} else {
 			if (clickedOrder) {
+				/*------------------------------*/
+				updatedOffers = updatedOffers.map((offer) => {
+					let tailorInfo = tailors.find((tailor) => tailor.id === offer.tailor);
+					if (tailorInfo) {
+						return {
+							...offer,
+							tailor: {
+								id: tailorInfo.id,
+								name: tailorInfo.nickName,
+								stars: tailorInfo.stars,
+								avatar: tailorInfo.avatar || null,
+							},
+						};
+					} else {
+						return { ...offer, tailor: { id: offer.tailor, name: '', stars: 0, avatar: null } };
+					}
+				});
+				/*------------------------------*/
 				let updatedCustomer = {
 					...customers.find((customer) => customer.id === clickedOrder.customer.id),
 				};
@@ -367,6 +467,32 @@ function OrderManagement(props) {
 						})
 						.catch((error) => {});
 				}
+			}
+		}
+	}
+	/************_END_****************/
+
+	/*********************************
+	 *  Description: handle manual offer
+	 */
+	function handleFinishOrder() {
+		if (clickedOrder) {
+			let relatedCustomer = JSON.parse(
+				JSON.stringify(customers.find((customer) => customer.id === clickedOrder.customer.id))
+			);
+			let indexOfClickedOrder = relatedCustomer.orders.findIndex(
+				(order) => order.id === clickedOrder.id
+			);
+			if (indexOfClickedOrder > -1) {
+				relatedCustomer.orders[indexOfClickedOrder].status = 'finish';
+				relatedCustomer.orders[indexOfClickedOrder].finishDate = moment().format('L');
+			}
+			if (relatedCustomer) {
+				updateDocument('customers', relatedCustomer.id, 'orders', relatedCustomer.orders).then(
+					() => {
+						alert('success');
+					}
+				);
 			}
 		}
 	}
@@ -407,6 +533,7 @@ function OrderManagement(props) {
 					onConfirm={handleManualOffer}
 					onCancel={() => setPopupShow(false)}
 					isReset={!popupShow}
+					tailors={tailors}
 				/>
 			</Popup>
 			<MaterialAlert

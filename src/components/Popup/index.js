@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import reactDom from 'react-dom';
 
 Popup.propTypes = {
 	show: PropTypes.bool,
@@ -25,13 +26,13 @@ function Popup(props) {
 		}
 	}
 	/************_END_****************/
-	return (
+	return reactDom.createPortal(
 		<div
 			className={classNames('c-popup', { 'c-popup--show': show })}
 			onClick={setPopupShow && onBackdropClick}
 		>
 			<div className="c-popup__content">{props.children}</div>
-		</div>
+		</div>, document.querySelector('body')
 	);
 }
 

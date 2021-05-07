@@ -17,7 +17,7 @@ FabricPattern.propTypes = {
 	onCollectionClick: PropTypes.func,
 	onPatternClick: PropTypes.func,
 	onNextClick: PropTypes.func,
-	estPrice: PropTypes.number,
+	// estPrice: PropTypes.string,
 };
 
 FabricPattern.defaultProps = {
@@ -114,12 +114,12 @@ function FabricPattern(props) {
 
 	return (
 		<div className="c-fabric-pattern">
-			<div className="c-fabric-pattern__title">
+			{/* <div className="c-fabric-pattern__title">
 				<Title title={FABRIC_PATTERN_TITLE} subtitle={FABRIC_PATTERN_SUBTITLE} />
 			</div>
 			<div className="c-fabric-pattern-collection">
 				<Picker list={collections} onItemClick={onCollectionClick} />
-			</div>
+			</div> */}
 			{patterns ? (
 				patterns.length > 0 ? (
 					<Slider swiperRef={swiperRef}>
@@ -157,7 +157,7 @@ function FabricPattern(props) {
 			<ProcessAction backLink="/requirement" onNextClick={onNextClick} />
 			<PhotoSwipe
 				isOpen={isPhotoSwipeOpen}
-				items={images}
+				items={images || []}
 				options={options}
 				onClose={handlePhotoSwipeClose}
 			/>

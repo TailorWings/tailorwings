@@ -1,0 +1,38 @@
+.c-admin-customer-mgmt {
+	margin-top: 5rem;
+	th {
+		max-width: 30rem;
+		@include textStyle(body);
+		text-transform: capitalize;
+		text-align: center;
+	}
+	td {
+		@include textStyle(caption);
+		max-width: 30rem;
+		// text-transform: capitalize;
+        &:first-child {
+            @include flex(center, center);
+        }
+	}
+	// tr {
+	// 	cursor: pointer;
+	// }
+	tbody {
+		max-height: 50rem;
+		overflow: hidden;
+	}
+	.image-wraper {
+		@include size(50px);
+		border-radius: 50%;
+		overflow: hidden;
+		position: relative;
+		& > img {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			object-fit: cover;
+			@include size(100%);
+		}
+	}
+}

@@ -33,17 +33,18 @@ function FabricTypeGallery(props) {
 		<ul className="c-fabric-type-gallery__list">
 			{fabricType.map((type, index) => {
 				return (
-					<li key={index} className="c-fabric-type-gallery__item">
+					<li key={index} className='c-fabric-type-gallery__item'>
 						<div
 							key={index}
-							className="c-fabric-type-gallery__image"
+							className={`c-fabric-type-gallery__image ${type.active && '--active'}`}
 							onClick={() => onFabricTypeClick(index)}
-						>
+						>	
 							{type.image && <img src={type.image} alt={type.id} />}
+							<span>{type.name}</span>
 						</div>
-						<div className="c-fabric-type-gallery__btn" onClick={() => onFabricTypeClick(index)}>
+						{/* <div className="c-fabric-type-gallery__btn" onClick={() => onFabricTypeClick(index)}>
 							<SmallButton1 text={type.name} isActive={type.active} />
-						</div>
+						</div> */}
 					</li>
 				);
 			})}

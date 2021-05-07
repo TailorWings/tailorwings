@@ -1,0 +1,68 @@
+.c-tailor-profile-products {
+	margin: 100px 0;
+	& > .container {
+		@include flex(flex-start, stretch, column);
+		& > h3 {
+			@include font(fontSemiBold, 26px);
+			text-align: left;
+		}
+	}
+	&__list {
+		@include flex(flex-start, center, row, wrap);
+		margin: 50px 0;
+		margin-right: -16px;
+		margin-bottom: -16px;
+	}
+
+	&__item {
+		@include size(calc(25% - 16px), 0);
+		margin-right: 16px;
+		margin-bottom: 16px;
+		padding-bottom: 30%;
+		overflow: hidden;
+		background: $light-gray-color;
+		border-radius: 10%;
+		position: relative;
+		& > img {
+			@include size(100%);
+			position: absolute;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			object-fit: cover;
+		}
+	}
+	&__view-all {
+		@include flex(center, center);
+		padding: 18px 12px;
+		border-radius: 5px;
+		border: 1.5px solid #f68729;
+		margin: 0 auto;
+		margin-top: 50px;
+		& > i {
+			@include size(20px);
+			margin-right: 12px;
+		}
+		& > span {
+			@include font(fontSemiBold, 18px);
+			color: $primary-color;
+		}
+	}
+
+	@include xs {
+		margin: 30px 0;
+		& > .container {
+			& > h3 {
+				@include font(fontSemiBold, 20px);
+			}
+		}
+		&__item {
+			@include size(calc(50% - 16px), 0);
+			padding-bottom: 60%;
+		}
+		&__view-all {
+            width: 100%;
+		}
+	}
+}

@@ -1,11 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Fragment, useEffect, useRef, useState } from 'react';
-import ReactIdSwiper from 'react-id-swiper';
 import Swiper from 'react-id-swiper';
 import ListLoader from '../../../components/ComponentLoader';
-import ListOfMesurementDropdown from '../../../components/Dropdown/ListOfMesurementDropdown';
 import MeasurementForm from '../../../components/Form/MeasurementForm';
-import SelectInput from '../../../components/Input/SelectInput';
 import ProcessAction from '../../../components/ProcessAction';
 import Slider from '../../../components/Slider';
 
@@ -38,7 +35,6 @@ function OnlineMethod(props) {
 			prevEl: '.swiper-button-prev',
 		},
 		on: {
-			'init': () => console.log('swiper ready!'),
 			'slideChange': onSlideChange
 		}
 	};

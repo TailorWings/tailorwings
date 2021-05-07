@@ -1,0 +1,68 @@
+.c-tailor-profile-basic-info {
+	@include size(100%, auto);
+	& > .container {
+		@include flex(center, center, column);
+	}
+	&__avatar {
+		@include size(16rem);
+		margin-top: 5.6rem;
+		border-radius: 50%;
+		background: $light-gray-color;
+		overflow: hidden;
+		position: relative;
+
+		& > img {
+			@include size(100%);
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			object-fit: cover;
+		}
+	}
+	&__name {
+		@include font(fontBold, 30px);
+		margin-top: 1rem;
+	}
+	&__desc {
+		@include font(fontMedium, 18px);
+		padding: 2rem;
+		text-align: center;
+	}
+	&__wrapper {
+		@include flex(space-between, center);
+		padding-bottom: 50px;
+		margin-bottom: 50px;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+		span {
+			@include font(fontSemiBold, 14px);
+		}
+	}
+	&__stars {
+		@include flex(flex-start, center);
+		margin-right: 30px;
+		& > i {
+			@include size(24px);
+			margin-right: 5px;
+		}
+	}
+	&__exp {
+		@include flex(flex-start, center);
+		& > i {
+			@include size(24px);
+			margin-right: 5px;
+		}
+	}
+
+	@include xs {
+		&__desc {
+			padding: 0 20px;
+			margin-bottom: 30px;
+		}
+		&__wrapper {
+			@include size(100%, auto);
+			padding-bottom: 30px;
+			margin-bottom: 30px;
+		}
+	}
+}

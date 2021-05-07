@@ -6,6 +6,7 @@ import SmallButton1 from '../../../components/Button/SmallButton1';
 import classNames from 'classnames';
 import Label from '../../../components/Label';
 import useIcon from '../../../assets/icons/user.svg';
+import { Link } from 'react-router-dom';
 
 TailorOffer.propTypes = {
 	offerInfo: PropTypes.array,
@@ -19,17 +20,18 @@ TailorOffer.defaultProps = {
 
 function TailorOffer(props) {
 	const { offerInfo, onTailorPick } = props;
-
 	if (!offerInfo || offerInfo.length < 1)
 		return (
 			<div className="c-tailor-offer --no-offer">
-				<p className="c-tailor-offer__annouce">Please come back after 10 minutes to have the best offers by our tailors.</p>
+				<p className="c-tailor-offer__annouce">
+					Please come back after 10 minutes to have the best offers by our tailors.
+				</p>
 			</div>
 		);
 	return (
 		<div className="c-tailor-offer">
 			{offerInfo.map((offer, index) => {
-				let price = offer.wage; // price tính sau
+				let price = offer.price;
 				return (
 					<div key={index} className="c-tailor-offer__item">
 						<div
@@ -40,20 +42,35 @@ function TailorOffer(props) {
 							<span>{index + 1}</span>
 						</div>
 						<div className="c-tailor-offer__avatar">
-							{<img src={offer.avatar || useIcon} alt="avatar" />}
+							<Link
+								style={{
+									width: '100%',
+								}}
+								to={{
+									pathname: '/tailor-profile',
+									search: `id=${offer.tailor.id}`,
+								}}
+							>
+								{<img src={offer.tailor.avatar || useIcon} alt="avatar" />}
+							</Link>
 						</div>
-						<div className="c-tailor-offer-tailor">
-							<p className="c-tailor-offer-tailor__name">{offer.name || 'Empty'}</p>
-							<Star number={Number(offer.stars)} />
-						</div>
+						<Link
+							to={{
+								pathname: '/tailor-profile',
+								search: `id=${offer.tailor.id}`,
+							}}
+						>
+							<div className="c-tailor-offer-tailor">
+								<p className="c-tailor-offer-tailor__name">{offer.tailor.name || 'Empty'}</p>
+								<Star number={Number(offer.tailor.stars)} />
+							</div>
+						</Link>
 						<div className="c-tailor-offer-estimate">
 							<Label
 								title="Est.time"
 								value={`${offer.duration} days`}
 								color={offer.duration > 6 ? 'primary' : 'secondary'}
 							/>
-							{/* <span className="c-tailor-offer-estimate__title">Est.time</span>
-							<span className="c-tailor-offer-estimate__value">{`${offer.time} days`}</span> */}
 						</div>
 						<div className="c-tailor-offer__price">
 							<span>{`${price * 1000} vnđ`}</span>

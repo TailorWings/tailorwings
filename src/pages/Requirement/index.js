@@ -86,8 +86,12 @@ function RequirementPage() {
 	return (
 		<section className="l-requirement container">
 			<RqmtDesignStyle styles={styles} onStyleClick={handleStylesStatus} />
-			<RqmtDesignUpload setDesignFiles={setDesignFiles} />
-			<RqmtFooter onNextClick={handleNextClick} />
+			{styles?.find((style) => style.active) && (
+				<>
+					<RqmtDesignUpload setDesignFiles={setDesignFiles} />
+					<RqmtFooter onNextClick={handleNextClick} />
+				</>
+			)}
 			<MaterialAlert
 				open={alertOpen}
 				setOpen={setAlertOpen}

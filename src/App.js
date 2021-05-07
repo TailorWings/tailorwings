@@ -18,6 +18,7 @@ const SummaryPage = React.lazy(() => import('./pages/Summary'));
 const AccountPage = React.lazy(() => import('./pages/Account'));
 const AdminPage = React.lazy(() => import('./pages/Admin'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFound'));
+const TailorProfilePage = React.lazy(() => import('./pages/TailorProfile'));
 
 function App() {
 	const location = useLocation();
@@ -38,7 +39,7 @@ function App() {
 						<Route path="/fabric" component={FabricPage} />
 
 						{/* MEASUREMENT */}
-						<Redirect from="/measurement" to="/measurement/online" exact />
+						<Redirect from="/measurement" to="/measurement/standard-size" exact />
 						<Route path="/measurement" component={MeasurementPage} />
 
 						{/* SUMMARY */}
@@ -51,6 +52,9 @@ function App() {
 						{/* ADMIN */}
 						{/* <Redirect from="/account" to="/account/order" exact /> */}
 						<Route path="/admin" component={AdminPage} />
+
+						{/* TAILOR PROFILE */}
+						<Route path="/tailor-profile" component={TailorProfilePage} />
 
 						{/* TEST FORM */}
 						<Route path="/test-form" component={() => <TestForm />} />

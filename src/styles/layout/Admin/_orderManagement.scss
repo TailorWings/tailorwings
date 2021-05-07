@@ -46,6 +46,13 @@
 	}
 	&__info {
 		margin-top: 3rem;
+		&.--content {
+			.c-tailor-offer__item {
+				& > .c-tailor-offer__button {
+					display: none;
+				}
+			}
+		}
 		&.--title {
 			@include textStyle(h2);
 			text-transform: uppercase;
