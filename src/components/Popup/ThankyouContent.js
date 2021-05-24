@@ -29,7 +29,7 @@ function ThankyouContent(props) {
 					className="c-thank-you-popup-content__back"
 					onClick={() => {
 						setPopupShow(false);
-						history.push('/account/order');
+						history.go(0);
 					}}
 				>
 					Back

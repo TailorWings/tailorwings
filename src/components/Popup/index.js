@@ -6,22 +6,24 @@ import reactDom from 'react-dom';
 Popup.propTypes = {
 	show: PropTypes.bool,
 	setPopupShow: PropTypes.func,
+	isBackdropClick: PropTypes.bool,
 };
 
 Popup.defaultProps = {
 	show: false,
 	setPopupShow: null,
+	isBackdropClick: true,
 };
 
 function Popup(props) {
-	const { show, setPopupShow } = props;
+	const { show, setPopupShow, isBackdropClick } = props;
 
 	/*********************************
 	 *  Description: close popup when click on backdrop
 	 */
 	function onBackdropClick(e) {
 		let target = e.target ? e.target.className : null;
-		if (target === 'c-popup__content') {
+		if (target === 'c-popup__content' && isBackdropClick) {
 			setPopupShow(false);
 		}
 	}
@@ -32,7 +34,8 @@ function Popup(props) {
 			onClick={setPopupShow && onBackdropClick}
 		>
 			<div className="c-popup__content">{props.children}</div>
-		</div>, document.querySelector('body')
+		</div>,
+		document.querySelector('body')
 	);
 }
 

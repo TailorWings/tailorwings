@@ -23,9 +23,10 @@ function AccountSidebar(props) {
 					return (
 						<Link key={index} to={info.path}>
 							<div
-								className={classNames('c-account-sidebar-item', {
-									'c-account-sidebar-item--active': info.active,
-								})}
+								// className={classNames('c-account-sidebar-item', {
+								// 	'c-account-sidebar-item--active': info.active,
+								// })}
+								className="c-account-sidebar-item c-account-sidebar-item--active"
 							>
 								{info.active ? (
 									<img

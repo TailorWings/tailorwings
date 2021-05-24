@@ -10,7 +10,7 @@ Slider.propTypes = {
 
 Slider.defaultProps = {
 	swiperRef: null,
-	onSlideChange: null
+	onSlideChange: null,
 };
 
 function Slider(props) {
@@ -33,7 +33,6 @@ function Slider(props) {
 		}
 	};
 	/*--------------*/
-
 	return (
 		<div className="c-slider">
 			<button className="c-slider__left" onClick={goPrev}>
@@ -43,6 +42,14 @@ function Slider(props) {
 			<button className="c-slider__right" onClick={goNext}>
 				<img src={rightArrowIcon} alt="icon" />
 			</button>
+			<div className="c-slider__mobile-btn">
+				<div className="--left" onClick={goPrev}>
+					<span>Previous</span>
+				</div>
+				<div className="--right" onClick={goNext}>
+					<span>Next</span>
+				</div>
+			</div>
 		</div>
 	);
 }

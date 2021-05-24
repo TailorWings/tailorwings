@@ -8,6 +8,13 @@
 		color: $light-black-color;
 	}
 
+	&__btn {
+		&.disabled {
+			opacity: 0.5;
+			pointer-events: none;
+		}
+	}
+
 	@include xs {
 		&__text {
 			font-size: 1.3rem;

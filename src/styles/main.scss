@@ -65,6 +65,9 @@
 
 @import './components/Login/login';
 
+@import './components/Tags/tailorRoundTag';
+@import './components/Tags/tailorSquareTag';
+
 //Layouts
 @import './layout/general';
 @import './layout/HomePage/banner';
@@ -107,3 +110,10 @@
 @import './layout/TailorProfile/basicInfo';
 @import './layout/TailorProfile/specialityInfo';
 @import './layout/TailorProfile/productList';
+
+@import './layout/Tailor/tailorMenu';
+@import './layout/Tailor/tailorHeader';
+@import './layout/Tailor/tailorOrder';
+@import './layout/Tailor/tailorMgmtMenu';
+@import './layout/Tailor/tailorOrderDetail';
+@import './layout/Tailor/tailorLogin';

@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import MultipleFileUpload from '../../../components/FileUpload/MultipleFileUpload';
+import { RQPAGE_SUBTITLE } from '../../../constants';
 
 RqmtDesignUpload.propTypes = {
 	setDesignFiles: PropTypes.func,
@@ -16,6 +17,7 @@ function RqmtDesignUpload(props) {
 	if (!setDesignFiles) return <Fragment />;
 	return (
 		<div className="c-rqmt-design-upload">
+			<p>{RQPAGE_SUBTITLE}</p>
 			<MultipleFileUpload setFiles={setDesignFiles} />
 		</div>
 	);

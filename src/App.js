@@ -1,14 +1,12 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense } from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
+import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import PageLoader from './components/PageLoader';
-import './styles/main.scss';
-import Footer from './components/Footer';
-import TestForm from './pages/TestForm';
-import TestDnDUpload from './pages/TestDnDUpload';
-import { fetchAll } from './services/API/firebaseAPI';
-import MultirowSwiper from './pages/TestMultiRow';
 import TestExcel from './pages/TestExcel';
+import TestForm from './pages/TestForm';
+import TestTailorDB from './pages/TestTailorDB';
+import './styles/main.scss';
 
 const HomePage = React.lazy(() => import('./pages/Home'));
 const RequirementPage = React.lazy(() => import('./pages/Requirement'));
@@ -19,6 +17,7 @@ const AccountPage = React.lazy(() => import('./pages/Account'));
 const AdminPage = React.lazy(() => import('./pages/Admin'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFound'));
 const TailorProfilePage = React.lazy(() => import('./pages/TailorProfile'));
+const TailorDashBoard = React.lazy(() => import('./pages/Tailor'));
 
 function App() {
 	const location = useLocation();
@@ -49,24 +48,24 @@ function App() {
 						<Redirect from="/account" to="/account/order" exact />
 						<Route path="/account" component={AccountPage} />
 
+						{/* TAILOR PROFILE */}
+						<Route path="/tailor-profile" component={TailorProfilePage} />
+
 						{/* ADMIN */}
 						{/* <Redirect from="/account" to="/account/order" exact /> */}
 						<Route path="/admin" component={AdminPage} />
 
-						{/* TAILOR PROFILE */}
-						<Route path="/tailor-profile" component={TailorProfilePage} />
+						{/* TAILOR DASHBOARD */}
+						<Route path="/tailor" component={TailorDashBoard} />
 
 						{/* TEST FORM */}
-						<Route path="/test-form" component={() => <TestForm />} />
-
-						{/* TEST DND */}
-						<Route path="/test-dnd" component={() => <TestDnDUpload />} />
-
-						{/* TEST SWIPER */}
-						<Route path="/test-swiper" component={() => <MultirowSwiper />} />
+						{/* <Route path="/test-form" component={() => <TestForm />} /> */}
 
 						{/* TEST SWIPER */}
 						<Route path="/test-excel" component={() => <TestExcel />} />
+
+						{/* TEST SWIPER */}
+						<Route path="/test-tailor" component={() => <TestTailorDB />} />
 
 						{/* NOT FOUND */}
 						<Route component={NotFoundPage} />

@@ -2,4 +2,8 @@
 	@include size(100%, auto);
 	@include flex(space-between, center);
 	// margin-bottom: 11.6rem;
+	& .disabled {
+		opacity: 0.5;
+		pointer-events: none;
+	}
 }

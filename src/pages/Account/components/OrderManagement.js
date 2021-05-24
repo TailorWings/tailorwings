@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import Accordion from '../../../components/Accordion';
 import ComponentLoader from '../../../components/ComponentLoader';
+import { fetchAllRealTime, fetchAllRTCondition } from '../../../services/API/firebaseAPI';
 import OrderList from './OrderList';
 
 OrderManagement.propTypes = {
@@ -20,7 +21,16 @@ function OrderManagement(props) {
 	const { findingOrders, tailoringOrders, finishOrders } = props;
 	/*--------------*/
 	const [loading, setLoading] = useState(true);
+	const [tailorFindingOrders, setTailorFindingOrders] = useState(null);
 	/*--------------*/
+	useEffect(() => {
+		fetchAllRTCondition('tailorOrders', 'status', '==', 'finding', (result) => {
+			if (result?.length > 0) {
+				setTailorFindingOrders(result);
+			}
+		});
+	}, []);
+
 	useEffect(() => {
 		/*--------------*/
 		let timer = setTimeout(() => {
@@ -44,7 +54,7 @@ function OrderManagement(props) {
 			<div className="c-order-management__finding">
 				<div className="c-order-management__dropdown">
 					<Accordion title="finding">
-						<OrderList orderList={findingOrders} />
+						<OrderList orderList={findingOrders} tailorFindingOrders={tailorFindingOrders} />
 					</Accordion>
 				</div>
 				<div className="c-order-management__dropdown">

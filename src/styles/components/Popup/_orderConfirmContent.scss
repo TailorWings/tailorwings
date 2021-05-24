@@ -25,7 +25,8 @@
 		}
 	}
 	&__button {
-		@include flex(center, center);
+		@include flex(space-between, center);
+		width: 100%;
 		& .c-medium-button {
 			width: fit-content;
 			text-transform: capitalize;
@@ -46,7 +47,6 @@
 	&__back {
 		@include size(10rem, auto);
 		@include font(fontSemiBold, 1.4rem);
-		margin-right: 4rem;
 		color: $primary-color;
 		text-transform: capitalize;
 	}
@@ -78,10 +78,13 @@
 			text-align: center;
 		}
 		&__button {
-			@include flex(center, center);
+			@include flex(space-between, center);
 			& .c-medium-button {
-				width: fit-content;
+				width: 100%;
 				text-transform: capitalize;
+				& > p {
+					min-width: unset;
+				}
 			}
 		}
 		&__phone {
@@ -97,14 +100,13 @@
 			}
 		}
 		&__back {
-			@include size(10rem, auto);
+			@include size(12rem, auto);
 			@include font(fontSemiBold, 1.4rem);
-			margin-right: 4rem;
 			color: $primary-color;
 			text-transform: capitalize;
 		}
 		&__next {
-			@include size(10rem, auto);
+			@include size(12rem, auto);
 		}
 	}
 }

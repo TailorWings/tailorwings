@@ -10,6 +10,7 @@ ProcessAction.propTypes = {
 	nextText: PropTypes.string,
 	onNextClick: PropTypes.func,
 	formID: PropTypes.string,
+	disabled: PropTypes.bool,
 };
 
 ProcessAction.defaultProps = {
@@ -19,10 +20,11 @@ ProcessAction.defaultProps = {
 	nextText: 'next',
 	onNextClick: null,
 	formID: '',
+	disabled: false,
 };
 
 function ProcessAction(props) {
-	const { backLink, nextLink, onNextClick, backText, nextText, formID } = props;
+	const { backLink, nextLink, onNextClick, backText, nextText, formID, disabled } = props;
 
 	if (!backLink) return <Fragment />;
 	return (
@@ -35,7 +37,12 @@ function ProcessAction(props) {
 					<MediumButton text={nextText} isActive={true} />
 				</Link>
 			) : (
-				<button onClick={onNextClick || null} type="submit" form={formID}>
+				<button
+					onClick={onNextClick || null}
+					type="submit"
+					form={formID}
+					className={`${disabled ? 'disabled' : ''}`}
+				>
 					<MediumButton text={nextText} isActive={true} />
 				</button>
 			)}

@@ -7,18 +7,46 @@ export const fetchAllRealTime = (collection, callback) => {
 		let result = [];
 		querySnapshot.forEach((doc) => {
 			let data = doc.data();
-			// if (data.visibleStatus) {
 			data.id = doc.id;
 			result.push(data);
-			// }
 		});
 		callback && callback(result);
 	});
 };
 
+export const fetchAllRTCondition = (collection, key, condition, value, callback) => {
+	database
+		.collection(collection)
+		.where(key, condition, value)
+		.onSnapshot((querySnapshot) => {
+			let result = [];
+			querySnapshot.forEach((doc) => {
+				let data = doc.data();
+				data.id = doc.id;
+				result.push(data);
+			});
+			callback && callback(result);
+		});
+};
+
 export const fetchAll = (collection) => {
 	return database
 		.collection(collection)
+		.get()
+		.then((querySnapshot) => {
+			let result = [];
+			querySnapshot.forEach((doc) => {
+				let data = doc.data();
+				data.id = doc.id;
+				result.push(data);
+			});
+			return result;
+		});
+};
+export const fetchCondition = (collection, key, condition, value) => {
+	return database
+		.collection(collection)
+		.where(key, condition, value)
 		.get()
 		.then((querySnapshot) => {
 			let result = [];
@@ -105,6 +133,23 @@ export const setDocument = (collection, newItem, docName) => {
 		});
 };
 
+export const setDocumentWithID = (collection, newItem) => {
+	const document = database.collection(collection).doc();
+	let id = document.id;
+	document
+		.set({
+			...newItem,
+			id,
+			timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+		})
+		.then(function () {
+			return 'success';
+		})
+		.catch(function (error) {
+			return error;
+		});
+};
+
 export const updateDocument = (collection, docName, field, value) => {
 	return database
 		.collection(collection)
@@ -123,9 +168,7 @@ export const deleteDocument = (collection, docName) => {
 		.collection(collection)
 		.doc(docName)
 		.delete()
-		.then(() => {
-			console.log('Document successfully deleted!');
-		})
+		.then(() => {})
 		.catch((error) => {
 			console.error('Error removing document: ', error);
 		});

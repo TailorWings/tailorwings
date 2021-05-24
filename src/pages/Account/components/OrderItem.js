@@ -7,13 +7,15 @@ import Label from '../../../components/Label';
 
 OrderItem.propTypes = {
 	info: PropTypes.object,
+	offersLength: PropTypes.number,
 };
 
 OrderItem.defaultProps = {
 	info: null,
+	offersLength: 0
 };
 function OrderItem(props) {
-	const { info } = props;
+	const { info, offersLength } = props;
 	/*--------------*/
 	/*********************************
 	 *  Description: handle content render depend on status change
@@ -30,8 +32,8 @@ function OrderItem(props) {
 							</div>
 							<div className="c-order-item__button">
 								<MediumButton
-									text={`${info.offers ? info.offers.length : 0} tailor offer${
-										info.offers.length > 1 ? 's' : ''
+									text={`${offersLength} tailor offer${
+										offersLength > 1 ? 's' : ''
 									}`}
 									isActive={true}
 								/>
@@ -41,15 +43,15 @@ function OrderItem(props) {
 					break;
 
 				case 'tailoring':
-					let tailoringPickedOffer = info.offers.find((item) => item.picked) || null;
+					let tailoringPickedOffer = info?.offers?.find((item) => item.picked) || null;
 					renderElement = (
 						<div className="c-order-item__content">
 							<div className="c-order-item-info">
-								<Label value={info.orderDate} title="Order date" color="secondary" />
+								<Label value={info?.orderDate || ''} title="Order date" color="secondary" />
 							</div>
 							<div className="c-order-item-info">
 								<Label
-									value={tailoringPickedOffer && tailoringPickedOffer.name}
+									value={tailoringPickedOffer && tailoringPickedOffer?.tailor?.name}
 									title="Tailor"
 									color="secondary"
 								/>
@@ -70,7 +72,7 @@ function OrderItem(props) {
 							</div>
 							<div className="c-order-item-info">
 								<Label
-									value={finishPickedOffer && finishPickedOffer.name}
+									value={finishPickedOffer && finishPickedOffer.tailor.name}
 									title="Tailor"
 									color="gray"
 								/>

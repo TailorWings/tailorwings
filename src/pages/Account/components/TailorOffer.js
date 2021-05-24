@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import Label from '../../../components/Label';
 import useIcon from '../../../assets/icons/user.svg';
 import { Link } from 'react-router-dom';
+import { modifyPrice } from '../../../services/Functions/commonFunctions';
 
 TailorOffer.propTypes = {
 	offerInfo: PropTypes.array,
@@ -24,7 +25,8 @@ function TailorOffer(props) {
 		return (
 			<div className="c-tailor-offer --no-offer">
 				<p className="c-tailor-offer__annouce">
-					Please come back after 10 minutes to have the best offers by our tailors.
+					We will email or message you as soon as possible when our tailor offer the price for your
+					order. It's often takes 2 working hours.
 				</p>
 			</div>
 		);
@@ -73,7 +75,7 @@ function TailorOffer(props) {
 							/>
 						</div>
 						<div className="c-tailor-offer__price">
-							<span>{`${price * 1000} vnđ`}</span>
+							<span>{`${modifyPrice(price)} vnđ`}</span>
 						</div>
 						{offer.picked ? (
 							<div className="c-tailor-offer__button">

@@ -9,7 +9,7 @@
 		margin-bottom: 1.6rem;
 	}
 	& .--disabled {
-		opacity: 0.7;
+		opacity: 0.7 !important;
 		& .c-small-button-1 {
 			cursor: default;
 		}

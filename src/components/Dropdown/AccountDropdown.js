@@ -6,22 +6,25 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { resetState, setCurrentCustomer } from '../../app/ReduxSlices/commonSlice';
+import { setTailor } from '../../app/ReduxSlices/tailorSlice';
 import userIcon from '../../assets/icons/user.svg';
 
 AccountDropdown.propTypes = {
 	avatar: PropTypes.string,
 	isAdmin: PropTypes.bool,
+	type: PropTypes.string,
 };
 
 AccountDropdown.defaultProps = {
 	avatar: null,
 	isAdmin: false,
+	type: 'customer'
 };
 
 function AccountDropdown(props) {
 	/*--------------*/
 	const history = useHistory();
-	const { avatar, isAdmin } = props;
+	const { avatar, isAdmin, type } = props;
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const dispatch = useDispatch();
 	/*--------------*/
@@ -38,28 +41,10 @@ function AccountDropdown(props) {
 			document.querySelector('html, body').removeEventListener('click', function () {});
 		};
 	}, []);
-	return (
-		<div
-			className="c-account-dropdown"
-			onClick={(e) => {
-				e.stopPropagation();
-				setDropdownOpen(!dropdownOpen);
-			}}
-		>
-			<img
-				className="c-account-dropdown__avatar"
-				src={avatar || userIcon}
-				alt="avatar"
-				onClick={(e) => {
-					e.stopPropagation();
-					setDropdownOpen(!dropdownOpen);
-				}}
-			/>
-			<ul
-				className={
-					dropdownOpen ? 'c-account-dropdown__content --open' : 'c-account-dropdown__content'
-				}
-			>
+	/*--------------*/
+	function customerRender() {
+		return ( 
+			<Fragment>
 				{isAdmin ? (
 					<Link to="/admin">
 						<li>Management</li>
@@ -83,6 +68,49 @@ function AccountDropdown(props) {
 				>
 					Sign out
 				</li>
+			</Fragment>
+		)
+	}
+	function tailorRender() {
+		return ( 
+			<Fragment>
+				<li
+					onClick={() => {
+						dispatch(setTailor(null))
+					}}
+				>
+					Đăng xuất
+				</li>
+			</Fragment>
+		)
+	}
+	/*--------------*/
+	return (
+		<div
+			className="c-account-dropdown"
+			onClick={(e) => {
+				e.stopPropagation();
+				setDropdownOpen(!dropdownOpen);
+			}}
+		>
+			<img
+				className="c-account-dropdown__avatar"
+				src={avatar || userIcon}
+				alt="avatar"
+				onClick={(e) => {
+					e.stopPropagation();
+					setDropdownOpen(!dropdownOpen);
+				}}
+			/>
+			<ul
+				className={
+					dropdownOpen ? 'c-account-dropdown__content --open' : 'c-account-dropdown__content'
+				}
+			>
+				{
+					type === 'customer' ? customerRender() : tailorRender()
+				}
+				
 			</ul>
 		</div>
 	);

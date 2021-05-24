@@ -41,12 +41,22 @@
 		}
 	}
 	&__button {
-		@include flex(center, center);
-		& .c-medium-button {
-			width: fit-content;
-			text-transform: capitalize;
+		@include flex(space-between, center);
+		& .-wrapper {
+			& .c-medium-button {
+				width: fit-content;
+				text-transform: capitalize;
+			}
 			&:first-child {
-				margin-right: 1.6rem;
+				& .c-medium-button {
+					border: none;
+					padding: 0;
+					text-decoration: underline;
+				}
+			}
+			&.disabled {
+				opacity: 0.5;
+				pointer-events: none;
 			}
 		}
 	}
@@ -93,10 +103,9 @@
 			&__form {
 				padding: 2.4rem 0 3.2rem;
 			}
-			
 		}
 		&__button {
-			@include flex(center, center);
+			@include flex(space-between, center);
 			& > div {
 				width: fit-content;
 				text-transform: capitalize;

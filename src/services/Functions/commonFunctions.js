@@ -9,10 +9,18 @@ export const formatLink = (link) => {
 };
 
 export const modifyPrice = (price) => {
-    if (!price) return "";
-    return price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+	if (!price) return '';
+	return price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
 };
 
 export const estimatePriceCalc = (designPrice, fabricPrice, fabricLength) => {
-	return 1.2 * (designPrice + (fabricPrice * fabricLength)) + 120000
-}
+	return 1.2 * (designPrice + fabricPrice * fabricLength) + 120000;
+};
+
+export const finalPriceCalc = (wage, fabricPrice, fabricLength, isFabric) => {
+	if (isFabric) {
+		return 1.2 * ((wage + (fabricPrice * fabricLength)) + 60000);
+	} else {
+		return (1.2 * wage) + 160000;
+	}
+};

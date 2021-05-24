@@ -16,7 +16,6 @@ function StandardSizeMeasurement(props) {
 	const { standardSizeInfo, onStandardSizeClick } = props;
 
 	if (!standardSizeInfo) return <Fragment />;
-	console.log('standardSizeInfo :>> ', standardSizeInfo);
 	let currentActiveSize = standardSizeInfo.find(size => size.active);
 	return (
 		<div className="c-standard-size-msmt-sum">

@@ -29,9 +29,12 @@
 			height: 100%;
 		}
 	}
+	&__mobile-btn {
+		display: none;
+	}
 
 	@include xs {
-		@include flex(space-between, center);
+		@include flex(space-between, center, column);
 		@include size(100%, auto);
 		position: relative;
 		&__left,
@@ -45,6 +48,12 @@
 			& > .swiper-container {
 				width: 100vw;
 			}
+		}
+		&__mobile-btn {
+			@include flex(space-between, center);
+			@include font(fontMedium, 14px);
+			width: 100%;
+			color: $primary-color;
 		}
 	}
 }

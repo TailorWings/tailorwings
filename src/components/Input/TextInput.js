@@ -1,36 +1,3 @@
-// import React from 'react';
-// import PropTypes from 'prop-types';
-
-// TextInput.propTypes = {
-// 	label: PropTypes.string,
-// 	content: PropTypes.string,
-// };
-
-// TextInput.defaultProps = {
-// 	label: '',
-// 	content: '',
-// };
-
-// function TextInput(props) {
-// 	const { label, content } = props;
-// 	return (
-// 		<div className="c-text-input">
-// 			<input
-// 				type="text"
-// 				required
-// 				className="c-text-input__field"
-// 				id="text-input"
-// 				value={content || ''}
-// 			/>
-// 			<label htmlFor="text-input" className="c-text-input__label">
-// 				{label}
-// 			</label>
-// 		</div>
-// 	);
-// }
-
-// export default TextInput;
-
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -43,6 +10,8 @@ TextInput.propTypes = {
 	maxlength: PropTypes.string,
 	placeHolder: PropTypes.string,
 	suffix: PropTypes.string,
+	id: PropTypes.string,
+	type: PropTypes.string,
 };
 
 TextInput.defaultProps = {
@@ -51,21 +20,23 @@ TextInput.defaultProps = {
 	maxlength: null,
 	placeHolder: null,
 	suffix: null,
+	id: '',
+	type: 'text'
 };
 
 function TextInput(props) {
-	const { label, disabled, onChange, value, errors, maxlength, placeHolder, suffix } = props;
+	const { label, disabled, onChange, value, errors, maxlength, placeHolder, suffix, id, type } = props;
 
 	return (
 		<div className="c-text-input">
-			<p className="c-text-input__error">{errors}</p>
+			{errors && <p className="c-text-input__error">{errors}</p>}
 			<label className="c-text-input__wrapper" htmlFor={`text-input-${label}`}>
 				{suffix && <span className="c-text-input__suffix">{suffix}</span>}
 				<input
-					type="text"
+					type={type}
 					required
 					className="c-text-input__field"
-					id={`text-input-${label}`}
+					id={id}
 					disabled={disabled}
 					onChange={onChange}
 					value={value}

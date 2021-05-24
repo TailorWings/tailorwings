@@ -19,9 +19,50 @@
 
 .MuiDialog-root {
 	.MuiTypography-h6 {
-		@include textStyle(h2)
+		@include textStyle(h2);
 	}
 	.MuiTypography-body1 {
 		@include textStyle(body);
+	}
+}
+
+.pswp {
+	.pswp__button--arrow--right:before {
+		right: 100px;
+	}
+	.pswp__button--arrow--left:before {
+		left: 100px;
+	}
+
+	@include xs {
+		.pswp__button--arrow--right:before {
+			display: none;
+		}
+		.pswp__button--arrow--left:before {
+			display: none;
+		}
+	}
+}
+
+.flickity-carousel {
+	height: 100% !important;
+	& > .flickity-viewport {
+		height: 100% !important;
+	}
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+	select,
+	textarea,
+	input {
+		font-size: 16px;
+	}
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+	select:focus,
+	textarea:focus,
+	input:focus {
+		font-size: 16px;
 	}
 }

@@ -1,6 +1,10 @@
 .c-rqmt-sum {
 	@include flex(center, center);
 	padding: 0 8.7rem;
+	&__style {
+		opacity: 0.7;
+		pointer-events: none
+	}
 	&-product {
 		@include flex(center, center);
 		margin: 3.25rem;

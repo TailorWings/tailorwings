@@ -10,6 +10,11 @@
 		border-radius: 20px;
 		border: 2px dashed $primary-color;
 		text-align: center;
+		background: $subprimary-color;
+		color: $primary-color;
+		& > strong {
+			font-weight: bold;
+		}
 	}
 	&__item {
 		@include flex(space-between, center);

@@ -2,6 +2,10 @@
 	@include flex(flex-start, flex-start, column-reverse);
 	@include textStyle(caption);
 
+	input[type='text'] {
+		@include textStyle(body);
+	}
+
 	&__label {
 		cursor: text;
 		padding-bottom: 1rem;

@@ -15,7 +15,7 @@ import {
 	RQMT_SUM_TITLE,
 	STANDARD_SIZES,
 } from '../../../constants';
-import { fileUpload, updateDocument } from '../../../services/API/firebaseAPI';
+import { fileUpload, setDocumentWithID, updateDocument } from '../../../services/API/firebaseAPI';
 import OfflineMeasurement from './OfflineMeasurement';
 import OnlineMeasurement from './OnlineMeasurement';
 import StandardSizeMeasurement from './StandardSizeMeasurement';
@@ -25,6 +25,7 @@ import { resetState, setOrderDetail, controlLogin } from '../../../app/ReduxSlic
 import { useHistory } from 'react-router';
 import Popup from '../../../components/Popup';
 import OrderConfirmContent from '../../../components/Popup/OrderConfirmContent';
+import MaterialAlert from '../../../components/MaterialAlert';
 
 SummaryContent.propTypes = {
 	msmtMethod: PropTypes.object,
@@ -40,7 +41,7 @@ SummaryContent.defaultProps = {
 
 const NOTE_PLACEHOLDER = [
 	'Ex: I want the neck 5cm deeper in comparison to the model ...',
-	"Ex: I want a comfortable fit, but not too loose",
+	'Ex: I want a comfortable fit, but not too loose',
 	'Ex: My arm is quite big, I want to hide it',
 	"Ex: Let's stitch a margin as big as possible just incase my body become bigger",
 ];
@@ -60,6 +61,7 @@ function SummaryContent(props) {
 	);
 	const [popupShow, setPopupShow] = useState(false);
 	const [isConfirmLoading, setIsConfirmLoading] = useState(false);
+	const [alertOpen, setAlertOpen] = useState(false);
 	const dispatch = useDispatch();
 	/*--------------*/
 	useEffect(() => {
@@ -196,19 +198,51 @@ function SummaryContent(props) {
 						uploadOrderDetail.push(currentOrderDetail);
 						updateDocument('customers', currentCustomer.id, 'orders', uploadOrderDetail);
 						/*--------------*/
-						// const action_resetState = resetState();
-						// dispatch(action_resetState);
-						/*--------------*/
 						if (phoneNumber) {
 							updateDocument('customers', currentCustomer.id, 'phoneNumber', phoneNumber);
 						}
+						/*--------------*/
+						const {
+							id,
+							designFiles,
+							designStyle,
+							fabric,
+							msmt,
+							notes,
+							stdSize,
+							orderDate
+						} = currentOrderDetail;
+						let newTailorOrder = {
+							orderID: id,
+							rqmt: {
+								designFiles,
+								designStyle,
+								fabric,
+								msmt,
+								notes,
+								stdSize,
+							},
+							pickedTailor: null,
+							status: 'finding',
+							offers: null,
+							customer: {
+								id: currentCustomer.id,
+								name: currentCustomer.displayName,
+							},
+							orderDate
+						};
+						setDocumentWithID('tailorOrders', newTailorOrder);
 						/*--------------*/
 						setIsConfirmLoading(false);
 						history.push(`/account/detail?id=${orderDetailId}`);
 						const action_resetState = resetState();
 						dispatch(action_resetState);
 					})
-					.catch((error) => {});
+					.catch((error) => {
+						console.log(`error`, error);
+						setAlertOpen(true);
+						setIsConfirmLoading(false);
+					});
 			}
 		} else {
 		}
@@ -246,6 +280,12 @@ function SummaryContent(props) {
 				backLink={`/measurement/${msmtMethod.method}`}
 				nextText="Next"
 				onNextClick={handleNextClick}
+			/>
+			<MaterialAlert
+				open={alertOpen}
+				setOpen={setAlertOpen}
+				content="ORDER FAILED: Please try again!"
+				serverity="error"
 			/>
 			<Popup show={popupShow} setPopupShow={setPopupShow}>
 				<OrderConfirmContent

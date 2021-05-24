@@ -3,6 +3,7 @@
 	padding: 5rem 0 12.6rem;
 
 	&__title {
+		@include flex(center, center);
 		padding: 0 18rem;
 		margin: 3.2rem 0;
 	}

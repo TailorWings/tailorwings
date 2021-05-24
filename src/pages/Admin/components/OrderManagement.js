@@ -1,7 +1,3 @@
-import React, { Fragment, useState } from 'react';
-import PropTypes from 'prop-types';
-import MediumButton from '../../../components/Button/MediumButton';
-import Popup from '../../../components/Popup';
 import {
 	makeStyles,
 	Paper,
@@ -10,19 +6,23 @@ import {
 	TableCell,
 	TableContainer,
 	TableHead,
-	TableRow,
+	TableRow
 } from '@material-ui/core';
-import RequiremmentSummary from '../../../components/RequirementSummary';
-import MeasurementForm from '../../../components/Form/MeasurementForm';
-import { ONLINE_MEASUREMENTS, STANDARD_SIZES } from '../../../constants';
-import Picker from '../../../components/Picker';
-import RqmtNoteForm from '../../../components/Form/RqmtNoteForm';
-import ManualOffer from './ManualOffer';
-import MaterialAlert from '../../../components/MaterialAlert';
-import { updateDocument } from '../../../services/API/firebaseAPI';
-import { useSelector } from 'react-redux';
-import TailorOffer from '../../Account/components/TailorOffer';
 import moment from 'moment';
+import PropTypes from 'prop-types';
+import React, { Fragment, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import MediumButton from '../../../components/Button/MediumButton';
+import MeasurementForm from '../../../components/Form/MeasurementForm';
+import RqmtNoteForm from '../../../components/Form/RqmtNoteForm';
+import MaterialAlert from '../../../components/MaterialAlert';
+import Picker from '../../../components/Picker';
+import Popup from '../../../components/Popup';
+import RequiremmentSummary from '../../../components/RequirementSummary';
+import { ONLINE_MEASUREMENTS, STANDARD_SIZES } from '../../../constants';
+import { fetchAllRTCondition, updateDocument } from '../../../services/API/firebaseAPI';
+import TailorOffer from '../../Account/components/TailorOffer';
+import ManualOffer from './ManualOffer';
 
 OrderManagement.propTypes = {
 	orders: PropTypes.object,
@@ -74,6 +74,8 @@ function OrderManagement(props) {
 			return { name: size, active: false };
 		})
 	);
+	const [tailorFindingOrders, setTailorFindingOrders] = useState(null);
+	/*------------------------------*/
 	const [popupShow, setPopupShow] = useState(false);
 	const [alertOpen, setAlertOpen] = useState(false);
 	/*-------------------------------------------------------ORDER STATUS------------------------------------------------------------*/
@@ -88,6 +90,14 @@ function OrderManagement(props) {
 		},
 	});
 	const classes = useStyles();
+	/*------------------------------*/
+	useEffect(() => {
+		fetchAllRTCondition('tailorOrders', 'status', '==', 'finding', (result) => {
+			if (result?.length > 0) {
+				setTailorFindingOrders(result);
+			}
+		});
+	}, []);
 	/*********************************
 	 *  Description: handle status change
 	 */
@@ -100,12 +110,13 @@ function OrderManagement(props) {
 					let rowContentFinding =
 						orders?.finding.length > 0
 							? orders.finding.map((order) => {
-									const { designFiles, customer, orderDate, offers } = order;
+									const { designFiles, customer, orderDate } = order;
+									let offers = tailorFindingOrders?.find(tailorOrder => tailorOrder.orderID === order.id)?.offers;
 									return {
 										image: designFiles[0],
 										customer: customer.displayName || customer.phone,
 										orderDate,
-										offers: offers?.length,
+										offers,
 										picked: offers?.length > 0 ? !!offers?.find((offer) => offer.picked) : false,
 									};
 							  })
@@ -129,7 +140,7 @@ function OrderManagement(props) {
 										<TableBody>
 											{rowContentFinding.length > 0 ? (
 												rowContentFinding.map((row, index) => (
-													<TableRow key={index} onClick={() => onRowClick(index, 'finding')}>
+													<TableRow key={index} onClick={() => onRowClick(index, 'finding', row.offers)}>
 														<TableCell align="center">{row.customer}</TableCell>
 														<TableCell align="center">
 															<div className="image-wraper">
@@ -137,7 +148,7 @@ function OrderManagement(props) {
 															</div>
 														</TableCell>
 														<TableCell align="center">{row.orderDate}</TableCell>
-														<TableCell align="center">{row.offers}</TableCell>
+														<TableCell align="center">{row.offers?.length || 0}</TableCell>
 														<TableCell align="center">{row.picked}</TableCell>
 													</TableRow>
 												))
@@ -302,10 +313,11 @@ function OrderManagement(props) {
 	/*********************************
 	 *  Description: onRowClick
 	 */
-	function onRowClick(clickedIndex, clickedStatus) {
+	function onRowClick(clickedIndex, clickedStatus, offers) {
 		let clickedStatusOrders = orders[clickedStatus] ? [...orders[clickedStatus]] : [];
 		let clickedOrder = clickedStatusOrders[clickedIndex] && {
 			...clickedStatusOrders[clickedIndex],
+			offers: [...offers]
 		};
 		if (clickedOrder) {
 			let updatedOnlineMsmt =
@@ -316,6 +328,7 @@ function OrderManagement(props) {
 				updatedOnlineMsmt.forEach((msmt) => {
 					msmt.value = clickedOrder.msmt ? clickedOrder.msmt[msmt.id] : '';
 				});
+
 				setOnlineMsmt(updatedOnlineMsmt);
 			}
 			/*--------------*/
@@ -386,7 +399,10 @@ function OrderManagement(props) {
 							)}
 							{clickedOrder.msmt ? (
 								<div className="c-admin-order__info --msmt">
-									<MeasurementForm disabled measurements={onlineMsmt} />
+									<MeasurementForm
+										disabled
+										measurements={Array.isArray(onlineMsmt) ? onlineMsmt : []}
+									/>
 								</div>
 							) : (
 								<Fragment />
@@ -394,7 +410,7 @@ function OrderManagement(props) {
 							{clickedOrder.notes ? (
 								<div className="c-admin-order__info --notes">
 									<p>Requirement Note</p>
-									<RqmtNoteForm notes={clickedOrder.notes} />
+									<RqmtNoteForm notes={clickedOrder?.notes || []} />
 								</div>
 							) : (
 								<Fragment />
@@ -406,6 +422,7 @@ function OrderManagement(props) {
 							) : (
 								<Fragment />
 							)}
+							{/* --- */}
 							{btnRender}
 						</div>
 					) : (

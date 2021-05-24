@@ -1,0 +1,13 @@
+.tailor-round-tag {
+	width: 100%;
+	border-radius: 20px;
+	padding: 12px 16px;
+	background: $subprimary-color;
+	& > span {
+		display: block;
+		color: $primary-color;
+		@include font(fontSemiBold, 14px);
+		text-align: center;
+		text-transform: capitalize;
+	}
+}

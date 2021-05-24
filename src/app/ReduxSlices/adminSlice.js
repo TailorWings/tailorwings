@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const commonSlice = createSlice({
+const adminSlice = createSlice({
 	name: 'admin',
 	initialState: {
 		customers: null,
@@ -16,6 +16,6 @@ const commonSlice = createSlice({
 	},
 });
 
-const { actions, reducer } = commonSlice;
+const { actions, reducer } = adminSlice;
 export const { updateCustomers, updateTailors } = actions;
 export default reducer;

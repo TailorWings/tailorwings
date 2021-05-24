@@ -1,0 +1,23 @@
+.tailor-square-tag {
+	@include flex(space-between, flex-start, column);
+	border-radius: 5px;
+	background: $primary-color;
+	padding: 16px 16px;
+	color: white;
+	min-height: 110px;
+
+	& > p {
+		@include font(fontMedium, 14px);
+		line-height: 16px;
+		margin-bottom: 20px;
+	}
+
+	& > span {
+		@include font(fontSemiBold, 18px);
+	}
+
+	&.--active {
+		background: $subprimary-color;
+		color: $primary-color;
+	}
+}

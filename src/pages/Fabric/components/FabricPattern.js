@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Fragment, useEffect, useRef, useState } from 'react';
-import ReactIdSwiper from 'react-id-swiper';
+import Swiper from 'react-id-swiper';
 import ListLoader from '../../../components/ComponentLoader';
 import Picker from '../../../components/Picker';
 import ProcessAction from '../../../components/ProcessAction';
@@ -18,6 +18,7 @@ FabricPattern.propTypes = {
 	onPatternClick: PropTypes.func,
 	onNextClick: PropTypes.func,
 	// estPrice: PropTypes.string,
+	isConfirmDisabled: PropTypes.bool,
 };
 
 FabricPattern.defaultProps = {
@@ -32,7 +33,7 @@ FabricPattern.defaultProps = {
 const PHOTO_SWIPE_SIZE = 500;
 
 function FabricPattern(props) {
-	const { collections, patterns, onCollectionClick, onPatternClick, onNextClick, estPrice } = props;
+	const { collections, patterns, onCollectionClick, onPatternClick, onNextClick, estPrice, isConfirmDisabled } = props;
 	const screenWidth = window.innerWidth;
 	const [isPhotoSwipeOpen, setIsPhotoSwipeOpen] = useState(false);
 	const [startIndex, setStartIndex] = useState(0);
@@ -40,14 +41,20 @@ function FabricPattern(props) {
 	/*--------------*/
 	const swiperRef = useRef(null);
 	const params = {
-		slidesPerView: screenWidth < 789 ? 3 : 5,
+		slidesPerView: screenWidth < 769 ? 3 : 5,
 		slidesPerColumn: 2,
-		spaceBetween: screenWidth < 789 ? 5 : 16,
+		spaceBetween: screenWidth < 769 ? 5 : 16,
 		slidesPerColumnFill: 'row',
 		lazy: true,
-		navigation: {
-			nextEl: '.swiper-button-next',
-			prevEl: '.swiper-button-prev',
+		// navigation: {
+		// 	nextEl: '.swiper-button-next',
+		// 	prevEl: '.swiper-button-prev',
+		// },
+		pagination: {
+			el: '.swiper-pagination',
+			clickable: true,
+		},
+		on: {
 		},
 	};
 	/*--------------*/
@@ -123,7 +130,10 @@ function FabricPattern(props) {
 			{patterns ? (
 				patterns.length > 0 ? (
 					<Slider swiperRef={swiperRef}>
-						<ReactIdSwiper {...params} ref={swiperRef}>
+						<Swiper
+							{...params}
+							ref={swiperRef}
+						>
 							{patterns.map((pattern, index) => {
 								return (
 									<div key={index}>
@@ -138,9 +148,12 @@ function FabricPattern(props) {
 									</div>
 								);
 							})}
-						</ReactIdSwiper>
+						</Swiper>
 					</Slider>
 				) : (
+					// {
+					// 	screenWidth < 789 && <div className="c-fabric-pattern__swipe-guide"><span>swipe for more</span><i><img src="" alt="" /></i></div>
+					// }
 					<p>No pattern for on this collection</p>
 				)
 			) : (
@@ -154,7 +167,7 @@ function FabricPattern(props) {
 			) : (
 				<Fragment />
 			)}
-			<ProcessAction backLink="/requirement" onNextClick={onNextClick} />
+			<ProcessAction backLink="/requirement" onNextClick={onNextClick} disabled={isConfirmDisabled}/>
 			<PhotoSwipe
 				isOpen={isPhotoSwipeOpen}
 				items={images || []}

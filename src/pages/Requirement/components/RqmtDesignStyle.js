@@ -21,7 +21,7 @@ function RqmtDesignStyle(props) {
 	return (
 		<div className="c-rqmt-design-style">
 			<div className="c-rqmt-design-style__title">
-				<Title title={RQPAGE_TITLE} subtitle={RQPAGE_SUBTITLE} />
+				<Title title={RQPAGE_TITLE} />
 			</div>
 			<div className="c-rqmt-design-style__picker">
 				<Picker list={styles} onItemClick={onStyleClick} />

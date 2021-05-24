@@ -15,6 +15,7 @@ function RequirementPage() {
 	const dispatch = useDispatch();
 	/*--------------*/
 	const [alertOpen, setAlertOpen] = useState(false);
+	const [confirmDisable, setConfirmDisable] = useState(false);
 	const [designFiles, setDesignFiles] = useState([]);
 	const [styles, setStyles] = useState(
 		STYLES_OF_CLOTHE.map((style) => {
@@ -39,6 +40,14 @@ function RequirementPage() {
 			setDesignFiles([...orderDetail.designFiles]);
 		}
 	}, [orderDetail]);
+	useEffect(() => {
+		if (designFiles?.length < 1 || !!!styles?.find((style) => style.active)) {
+			console.log('here');
+			setConfirmDisable(true);
+		} else if (confirmDisable) {
+			setConfirmDisable(false);
+		}
+	}, [designFiles, styles]);
 	/*--------------*/
 	const alertUser = (e) => {
 		e.preventDefault();
@@ -89,7 +98,7 @@ function RequirementPage() {
 			{styles?.find((style) => style.active) && (
 				<>
 					<RqmtDesignUpload setDesignFiles={setDesignFiles} />
-					<RqmtFooter onNextClick={handleNextClick} />
+					<RqmtFooter onNextClick={handleNextClick} disabled={confirmDisable}/>
 				</>
 			)}
 			<MaterialAlert

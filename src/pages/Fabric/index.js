@@ -39,6 +39,7 @@ function FabricPage() {
 	const [renderPatterns, setRenderPatterns] = useState(null);
 	const [estPrice, setEstPrice] = useState('');
 	const [isOnline, setIsOnline] = useState(!!orderDetail.fabric.isOnline);
+	const [isConfirmDisabled, setIsConfirmDisabled] = useState(true);
 	/*--------------*/
 	const alertUser = (e) => {
 		e.preventDefault();
@@ -69,15 +70,16 @@ function FabricPage() {
 			let initilRenderPatterns = patterns.map((pattern) => {
 				return { ...pattern, active: false };
 			});
-			if (!orderDetail.fabric.type) {
+			if (!orderDetail?.fabric?.type) {
 				setRenderPatterns(initilRenderPatterns);
 			} else {
 				let firstPattern = { ...initilRenderPatterns[0] };
 				let selectedPatternIndex = initilRenderPatterns.findIndex((pattern) => {
 					return pattern.id === orderDetail.fabric.pattern.id;
 				});
-				if (selectedPatternIndex > 0) {
-					initilRenderPatterns[0] = { ...initilRenderPatterns[selectedPatternIndex], active: true };
+				if (selectedPatternIndex > -1) {
+					// initilRenderPatterns[0] = { ...initilRenderPatterns[selectedPatternIndex], active: true };
+					initilRenderPatterns[0] = { ...orderDetail?.fabric?.pattern };
 					initilRenderPatterns[selectedPatternIndex] = { ...firstPattern };
 				}
 				setRenderPatterns(initilRenderPatterns);
@@ -89,11 +91,39 @@ function FabricPage() {
 				);
 			}
 		}
-	}, [orderDetail, patterns]);
-	/*------------------------------*/
+	}, []);
 	useEffect(() => {
-		handleCollectionStatus(0);
-	}, [fabricType]);
+		let selectedFabricType = fabricType?.find((type) => {
+			return type.active;
+		});
+		let selectedPattern = renderPatterns?.find((pattern) => {
+			return pattern.active;
+		});
+
+		if (selectedFabricType && selectedPattern) {
+			setIsConfirmDisabled(false);
+		} else if (!isConfirmDisabled) {
+			setIsConfirmDisabled(true);
+		}
+	}, [fabricType, renderPatterns]);
+	/*------------------------------*/
+	// useEffect(() => {
+	// handleCollectionStatus(0);
+	/*------------------------------*/
+	// let newRenderPatterns = patterns?.filter((pattern) =>
+	// 	pattern?.idFabricType?.includes(fabricType?.find((type) => type?.active)?.id)
+	// );
+	// if (newRenderPatterns) {
+	// 	setRenderPatterns(null);
+	// 	setTimeout(() => {
+	// 		setRenderPatterns(
+	// 			newRenderPatterns.map((pattern) => {
+	// 				return { ...pattern, active: false };
+	// 			})
+	// 		);
+	// 	}, 500);
+	// }
+	// }, [patterns, fabricType]);
 	/*------------------------------*/
 	useEffect(() => {
 		let currentFabricType = fabricType.find((type) => type.active);
@@ -129,16 +159,31 @@ function FabricPage() {
 	 *  Description: handle fabric type set
 	 */
 	function onFabricTypeSet(thisFabricType) {
+		/*------------------------------*/
+		let newRenderPatterns = patterns?.filter((pattern) =>
+			pattern.idFabricType?.includes(thisFabricType?.find((type) => type?.active)?.id)
+		);
+		if (newRenderPatterns) {
+			setRenderPatterns(null);
+			setTimeout(() => {
+				setRenderPatterns(
+					newRenderPatterns.map((pattern) => {
+						return { ...pattern, active: false };
+					})
+				);
+			}, 500);
+		}
+		/*------------------------------*/
 		setFabricType(thisFabricType);
 		// let widthScreen = window.innerWidth;
-		let patternSection = document.querySelector('.c-fabric-type .c-fabric-type__gallery');
+		// let patternSection = document.querySelector('.c-fabric-type .c-fabric-type__gallery');
 		// if (widthScreen < 769) {
-		if (patternSection) {
-			window.scrollTo({
-				top: patternSection.offsetTop - 40,
-				behavior: 'smooth',
-			});
-		}
+		// if (patternSection) {
+		// 	window.scrollTo({
+		// 		top: patternSection.offsetTop - 40,
+		// 		behavior: 'smooth',
+		// 	});
+		// }
 		// }
 	}
 	/************_END_****************/
@@ -239,6 +284,7 @@ function FabricPage() {
 							onPatternClick={handlePatternSelect}
 							onNextClick={handleConfirm}
 							estPrice={estPrice}
+							isConfirmDisabled={isConfirmDisabled}
 						/>
 					)}
 
@@ -251,7 +297,12 @@ function FabricPage() {
 				</Fragment>
 			)}
 			{!isOnline && (
-				<div style={{ display: 'block', marginTop: '10%' }}>
+				<div
+					style={{
+						display: 'block',
+						marginTop: '10%',
+					}}
+				>
 					<ProcessAction backLink="/requirement" onNextClick={onSendFabricOffline} />
 				</div>
 			)}

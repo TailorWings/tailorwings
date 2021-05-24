@@ -21,7 +21,7 @@ import PaymentInfo from '../../../components/PaymentInfo';
 import Picker from '../../../components/Picker';
 import RequirementSummary from '../../../components/RequirementSummary';
 import { ONLINE_MEASUREMENTS, SHIPPING_INFO, STANDARD_SIZES } from '../../../constants';
-import { setDocument, updateDocument } from '../../../services/API/firebaseAPI';
+import { fetchCondition, setDocument, updateDocument } from '../../../services/API/firebaseAPI';
 import TailorOffer from './TailorOffer';
 
 OrderDetail.propTypes = {
@@ -53,10 +53,22 @@ function OrderDetail(props) {
 			return info;
 		})
 	);
+	const [offers, setOffers] = useState([]);
+	const [tailorOrder, setTailorOrder] = useState(null);
 	const [alertOpen, setAlertOpen] = useState(false);
 	const [deleteOpen, setDeleteOpen] = useState(false);
 	const [isPageLoad, setIsPageLoad] = useState(false);
 	/*--------------*/
+	const alertUser = (e) => {
+		e.preventDefault();
+		e.returnValue = '';
+	};
+	useEffect(() => {
+		window.addEventListener('beforeunload', alertUser);
+		return () => {
+			window.removeEventListener('beforeunload', alertUser);
+		};
+	}, []);
 	useEffect(() => {
 		/*--------------*/
 		let myTimeout = setTimeout(() => {
@@ -109,7 +121,6 @@ function OrderDetail(props) {
 					);
 				}
 				/*--------------*/
-				
 			}
 			newOrderDetail && setCurrentOrderDetail(newOrderDetail);
 			/*--------------*/
@@ -120,7 +131,23 @@ function OrderDetail(props) {
 		if (currentCustomer?.shippingInfo) {
 			setShippingInfo(currentCustomer.shippingInfo);
 		}
-	}, [currentCustomer])
+	}, [currentCustomer]);
+
+	useEffect(() => {
+		async function fetchOffers() {
+			try {
+				let tailorOrder = await fetchCondition('tailorOrders', 'orderID', '==', orderID.id);
+				console.log(`tailorOrder`, tailorOrder)
+				if (tailorOrder?.length === 1) {
+					setOffers(tailorOrder[0]?.offers || []);
+					setTailorOrder(tailorOrder[0]);
+				}
+			} catch (error) {}
+		}
+		if (orderID?.id) {
+			fetchOffers();
+		}
+	}, [orderID?.id]);
 
 	// if (!orderList || !currentOrderDetail)
 	// 	return (
@@ -137,12 +164,19 @@ function OrderDetail(props) {
 	/*********************************
 	 *  Description: handle tailor picked
 	 */
-	function onOrderDetailChange(pickedIndex) {
-		let updatedOffers = currentOrderDetail.offers.map((order, index) => {
-			return { ...order, picked: index === pickedIndex };
+	function onOfferPicked(pickedIndex) {
+		// let updatedOffers = currentOrderDetail.offers.map((order, index) => {
+		// 	return { ...order, picked: index === pickedIndex };
+		// });
+		// if (updatedOffers) {
+		// 	setCurrentOrderDetail({ ...currentOrderDetail, offers: [...updatedOffers] });
+		// }
+		let updatedOffers = offers?.map((offer, index) => {
+			return { ...offer, picked: index === pickedIndex };
 		});
-		if (updatedOffers) {
-			setCurrentOrderDetail({ ...currentOrderDetail, offers: [...updatedOffers] });
+
+		if (updatedOffers.length > 0) {
+			setOffers(updatedOffers);
 		}
 	}
 	/************_END_****************/
@@ -161,28 +195,48 @@ function OrderDetail(props) {
 	 *  Description: handle order confirm
 	 */
 	function handleOrderConfirm() {
-		let offerVerify = !!currentOrderDetail.offers.find((offer) => offer.picked);
+		// let offerVerify = !!currentOrderDetail.offers.find((offer) => offer.picked);
+		let offerVerify = !!offers?.find((offer) => offer.picked);
 		if (offerVerify && shippingInfo[0].value && shippingInfo[1].value && shippingInfo[2].value) {
 			setLoading(true);
+			/*------------------------------*/
 			let updatedCustomer = {
 				...currentCustomer,
 				shippingInfo,
 				orders: currentCustomer.orders.map((order) => {
 					if (order.id === currentOrderDetail.id) {
-						return { ...currentOrderDetail, shippingInfo, status: 'tailoring' };
+						return {
+							...currentOrderDetail,
+							shippingInfo,
+							status: 'tailoring',
+							offers: [...offers],
+						};
 					} else {
 						return { ...order };
 					}
 				}),
 			};
+			/*------------------------------*/
 			if (updatedCustomer) {
-				setDocument('customers', updatedCustomer, updatedCustomer.id).then(() => {
-					setLoading(false);
-					onPopupStatusChange && onPopupStatusChange(true);
-				}).catch((error) => {
-					setLoading(false);
-				});
+				setDocument('customers', updatedCustomer, updatedCustomer.id);
 			}
+			/*------------------------------*/
+			let updatedTailorOrder = tailorOrder && JSON.parse(JSON.stringify(tailorOrder));
+			if (updatedTailorOrder) {
+				updatedTailorOrder.pickedTailor = offers?.find((offer) => offer.picked)?.tailor?.id || null;
+				updatedTailorOrder.status = 'tailoring';
+				updatedTailorOrder.offers = [...offers];
+
+				setDocument('tailorOrders', updatedTailorOrder, updatedTailorOrder.id)
+					.then(() => {
+						setLoading(false);
+						onPopupStatusChange && onPopupStatusChange(true);
+					})
+					.catch((error) => {
+						setLoading(false);
+					});
+			}
+			/*------------------------------*/
 		} else {
 			setAlertOpen(true);
 		}
@@ -224,6 +278,7 @@ function OrderDetail(props) {
 		return <Redirect to="/account" />;
 	}
 	const { designFiles, designStyle, fabric, msmt, notes, status } = currentOrderDetail;
+	console.log('offers :>> ', offers);
 	return (
 		<div className="c-order-detail">
 			<div className="c-order-detail__header">
@@ -234,12 +289,17 @@ function OrderDetail(props) {
 			</div>
 			<div className="c-order-detail__offer">
 				<TailorOffer
+					// offerInfo={
+					// 	currentOrderDetail?.status !== 'finding'
+					// 		? currentOrderDetail?.offers?.filter((elem) => elem.picked)
+					// 		: currentOrderDetail?.offers
+					// }
 					offerInfo={
 						currentOrderDetail?.status !== 'finding'
-							? currentOrderDetail?.offers?.filter((elem) => elem.picked)
-							: currentOrderDetail?.offers
+							? offers?.filter((elem) => elem.picked)
+							: offers
 					}
-					onTailorPick={status === 'finding' ? onOrderDetailChange : null}
+					onTailorPick={status === 'finding' ? onOfferPicked : null}
 				/>
 			</div>
 			<div className="c-order-detail-summary">
@@ -266,7 +326,7 @@ function OrderDetail(props) {
 				</Accordion>
 			</div>
 			<div className="c-order-detail-shipping-info">
-				<Accordion title="shipping information">
+				<Accordion title="shipping information" isActive={false}>
 					<div className="c-order-detail-shipping-info__form">
 						<ShippingForm
 							shippingInfo={shippingInfo}
@@ -284,15 +344,21 @@ function OrderDetail(props) {
 					<div className="-wrapper" onClick={() => setDeleteOpen(true)}>
 						<MediumButton text="Delete" />
 					</div>
-					<div className="-wrapper" onClick={handleOrderConfirm}>
-						<MediumButton text="Place Order" isActive />
-					</div>
+					{offers?.find((offer) => offer.picked) ? (
+						<div className="-wrapper" onClick={handleOrderConfirm}>
+							<MediumButton text="Place order" isActive />
+						</div>
+					) : (
+						<div className="-wrapper disabled" onClick={handleOrderConfirm}>
+							<MediumButton text="Place order" isActive />
+						</div>
+					)}
 				</div>
 			)}
 			<MaterialAlert
 				open={alertOpen}
 				setOpen={setAlertOpen}
-				content="Please pick a tailor and provide your shipping information"
+				content="Please pick a tailor and provide your shipping information (in Shipping Information tag)"
 				serverity="error"
 			/>
 			<Dialog
@@ -304,9 +370,7 @@ function OrderDetail(props) {
 				<DialogTitle id="alert-dialog-title">{'Do you want delete this order?'}</DialogTitle>
 				<DialogContent>
 					<DialogContentText id="alert-dialog-description">
-						Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, dolores
-						exercitationem. Minima ipsum nemo earum tenetur! Illum quae ea quibusdam similique
-						pariatur doloremque dolor consequatur, exercitationem ipsam perspiciatis at? Alias?
+						Warning: All data of this order will be delete.
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>

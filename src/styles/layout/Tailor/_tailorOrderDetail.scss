@@ -1,0 +1,165 @@
+.tailor-order-detail {
+	margin-bottom: 50px;
+	&__slider {
+		margin-top: 24px;
+		width: 100%;
+		height: 332px;
+		padding: 16px 0;
+		& .-image {
+			width: 230px;
+			margin: 0 8px;
+			border-radius: 8px;
+		}
+	}
+	&__wrapper {
+		padding: 16px 24px;
+	}
+	&__title {
+		@include font(fontSemiBold, 20px);
+		padding: 24px 0;
+		text-align: left;
+		position: relative;
+		&::after {
+			content: '';
+			width: 100%;
+			height: 1px;
+			background: rgba($color: #000000, $alpha: 0.1);
+			position: absolute;
+			left: 0;
+			bottom: 10px;
+		}
+	}
+	&__design {
+		width: 100%;
+		margin-bottom: 16px;
+		& > p {
+			@include font(fontSemiBold, 24px);
+			text-align: center;
+			text-transform: capitalize;
+			line-height: 120%;
+			margin-bottom: 16px;
+		}
+		& > .-wrapper {
+			@include flex(center, center);
+			width: 100%;
+			& > .tailor-round-tag {
+				width: 120px;
+				&:first-child {
+					margin-right: 8px;
+				}
+			}
+		}
+	}
+	&__fabric {
+		width: 100%;
+		& > p {
+			@include font(fontSemiBold, 20px);
+			padding: 24px 0;
+			text-align: left;
+			position: relative;
+			&::after {
+				content: '';
+				width: 100%;
+				height: 1px;
+				background: rgba($color: #000000, $alpha: 0.1);
+				position: absolute;
+				left: 0;
+				bottom: 10px;
+			}
+		}
+		& > .-wrapper {
+			@include flex();
+			margin-right: -20px;
+			& .fabric-type,
+			& .fabric-pattern {
+				width: calc(50% - 20px);
+				height: 0;
+				padding-bottom: calc(50% - 20px);
+				margin-right: 20px;
+				border-radius: 10px;
+				overflow: hidden;
+				position: relative;
+				& > img {
+					@include size(100%);
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					object-fit: cover;
+				}
+			}
+			& .fabric-type {
+				@include flex(center, center);
+				position: relative;
+				z-index: 1;
+
+				& .-overlay {
+					@include size(100%);
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					background: $solid-black-color;
+					opacity: 0.3;
+
+					z-index: 2;
+				}
+				& span {
+					@include textStyle(h3);
+					color: white;
+					text-transform: uppercase;
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					z-index: 3;
+				}
+			}
+		}
+	}
+	&__msmt {
+		width: 100%;
+		& > .-list {
+			@include flex(flex-start, center, row, wrap);
+			margin-right: -10px;
+			margin-bottom: -10px;
+			& > .-item {
+				width: calc(33.33% - 10px);
+				margin-right: 10px;
+				margin-bottom: 10px;
+				& > .tailor-square-tag {
+					text-transform: capitalize;
+					min-height: 125px;
+				}
+			}
+		}
+	}
+	&__notes {
+		width: 100%;
+		margin-bottom: -16px;
+		& > .-note {
+			width: 100%;
+			margin-bottom: 16px;
+			& > .tailor-square-tag {
+				min-height: 100px;
+			}
+		}
+	}
+	&__form {
+		& .c-text-input {
+			margin-bottom: 16px;
+		}
+		& .-btn {
+			@include flex(center, center);
+			width: 100%;
+			padding: 18px 12px;
+			background: $primary-color;
+			border-radius: 5px;
+			& > span {
+				@include font(fontSemiBold, 18px);
+				color: white;
+				text-transform: capitalize;
+			}
+		}
+	}
+}
