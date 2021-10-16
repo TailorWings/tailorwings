@@ -232,7 +232,8 @@ function FabricPage() {
 	/*********************************
 	 *  Description: handle pattern select
 	 */
-	function handlePatternSelect(updatedPatterns) {
+	function handlePatternSelect(updatedPatterns, clickedIndex) {
+		console.log('updatedPatterns :>> ', updatedPatterns, clickedIndex);
 		if (updatedPatterns) {
 			setRenderPatterns(updatedPatterns);
 		}

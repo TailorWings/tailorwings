@@ -33,7 +33,15 @@ FabricPattern.defaultProps = {
 const PHOTO_SWIPE_SIZE = 500;
 
 function FabricPattern(props) {
-	const { collections, patterns, onCollectionClick, onPatternClick, onNextClick, estPrice, isConfirmDisabled } = props;
+	const {
+		collections,
+		patterns,
+		onCollectionClick,
+		onPatternClick,
+		onNextClick,
+		estPrice,
+		isConfirmDisabled,
+	} = props;
 	const screenWidth = window.innerWidth;
 	const [isPhotoSwipeOpen, setIsPhotoSwipeOpen] = useState(false);
 	const [startIndex, setStartIndex] = useState(0);
@@ -54,8 +62,7 @@ function FabricPattern(props) {
 			el: '.swiper-pagination',
 			clickable: true,
 		},
-		on: {
-		},
+		on: {},
 	};
 	/*--------------*/
 	let options = {
@@ -69,8 +76,8 @@ function FabricPattern(props) {
 		zoomEl: true,
 		closeOnScroll: false,
 		isClickableElement: function (el) {
-			let clickedIndex = el.getAttribute('id');
-			if (clickedIndex && clickedIndex > -1) {
+			let clickedIndex = startIndex;
+			if (clickedIndex && clickedIndex > -1 && el.tagName === "BUTTON" && !el.className.includes("pswp__button")) {
 				let updatedPattern = patterns.map((pattern, index) => {
 					return { ...pattern, active: index === Number(clickedIndex) };
 				});
@@ -80,7 +87,7 @@ function FabricPattern(props) {
 						updatedPattern[0] = updatedPattern[Number(clickedIndex)];
 						updatedPattern[Number(clickedIndex)] = temp;
 					}
-					onPatternClick(updatedPattern);
+					onPatternClick(updatedPattern, clickedIndex);
 					swiperRef.current.swiper.slideTo(0);
 				}
 				setIsPhotoSwipeOpen(false);
@@ -111,6 +118,31 @@ function FabricPattern(props) {
 		setTimeout(() => {
 			setIsPhotoSwipeOpen(true);
 		}, 100);
+		/*------------------------------*/
+		let selectedPattern = patterns[clickedIndex];
+		if (selectedPattern?.image?.list) {
+			setImages(
+				selectedPattern?.image?.list.map((img, index) => {
+					return {
+						w: PHOTO_SWIPE_SIZE,
+						h: PHOTO_SWIPE_SIZE,
+						html: `<div className="c-fabric-pattern__select-btn"><img src=${img} /><button className="select-btn" id=${index}>Select</button></div>`,
+					};
+				})
+			);
+		} else if (selectedPattern?.image?.normal) {
+			setImages([
+				{
+					// src: pattern.image.normal,
+					w: PHOTO_SWIPE_SIZE,
+					h: PHOTO_SWIPE_SIZE,
+					html: `<div className="c-fabric-pattern__select-btn"><img src=${selectedPattern.image.normal
+						} /><button className="select-btn" id=${0}>Select</button></div>`,
+				},
+			]);
+		}
+
+		// DÒNG NÀY MỞ LÊN khi sử dụng data mới
 	}
 	/************_END_****************/
 	const handlePhotoSwipeClose = () => {
@@ -118,7 +150,6 @@ function FabricPattern(props) {
 	};
 	/*--------------*/
 	if (!collections || !onCollectionClick || !onPatternClick) return <Fragment />;
-
 	return (
 		<div className="c-fabric-pattern">
 			{/* <div className="c-fabric-pattern__title">
@@ -130,17 +161,13 @@ function FabricPattern(props) {
 			{patterns ? (
 				patterns.length > 0 ? (
 					<Slider swiperRef={swiperRef}>
-						<Swiper
-							{...params}
-							ref={swiperRef}
-						>
+						<Swiper {...params} ref={swiperRef}>
 							{patterns.map((pattern, index) => {
 								return (
 									<div key={index}>
 										<li
-											className={`c-fabric-pattern__item ${pattern.active ? '--selected' : ''} ${
-												!pattern.image ? '--no-image' : ''
-											}`}
+											className={`c-fabric-pattern__item ${pattern.active ? '--selected' : ''} ${!pattern.image ? '--no-image' : ''
+												}`}
 											onClick={() => onPatternSelect(index)}
 										>
 											{pattern.image ? <img src={pattern.image.normal} alt="icon" /> : <Fragment />}
@@ -167,7 +194,11 @@ function FabricPattern(props) {
 			) : (
 				<Fragment />
 			)}
-			<ProcessAction backLink="/requirement" onNextClick={onNextClick} disabled={isConfirmDisabled}/>
+			<ProcessAction
+				backLink="/requirement"
+				onNextClick={onNextClick}
+				disabled={isConfirmDisabled}
+			/>
 			<PhotoSwipe
 				isOpen={isPhotoSwipeOpen}
 				items={images || []}

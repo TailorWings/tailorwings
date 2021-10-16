@@ -1,0 +1,31 @@
+.admin-pattern-upload {
+	width: 100%;
+	@include flex(center, center, column);
+	padding: 20px 0;
+    &__title {
+        @include flex(center, center);
+        margin-bottom: 20px;
+    }
+	& h2 {
+		@include font(fontBold, 24px);
+        margin-right: 20px;
+        line-height: 100%;
+	}
+    & .-upload-btn {
+        margin-top: 5px;
+    }
+	&__data {
+		@include flex(center, center, column);
+        margin-bottom: 20px;
+		& label {
+            @include flex(center, center, column);
+            @include font(fontBold, 14px);
+            text-decoration: underline;
+			cursor: pointer;
+			color: #f68729;
+			text-transform: capitalize;
+			transition: color 0.3s linear;
+            text-align: center;
+		}
+	}
+}

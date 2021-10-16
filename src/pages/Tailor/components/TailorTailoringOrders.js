@@ -7,11 +7,13 @@ import TailorOrder from './TailorOrder';
 function TailorTailoringOrders() {
 	/*------------------------------*/
 	const { pickedOrders } = useSelector((state) => state.tailor);
-	const [ alertOpen, setAlertOpen ] = useState(false);
-	const [ alertContent, setAlertContent ] = useState({
+	const [tailoringOrders, setTailoringOrders] = useState(null);
+	const [alertOpen, setAlertOpen] = useState(false);
+	const [alertContent, setAlertContent] = useState({
 		content: '',
-		serverity: ''
+		serverity: '',
 	});
+
 	/*------------------------------*/
 	useEffect(() => {
 		window.scrollTo({
@@ -19,30 +21,39 @@ function TailorTailoringOrders() {
 			behavior: 'smooth',
 		});
 	}, []);
-	/*------------------------------*/
-    function onTailorDone(orderID) {
-		if (orderID) {
-			updateDocument('tailorOrders', orderID, 'isTailored', true).then(() => {
-				setAlertOpen(true);
-				setAlertContent({
-					content: "Thành công!",
-					serverity: 'success'
-				})
-			}).catch((error) => {
-				setAlertContent({
-					content: "Lỗi, vui lòng thử lại!",
-					serverity: 'error'
-				})
-			})
+
+	useEffect(() => {
+		if (pickedOrders) {
+			let tailoringList = pickedOrders.filter((order) => order.status === 'tailoring');
+			setTailoringOrders(tailoringList);
 		}
-    }
-    /*------------------------------*/
+	}, [pickedOrders]);
+	/*------------------------------*/
+	function onTailorDone(orderID) {
+		if (orderID) {
+			updateDocument('tailorOrders', orderID, 'isTailored', true)
+				.then(() => {
+					setAlertOpen(true);
+					setAlertContent({
+						content: 'Thành công!',
+						serverity: 'success',
+					});
+				})
+				.catch((error) => {
+					setAlertContent({
+						content: 'Lỗi, vui lòng thử lại!',
+						serverity: 'error',
+					});
+				});
+		}
+	}
+	/*------------------------------*/
 	return (
 		<div className="tailor-finding-orders" style={{ width: '100%' }}>
-			{pickedOrders.map((order) => {
+			{tailoringOrders?.map((order) => {
 				return (
 					<div key={order.id}>
-						<TailorOrder order={order} onTailorDone={onTailorDone} type="t"/>
+						<TailorOrder order={order} onTailorDone={onTailorDone} type="t" />
 					</div>
 				);
 			})}

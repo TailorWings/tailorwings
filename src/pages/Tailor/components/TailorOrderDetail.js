@@ -12,6 +12,7 @@ import TextInput from '../../../components/Input/TextInput';
 import MaterialAlert from '../../../components/MaterialAlert';
 import { updateDocument } from '../../../services/API/firebaseAPI';
 import { finalPriceCalc } from '../../../services/Functions/commonFunctions';
+import emailjs from 'emailjs-com';
 
 function TailorOrderDetail() {
 	/*------------------------------*/
@@ -50,6 +51,11 @@ function TailorOrderDetail() {
 					break;
 
 				case 't':
+					order = tailorState?.pickedOrders.find((order) => order.id === params.orderID);
+					order && setCurrentOrder(order);
+					break;
+
+				case 'd':
 					order = tailorState?.pickedOrders.find((order) => order.id === params.orderID);
 					order && setCurrentOrder(order);
 					break;
@@ -110,10 +116,13 @@ function TailorOrderDetail() {
 				newOffer.price = price;
 			}
 			/*------------------------------*/
-			let newOffers = currentOffer?.offers ? [...currentOrder?.offers, newOffer] : [newOffer];
+			let newOffers = currentOrder?.offers ? [...currentOrder?.offers, newOffer] : [newOffer];
 			if (newOffers) {
 				updateDocument('tailorOrders', currentOrder.id, 'offers', newOffers)
 					.then(() => {
+						/*---------*/
+						sendMail();
+						/*---------*/
 						setAlertOpen(true);
 						history.goBack();
 					})
@@ -138,7 +147,7 @@ function TailorOrderDetail() {
 			if (adjustOffers) {
 				adjustOffers[adjustOfferIndex] = { ...adjustOffer };
 			} else {
-				adjustOffers = [{...adjustOffer}]
+				adjustOffers = [{ ...adjustOffer }];
 			}
 			updateDocument('tailorOrders', currentOrder.id, 'offers', adjustOffers)
 				.then(() => {
@@ -157,6 +166,42 @@ function TailorOrderDetail() {
 			return finalPriceCalc(wage, fabricPrice, fabricNumber, true);
 		} else {
 			return finalPriceCalc(wage, 0, 0, false);
+		}
+	}
+	function sendMail() {
+		const { id, name, email } = currentOrder.customer;
+		if (email) {
+			emailjs
+				.send(
+					'service_gmail',
+					'template_new_offer',
+					{ cusName: name || id || '', email: email },
+					'user_v3OrYsKqdHUnLHpgB4CgD'
+				)
+				.then(
+					(result) => {
+						console.log(result.text);
+					},
+					(error) => {
+						console.log(error.text);
+					}
+				);
+		} else {
+			emailjs
+				.send(
+					'service_gmail',
+					'template_new_offer',
+					{ cusName: name || id || '', email: 'cham@tailorwings.com' },
+					'user_v3OrYsKqdHUnLHpgB4CgD'
+				)
+				.then(
+					(result) => {
+						console.log(result.text);
+					},
+					(error) => {
+						console.log(error.text);
+					}
+				);
 		}
 	}
 	/*------------------------------*/
@@ -293,7 +338,7 @@ function TailorOrderDetail() {
 							onChange={onInputChange}
 						/>
 						<div className="-btn" onClick={offerAlready ? adjustOffer : onOffer}>
-							<span>{offerAlready ? 'Chỉnh sửa báo giá' : 'Báo giá'}</span>
+							<span>{offerAlready ? 'Cập nhật' : 'Báo giá'}</span>
 						</div>
 					</div>
 				)}

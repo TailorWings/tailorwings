@@ -1,12 +1,16 @@
 import {
+	FormControl,
+	InputLabel,
 	makeStyles,
+	MenuItem,
 	Paper,
+	Select,
 	Table,
 	TableBody,
 	TableCell,
 	TableContainer,
 	TableHead,
-	TableRow
+	TableRow,
 } from '@material-ui/core';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -20,7 +24,8 @@ import Picker from '../../../components/Picker';
 import Popup from '../../../components/Popup';
 import RequiremmentSummary from '../../../components/RequirementSummary';
 import { ONLINE_MEASUREMENTS, STANDARD_SIZES } from '../../../constants';
-import { fetchAllRTCondition, updateDocument } from '../../../services/API/firebaseAPI';
+import { fetchAllRealTime, updateDocument } from '../../../services/API/firebaseAPI';
+import { modifyPrice } from '../../../services/Functions/commonFunctions';
 import TailorOffer from '../../Account/components/TailorOffer';
 import ManualOffer from './ManualOffer';
 
@@ -32,7 +37,7 @@ OrderManagement.defaultProps = {
 	orders: null,
 };
 
-const TABLE_HEAD_FINDING = ['customer', 'image', 'order date', 'offers', 'picked'];
+const TABLE_HEAD_FINDING = ['customer', 'image', 'order date', 'offers'];
 const TABLE_HEAD_TAILORING = [
 	'customer',
 	'image',
@@ -42,6 +47,7 @@ const TABLE_HEAD_TAILORING = [
 	'fabric number',
 	'wage',
 	'price',
+	'status',
 ];
 const TABLE_HEAD_FINISH = [
 	'customer',
@@ -75,6 +81,8 @@ function OrderManagement(props) {
 		})
 	);
 	const [tailorFindingOrders, setTailorFindingOrders] = useState(null);
+	const [tailorTailoringOrders, setTailorTailoringOrders] = useState(null);
+	const [tailorFinishOrders, setTailorFinishOrders] = useState(null);
 	/*------------------------------*/
 	const [popupShow, setPopupShow] = useState(false);
 	const [alertOpen, setAlertOpen] = useState(false);
@@ -92,9 +100,16 @@ function OrderManagement(props) {
 	const classes = useStyles();
 	/*------------------------------*/
 	useEffect(() => {
-		fetchAllRTCondition('tailorOrders', 'status', '==', 'finding', (result) => {
+		fetchAllRealTime('tailorOrders', (result) => {
 			if (result?.length > 0) {
-				setTailorFindingOrders(result);
+				let tailorFindingOrders = result.filter((tailorOrder) => tailorOrder.status === 'finding');
+				let tailorTailoringOrders = result.filter(
+					(tailorOrder) => tailorOrder.status === 'tailoring'
+				);
+				let tailorFinishOrders = result.filter((tailorOrder) => tailorOrder.status === 'finish');
+				setTailorFindingOrders(tailorFindingOrders);
+				setTailorTailoringOrders(tailorTailoringOrders);
+				setTailorFinishOrders(tailorFinishOrders);
 			}
 		});
 	}, []);
@@ -111,13 +126,19 @@ function OrderManagement(props) {
 						orders?.finding.length > 0
 							? orders.finding.map((order) => {
 									const { designFiles, customer, orderDate } = order;
-									let offers = tailorFindingOrders?.find(tailorOrder => tailorOrder.orderID === order.id)?.offers;
+									let tailorOrder = tailorFindingOrders?.find(
+										(tailorOrder) => tailorOrder.orderID === order.id
+									);
 									return {
 										image: designFiles[0],
 										customer: customer.displayName || customer.phone,
 										orderDate,
-										offers,
-										picked: offers?.length > 0 ? !!offers?.find((offer) => offer.picked) : false,
+										offers: tailorOrder?.offers || null,
+										picked:
+											tailorOrder?.offers?.length > 0
+												? !!tailorOrder?.offers?.find((offer) => offer.picked)
+												: false,
+										tailorOrder,
 									};
 							  })
 							: [];
@@ -140,7 +161,10 @@ function OrderManagement(props) {
 										<TableBody>
 											{rowContentFinding.length > 0 ? (
 												rowContentFinding.map((row, index) => (
-													<TableRow key={index} onClick={() => onRowClick(index, 'finding', row.offers)}>
+													<TableRow
+														key={index}
+														onClick={() => onRowClick(index, 'finding', row.tailorOrder)}
+													>
 														<TableCell align="center">{row.customer}</TableCell>
 														<TableCell align="center">
 															<div className="image-wraper">
@@ -149,7 +173,6 @@ function OrderManagement(props) {
 														</TableCell>
 														<TableCell align="center">{row.orderDate}</TableCell>
 														<TableCell align="center">{row.offers?.length || 0}</TableCell>
-														<TableCell align="center">{row.picked}</TableCell>
 													</TableRow>
 												))
 											) : (
@@ -170,17 +193,32 @@ function OrderManagement(props) {
 					let rowContentTailoring =
 						orders?.tailoring.length > 0
 							? orders.tailoring.map((order) => {
-									let pickedOffer = order.offers.find((offer) => offer.picked);
+									let tailorOrder = tailorTailoringOrders?.find(
+										(tailorOrder) => tailorOrder.orderID === order.id
+									);
+									/*------------------------------*/
+									let status = 'tailoring';
+									if (tailorOrder?.status === 'tailoring') {
+										if (tailorOrder?.isTailored) {
+											status = 'tailored';
+										}
+									}
+									/*------------------------------*/
+									let pickedOffer = tailorOrder?.offers?.find((offer) => offer?.picked);
 									const { designFiles, customer, orderDate } = order;
 									return {
 										image: designFiles[0],
-										customer: customer.displayName || customer.phone,
+										customer: customer?.displayName || customer?.phone || 'none',
 										orderDate,
-										tailor: pickedOffer.name,
-										duration: pickedOffer.duration,
-										fabricNumber: pickedOffer.fabricNumber,
-										wage: pickedOffer.wage && pickedOffer.wage * 1000,
-										price: pickedOffer.price && pickedOffer.price * 1000,
+										tailor: pickedOffer?.tailor?.name || '',
+										duration: pickedOffer?.duration || '',
+										fabricNumber: pickedOffer?.fabricNumber || '',
+										wage: modifyPrice(pickedOffer?.wage) || 0,
+										price: modifyPrice(pickedOffer?.price) || 0,
+										status,
+										tailorOrder,
+										offers: tailorOrder?.offers,
+										pickedOffer,
 									};
 							  })
 							: [];
@@ -203,22 +241,56 @@ function OrderManagement(props) {
 										</TableHead>
 										<TableBody>
 											{rowContentTailoring.length > 0 ? (
-												rowContentTailoring.map((row, index) => (
-													<TableRow key={index} onClick={() => onRowClick(index, 'tailoring')}>
-														<TableCell align="center">{row.customer}</TableCell>
-														<TableCell align="center">
-															<div className="image-wraper">
-																<img src={row.image} alt="design file" />
-															</div>
-														</TableCell>
-														<TableCell align="center">{row.orderDate}</TableCell>
-														<TableCell align="center">{row.tailor}</TableCell>
-														<TableCell align="center">{row.duration}</TableCell>
-														<TableCell align="center">{row.fabricNumber}</TableCell>
-														<TableCell align="center">{row.wage}</TableCell>
-														<TableCell align="center">{row.price}</TableCell>
-													</TableRow>
-												))
+												rowContentTailoring.map((row, index) => {
+													let background = 'white';
+													if (row?.status === 'tailored') {
+														background = 'greenyellow';
+													}
+													return (
+														<TableRow
+															key={index}
+															onClick={() => onRowClick(index, 'tailoring', row.tailorOrder)}
+														>
+															<TableCell align="center">{row.customer}</TableCell>
+															<TableCell align="center">
+																<div className="image-wraper">
+																	<img src={row.image} alt="design file" />
+																</div>
+															</TableCell>
+															<TableCell align="center">{row.orderDate}</TableCell>
+															<TableCell align="center">{row.tailor}</TableCell>
+															<TableCell align="center">{row.duration}</TableCell>
+															<TableCell align="center">{row.fabricNumber}</TableCell>
+															<TableCell align="center">{row.wage}</TableCell>
+															<TableCell align="center">{row.price}</TableCell>
+															<TableCell align="center">
+																<FormControl variant="outlined" className={classes.formControl}>
+																	<InputLabel id="demo-simple-select-outlined-label">
+																		Status
+																	</InputLabel>
+																	<Select
+																		style={{ background: background }}
+																		labelId="demo-simple-select-outlined-label"
+																		id="demo-simple-select-outlined"
+																		value={row?.status || ''}
+																		onChange={
+																			row?.tailorOrder
+																				? (e) => handleTailorStatusChange(e, row?.tailorOrder)
+																				: () => {}
+																		}
+																		label="Status"
+																	>
+																		<MenuItem value="">
+																			<em>None</em>
+																		</MenuItem>
+																		<MenuItem value="tailoring">Tailoring</MenuItem>
+																		<MenuItem value="tailored">Tailored</MenuItem>
+																	</Select>
+																</FormControl>
+															</TableCell>
+														</TableRow>
+													);
+												})
 											) : (
 												<TableRow>
 													<TableCell>
@@ -238,18 +310,23 @@ function OrderManagement(props) {
 					let rowContentFinish =
 						orders?.finish.length > 0
 							? orders.finish.map((order) => {
-									let pickedOffer = order.offers.find((offer) => offer.picked);
+									let tailorOrder = tailorFinishOrders?.find(
+										(tailorOrder) => tailorOrder.orderID === order.id
+									);
+									/*------------------------------*/
+									let pickedOffer = tailorOrder?.offers?.find((offer) => offer?.picked);
 									const { designFiles, customer, orderDate, finishDate } = order;
 									return {
 										image: designFiles[0],
 										customer: customer.displayName || customer.phone,
 										orderDate,
 										finishDate,
-										tailor: pickedOffer.name || '',
-										duration: pickedOffer.duration || 0,
-										fabricNumber: pickedOffer.fabricNumber || 0,
-										wage: pickedOffer.wage && pickedOffer.wage * 1000,
-										price: pickedOffer.price && pickedOffer.price * 1000,
+										tailor: pickedOffer?.tailor?.name || '',
+										duration: pickedOffer?.duration || 0,
+										fabricNumber: pickedOffer?.fabricNumber || 0,
+										wage: modifyPrice(pickedOffer?.wage) || 0,
+										price: modifyPrice(pickedOffer?.price) || 0,
+										tailorOrder,
 									};
 							  })
 							: [];
@@ -272,7 +349,10 @@ function OrderManagement(props) {
 										<TableBody>
 											{rowContentFinish.length > 0 ? (
 												rowContentFinish.map((row, index) => (
-													<TableRow key={index} onClick={() => onRowClick(index, 'tailoring')}>
+													<TableRow
+														key={index}
+														onClick={() => onRowClick(index, 'finish', row.tailorOrder)}
+													>
 														<TableCell align="center">{row.customer}</TableCell>
 														<TableCell align="center">
 															<div className="image-wraper">
@@ -313,11 +393,12 @@ function OrderManagement(props) {
 	/*********************************
 	 *  Description: onRowClick
 	 */
-	function onRowClick(clickedIndex, clickedStatus, offers) {
+	function onRowClick(clickedIndex, clickedStatus, tailorOrder) {
 		let clickedStatusOrders = orders[clickedStatus] ? [...orders[clickedStatus]] : [];
 		let clickedOrder = clickedStatusOrders[clickedIndex] && {
 			...clickedStatusOrders[clickedIndex],
-			offers: [...offers]
+			offers: tailorOrder?.offers && [...tailorOrder.offers],
+			tailorOrder,
 		};
 		if (clickedOrder) {
 			let updatedOnlineMsmt =
@@ -353,13 +434,13 @@ function OrderManagement(props) {
 			let btnRender = <Fragment />;
 			switch (currentStatus) {
 				case 'finding':
-					btnRender = (
-						<div className="c-admin-order__info --btn">
-							<div className="--wrapper" onClick={() => setPopupShow(true)}>
-								<MediumButton text="Manual Offer" isActive />
-							</div>
-						</div>
-					);
+					// btnRender = (
+					// 	<div className="c-admin-order__info --btn">
+					// 		<div className="--wrapper" onClick={() => setPopupShow(true)}>
+					// 			<MediumButton text="Manual Offer" isActive />
+					// 		</div>
+					// 	</div>
+					// );
 					break;
 
 				case 'tailoring':
@@ -507,8 +588,31 @@ function OrderManagement(props) {
 			if (relatedCustomer) {
 				updateDocument('customers', relatedCustomer.id, 'orders', relatedCustomer.orders).then(
 					() => {
-						alert('success');
+						updateDocument('tailorOrders', clickedOrder?.tailorOrder?.id, 'status', 'finish').then(
+							() => {
+								alert('success');
+							}
+						);
 					}
+				);
+			}
+		}
+	}
+	/************_END_****************/
+	/*********************************
+	 *  Description: handle tailor status change
+	 */
+	function handleTailorStatusChange(e, tailorOrder) {
+		let value = e.target.value;
+
+		if (tailorOrder) {
+			if (value === 'tailoring') {
+				updateDocument('tailorOrders', tailorOrder.id, 'isTailored', false).catch(() =>
+					alert('Update fail!')
+				);
+			} else if (value === 'tailored') {
+				updateDocument('tailorOrders', tailorOrder.id, 'isTailored', true).catch(() =>
+					alert('Update fail!')
 				);
 			}
 		}

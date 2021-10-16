@@ -15,7 +15,12 @@ import {
 	RQMT_SUM_TITLE,
 	STANDARD_SIZES,
 } from '../../../constants';
-import { fileUpload, setDocumentWithID, updateDocument } from '../../../services/API/firebaseAPI';
+import {
+	fetchAll,
+	fileUpload,
+	setDocumentWithID,
+	updateDocument,
+} from '../../../services/API/firebaseAPI';
 import OfflineMeasurement from './OfflineMeasurement';
 import OnlineMeasurement from './OnlineMeasurement';
 import StandardSizeMeasurement from './StandardSizeMeasurement';
@@ -26,6 +31,7 @@ import { useHistory } from 'react-router';
 import Popup from '../../../components/Popup';
 import OrderConfirmContent from '../../../components/Popup/OrderConfirmContent';
 import MaterialAlert from '../../../components/MaterialAlert';
+import emailjs from 'emailjs-com';
 
 SummaryContent.propTypes = {
 	msmtMethod: PropTypes.object,
@@ -59,6 +65,8 @@ function SummaryContent(props) {
 			return { name: size, active: false };
 		})
 	);
+	const [tailors, setTailors] = useState(null);
+	/*---------*/
 	const [popupShow, setPopupShow] = useState(false);
 	const [isConfirmLoading, setIsConfirmLoading] = useState(false);
 	const [alertOpen, setAlertOpen] = useState(false);
@@ -100,6 +108,15 @@ function SummaryContent(props) {
 			}
 		}
 	}, [orderDetail, orderDetail.stdSize]);
+	useEffect(() => {
+		async function fetchTailor() {
+			let tailors = await fetchAll('tailors');
+			if (tailors?.length > 0) {
+				setTailors(tailors);
+			}
+		}
+		fetchTailor();
+	}, []);
 	/*********************************
 	 *  Description:
 	 */
@@ -210,7 +227,7 @@ function SummaryContent(props) {
 							msmt,
 							notes,
 							stdSize,
-							orderDate
+							orderDate,
 						} = currentOrderDetail;
 						let newTailorOrder = {
 							orderID: id,
@@ -228,15 +245,19 @@ function SummaryContent(props) {
 							customer: {
 								id: currentCustomer.id,
 								name: currentCustomer.displayName,
+								email: currentCustomer.email,
 							},
-							orderDate
+							orderDate,
 						};
 						setDocumentWithID('tailorOrders', newTailorOrder);
-						/*--------------*/
+						/*---------*/
 						setIsConfirmLoading(false);
-						history.push(`/account/detail?id=${orderDetailId}`);
 						const action_resetState = resetState();
 						dispatch(action_resetState);
+						/*---------*/
+						sendMail();
+						/*---------*/
+						history.push(`/account/detail?id=${orderDetailId}`);
 					})
 					.catch((error) => {
 						console.log(`error`, error);
@@ -245,6 +266,64 @@ function SummaryContent(props) {
 					});
 			}
 		} else {
+		}
+	}
+	function sendMail() {
+		if (tailors?.length > 0) {
+			let tailorEmail = tailors
+				.reduce((acc, cur) => {
+					return [...acc, cur.email.trim()];
+				}, [])
+				.join(',');
+			if (tailorEmail) {
+				emailjs
+					.send(
+						'service_gmail',
+						'template_new_order',
+						{ cusName: currentCustomer?.displayName || '', email: tailorEmail },
+						'user_v3OrYsKqdHUnLHpgB4CgD'
+					)
+					.then(
+						(result) => {
+							console.log(result.text);
+						},
+						(error) => {
+							console.log(error.text);
+						}
+					);
+			} else {
+				emailjs
+					.send(
+						'service_gmail',
+						'template_new_order',
+						{ cusName: currentCustomer?.displayName || '', email: 'cham@tailorwings.com' },
+						'user_v3OrYsKqdHUnLHpgB4CgD'
+					)
+					.then(
+						(result) => {
+							console.log(result.text);
+						},
+						(error) => {
+							console.log(error.text);
+						}
+					);
+			}
+		} else {
+			emailjs
+				.send(
+					'service_gmail',
+					'template_new_order',
+					{ cusName: currentCustomer?.displayName || '', email: 'cham@tailorwings.com' },
+					'user_v3OrYsKqdHUnLHpgB4CgD'
+				)
+				.then(
+					(result) => {
+						console.log(result.text);
+					},
+					(error) => {
+						console.log(error.text);
+					}
+				);
 		}
 	}
 	/************_END_****************/

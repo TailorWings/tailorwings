@@ -4,6 +4,7 @@ import TailorFindingOrders from './TailorFindingOrders';
 import TailorHeader from './TailorHeader';
 import TailorMgmtMenu from './TailorMgmtMenu';
 import TailorTailoringOrders from './TailorTailoringOrders';
+import TailorFinishOrders from './TailorFinishOrders';
 
 function TailorOrderMgmt() {
 	/*------------------------------*/
@@ -30,6 +31,7 @@ function TailorOrderMgmt() {
 				<Switch>
 					<Route path={`${url}/finding`} component={TailorFindingOrders} />
 					<Route path={`${url}/tailoring`} component={TailorTailoringOrders} />
+					<Route path={`${url}/finish`} component={TailorFinishOrders} />
 					<Route path={`${url}`} component={TailorMgmtMenu} />
 				</Switch>
 			</div>

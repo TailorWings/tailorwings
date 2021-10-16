@@ -3,6 +3,7 @@ import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import PageLoader from './components/PageLoader';
+import TestEmail from './pages/TestEmail';
 import TestExcel from './pages/TestExcel';
 import TestForm from './pages/TestForm';
 import TestTailorDB from './pages/TestTailorDB';
@@ -18,6 +19,8 @@ const AdminPage = React.lazy(() => import('./pages/Admin'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFound'));
 const TailorProfilePage = React.lazy(() => import('./pages/TailorProfile'));
 const TailorDashBoard = React.lazy(() => import('./pages/Tailor'));
+const AboutUsPage = React.lazy(() => import('./pages/AboutUs'));
+const FaqPage = React.lazy(() => import('./pages/FAQ'));
 
 function App() {
 	const location = useLocation();
@@ -48,6 +51,12 @@ function App() {
 						<Redirect from="/account" to="/account/order" exact />
 						<Route path="/account" component={AccountPage} />
 
+						{/* ABOUT */}
+						<Route path="/about" component={AboutUsPage} />
+
+						{/* FQA */}
+						<Route path="/faq" component={FaqPage} />
+
 						{/* TAILOR PROFILE */}
 						<Route path="/tailor-profile" component={TailorProfilePage} />
 
@@ -66,6 +75,9 @@ function App() {
 
 						{/* TEST SWIPER */}
 						<Route path="/test-tailor" component={() => <TestTailorDB />} />
+
+						{/* TEST SWIPER */}
+						<Route path="/test-mail" component={() => <TestEmail />} />
 
 						{/* NOT FOUND */}
 						<Route component={NotFoundPage} />

@@ -106,6 +106,9 @@
 @import './layout/Admin/orderManagement';
 @import './layout/Admin/manualOffer';
 @import './layout/Admin/customerManagement';
+@import './layout/Admin/patternManagement';
+@import './layout/Admin/patternManage';
+@import './layout/Admin/patternUpload';
 
 @import './layout/TailorProfile/basicInfo';
 @import './layout/TailorProfile/specialityInfo';
@@ -117,3 +120,7 @@
 @import './layout/Tailor/tailorMgmtMenu';
 @import './layout/Tailor/tailorOrderDetail';
 @import './layout/Tailor/tailorLogin';
+
+@import './layout/AboutUs/aboutUs';
+
+@import './layout/FAQ/faq';

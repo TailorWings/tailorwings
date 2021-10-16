@@ -1,8 +1,9 @@
-import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
-import OrderManagement from './OrderManagement';
-import CustomerManagement from './CustomerManagement';
+import React from 'react';
 import { NavLink, Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
+import CustomerManagement from './CustomerManagement';
+import OrderManagement from './OrderManagement';
+import PatternManagement from './PatternManagement';
 
 AdminLayout.propTypes = {
 	orders: PropTypes.object,
@@ -12,7 +13,7 @@ AdminLayout.defaultProps = {
 	orders: null,
 };
 
-const TABS = ['orders', 'customers'];
+const TABS = ['orders', 'customers', 'patterns'];
 
 function AdminLayout(props) {
 	const { orders } = props;
@@ -73,7 +74,7 @@ function AdminLayout(props) {
 							// </div>
 							<NavLink
 								key={index}
-								to={`${url}/${tab}`}
+								to={`${url}/${tab.split(' ').join('-')}`}
 								// className={tab.active ? '--active' : ''}
 								// onClick={() =>
 								// 	setTabs(
@@ -93,6 +94,7 @@ function AdminLayout(props) {
 					<Switch>
 						<Route path={`${url}/orders`} component={() => <OrderManagement orders={orders} />} />
 						<Route path={`${url}/customers`} component={() => <CustomerManagement />} />
+						<Route path={`${url}/patterns`} component={() => <PatternManagement />} />
 						<Redirect from={`${url}`} to={`${url}/orders`}/>
 					</Switch>
 				</div>

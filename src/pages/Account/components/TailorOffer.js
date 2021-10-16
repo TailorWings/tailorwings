@@ -30,6 +30,7 @@ function TailorOffer(props) {
 				</p>
 			</div>
 		);
+	console.log(`offerInfo`, offerInfo)
 	return (
 		<div className="c-tailor-offer">
 			{offerInfo.map((offer, index) => {
@@ -72,6 +73,12 @@ function TailorOffer(props) {
 								title="Est.time"
 								value={`${offer.duration} days`}
 								color={offer.duration > 6 ? 'primary' : 'secondary'}
+							/>
+						</div>
+						<div className="c-tailor-offer-estimate">
+							<Label
+								title="Est.Fabric Length"
+								value={`${offer?.fabricNumber || 'Unknown'} m`}
 							/>
 						</div>
 						<div className="c-tailor-offer__price">

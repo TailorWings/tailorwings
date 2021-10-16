@@ -1,0 +1,122 @@
+.l-about-us {
+	width: 100%;
+	min-height: 100%;
+	@include flex(center, center, column);
+	.about-us-content {
+		width: 100%;
+		height: 0;
+		padding-bottom: 50%;
+		overflow: hidden;
+		position: relative;
+		&.--reverse {
+			& .-wrapper {
+				flex-direction: row-reverse;
+			}
+		}
+		& .-wrapper {
+			@include flex();
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		&__text,
+		&__image {
+			width: 50%;
+			height: 100%;
+			display: inline-block;
+		}
+
+		&__text {
+			@include flex(flex-start, center);
+			padding-left: 100px;
+			h2 {
+				@include font(fontMedium, 36px);
+				max-width: 67%;
+				margin-bottom: 30px;
+			}
+			pre {
+				display: inline-block;
+				max-width: 67%;
+				@include font(fontRegular, 18px);
+				white-space: pre-line;
+			}
+		}
+		&__image {
+			overflow: hidden;
+			background: $subprimary-color;
+			& > img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+		}
+	}
+
+	@include xs {
+		width: 100%;
+		min-height: 100%;
+		@include flex(center, center, column);
+		.about-us-content {
+			width: 100%;
+			height: 0;
+			padding-bottom: 200%;
+			overflow: hidden;
+			position: relative;
+			&.--reverse {
+				& .-wrapper {
+					flex-direction: column;
+				}
+			}
+			& .-wrapper {
+				@include flex();
+				flex-direction: column;
+				width: auto;
+				height: auto;
+				min-width: 100%;
+				min-height: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			&__text,
+			&__image {
+				width: 100%;
+				height: 50%;
+				display: inline-block;
+			}
+
+			&__text {
+				@include flex(center, center);
+				padding-left: 0;
+				& .-text-box {
+					@include size(100%);
+					@include flex(center, center, column);
+                    min-height: 100%;
+                    padding: 15px;
+				}
+				h2 {
+					@include font(fontMedium, 32px);
+					max-width: 100%;
+					margin-bottom: 30px;
+				}
+				pre {
+					display: inline-block;
+					max-width: 100%;
+					@include font(fontRegular, 18px);
+					white-space: pre-line;
+				}
+			}
+			&__image {
+				overflow: hidden;
+				background: $subprimary-color;
+				& > img {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+				}
+			}
+		}
+	}
+}

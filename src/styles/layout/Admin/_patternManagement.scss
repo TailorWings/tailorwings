@@ -1,0 +1,15 @@
+.c-admin-patterns {
+    width: 100%;
+    padding: 20px 0;
+    &__options {
+        width: 100%;
+        @include flex(center, center);
+        margin-bottom: 20px;
+        & .-upload {
+            margin-right: 20px;
+        }
+    }
+    &__content {
+        width: 100%;
+    }
+}

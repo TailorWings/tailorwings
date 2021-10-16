@@ -75,7 +75,6 @@ function TailorDashBoard() {
 			<Switch>
 				<PrivateRoute checkedElem={tailor} redirectTo={`${url}`} path={`${url}/detail/:orderID`} component={TailorOrderDetail} />
 				<PrivateRoute checkedElem={tailor} redirectTo={`${url}`} path={`${url}/manage`} component={TailorOrderMgmt} />
-				<PrivateRoute checkedElem={tailor} redirectTo={`${url}`} path={`${url}/info`} component={TailorOrderMgmt} />
 				<Route path={`${url}`} component={TailorMenu} />
 			</Switch>
 		</div>

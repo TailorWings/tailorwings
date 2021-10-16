@@ -8,6 +8,10 @@ import rayon from '../assets/images/fabric-rayon.jpg';
 import satin from '../assets/images/fabric-satin.jpg';
 import silk from '../assets/images/fabric-silk.jpg';
 
+import about_team from '../assets/images/about_team.jpg';
+import about_polution from '../assets/images/about_polution.jpg';
+import about_vision from '../assets/images/about_vision.jpg';
+
 import topDressLength from '../assets/images/top-dress-length.jpg';
 import neck from '../assets/images/neck.jpg';
 import shoulder from '../assets/images/shoulder.jpg';
@@ -40,28 +44,27 @@ export const STYLE_ESTIMATE_PRICE = [
 	{
 		id: 'dress',
 		estPrice: 300000,
-		fabricLength: 2
+		fabricLength: 2,
 	},
 	{
 		id: 'shirts',
 		estPrice: 200000,
-		fabricLength: 1.5
-
+		fabricLength: 1.5,
 	},
 	{
 		id: 'pants',
 		estPrice: 250000,
-		fabricLength: 1.5
+		fabricLength: 1.5,
 	},
 	{
 		id: 'skirts',
 		estPrice: 200000,
-		fabricLength: 1.5
+		fabricLength: 1.5,
 	},
 	{
 		id: 'ao dai',
 		estPrice: 700000,
-		fabricLength: 3.5
+		fabricLength: 3.5,
 	},
 ];
 
@@ -222,8 +225,7 @@ export const MSMT_METHODS = [
 	},
 	{
 		name: 'standard size',
-		desc:
-			'Choose your right size bellow.',
+		desc: 'Choose your right size bellow.',
 		buttonText: 'Pick Sizes',
 		link: '/standard-size',
 	},
@@ -552,201 +554,59 @@ export const SHIPPING_INFO = [
 	},
 ];
 
-// export const TEST_ORDER_INFO = [
-// 	{
-// 		id: 1000,
-// 		orderDate: '14/2/2020',
-// 		offer: [
-// 			{
-// 				tailor: { name: 'Hiền Cát Lái' },
-// 				time: 4,
-// 				price: 763000,
-// 				picked: false,
-// 			},
-// 			{
-// 				tailor: { name: 'Cô Ly' },
-// 				time: 4,
-// 				price: 830000,
-// 				picked: true,
-// 			},
-// 			{
-// 				tailor: { name: 'Cô Loan' },
-// 				time: 7,
-// 				price: 2300000,
-// 				picked: false,
-// 			},
-// 		],
-// 		receiveDate: null,
-// 		pickedOfferIndex: null,
-// 		finishDate: null,
-// 		status: 'finding',
-// 	},
-// 	{
-// 		id: 1001,
-// 		orderDate: '2/2/2020',
-// 		offer: [
-// 			{
-// 				tailor: { name: 'Hiền Cát Lái' },
-// 				time: 4,
-// 				price: 763000,
-// 				picked: false,
-// 			},
-// 			{
-// 				tailor: { name: 'Cô Ly' },
-// 				time: 4,
-// 				price: 830000,
-// 				picked: true,
-// 			},
-// 			{
-// 				tailor: { name: 'Cô Loan' },
-// 				time: 7,
-// 				price: 2300000,
-// 				picked: false,
-// 			},
-// 		],
-// 		receiveDate: null,
-// 		pickedOfferIndex: null,
-// 		finishDate: null,
-// 		status: 'finding',
-// 	},
-// 	{
-// 		id: 1002,
-// 		orderDate: '2/4/2020',
-// 		offer: [
-// 			{
-// 				tailor: { name: 'Hiền Cát Lái' },
-// 				time: 4,
-// 				price: 763000,
-// 				picked: false,
-// 			},
-// 			{
-// 				tailor: { name: 'Cô Ly' },
-// 				time: 4,
-// 				price: 830000,
-// 				picked: true,
-// 			},
-// 			{
-// 				tailor: { name: 'Cô Loan' },
-// 				time: 7,
-// 				price: 2300000,
-// 				picked: false,
-// 			},
-// 		],
-// 		receiveDate: '7/4/2020',
-// 		pickedOfferIndex: 0,
-// 		finishDate: null,
-// 		status: 'tailoring',
-// 	},
-// 	{
-// 		id: 1003,
-// 		orderDate: '2/4/2020',
-// 		offer: [
-// 			{
-// 				tailor: { name: 'Hiền Cát Lái' },
-// 				time: 4,
-// 				price: 763000,
-// 				picked: false,
-// 			},
-// 			{
-// 				tailor: { name: 'Cô Ly' },
-// 				time: 4,
-// 				price: 830000,
-// 				picked: true,
-// 			},
-// 			{
-// 				tailor: { name: 'Cô Loan' },
-// 				time: 7,
-// 				price: 2300000,
-// 				picked: false,
-// 			},
-// 		],
-// 		receiveDate: '7/4/2020',
-// 		pickedOfferIndex: 1,
-// 		finishDate: null,
-// 		status: 'tailoring',
-// 	},
-// 	{
-// 		id: 1004,
-// 		orderDate: '2/3/2020',
-// 		offer: [
-// 			{
-// 				tailor: { name: 'Hiền Cát Lái' },
-// 				time: 4,
-// 				price: 763000,
-// 				picked: false,
-// 			},
-// 			{
-// 				tailor: { name: 'Cô Ly' },
-// 				time: 4,
-// 				price: 830000,
-// 				picked: true,
-// 			},
-// 			{
-// 				tailor: { name: 'Cô Loan' },
-// 				time: 7,
-// 				price: 2300000,
-// 				picked: false,
-// 			},
-// 		],
-// 		receiveDate: '7/3/2020',
-// 		pickedOfferIndex: 2,
-// 		finishDate: '10/3/2020',
-// 		status: 'finish',
-// 	},
-// 	{
-// 		id: 1005,
-// 		orderDate: '1/2/2020',
-// 		offer: [
-// 			{
-// 				tailor: { name: 'Hiền Cát Lái' },
-// 				time: 4,
-// 				price: 763000,
-// 				picked: false,
-// 			},
-// 			{
-// 				tailor: { name: 'Cô Ly' },
-// 				time: 4,
-// 				price: 830000,
-// 				picked: true,
-// 			},
-// 			{
-// 				tailor: { name: 'Cô Loan' },
-// 				time: 7,
-// 				price: 2300000,
-// 				picked: false,
-// 			},
-// 		],
-// 		receiveDate: '3/2/2020',
-// 		pickedOfferIndex: 1,
-// 		finishDate: '7/2/2020',
-// 		status: 'finish',
-// 	},
-// 	{
-// 		id: 1006,
-// 		orderDate: '1/2/2020',
-// 		offer: [
-// 			{
-// 				tailor: { name: 'Hiền Cát Lái' },
-// 				time: 4,
-// 				price: 763000,
-// 				picked: false,
-// 			},
-// 			{
-// 				tailor: { name: 'Cô Ly' },
-// 				time: 4,
-// 				price: 830000,
-// 				picked: true,
-// 			},
-// 			{
-// 				tailor: { name: 'Cô Loan' },
-// 				time: 7,
-// 				price: 2300000,
-// 				picked: false,
-// 			},
-// 		],
-// 		receiveDate: '3/2/2020',
-// 		pickedOfferIndex: 1,
-// 		finishDate: '7/2/2020',
-// 		status: 'finish',
-// 	},
-// ];
+// About us Page
+
+export const ABOUT_CONTENT = [
+	{
+		title: 'Who We Are',
+		content: `Tailor Wings - The place for connecting the skilled tailors with the modern consumers. We would love to celebrate diversity of each individual by made-to-order all your fashion product. 
+		Our (almost) zero-waste sustainable manufacturing model offers unparalleled choice without harming the Earth. At the same time it brings worthy remuneration for the tailor who actually created it.`,
+		image: about_team,
+	},
+	{
+		title: `The Problem`,
+		content: `Overproduction in the fashion industry is the cause behind many global problems, from wasted CO2 to excess items being landfilled or burned.
+		The violations of workers’ rights in garment and textile factories because of excessive overtime work, sometimes forced or not paid at the correct rate, productivity pressure and a lack of fire safety regulations.`,
+		image: about_polution,
+	},
+	{
+		title: `Our Vision`,
+		content: `The growing of “to be different” demand of consumer cannot be met in the way that traditional fashion distribution has done - which has caused serious environmental damage to date. 
+		We pursue sustainable fashion by being a leader of custom and also re-distribute value to stakeholders by the sharing economy model. 
+		Thereby our women they are not only beautiful because the clothes are made for herself, but she is more beautiful because of her responsible actions for the environment and society in where her live.`,
+		image: about_vision,
+	},
+];
+
+// Faq
+
+export const FAQ_TITLE = {
+	title: 'Frequently asked questions',
+	subtitle: ``
+};
+
+export const FAQ_CONTENT = [
+	{
+		question: `HOW LONG DOES ORDER TAKE?`,
+		answer: `Depending on the complexity of any customizations and/or special fabrics associated with the order.
+			-Not In A Rush: 8 - 12 days
+			-Standard: 5 - 7  days
+			-Express: 3 - 4 days
+			-VIP: 2 - 3 days
+		Orders are delivered Monday to Saturday.
+		
+		Please note: orders are not shipped and/or delivered on weekends or holidays.`,
+	},
+	{
+		question: `Can I cancel my Essentials or Premium plan subscription at any time?`,
+		answer: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis nesciunt animi quam repellat et quaerat dolorum ipsa? Voluptates perferendis repudiandae consequatur debitis veritatis, assumenda perspiciatis quisquam itaque voluptatibus aliquid nam.`,
+	},
+	{
+		question: `Can I cancel my Essentials or Premium plan subscription at any time?`,
+		answer: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis nesciunt animi quam repellat et quaerat dolorum ipsa? Voluptates perferendis repudiandae consequatur debitis veritatis, assumenda perspiciatis quisquam itaque voluptatibus aliquid nam.`,
+	},
+	{
+		question: `Can I cancel my Essentials or Premium plan subscription at any time?`,
+		answer: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis nesciunt animi quam repellat et quaerat dolorum ipsa? Voluptates perferendis repudiandae consequatur debitis veritatis, assumenda perspiciatis quisquam itaque voluptatibus aliquid nam.`,
+	},
+];

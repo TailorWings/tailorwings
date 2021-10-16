@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import facebookIcon from '../../assets/icons/facebook.svg';
 import messengerIcon from '../../assets/icons/messenger.svg';
 import youtubeIcon from '../../assets/icons/youtube.svg';
@@ -16,23 +17,19 @@ function Footer() {
 					Terms
 				</a>
 				<li className="c-footer__item">|</li>
-				<a
-					href="https://www.facebook.com/TailorWings"
-					target="_blank"
-					rel="noreferrer"
+				<Link
+					to="/faq"
 					className="c-footer__item"
 				>
 					FAQs
-				</a>
+				</Link>
 				<li className="c-footer__item">|</li>
-				<a
-					href="https://www.facebook.com/TailorWings"
-					target="_blank"
-					rel="noreferrer"
+				<Link
+					to="/about"
 					className="c-footer__item"
 				>
 					About Us
-				</a>
+				</Link>
 				<li className="c-footer__item">|</li>
 				<a
 					href="https://www.facebook.com/messages/t/334170847264692"
@@ -44,11 +41,7 @@ function Footer() {
 				</a>
 			</ul>
 			<div className="c-footer__social-media">
-				<a
-					href="https://www.facebook.com/TailorWings"
-					target="_blank"
-					rel="noreferrer"
-				>
+				<a href="https://www.facebook.com/TailorWings" target="_blank" rel="noreferrer">
 					<img src={messengerIcon} alt="messenger" />
 				</a>
 				<a href="https://www.facebook.com/TailorWings" target="_blank" rel="noreferrer">

@@ -1,0 +1,52 @@
+.l-faq {
+	width: 100%;
+	min-height: 100%;
+	padding: 0 200px 100px 200px;
+	.faq {
+		&-title {
+			padding: 24px 0;
+			width: 100%;
+			@include flex(center, center, column);
+			& > h1 {
+				@include font(fontBold, 24px);
+				text-align: center;
+				margin-bottom: 12px;
+                text-transform: uppercase;
+			}
+			& > p {
+				@include font(fontMedium, 16px);
+				color: $medium-black-color;
+				text-align: center;
+			}
+		}
+		&-content {
+			width: 100%;
+			& .c-accordion {
+				margin-bottom: 16px;
+			}
+			&__answer {
+				padding: 10px 15px;
+                p {
+                    margin-bottom: 10px;
+                }
+                span {
+                    color: #0052cc;
+                }
+                ul {
+                    list-style: disc;
+                    padding-left: 20px;
+                    margin-bottom: 10px;
+                }
+                i {
+                    font-style: italic;
+                }
+                a {
+                    color: #0052cc;
+                }
+			}
+		}
+	}
+    @include xs {
+        padding: 15px;
+    }
+}

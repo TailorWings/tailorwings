@@ -4,7 +4,10 @@ import XLSX from 'xlsx';
 import { make_cols } from './MakeColumns';
 import { SheetJSFT } from './type';
 import firebase from 'firebase/app';
-import { setDocument } from '../../services/API/firebaseAPI';
+import { fileUpload, setDocument } from '../../services/API/firebaseAPI';
+import MultipleFileUpload from '../../components/FileUpload/MultipleFileUpload';
+import MediumButton from '../../components/Button/MediumButton';
+import { formatLink } from '../../services/Functions/commonFunctions';
 
 TestExcel.propTypes = {};
 
@@ -50,33 +53,84 @@ function TestExcel(props) {
 				return { ...data };
 			});
 
-			let promiseArray = uploadedPatterns.map((data) => {
-				let imageRef = `image/patterns/${data.id}.jpg`;
+			uploadedPatterns.forEach(async (data) => {
+				let imageRef = `image/testPatterns`;
 				/*--------------*/
-				var storageRef = firebase.storage().ref();
-				var imgRef = storageRef.child(imageRef);
-				/*--------------*/
-				return imgRef.getDownloadURL();
-			});
-
-			Promise.all(promiseArray)
-				.then((result) => {
-					if (result) {
-						uploadedPatterns = uploadedPatterns.map((pattern, index) => {
-							return { ...pattern, image: { mockup: '', normal: result[index] } };
-						});
-						if (uploadedPatterns) {
-							let uploadArray = uploadedPatterns.map((pattern) => {
-								return setDocument('patterns', pattern, pattern.id);
-							});
-
-                            Promise.all(uploadArray);
-						}
-					}
-				})
-				.catch((error) => {
-					console.log(`error`, error);
+				var storageRef = firebase.storage().ref().child(imageRef);
+				var res = await storageRef.listAll();
+				let itemRefArray = res?.items.filter((itemRef) => {
+					return (
+						itemRef?.name.toLowerCase()?.split('.')[0]?.split('_')[0].trim() === data.name.toLowerCase().trim()
+					);
 				});
+				// res.items.forEach((itemRef) => {
+				// All the items under listRef.
+
+				// if (
+				// 	itemRef?.name.toLowerCase()?.split('.')[0]?.split('_')[0] === data.name.toLowerCase()
+				// ) {
+				// 	console.log('here')
+				// 	promiseArray.push(itemRef.getDownloadURL());
+				// }
+				// });
+				/*--------------*/
+				// return true;
+				// return imgRef.getDownloadURL();
+				if (itemRefArray.length > 0) {
+					let urls = await Promise.all(itemRefArray?.map((itemRef) => itemRef.getDownloadURL()));
+					if (urls?.length > 0) {
+						// uploadedPatterns = uploadedPatterns.map((pattern) => {
+						// 	return { ...pattern, image: { mockup: '', normal: [...urls] } };
+						// });
+						let updatePattern = {
+							...data,
+							image: { ...data?.image, normal: urls.sort()[0], list: [...urls.sort()] },
+						};
+						console.log(`updatePattern`, updatePattern);
+						// setDocument('patterns', updatePattern, updatePattern.id);
+					}
+					// if (uploadedPatterns) {
+					// console.log('uploadedPatterns :>> ', uploadedPatterns);
+					// let uploadArray = uploadedPatterns.map((pattern) => {
+					// return setDocument('patterns', pattern, pattern.id);
+					// });
+					// Promise.all(uploadArray).then(() => alert('success'));
+					// }
+				}
+			});
+			// Promise.all(promiseArray)
+			// 	.then((result) => {console.log('result :>> ', result);})
+
+			// Promise.all(promiseArray)
+			// 	.then((result) => {
+			// 		if (result) {
+			// 			uploadedPatterns = uploadedPatterns.map((pattern, index) => {
+			// 				return { ...pattern, image: { mockup: '', normal: result[index] } };
+			// 			});
+			// 			console.log('uploadedPatterns :>> ', uploadedPatterns);
+			// if (uploadedPatterns) {
+			// 	let uploadArray = uploadedPatterns.map((pattern) => {
+			// 		return setDocument('patterns', pattern, pattern.id);
+			// 	});
+
+			// 	Promise.all(uploadArray);
+			// }
+			// }
+			// })
+			// .catch((error) => {
+			// console.log(`error`, error);
+			// });
+		}
+	}
+
+	function onSetFiles(files) {
+		let fileUploadPromises = files.map((file) => {
+			return fileUpload(file, `image/testPatterns/${file.name}`);
+		});
+
+		console.log('fileUploadPromises :>> ', fileUploadPromises);
+		if (fileUploadPromises.length > 0) {
+			Promise.all(fileUploadPromises).then(() => alert('success'));
 		}
 	}
 
@@ -96,6 +150,15 @@ function TestExcel(props) {
 			) : (
 				<Fragment />
 			)}
+
+			<br />
+			<br />
+			<br />
+			<MultipleFileUpload setFiles={onSetFiles} />
+
+			<div>
+				<MediumButton text="Upload" />
+			</div>
 		</div>
 	);
 }

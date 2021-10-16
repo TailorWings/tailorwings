@@ -1,0 +1,39 @@
+.admin-pattern-mgmt {
+	width: 100%;
+	@include flex(center, center, column);
+	& > h2 {
+		@include font(fontBold, 24px);
+		margin-bottom: 20px;
+	}
+	&__table {
+		width: 100%;
+        & th {
+            @include font(fontBold, 14px);
+        }
+		& td {
+			@include font(fontMedium, 14px);
+			& .image-wraper {
+				width: 100px;
+				height: 100px;
+				overflow: hidden;
+				position: relative;
+				margin: 0 auto;
+				display: block;
+				& > img {
+					@include size(100%);
+					object-fit: cover;
+				}
+			}
+
+			& .-delete-btn {
+				& > .c-medium-button {
+					width: fit-content;
+                    padding: 5px 8px;
+					& p {
+						font-size: 14px !important;
+					}
+				}
+			}
+		}
+	}
+}

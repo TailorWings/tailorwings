@@ -8,21 +8,24 @@ import MaterialAlert from '../MaterialAlert';
 
 MultipleFileUpload.propTypes = {
 	setFiles: PropTypes.func,
+	type: PropTypes.string,
+	isClear: PropTypes.bool,
 };
 
 MultipleFileUpload.defaultProps = {
 	setFiles: null,
+	isClear: false
 };
 
 function MultipleFileUpload(props) {
-	const { setFiles } = props;
+	const { setFiles, isClear } = props;
 	/*--------------*/
 	const designFiles = useSelector((state) => state.common.orderDetail?.designFiles);
 	const [tempFiles, setTempFiles] = useState(designFiles ? [...designFiles] : []);
 	const [alertOpen, setAlertOpen] = useState(false);
 
 	const { getRootProps, getInputProps } = useDropzone({
-		accept: 'image/jpeg, image/png, image/jpg',
+		accept: 'image/jpeg, image/png, image/jpg, image/gif',
 		onDrop: (acceptedFiles) => {
 			let totalFile = [
 				...tempFiles,
@@ -42,6 +45,11 @@ function MultipleFileUpload(props) {
 	});
 	/*--------------*/
 	useEffect(() => {
+		if (isClear) {
+			setTempFiles([]);
+		}
+	}, [isClear])
+	useEffect(() => {
 		// Make sure to revoke the data uris to avoid memory leaks
 		tempFiles.forEach((file) => {
 			if (!file.preview) {
@@ -49,7 +57,7 @@ function MultipleFileUpload(props) {
 			}
 		});
 		/*--------------*/
-		setFiles(tempFiles);
+		setFiles && setFiles(tempFiles);
 	}, [tempFiles]);
 	/*--------------*/
 	/*********************************

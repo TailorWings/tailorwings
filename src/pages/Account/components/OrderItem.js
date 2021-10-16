@@ -4,6 +4,7 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import MediumButton from '../../../components/Button/MediumButton';
 import Label from '../../../components/Label';
+import { modifyPrice } from '../../../services/Functions/commonFunctions';
 
 OrderItem.propTypes = {
 	info: PropTypes.object,
@@ -78,7 +79,7 @@ function OrderItem(props) {
 								/>
 							</div>
 							<p className="c-order-item-info__price">{`${
-								finishPickedOffer.price ? finishPickedOffer.price * 1000 : "Error"
+								finishPickedOffer.price ? modifyPrice(finishPickedOffer.price)  : "Error"
 							} vnđ`}</p>
 							<div className="c-order-item__button">
 								<MediumButton text="Order Details" isActive={false} />
