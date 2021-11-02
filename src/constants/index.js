@@ -77,6 +77,23 @@ export const STYLE_ESTIMATE_PRICE = [
 export const FABRIC_TYPE_TITLE = 'Choose the fabric type for your design';
 export const FABRIC_TYPE_SUBTITLE =
 	'Here you can find all of our available fabrics (more will be added by time).';
+export const FABRIC_BUY_TYPES = [
+	{
+		id: 'TAILOR_WINGS',
+		title: "TailorWings's Fabric",
+		description: 'Choose from our available fabric',
+	},
+	{
+		id: 'MY_OWN',
+		title: 'My own fabric',
+		description: 'We will contact to pick up your fabric after you place the order',
+	},
+	{
+		id: 'TAILOR_WINGS_PARTNER',
+		title: "Fabric form Tailor Wings's partner",
+		description: 'We will contact to help you buy fabric you love right after you place the order.',
+	},
+];
 export const FABRIC_TYPES = [
 	{
 		id: 'COT',
