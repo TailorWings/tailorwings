@@ -39,7 +39,7 @@ export const HOW_IT_WORK_SUBTITLE =
 export const RQPAGE_TITLE = 'What do you want to be tailored?';
 export const RQPAGE_SUBTITLE =
 	'Please send us at least 03 pictures of the design you want to make. More detail picture more better results of clothes be made.';
-export const STYLES_OF_CLOTHE = ['dress', 'shirts', 'pants', 'skirts', 'ao dai'];
+export const STYLES_OF_CLOTHE = ['dress', 'shirts', 'pants', 'skirts', 'ao dai', 'others'];
 export const STYLE_ESTIMATE_PRICE = [
 	{
 		id: 'dress',
@@ -63,6 +63,11 @@ export const STYLE_ESTIMATE_PRICE = [
 	},
 	{
 		id: 'ao dai',
+		estPrice: 700000,
+		fabricLength: 3.5,
+	},
+	{
+		id: 'others',
 		estPrice: 700000,
 		fabricLength: 3.5,
 	},
