@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { resetState, setCurrentCustomer } from '../../app/ReduxSlices/commonSlice';
 import { setTailor } from '../../app/ReduxSlices/tailorSlice';
 import userIcon from '../../assets/icons/user.svg';
+import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 AccountDropdown.propTypes = {
 	avatar: PropTypes.string,
@@ -27,6 +28,7 @@ function AccountDropdown(props) {
 	const { avatar, isAdmin, type } = props;
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const dispatch = useDispatch();
+	const { t, i18n } = useTranslation();
 	/*--------------*/
 	useEffect(() => {
 		document.querySelector('html, body').addEventListener('click', function () {
@@ -53,7 +55,7 @@ function AccountDropdown(props) {
 					<Fragment />
 				)}
 				<Link to="/account" onClick={() => setDropdownOpen(!dropdownOpen)}>
-					<li>Your orders</li>
+					<li>{t('yourOrder')}</li>
 				</Link>
 				<li
 					onClick={() => {
@@ -66,7 +68,7 @@ function AccountDropdown(props) {
 						history.push('/');
 					}}
 				>
-					Sign out
+					{t('signOut')}
 				</li>
 			</Fragment>
 		)

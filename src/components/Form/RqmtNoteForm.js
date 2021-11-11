@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import TextInput from '../Input/TextInput';
+import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 RqmtNoteForm.propTypes = {
 	notes: PropTypes.array,
@@ -16,6 +17,8 @@ RqmtNoteForm.defaultProps = {
 
 function RqmtNoteForm(props) {
 	const { notes, onNoteChange, placeHolder } = props;
+	const { t, i18n } = useTranslation();
+	const isENG = i18n.language == 'en';
 
 	if (!notes) return <Fragment />;
 	return (
@@ -25,14 +28,14 @@ function RqmtNoteForm(props) {
 					<div key={index} className="c-rqmt-note-form__input">
 						{onNoteChange ? (
 							<TextInput
-								label={`Note ${index + 1}`}
+								label={`${t('summary.note')} ${index + 1}`}
 								value={note}
 								onChange={(e) => onNoteChange(e, index)}
-								placeHolder={placeHolder ? placeHolder[index] : null}
+								placeHolder={placeHolder ? placeHolder[i18n.language][index] : null}
 							/>
 						) : (
 							<TextInput
-								label={`Note ${index + 1}`}
+								label={`${t('summary.note')} ${index + 1}`}
 								value={note}
 								// onChange={(e) => onNoteChange(e, index)}
 								disabled

@@ -23,6 +23,13 @@
 	&__sign-up {
 		margin-right: 1rem;
 	}
+	&__languages{
+		@include flex(stretch, center);
+	}
+	&__right-content{
+		@include flex(space-between, center);
+		gap: 1rem;
+	}
 	
 	@include xs {
 		max-height: 6rem;
@@ -32,6 +39,11 @@
 		}
 		&__account {
 			& > .c-account-dropdown {
+				@include size(4rem);
+			}
+		}
+		&__languages{
+			& > .c-languages-dropdown {
 				@include size(4rem);
 			}
 		}

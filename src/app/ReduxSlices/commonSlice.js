@@ -18,6 +18,8 @@ const commonSlice = createSlice({
 			stdSize: null,
 		},
 		patterns: null,
+		fabricTypes: null,
+		stylesOfClothe: null,
 	},
 	reducers: {
 		controlLogin(state, action) {
@@ -52,6 +54,12 @@ const commonSlice = createSlice({
 			};
 			state.patterns = null;
 		},
+		updateFabricTypes(state, action) {
+			state.fabricTypes = action.payload;
+		},
+		updateStylesOfClothe(state, action) {
+			state.stylesOfClothe = action.payload;
+		},
 	},
 });
 
@@ -62,5 +70,7 @@ export const {
 	setOrderDetail,
 	setPatterns,
 	resetState,
+	updateFabricTypes,
+	updateStylesOfClothe,
 } = actions;
 export default reducer;

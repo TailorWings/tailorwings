@@ -11,6 +11,7 @@ import { updateDocument } from '../../../services/API/firebaseAPI';
 // import OfflineMethod from './OfflineMethod';
 import OnlineMethod from './OnlineMethod';
 import StandardSizeMethod from './StandardSizeMethod';
+import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 MeasurementContent.propTypes = {
 	match: PropTypes.object,
@@ -28,6 +29,8 @@ function MeasurementContent(props) {
 	const orderDetail = useSelector((state) => state.common.orderDetail);
 	const currentCustomer = useSelector((state) => state.common.currentCustomer);
 	const dispatch = useDispatch();
+	const { t, i18n } = useTranslation();
+	const isENG = i18n.language == 'en';
 	/*--------------*/
 	const [onlineMsmt, setOnlineMsmt] = useState(null);
 	const [alertOpen, setAlertOpen] = useState(false);
@@ -124,6 +127,7 @@ function MeasurementContent(props) {
 	 *  Description: handle form submit
 	 */
 	function handleOnlineConfirm(value) {
+		console.log("handleOnlineConfirm value = ", value)
 		/*--------------*/
 		const action_setOrderDetail = setOrderDetail({ ...orderDetail, msmt: { ...value } });
 		dispatch(action_setOrderDetail);
@@ -149,6 +153,7 @@ function MeasurementContent(props) {
 			setAlertOpen(true);
 		} else {
 			let updatedOrderDetail = { ...orderDetail, stdSize: activeStandardSize.name };
+			console.log("updatedOrderDetail", updatedOrderDetail)
 			const action_setOrderDetail = setOrderDetail(updatedOrderDetail);
 			dispatch(action_setOrderDetail);
 			/*--------------*/
@@ -237,7 +242,7 @@ function MeasurementContent(props) {
 			<MaterialAlert
 				open={alertOpen}
 				setOpen={setAlertOpen}
-				content="Please select standard size that fit you!"
+				content={t('measurement.pleaseSelectSize')}
 				serverity="error"
 			/>
 			<Popup show={popupShow} setPopupShow={setPopupShow}>

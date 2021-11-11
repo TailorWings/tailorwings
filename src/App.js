@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
+import LanguageSwitcher from './components/LanguageSwitcher';
 import PageLoader from './components/PageLoader';
 import TestEmail from './pages/TestEmail';
 import TestExcel from './pages/TestExcel';
@@ -27,6 +28,7 @@ function App() {
 	return (
 		<div className="App">
 			<Suspense fallback={<PageLoader />}>
+				{/* <LanguageSwitcher /> */}
 				<Navbar />
 				<div className="content">
 					<Switch>

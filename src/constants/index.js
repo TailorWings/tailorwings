@@ -7,28 +7,48 @@ import linen from '../assets/images/fabric-linen.jpg';
 import rayon from '../assets/images/fabric-rayon.jpg';
 import satin from '../assets/images/fabric-satin.jpg';
 import silk from '../assets/images/fabric-silk.jpg';
+import wool from '../assets/images/fabric-silk.jpg';
+import stretch from '../assets/images/fabric-silk.jpg';
 
 import about_team from '../assets/images/about_team.jpg';
 import about_polution from '../assets/images/about_polution.jpg';
 import about_vision from '../assets/images/about_vision.jpg';
 
-import topDressLength from '../assets/images/top-dress-length.jpg';
-import neck from '../assets/images/neck.jpg';
-import shoulder from '../assets/images/shoulder.jpg';
-import bust from '../assets/images/bust.jpg';
-import waist from '../assets/images/waist.jpg';
-import hip from '../assets/images/hip.jpg';
-import fullArmHole from '../assets/images/full-arm-hole.jpg';
-import shoulderToWaistFront from '../assets/images/shoulder-to-waist-front.jpg';
-import shoulderToWaistBack from '../assets/images/shoulder-to-waist-back.jpg';
-import abdomen from '../assets/images/abdomen.jpg';
-import bicep from '../assets/images/bicep.jpg';
-import crothDepth from '../assets/images/croth-depth.jpg';
-import crothLength from '../assets/images/croth-length.jpg';
-import sleeve from '../assets/images/sleeve.jpg';
-import highHip from '../assets/images/high-hip.jpg';
-import pantLength from '../assets/images/pant-length.jpg';
-import thigh from '../assets/images/thigh.jpg';
+import topDressLength from '../assets/images/en/top-dress-length.jpg';
+import neck from '../assets/images/en/neck.jpg';
+import shoulder from '../assets/images/en/shoulder.jpg';
+import bust from '../assets/images/en/bust.jpg';
+import waist from '../assets/images/en/waist.jpg';
+import hip from '../assets/images/en/hip.jpg';
+import fullArmHole from '../assets/images/en/full-arm-hole.jpg';
+import shoulderToWaistFront from '../assets/images/en/shoulder-to-waist-front.jpg';
+import shoulderToWaistBack from '../assets/images/en/shoulder-to-waist-back.jpg';
+import abdomen from '../assets/images/en/abdomen.jpg';
+import bicep from '../assets/images/en/bicep.jpg';
+import crothDepth from '../assets/images/en/croth-depth.jpg';
+import crothLength from '../assets/images/en/croth-length.jpg';
+import sleeve from '../assets/images/en/sleeve.jpg';
+import highHip from '../assets/images/en/high-hip.jpg';
+import pantLength from '../assets/images/en/pant-length.jpg';
+import thigh from '../assets/images/en/thigh.jpg';
+
+import topDressLengthVN from '../assets/images/vn/top-dress-length.jpg';
+import neckVN from '../assets/images/vn/neck.jpg';
+import shoulderVN from '../assets/images/vn/shoulder.jpg';
+import bustVN from '../assets/images/vn/bust.jpg';
+import waistVN from '../assets/images/vn/waist.jpg';
+import hipVN from '../assets/images/vn/hip.jpg';
+import fullArmHoleVN from '../assets/images/vn/full-arm-hole.jpg';
+import shoulderToWaistFrontVN from '../assets/images/vn/shoulder-to-waist-front.jpg';
+import shoulderToWaistBackVN from '../assets/images/vn/shoulder-to-waist-back.jpg';
+import abdomenVN from '../assets/images/vn/abdomen.jpg';
+import bicepVN from '../assets/images/vn/bicep.jpg';
+import crothDepthVN from '../assets/images/vn/croth-depth.jpg';
+import crothLengthVN from '../assets/images/vn/croth-length.jpg';
+import sleeveVN from '../assets/images/vn/sleeve.jpg';
+import highHipVN from '../assets/images/vn/high-hip.jpg';
+import pantLengthVN from '../assets/images/vn/pant-length.jpg';
+import thighVN from '../assets/images/vn/thigh.jpg';
 
 // Homepage
 export const HOW_IT_WORK_TITLE = 'Personalizing all your fashion has never been easier';
@@ -74,7 +94,7 @@ export const STYLE_ESTIMATE_PRICE = [
 ];
 
 // Fabric page
-export const FABRIC_TYPE_TITLE = 'Choose the fabric type for your design';
+export const FABRIC_TYPE_TITLE = 'Tailor Wings available fabrics';
 export const FABRIC_TYPE_SUBTITLE =
 	'Here you can find all of our available fabrics (more will be added by time).';
 export const FABRIC_BUY_TYPES = [
@@ -82,35 +102,41 @@ export const FABRIC_BUY_TYPES = [
 		id: 'TAILOR_WINGS',
 		title: "TailorWings's Fabric",
 		description: 'Choose from our available fabric',
+		titleVN: "Vải của Tailor Wings",
+		descriptionVN: 'Chọn từ hàng trăm mẫu vải có sẵn',
 	},
 	{
 		id: 'MY_OWN',
 		title: 'My own fabric',
-		description: 'We will contact to pick up your fabric after you place the order',
+		description: 'We will get in contact to pick up your fabric after you place the order',
+		titleVN: "Vải của tôi",
+		descriptionVN: 'Tailor Wings sẽ liên hệ để lấy vải từ bạn sau bước đặt hàng',
 	},
 	{
 		id: 'TAILOR_WINGS_PARTNER',
 		title: "Fabric form Tailor Wings's partner",
-		description: 'We will contact to help you buy fabric you love right after you place the order.',
+		description: 'We will get in contact to help you buy fabric you love right after you place the order.',
+		titleVN: "Vải từ đối tác của Tailor Wings",
+		descriptionVN: 'Chúng tôi sẽ liên hệ để tư vấn và giúp bạn mua vải mà bạn yêu thích sau bước đặt hàng',
 	},
 ];
 export const FABRIC_TYPES = [
 	{
 		id: 'COT',
-		name: 'cotton',
+		name: 'Cotton',
 		image: cotton,
 		price: 100000,
 		info: [
 			{
-				label: 'FABRIC TYPE',
+				label: 'Fabric Types',
 				value: 'Cotton',
 			},
 			{
-				label: 'SUITABLE COSTUME',
+				label: 'Suitable Costume',
 				value: 'T-shirts, dresses, skirts and pants and childrenswear',
 			},
 			{
-				label: 'DETAIL',
+				label: 'Details',
 				value: `100% Cotton made organic fibers from the seeds of the cotton plant`,
 			},
 		],
@@ -122,95 +148,135 @@ export const FABRIC_TYPES = [
 		price: 150000,
 		info: [
 			{
-				label: 'FABRIC TYPE',
+				label: 'Fabric Types',
 				value: 'Linen',
 			},
 			{
-				label: 'SUITABLE COSTUME',
+				label: 'Suitable Costume',
 				value: 'T-shirts, dresses, skirts and pants and childrenswear',
 			},
 			{
-				label: 'DETAIL',
+				label: 'Details',
 				value: `100% Linen made from fibers derived from the stems of the flax plan`,
 			},
 		],
 	},
 	{
 		id: 'SIL',
-		name: 'silk',
+		name: 'Silk',
 		image: silk,
 		price: 240000,
 		info: [
 			{
-				label: 'FABRIC TYPE',
+				label: 'Fabric Types',
 				value: 'Silk',
 			},
 			{
-				label: 'SUITABLE COSTUME',
+				label: 'Suitable Costume',
 				value: 'T-shirts, dresses, skirts and pants',
 			},
 			{
-				label: 'DETAIL',
+				label: 'Details',
 				value: `100% Nature Silk made from fibers created by the silkworm insect.`,
 			},
 		],
 	},
 	{
 		id: 'RAY',
-		name: 'rayon',
+		name: 'Rayon',
 		image: rayon,
 		price: 100000,
 		info: [
 			{
-				label: 'FABRIC TYPE',
+				label: 'Fabric Types',
 				value: 'Rayon',
 			},
 			{
-				label: 'SUITABLE COSTUME',
+				label: 'Suitable Costume',
 				value: 'T-shirts, dresses, skirts and pants and childrenswear',
 			},
 			{
-				label: 'DETAIL',
+				label: 'Details',
 				value: `100% Rayon made from purified cellulose fibers, which are typically created from wood pulp`,
 			},
 		],
 	},
 	{
 		id: 'CIF',
-		name: 'chiffon',
+		name: 'Chiffon',
 		image: chiffon,
 		price: 80000,
 		info: [
 			{
-				label: 'FABRIC TYPE',
+				label: 'Fabric Types',
 				value: 'Chiffon',
 			},
 			{
-				label: 'SUITABLE COSTUME',
+				label: 'Suitable Costume',
 				value: 'T-shirts, dresses, skirts and pants',
 			},
 			{
-				label: 'DETAIL',
+				label: 'Details',
 				value: `100% Polyester`,
 			},
 		],
 	},
 	{
 		id: 'SAT',
-		name: 'satin',
+		name: 'Satin',
 		image: satin,
 		price: 90000,
 		info: [
 			{
-				label: 'FABRIC TYPE',
+				label: 'Fabric Types',
 				value: 'Satin',
 			},
 			{
-				label: 'SUITABLE COSTUME',
+				label: 'Suitable Costume',
 				value: 'T-shirts, dresses, skirts and pants',
 			},
 			{
-				label: 'DETAIL',
+				label: 'Details',
+				value: `100% Polyester`,
+			},
+		],
+	},
+	{
+		id: 'WOO',
+		name: 'Wool',
+		image: wool,
+		price: 90000,
+		info: [
+			{
+				label: 'Fabric Types',
+				value: 'Wool',
+			},
+			{
+				label: 'Suitable Costume',
+				value: 'T-shirts, dresses, skirts and pants',
+			},
+			{
+				label: 'Details',
+				value: `100% Polyester`,
+			},
+		],
+	},
+	{
+		id: 'STR',
+		name: 'Stretch',
+		image: stretch,
+		price: 90000,
+		info: [
+			{
+				label: 'Fabric Types',
+				value: 'Stretch',
+			},
+			{
+				label: 'Suitable Costume',
+				value: 'T-shirts, dresses, skirts and pants',
+			},
+			{
+				label: 'Details',
 				value: `100% Polyester`,
 			},
 		],
@@ -240,272 +306,232 @@ export const MSMT_METHODS = [
 	// 	link: '/offline',
 	// },
 	{
-		name: 'online',
-		desc: 'Taking your measurements is quick and easy with our instruction.',
+		name: 'Measure Online',
+		desc: 'Just follow the instructions and you will get a perfect fit.',
 		buttonText: 'View Guidance Images',
+		nameVN: 'Đo online',
+		descVN: 'Đơn giản mà có được sự vừa vặn, vui lòng thực hiện theo hướng dẫn.',
+		buttonTextVN: 'Xem hướng dẫn',
 		link: '/online',
 	},
 	{
-		name: 'standard size',
-		desc: 'Choose your right size bellow.',
+		name: 'Standard Size',
+		desc: 'Choose your right size below.',
 		buttonText: 'Pick Sizes',
+		nameVN: 'Size chuẩn',
+		descVN: 'Hãy tìm đúng size của bạn.',
+		buttonTextVN: 'Chọn size',
 		link: '/standard-size',
 	},
 ];
+
+const MEASUREMENTS_STYLES = {
+	'abdomen': {
+		id: 'abdomen',
+		label: 'abdomen',
+		guide: abdomen,
+		labelVN: 'Vai',
+		guideVN: abdomenVN,
+	},
+	'bicep': {
+		id: 'bicep',
+		label: 'Bicep',
+		guide: bicep,
+		labelVN: 'Bắp tay',
+		guideVN: bicepVN,
+	},
+	'bust': {
+		id: 'bust',
+		label: 'bust',
+		guide: bust,
+		labelVN: 'Ngực',
+		guideVN: bustVN,
+	},
+	'crothdepth': {
+		id: 'crothdepth',
+		label: 'croth depth',
+		guide: crothDepth,
+		labelVN: 'Hạ đáy',
+		guideVN: crothDepthVN,
+	},
+	'crothlength': {
+		id: 'crothlength',
+		label: 'croth Length',
+		guide: crothLength,
+		labelVN: 'Dài đầm',
+		guideVN: crothLengthVN,
+	},
+	'fullarmhole': {
+		id: 'fullarmhole',
+		label: 'full armhole',
+		guide: fullArmHole,
+		labelVN: 'Vòng sát nách',
+		guideVN: fullArmHoleVN,
+	},
+	'highhip': {
+		id: 'highhip',
+		label: 'high hip',
+		guide: highHip,
+		labelVN: 'Vòng hông',
+		guideVN: highHipVN,
+	},
+	'hip': {
+		id: 'hip',
+		label: 'Hip',
+		guide: hip,
+		labelVN: 'Mông',
+		guideVN: hipVN,
+	},
+	'neck': {
+		id: 'neck',
+		label: 'Neck',
+		guide: neck,
+		labelVN: 'Vòng cổ',
+		guideVN: neckVN,
+	},
+	'pantlength': {
+		id: 'pantlength',
+		label: 'pant length',
+		guide: pantLength,
+		labelVN: 'Dài quần',
+		guideVN: pantLengthVN,
+	},
+	'shouldertowaistfront': {
+		id: 'shouldertowaistfront',
+		label: 'shoulder to waist front',
+		guide: shoulderToWaistFront,
+		labelVN: 'Hạ eo trước',
+		guideVN: shoulderToWaistFrontVN,
+	},
+	'shouldertowaistback': {
+		id: 'shouldertowaistback',
+		label: 'shoulder to waist back',
+		guide: shoulderToWaistBack,
+		labelVN: 'Hạ eo sau',
+		guideVN: shoulderToWaistBackVN,
+	},
+	'shoulder': {
+		id: 'shoulder',
+		label: 'Shoulder',
+		guide: shoulder,
+		labelVN: 'Vai',
+		guideVN: shoulderVN,
+	},
+	'sleeve': {
+		id: 'sleeve',
+		label: 'sleeve',
+		guide: sleeve,
+		labelVN: 'Dài tay',
+		guideVN: sleeveVN,
+	},
+	'thigh': {
+		id: 'thigh',
+		label: 'thigh',
+		guide: thigh,
+		labelVN: 'Bắp đùi',
+		guideVN: thighVN,
+	},
+	'dresslength': {
+		id: 'dresslength',
+		label: 'top dress length',
+		guide: topDressLength,
+		labelVN: 'Dài áo đầm',
+		guideVN: topDressLengthVN,
+	},
+	'waist': {
+		id: 'waist',
+		label: 'Waist',
+		guide: waist,
+		labelVN: 'Eo',
+		guideVN: waistVN,
+	},
+};
+
 export const ONLINE_MEASUREMENTS = [
 	{
 		style: 'dress',
 		msmts: [
-			{
-				id: 'shoulder',
-				label: 'Shoulder',
-				guide: shoulder,
-			},
-			{
-				id: 'sleeve',
-				label: 'sleeve',
-				guide: sleeve,
-			},
-			{
-				id: 'fullarmhole',
-				label: 'full armhole',
-				guide: fullArmHole,
-			},
-			{
-				id: 'bicep',
-				label: 'Bicep',
-				guide: bicep,
-			},
-			{
-				id: 'bust',
-				label: 'bust',
-				guide: bust,
-			},
-			{
-				id: 'waist',
-				label: 'Waist',
-				guide: waist,
-			},
-			{
-				id: 'shouldertowaistfront',
-				label: 'shoulder to waist front',
-				guide: shoulderToWaistFront,
-			},
-			{
-				id: 'shouldertowaistback',
-				label: 'shoulder to waist back',
-				guide: shoulderToWaistBack,
-			},
-			{
-				id: 'hip',
-				label: 'Hip',
-				guide: hip,
-			},
-			{
-				id: 'crothdepth',
-				label: 'croth depth',
-				guide: crothDepth,
-			},
-			{
-				id: 'dresslength',
-				label: 'dress length',
-				guide: topDressLength,
-			},
-			{
-				id: 'thigh',
-				label: 'thigh',
-				guide: thigh,
-			},
-			{
-				id: 'highhip',
-				label: 'high hip',
-				guide: highHip,
-			},
+			MEASUREMENTS_STYLES['shoulder'],
+			MEASUREMENTS_STYLES['sleeve'],
+			MEASUREMENTS_STYLES['fullarmhole'],
+			MEASUREMENTS_STYLES['bicep'],
+			MEASUREMENTS_STYLES['bust'],
+			MEASUREMENTS_STYLES['waist'],
+			MEASUREMENTS_STYLES['shouldertowaistfront'],
+			MEASUREMENTS_STYLES['shouldertowaistback'],
+			MEASUREMENTS_STYLES['hip'],
+			MEASUREMENTS_STYLES['crothdepth'],
+			MEASUREMENTS_STYLES['dresslength'],
+			MEASUREMENTS_STYLES['thigh'],
+			MEASUREMENTS_STYLES['highhip'],
 		],
 	},
 	{
 		style: 'shirts',
 		msmts: [
-			{
-				id: 'shoulder',
-				label: 'Shoulder',
-				guide: shoulder,
-			},
-			{
-				id: 'sleeve',
-				label: 'sleeve',
-				guide: sleeve,
-			},
-			{
-				id: 'fullarmhole',
-				label: 'full armhole',
-				guide: fullArmHole,
-			},
-			{
-				id: 'bicep',
-				label: 'Bicep',
-				guide: bicep,
-			},
-			{
-				id: 'bust',
-				label: 'bust',
-				guide: bust,
-			},
-			{
-				id: 'waist',
-				label: 'Waist',
-				guide: waist,
-			},
-			{
-				id: 'shouldertowaistfront',
-				label: 'shoulder to waist front',
-				guide: shoulderToWaistFront,
-			},
-			{
-				id: 'shouldertowaistback',
-				label: 'shoulder to waist back',
-				guide: shoulderToWaistBack,
-			},
-			{
-				id: 'hip',
-				label: 'Hip',
-				guide: hip,
-			},
-			{
-				id: 'dresslength',
-				label: 'dress length',
-				guide: topDressLength,
-			},
-			{
-				id: 'highhip',
-				label: 'high hip',
-				guide: highHip,
-			},
+			MEASUREMENTS_STYLES['shoulder'],
+			MEASUREMENTS_STYLES['sleeve'],
+			MEASUREMENTS_STYLES['fullarmhole'],
+			MEASUREMENTS_STYLES['bicep'],
+			MEASUREMENTS_STYLES['bust'],
+			MEASUREMENTS_STYLES['waist'],
+			MEASUREMENTS_STYLES['shouldertowaistfront'],
+			MEASUREMENTS_STYLES['shouldertowaistback'],
+			MEASUREMENTS_STYLES['hip'],
+			MEASUREMENTS_STYLES['dresslength'],
+			MEASUREMENTS_STYLES['highhip'],
 		],
 	},
 	{
 		style: 'pants',
 		msmts: [
-			{
-				id: 'abdomen',
-				label: 'abdomen',
-				guide: abdomen,
-			},
-			{
-				id: 'hip',
-				label: 'Hip',
-				guide: hip,
-			},
-			{
-				id: 'crothdepth',
-				label: 'croth depth',
-				guide: crothDepth,
-			},
-			{
-				id: 'pantlength',
-				label: 'pant length',
-				guide: pantLength,
-			},
-			{
-				id: 'thigh',
-				label: 'thigh',
-				guide: thigh,
-			},
-			{
-				id: 'highhip',
-				label: 'high hip',
-				guide: highHip,
-			},
+			MEASUREMENTS_STYLES['abdomen'],
+			MEASUREMENTS_STYLES['hip'],
+			MEASUREMENTS_STYLES['crothdepth'],
+			MEASUREMENTS_STYLES['pantlength'],
+			MEASUREMENTS_STYLES['thigh'],
+			MEASUREMENTS_STYLES['highhip'],
 		],
 	},
 	{
 		style: 'skirts',
 		msmts: [
-			{
-				id: 'abdomen',
-				label: 'abdomen',
-				guide: abdomen,
-			},
-			{
-				id: 'hip',
-				label: 'Hip',
-				guide: hip,
-			},
-			{
-				id: 'crothdepth',
-				label: 'croth depth',
-				guide: crothDepth,
-			},
-			{
-				id: 'pantlength',
-				label: 'pant length',
-				guide: topDressLength,
-			},
-			{
-				id: 'thigh',
-				label: 'thigh',
-				guide: thigh,
-			},
-			{
-				id: 'highhip',
-				label: 'high hip',
-				guide: highHip,
-			},
+			MEASUREMENTS_STYLES['abdomen'],
+			MEASUREMENTS_STYLES['hip'],
+			MEASUREMENTS_STYLES['crothdepth'],
+			MEASUREMENTS_STYLES['pantlength'],
+			MEASUREMENTS_STYLES['thigh'],
+			MEASUREMENTS_STYLES['highhip'],
 		],
 	},
 	{
 		style: 'ao dai',
 		msmts: [
-			{
-				id: 'shoulder',
-				label: 'Shoulder',
-				guide: shoulder,
-			},
-			{
-				id: 'sleeve',
-				label: 'sleeve',
-				guide: sleeve,
-			},
-			{
-				id: 'fullarmhole',
-				label: 'full armhole',
-				guide: fullArmHole,
-			},
-			{
-				id: 'bicep',
-				label: 'Bicep',
-				guide: bicep,
-			},
-			{
-				id: 'bust',
-				label: 'bust',
-				guide: bust,
-			},
-			{
-				id: 'waist',
-				label: 'Waist',
-				guide: waist,
-			},
-			{
-				id: 'shouldertowaistfront',
-				label: 'shoulder to waist front',
-				guide: shoulderToWaistFront,
-			},
-			{
-				id: 'shouldertowaistback',
-				label: 'shoulder to waist back',
-				guide: shoulderToWaistBack,
-			},
-			{
-				id: 'hip',
-				label: 'Hip',
-				guide: hip,
-			},
-			{
-				id: 'dresslength',
-				label: 'dress length',
-				guide: topDressLength,
-			},
+			MEASUREMENTS_STYLES['shoulder'],
+			MEASUREMENTS_STYLES['sleeve'],
+			MEASUREMENTS_STYLES['fullarmhole'],
+			MEASUREMENTS_STYLES['bicep'],
+			MEASUREMENTS_STYLES['bust'],
+			MEASUREMENTS_STYLES['waist'],
+			MEASUREMENTS_STYLES['shouldertowaistfront'],
+			MEASUREMENTS_STYLES['shouldertowaistback'],
+			MEASUREMENTS_STYLES['hip'],
+			MEASUREMENTS_STYLES['dresslength'],
+		],
+	},
+	{
+		style: 'others',
+		msmts: [
+			MEASUREMENTS_STYLES['shoulder'],
+			MEASUREMENTS_STYLES['sleeve'],
+			MEASUREMENTS_STYLES['fullarmhole'],
+			MEASUREMENTS_STYLES['bicep'],
+			MEASUREMENTS_STYLES['bust'],
+			MEASUREMENTS_STYLES['waist'],
+			MEASUREMENTS_STYLES['shouldertowaistfront'],
+			MEASUREMENTS_STYLES['shouldertowaistback'],
+			MEASUREMENTS_STYLES['hip'],
+			MEASUREMENTS_STYLES['dresslength'],
 		],
 	},
 ];
@@ -529,6 +555,7 @@ export const ACCOUNT_SIDEBAR_ITEMS = [
 	// },
 	{
 		text: 'Order management',
+		textVN: 'Quản lý đơn hàng',
 		path: '/account/order',
 		activeIcon: activeBagIcon,
 		passiveIcon: passiveBagIcon,
@@ -545,11 +572,13 @@ export const SHIPPING_INFO = [
 	{
 		id: 'name',
 		label: 'Name',
+		labelVN: 'Tên',
 		value: '',
 	},
 	{
 		id: 'phone',
 		label: 'Phone number',
+		labelVN: 'Số điện thoại',
 		value: '',
 	},
 	// {
@@ -567,11 +596,13 @@ export const SHIPPING_INFO = [
 	{
 		id: 'address',
 		label: 'Address',
+		labelVN: 'Địa chỉ',
 		value: '',
 	},
 	{
 		id: 'notes',
 		label: 'notes',
+		labelVN: 'Ghi chú',
 		value: '',
 	},
 ];

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import MediumButton from '../../../components/Button/MediumButton';
 import Label from '../../../components/Label';
 import { modifyPrice } from '../../../services/Functions/commonFunctions';
+import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 OrderItem.propTypes = {
 	info: PropTypes.object,
@@ -17,6 +18,8 @@ OrderItem.defaultProps = {
 };
 function OrderItem(props) {
 	const { info, offersLength } = props;
+	const { t, i18n } = useTranslation();
+
 	/*--------------*/
 	/*********************************
 	 *  Description: handle content render depend on status change
@@ -29,11 +32,11 @@ function OrderItem(props) {
 					renderElement = (
 						<div className="c-order-item__content">
 							<div className="c-order-item-info">
-								<Label value={info.orderDate} title="Order date" color="primary" />
+								<Label value={info.orderDate} title={t('account.orderDate')} color="primary" />
 							</div>
 							<div className="c-order-item__button">
 								<MediumButton
-									text={`${offersLength} tailor offer${
+									text={`${offersLength} ${t('account.tailorOffer')} ${
 										offersLength > 1 ? 's' : ''
 									}`}
 									isActive={true}
@@ -58,7 +61,7 @@ function OrderItem(props) {
 								/>
 							</div>
 							<div className="c-order-item__button">
-								<MediumButton text="Order Details" isActive={false} />
+								<MediumButton text={t('account.orderDetails')} isActive={false} />
 							</div>
 						</div>
 					);
@@ -82,7 +85,7 @@ function OrderItem(props) {
 								finishPickedOffer.price ? modifyPrice(finishPickedOffer.price)  : "Error"
 							} vnđ`}</p>
 							<div className="c-order-item__button">
-								<MediumButton text="Order Details" isActive={false} />
+								<MediumButton text={t('account.orderDetails')} isActive={false} />
 							</div>
 						</div>
 					);

@@ -64,9 +64,10 @@
 	@include xs {
 		@include flex(center, center, column);
 		@include size(100%, auto);
-		padding: 2rem;
+		padding: 2rem 0;
 		background-color: white;
 		border-radius: 30px;
+		margin: 0;
 		&__title {
 			@include textStyle(h3);
 			margin: 0 20px;
