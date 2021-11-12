@@ -28,7 +28,6 @@ import { fetchAllRealTime, updateDocument } from '../../../services/API/firebase
 import { modifyPrice } from '../../../services/Functions/commonFunctions';
 import TailorOffer from '../../Account/components/TailorOffer';
 import ManualOffer from './ManualOffer';
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 OrderManagement.propTypes = {
 	orders: PropTypes.object,
@@ -68,7 +67,6 @@ function OrderManagement(props) {
 	const { orders } = props;
 	const customers = useSelector((state) => state.admin.customers);
 	const tailors = useSelector((state) => state.admin.tailors);
-	const { t, i18n } = useTranslation();
 	/*--------------*/
 	const [orderStatus, setOrderStatus] = useState(
 		ORDER_STATUS.map((status, index) => {
@@ -492,7 +490,7 @@ function OrderManagement(props) {
 							)}
 							{clickedOrder.notes ? (
 								<div className="c-admin-order__info --notes">
-									<p>{t('account.requirementNote')}</p>
+									<p>Requirement Note</p>
 									<RqmtNoteForm notes={clickedOrder?.notes || []} />
 								</div>
 							) : (

@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Controller } from 'react-hook-form';
 import TextInput from '../Input/TextInput';
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
 InputField.propTypes = {
 	form: PropTypes.object.isRequired,
 	name: PropTypes.string.isRequired,
@@ -17,8 +16,6 @@ function InputField(props) {
 	const { form, name, label, disabled, placeHolder, suffix } = props;
 	const { register, errors, formState } = form;
 	const hasError = !!errors[name];
-	const { t, i18n } = useTranslation();
-	const isENG = i18n.language == 'en';
 	return (
 		<Controller
 			name={name}
@@ -31,7 +28,7 @@ function InputField(props) {
 					value={value}
 					register={register}
 					hasError={hasError}
-					errors={hasError ? (isENG ? 'Please input a positive interger' : 'Vui lòng nhập một số nguyên') : ''}
+					errors={hasError ? 'Please input a positive interger' : ''}
 					placeHolder={placeHolder}
 					suffix={suffix || null}
 					maxlength="3"

@@ -3,13 +3,10 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import MediumButton from '../Button/MediumButton';
 import AvatarDropdown from '../Dropdown/AccountDropdown';
-import LanguagesDropdown from '../Dropdown/LanguagesDropdown';
 import logo from '../../assets/images/logo.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { controlLogin } from '../../app/ReduxSlices/commonSlice';
 import Login from '../Login';
-import LanguageSwitcher from '../../components/LanguageSwitcher';
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 Navbar.propTypes = {
 	type: PropTypes.string,
@@ -20,7 +17,6 @@ Navbar.defaultProps = {
 };
 
 function Navbar({type}) {
-	const { t } = useTranslation();
 	/*--------------*/
 	const currentCustomer = useSelector((state) => state.common.currentCustomer);
 	const {tailor} = useSelector((state) => state.tailor);
@@ -48,7 +44,7 @@ function Navbar({type}) {
 							dispatch(action_controlLogin);
 						}}
 					>
-						<MediumButton text={t('signIn')} />
+						<MediumButton text="sign in" />
 					</div>
 				</div>
 			);
@@ -78,7 +74,7 @@ function Navbar({type}) {
 							dispatch(action_controlLogin);
 						}}
 					>
-						<MediumButton text={t('signIn')} />
+						<MediumButton text="sign in" />
 					</div>
 				</div>
 			);
@@ -94,14 +90,7 @@ function Navbar({type}) {
 							<img src={logo} alt="logo" className="c-navbar__logo" />
 						</Link>
 					)}
-					<div className="c-navbar__right-content">
-						{ type === 'customer' ? customerLoginStatusRender() : tailorLoginStatusRender()}
-						{/* <LanguageSwitcher /> */}
-
-						<div className="c-navbar__languages">
-							<LanguagesDropdown />
-						</div>
-					</div>
+					{ type === 'customer' ? customerLoginStatusRender() : tailorLoginStatusRender()}
 				</div>
 			</div>
 			<Login />

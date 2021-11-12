@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import Title from '../../../components/Title';
 import { MSMT_OPTION_SUBTITLE, MSMT_OPTION_TITLE } from '../../../constants';
 import MeasurementMethod from './MeasurementMethod';
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 MeasurementOptions.propTypes = {
 	match: PropTypes.object,
@@ -19,18 +18,16 @@ MeasurementOptions.defaultProps = {
 };
 
 function MeasurementOptions(props) {
-	const { t, i18n } = useTranslation();
-	const isENG = i18n.language == 'en';
 	const { match, methods, onMethodClick } = props;
 	if (!match || !methods || !onMethodClick) return <Fragment />;
 	return (
 		<div className="c-msmt-options">
 			<div className="c-msmt-options__title">
-				<Title title={t('measurement.title')} subtitle={t('measurement.subTitle')} />
+				<Title title={MSMT_OPTION_TITLE} subtitle={MSMT_OPTION_SUBTITLE} />
 			</div>
 			<div className="c-msmt-options-method">
 				{methods.map((method, index) => {
-					const { name, desc, buttonText, nameVN, descVN, buttonTextVN, active, link } = method;
+					const { name, desc, buttonText, active, link } = method;
 					return (
 						<Link
 							to={`${match.path}${link}`}
@@ -39,9 +36,9 @@ function MeasurementOptions(props) {
 							className="c-msmt-options-method__item"
 						>
 							<MeasurementMethod
-								name={isENG ? name : nameVN}
-								desc={isENG ? desc : descVN}
-								buttonText={isENG ? buttonText : buttonTextVN}
+								name={name}
+								desc={desc}
+								buttonText={buttonText}
 								isActive={active}
 							/>
 						</Link>

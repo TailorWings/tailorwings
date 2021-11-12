@@ -5,9 +5,6 @@ import ListLoader from '../../../components/ComponentLoader';
 import MeasurementForm from '../../../components/Form/MeasurementForm';
 import ProcessAction from '../../../components/ProcessAction';
 import Slider from '../../../components/Slider';
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
-import {find} from 'lodash'
-import { useSelector } from 'react-redux';
 
 OnlineMethod.propTypes = {
 	measurements: PropTypes.array,
@@ -25,13 +22,6 @@ OnlineMethod.defaultProps = {
 
 function OnlineMethod(props) {
 	const { measurements, onMeasurementConfirm, onGetLatestMsmt, designStyle } = props;
-	const { t, i18n } = useTranslation();
-	const isENG = i18n.language == 'en';
-	const stylesOfClothe = useSelector((state) => state.common.stylesOfClothe);
-	
-	const getStyleOfClothe = (id) => {
-		return find(stylesOfClothe, {id: id})
-	}
 
 	const swiperRef = useRef(null);
 	const params = {
@@ -49,7 +39,6 @@ function OnlineMethod(props) {
 		}
 	};
 	const [activeGuide, setActiveGuide] = useState(null);
-	const [currentIndex, setCurrentIndex] = useState(0);
 
 	useEffect(() => {
 		if (measurements) {
@@ -65,25 +54,6 @@ function OnlineMethod(props) {
 		}
 	}
 
-	const actionNext = () => {
-		console.log("actionNext")
-		var newIndex = currentIndex + 1
-		if(newIndex > 0 && newIndex < measurements.length) {
-			setCurrentIndex(newIndex)
-			swiperRef.current.swiper.slideNext()
-		}
-	}
-	const actionBack = () => {
-		console.log("actionBack")
-		var newIndex = currentIndex - 1
-		if(newIndex >= 0 && newIndex < measurements.length) {
-			setCurrentIndex(newIndex)
-			swiperRef.current.swiper.slidePrev();
-		}
-	}
-	const styleOfClothe = getStyleOfClothe(designStyle)
-	const styleOfClotheName = isENG ? styleOfClothe.name : styleOfClothe.nameVN
-
 	if (!measurements || !onMeasurementConfirm) return <Fragment />;
 	return (
 		<div className="c-msmt-online">
@@ -96,7 +66,7 @@ function OnlineMethod(props) {
 									{measurements.map((msmt, index) => {
 										return (
 											<div key={index}>
-												<img src={ (isENG ? msmt.guide : msmt.guideVN) || ''} alt={msmt.id} />
+												<img src={msmt.guide || ''} alt={msmt.id} />
 											</div>
 										);
 									})}
@@ -109,9 +79,9 @@ function OnlineMethod(props) {
 				</div>
 				<div className="c-msmt-online-guideline-bottom">
 					<span className="c-msmt-online-guideline-bottom__count">
-						TAILORWINGS - {t("measurement.guideFor")} {styleOfClotheName}:{' '}
+						TAILORWINGS - Measurement Guide For {designStyle}:{' '}
 						{activeGuide
-							? `${ isENG ? activeGuide.label : activeGuide.labelVN } (${activeGuide.activeIndex + 1}/${measurements.length})`
+							? `${activeGuide.label} (${activeGuide.activeIndex + 1}/${measurements.length})`
 							: `...`}
 					</span>
 					{/* <SelectInput
@@ -127,10 +97,6 @@ function OnlineMethod(props) {
 					measurements={measurements}
 					onSubmit={onMeasurementConfirm}
 					onGetLatestMsmt={onGetLatestMsmt}
-					onActionBack={actionBack}
-					onActionNext={actionNext}
-					isDisplayFull={true}
-					currentIndex={currentIndex}
 				/>
 			</div>
 			<ProcessAction backLink="/fabric" formID="msmt-form" />
