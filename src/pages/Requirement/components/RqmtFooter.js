@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import MediumButton from '../../../components/Button/MediumButton';
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 RqmtFooter.propTypes = {
 	onNextClick: PropTypes.func,
@@ -15,15 +14,14 @@ RqmtFooter.defaultProps = {
 
 function RqmtFooter(props) {
 	const { onNextClick, disabled } = props;
-	const { t } = useTranslation();
 
 	return (
 		<div className="c-rqmt-footer">
 			<p className="c-rqmt-footer__text">
-				{t('minImageRequirement')}
+				Minimum image size 500 KB. The higher the quality, the better the results.
 			</p>
 			<div className={`c-rqmt-footer__btn ${disabled ? 'disabled' : ""}`} onClick={onNextClick}>
-				<MediumButton isActive={true} text={t('next')} />
+				<MediumButton isActive={true} text="next" />
 			</div>
 		</div>
 	);

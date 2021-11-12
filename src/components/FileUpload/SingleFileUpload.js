@@ -3,14 +3,10 @@ import PropTypes from 'prop-types';
 import imageUploadIcon from '../../assets/icons/image-upload.svg';
 import { useDropzone } from 'react-dropzone';
 import SmallButton2 from '../Button/SmallButton2';
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 SingleFileUpload.propTypes = {};
 
 function SingleFileUpload(props) {
-
-	const { t } = useTranslation();
-
 	/*--------------*/
 	const [files, setFiles] = useState([]);
 	const { getRootProps, getInputProps } = useDropzone({
@@ -70,9 +66,9 @@ function SingleFileUpload(props) {
 						<input {...getInputProps()} />
 						<img src={imageUploadIcon} alt="upload-icon" className="c-single-file-upload__icon" />
 						<p className="c-single-file-upload__guide">
-							{t('requirement.uploadImageDescription')} <span>{t('requirement.browse')}</span>
+							Drop your image here, or <span>browse</span>
 						</p>
-						<span className="c-single-file-upload__support">{t('requirement.supports')}: JPG, PNG, JPEG</span>
+						<span className="c-single-file-upload__support">Supports: JPG, PNG, JPEG</span>
 					</div>
 				)}
 			</div>

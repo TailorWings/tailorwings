@@ -3,11 +3,8 @@ import { Link } from 'react-router-dom';
 import facebookIcon from '../../assets/icons/facebook.svg';
 import messengerIcon from '../../assets/icons/messenger.svg';
 import youtubeIcon from '../../assets/icons/youtube.svg';
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
-
 
 function Footer() {
-	const { t } = useTranslation();
 	return (
 		<footer className="c-footer">
 			<ul className="c-footer__menu">
@@ -17,21 +14,21 @@ function Footer() {
 					rel="noreferrer"
 					className="c-footer__item"
 				>
-					{t('terms')}
+					Terms
 				</a>
 				<li className="c-footer__item">|</li>
 				<Link
 					to="/faq"
 					className="c-footer__item"
 				>
-					{t('faqs')}
+					FAQs
 				</Link>
 				<li className="c-footer__item">|</li>
 				<Link
 					to="/about"
 					className="c-footer__item"
 				>
-					{t('aboutUs')}
+					About Us
 				</Link>
 				<li className="c-footer__item">|</li>
 				<a
@@ -40,7 +37,7 @@ function Footer() {
 					rel="noreferrer"
 					className="c-footer__item"
 				>
-					{t('contact')}
+					Contact
 				</a>
 			</ul>
 			<div className="c-footer__social-media">
@@ -56,7 +53,7 @@ function Footer() {
 			</div>
 			<div className="c-footer__business-code">
 				<span>© 2021 All right reserved.</span>
-				<span>{t('companyName')}</span>
+				<span>TAILOR WINGS COMPANY LIMITED / Tax code: 0316695125</span>
 			</div>
 		</footer>
 	);

@@ -6,16 +6,12 @@ import MaterialAlert from '../../components/MaterialAlert';
 import Popup from '../../components/Popup';
 import FabricContent from '../../components/Popup/FabricContent';
 import ProcessAction from '../../components/ProcessAction';
-import { FABRIC_TYPES, PATTERN_COLLECTIONS, STYLE_ESTIMATE_PRICE, FABRIC_BUY_TYPES, FABRIC_TOOLTIP_TITLE } from '../../constants';
+import { FABRIC_TYPES, PATTERN_COLLECTIONS, STYLE_ESTIMATE_PRICE } from '../../constants';
 import { fetchAll } from '../../services/API/firebaseAPI';
 import { estimatePriceCalc } from '../../services/Functions/commonFunctions';
 import FabricOptions from './components/FabricOptions';
 import FabricPattern from './components/FabricPattern';
 import FabricType from './components/FabricType';
-import Tooltip from '../../components/Tooltip';
-import FabricBottom from './components/FabricBottom';
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
-
 
 function FabricPage() {
 	/*--------------*/
@@ -23,9 +19,6 @@ function FabricPage() {
 	const patterns = useSelector((state) => state.common.patterns);
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const fabricTypes = useSelector((state) => state.common.fabricTypes);
-
-	const { t, i18n } = useTranslation();
 
 	/*--------------*/
 	const [alertOpen, setAlertOpen] = useState(false);
@@ -34,7 +27,7 @@ function FabricPage() {
 	// );
 	/*--------------*/
 	const [fabricType, setFabricType] = useState(
-		fabricTypes.map((type) => {
+		FABRIC_TYPES.map((type) => {
 			return { ...type, active: false };
 		})
 	);
@@ -45,7 +38,7 @@ function FabricPage() {
 	);
 	const [renderPatterns, setRenderPatterns] = useState(null);
 	const [estPrice, setEstPrice] = useState('');
-	const [fabricBuyType, setFabricBuyType] = useState(FABRIC_BUY_TYPES[0].id);
+	const [isOnline, setIsOnline] = useState(!!orderDetail.fabric.isOnline);
 	const [isConfirmDisabled, setIsConfirmDisabled] = useState(true);
 	/*--------------*/
 	const alertUser = (e) => {
@@ -151,11 +144,10 @@ function FabricPage() {
 	/*********************************
 	 *  Description: handle send fabric offline
 	 */
-	function onSendFabric(type) {
+	function onSendFabricOffline() {
 		let updatedOrderDetail = { ...orderDetail };
 		updatedOrderDetail.fabric = {
-			fabricBuyType: type,
-			isOnline: type == FABRIC_BUY_TYPES[0].id
+			isOnline: false,
 		};
 		const action_setOrderDetail = setOrderDetail(updatedOrderDetail);
 		dispatch(action_setOrderDetail);
@@ -167,7 +159,6 @@ function FabricPage() {
 	 *  Description: handle fabric type set
 	 */
 	function onFabricTypeSet(thisFabricType) {
-		console.log("onFabricTypeSet thisFabricType", thisFabricType);
 		/*------------------------------*/
 		let newRenderPatterns = patterns?.filter((pattern) =>
 			pattern.idFabricType?.includes(thisFabricType?.find((type) => type?.active)?.id)
@@ -264,11 +255,10 @@ function FabricPage() {
 			let updatedOrderDetail = {
 				...orderDetail,
 				fabric: {
-					fabricBuyType: fabricBuyType, 
+					isOnline: true,
 					price: selectedFabricType.price || 0,
 					pattern: selectedPattern || null,
 					type: selectedFabricType.id.toString() || null,
-					isOnline: selectedFabricType.id == FABRIC_BUY_TYPES[0].id
 				},
 			};
 			const action_setOrderDetail = setOrderDetail(updatedOrderDetail);
@@ -283,12 +273,10 @@ function FabricPage() {
 	if (!orderDetail.designStyle || !orderDetail.designFiles) return <Redirect to="/requirement" />;
 	return (
 		<div className="l-fabric container">
-			<FabricOptions setType={setFabricBuyType} type={fabricBuyType} />
-			{ fabricBuyType == FABRIC_BUY_TYPES[0].id && (
+			<FabricOptions setIsOnline={setIsOnline} isOnline={isOnline} />
+			{isOnline && (
 				<Fragment>
 					<FabricType fabricType={fabricType} setFabricType={onFabricTypeSet} />
-					
-					
 					{fabricType.find((type) => type.active) && (
 						<FabricPattern
 							collections={patternCollection}
@@ -301,32 +289,6 @@ function FabricPage() {
 						/>
 					)}
 
-
-					<div className="c-fabric-type__wrapper">
-						<div className="c-fabric-type__tooltip">
-							<Tooltip
-								title={t('fabric.toolTipTitle')}
-								content={
-									fabricType.find((type) => type.active) && fabricType.find((type) => type.active).info
-								}
-                                
-							/>
-						</div>
-					</div>
-					
-					{fabricType.find((type) => type.active) && (
-						<FabricBottom
-							collections={patternCollection}
-							patterns={renderPatterns}
-							onCollectionClick={handleCollectionStatus}
-							onPatternClick={handlePatternSelect}
-							onNextClick={handleConfirm}
-							estPrice={estPrice}
-							isConfirmDisabled={isConfirmDisabled}
-						/>
-					)}
-                    
-
 					<MaterialAlert
 						open={alertOpen}
 						setOpen={setAlertOpen}
@@ -335,14 +297,14 @@ function FabricPage() {
 					/>
 				</Fragment>
 			)}
-			{fabricBuyType != FABRIC_BUY_TYPES[0].id && (
+			{!isOnline && (
 				<div
 					style={{
 						display: 'block',
 						marginTop: '10%',
 					}}
 				>
-					<ProcessAction backLink="/requirement" onNextClick={() => onSendFabric(fabricBuyType)} />
+					<ProcessAction backLink="/requirement" onNextClick={onSendFabricOffline} />
 				</div>
 			)}
 

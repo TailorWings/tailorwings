@@ -4,7 +4,6 @@ import Accordion from '../../../components/Accordion';
 import ComponentLoader from '../../../components/ComponentLoader';
 import { fetchAllRealTime, fetchAllRTCondition } from '../../../services/API/firebaseAPI';
 import OrderList from './OrderList';
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 OrderManagement.propTypes = {
 	findingOrders: PropTypes.array,
@@ -20,7 +19,6 @@ OrderManagement.defaultProps = {
 
 function OrderManagement(props) {
 	const { findingOrders, tailoringOrders, finishOrders } = props;
-	const { t, i18n } = useTranslation();
 	/*--------------*/
 	const [loading, setLoading] = useState(true);
 	const [tailorFindingOrders, setTailorFindingOrders] = useState(null);
@@ -52,20 +50,20 @@ function OrderManagement(props) {
 		);
 	return (
 		<div className="c-order-management">
-			<div className="c-order-management__title">{t('account.orders')}</div>
+			<div className="c-order-management__title">Orders</div>
 			<div className="c-order-management__finding">
 				<div className="c-order-management__dropdown">
-					<Accordion title={t('account.finding')}>
+					<Accordion title="finding">
 						<OrderList orderList={findingOrders} tailorFindingOrders={tailorFindingOrders} />
 					</Accordion>
 				</div>
 				<div className="c-order-management__dropdown">
-					<Accordion title={t('account.tailoring')}>
+					<Accordion title="tailoring">
 						<OrderList orderList={tailoringOrders} />
 					</Accordion>
 				</div>
 				<div className="c-order-management__dropdown">
-					<Accordion title={t('account.history')}>
+					<Accordion title="history">
 						<OrderList orderList={finishOrders} />
 					</Accordion>
 				</div>

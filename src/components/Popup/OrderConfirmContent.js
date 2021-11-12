@@ -6,7 +6,6 @@ import MediumButton from '../Button/MediumButton';
 import MaterialAlert from '../MaterialAlert';
 import PageLoader from '../PageLoader';
 import ListLoader from '../ComponentLoader';
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 OrderConfirmContent.propTypes = {
 	setPopupShow: PropTypes.func,
@@ -24,8 +23,6 @@ OrderConfirmContent.defaultProps = {
 
 function OrderConfirmContent(props) {
 	const { setPopupShow, onFindTailor, isPhoneRequired, isLoading } = props;
-	const { t, i18n } = useTranslation();
-	const isENG = i18n.language == 'en';
 	/*--------------*/
 	const [phone, setPhone] = useState('');
 	const [isRightPhone, setIsRightPhone] = useState(false);
@@ -56,11 +53,12 @@ function OrderConfirmContent(props) {
 		<div className="c-order-confirm-content">
 			<img src={successIcon} alt="success-icon" className="c-order-confirm-content__icon" />
 			<div className="c-order-confirm-content__title">
-				<span>{t('orderConfirmDialog.title')}</span>
+				<span>Thank you for your information</span>
 			</div>
 			<div className="c-order-confirm-content__subtitle">
 				<p>
-				{t('orderConfirmDialog.description1')} <strong>{t('orderConfirmDialog.description2')}</strong> {t('orderConfirmDialog.description3')}
+					Next step you will be to check the <strong>Order Management</strong> page to pick a best
+					tailor for you.
 				</p>
 			</div>
 			{isPhoneRequired ? (
@@ -71,7 +69,7 @@ function OrderConfirmContent(props) {
 						onChange={(e) => setPhone(e.target.value)}
 					/>
 					<p className={`error ${isRightPhone && '--active'}`}>
-						{t('orderConfirmDialog.errorPhoneNumber')}
+						Please provide your valid phone number!
 					</p>
 				</div>
 			) : (
@@ -80,10 +78,10 @@ function OrderConfirmContent(props) {
 
 			<div className="c-order-confirm-content__button">
 				<button className="c-order-confirm-content__back" onClick={() => setPopupShow(false)}>
-					<MediumButton text={t('back')} />
+					<MediumButton text="back" />
 				</button>
 				<div className="c-order-confirm-content__next" onClick={handleFindTailor}>
-					<MediumButton isActive text={t('findTailor')} />
+					<MediumButton isActive text="find tailor" />
 				</div>
 			</div>
 		</div>

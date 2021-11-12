@@ -10,7 +10,6 @@ import { FABRIC_PATTERN_SUBTITLE, FABRIC_PATTERN_TITLE } from '../../../constant
 import { PhotoSwipe } from 'react-photoswipe-2';
 import MediumButton from '../../../components/Button/MediumButton';
 import { modifyPrice } from '../../../services/Functions/commonFunctions';
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 FabricPattern.propTypes = {
 	collections: PropTypes.array,
@@ -34,7 +33,6 @@ FabricPattern.defaultProps = {
 const PHOTO_SWIPE_SIZE = 500;
 
 function FabricPattern(props) {
-	const { t } = useTranslation();
 	const {
 		collections,
 		patterns,
@@ -104,7 +102,7 @@ function FabricPattern(props) {
 					// src: pattern.image.normal,
 					w: PHOTO_SWIPE_SIZE,
 					h: PHOTO_SWIPE_SIZE,
-					html: `<div className="c-fabric-pattern__select-btn"><img src=${pattern.image.normal} /><button id=${index}>${t('select')}</button></div>`,
+					html: `<div className="c-fabric-pattern__select-btn"><img src=${pattern.image.normal} /><button id=${index}>Select</button></div>`,
 				};
 			});
 			if (photos) {
@@ -128,7 +126,7 @@ function FabricPattern(props) {
 					return {
 						w: PHOTO_SWIPE_SIZE,
 						h: PHOTO_SWIPE_SIZE,
-						html: `<div className="c-fabric-pattern__select-btn"><img src=${img} /><button className="select-btn" id=${index}>${t('select')}</button></div>`,
+						html: `<div className="c-fabric-pattern__select-btn"><img src=${img} /><button className="select-btn" id=${index}>Select</button></div>`,
 					};
 				})
 			);
@@ -139,7 +137,7 @@ function FabricPattern(props) {
 					w: PHOTO_SWIPE_SIZE,
 					h: PHOTO_SWIPE_SIZE,
 					html: `<div className="c-fabric-pattern__select-btn"><img src=${selectedPattern.image.normal
-						} /><button className="select-btn" id=${0}>${t('select')}</button></div>`,
+						} /><button className="select-btn" id=${0}>Select</button></div>`,
 				},
 			]);
 		}
@@ -188,7 +186,7 @@ function FabricPattern(props) {
 			) : (
 				<ListLoader />
 			)}
-			{/* {estPrice ? (
+			{estPrice ? (
 				<div className="c-fabric-pattern__estprice">
 					<p>{`~ ${modifyPrice(estPrice)} VND`}</p>
 					<p>{`Order's estimated price`}</p>
@@ -200,7 +198,7 @@ function FabricPattern(props) {
 				backLink="/requirement"
 				onNextClick={onNextClick}
 				disabled={isConfirmDisabled}
-			/> */}
+			/>
 			<PhotoSwipe
 				isOpen={isPhotoSwipeOpen}
 				items={images || []}

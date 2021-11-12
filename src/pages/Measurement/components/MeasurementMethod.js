@@ -25,9 +25,9 @@ function MeasurementMethod(props) {
 	if (!name || !desc || !buttonText) return <Fragment />;
 	return (
 		<div className={classNames('c-msmt-method', { 'c-msmt-method--active': isActive })}>
-			{/* <div className="c-msmt-method__icon">
+			<div className="c-msmt-method__icon">
 				<img src={isActive ? whiteStarIcon : grayStarIcon} alt="icon" />
-			</div> */}
+			</div>
 			<p className="c-msmt-method__name">{name}</p>
 			<p className="c-msmt-method__desc">{desc}</p>
 			<div className="c-msmt-method__button">

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import MediumButton from '../../../components/Button/MediumButton';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 AccountSidebar.propTypes = {
 	sidebarInfo: PropTypes.array,
@@ -15,8 +14,6 @@ AccountSidebar.defaultProps = {
 
 function AccountSidebar(props) {
 	const { sidebarInfo } = props;
-	const { t, i18n } = useTranslation();
-	const isENG = i18n.language == 'en';
 
 	if (!sidebarInfo) return <Fragment />;
 	return (
@@ -44,7 +41,7 @@ function AccountSidebar(props) {
 										className="c-account-sidebar-item__icon"
 									/>
 								)}
-								<span className="c-account-sidebar-item__text">{isENG ? info.text : info.textVN}</span>
+								<span className="c-account-sidebar-item__text">{info.text}</span>
 							</div>
 						</Link>
 					);

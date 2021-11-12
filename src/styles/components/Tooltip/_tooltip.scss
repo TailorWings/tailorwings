@@ -17,22 +17,9 @@
 	&__label {
 		@include textStyle(h4);
 		font-size: 1.6rem;
-		color: $light-black-color;
-	}
-	&__value {
-		color: $black-color-33;
+		color: $solid-black-color;
 	}
 	&__item {
 		margin-bottom: 2rem;
-	}
-	&__item-text {
-		@include flex(left, center);
-		gap: 2rem;
-		p {
-			width: 100px;
-		}
-	}
-	&__slider {
-		margin-top: 1.2rem;
 	}
 }
