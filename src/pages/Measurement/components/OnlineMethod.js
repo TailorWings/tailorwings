@@ -157,7 +157,7 @@ function OnlineMethod(props) {
 										})}
 									</Swiper>
 								) : (
-									<ListLoader />
+									<ListLoader /> 
 								)}
 							</div>
 						</Slider>
