@@ -330,7 +330,7 @@ const MEASUREMENTS_STYLES = {
 		id: 'abdomen',
 		label: 'abdomen',
 		guide: abdomen,
-		labelVN: 'Vai',
+		labelVN: 'Lưng quần/ Chân váy',
 		guideVN: abdomenVN,
 	},
 	'bicep': {

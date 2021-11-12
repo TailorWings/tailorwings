@@ -6,8 +6,11 @@ import MeasurementForm from '../../../components/Form/MeasurementForm';
 import ProcessAction from '../../../components/ProcessAction';
 import Slider from '../../../components/Slider';
 import { useTranslation, withTranslation, Trans } from 'react-i18next';
-import {find} from 'lodash'
+import { find } from 'lodash';
 import { useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+
+import IconList from '../../../assets/icons/icon-list.svg';
 
 OnlineMethod.propTypes = {
 	measurements: PropTypes.array,
@@ -20,7 +23,7 @@ OnlineMethod.defaultProps = {
 	measurements: null,
 	onMeasurementConfirm: null,
 	onGetLatestMsmt: null,
-	designStyle: ''
+	designStyle: '',
 };
 
 function OnlineMethod(props) {
@@ -28,10 +31,10 @@ function OnlineMethod(props) {
 	const { t, i18n } = useTranslation();
 	const isENG = i18n.language == 'en';
 	const stylesOfClothe = useSelector((state) => state.common.stylesOfClothe);
-	
+
 	const getStyleOfClothe = (id) => {
-		return find(stylesOfClothe, {id: id})
-	}
+		return find(stylesOfClothe, { id: id });
+	};
 
 	const swiperRef = useRef(null);
 	const params = {
@@ -45,8 +48,8 @@ function OnlineMethod(props) {
 			prevEl: '.swiper-button-prev',
 		},
 		on: {
-			'slideChange': onSlideChange
-		}
+			slideChange: onSlideChange,
+		},
 	};
 	const [activeGuide, setActiveGuide] = useState(null);
 	const [currentIndex, setCurrentIndex] = useState(0);
@@ -66,30 +69,39 @@ function OnlineMethod(props) {
 	}
 
 	const actionNext = () => {
-		console.log("actionNext")
-		var newIndex = currentIndex + 1
-		if(newIndex > 0 && newIndex < measurements.length) {
-			setCurrentIndex(newIndex)
-			swiperRef.current.swiper.slideNext()
+		console.log('actionNext');
+		var newIndex = currentIndex + 1;
+		if (newIndex > 0 && newIndex < measurements.length) {
+			setCurrentIndex(newIndex);
+			swiperRef.current.swiper.slideNext();
 		}
-	}
+	};
 	const actionBack = () => {
-		console.log("actionBack")
-		var newIndex = currentIndex - 1
-		if(newIndex >= 0 && newIndex < measurements.length) {
-			setCurrentIndex(newIndex)
+		console.log('actionBack');
+		var newIndex = currentIndex - 1;
+		if (newIndex >= 0 && newIndex < measurements.length) {
+			setCurrentIndex(newIndex);
 			swiperRef.current.swiper.slidePrev();
 		}
-	}
-	const styleOfClothe = getStyleOfClothe(designStyle)
-	const styleOfClotheName = isENG ? styleOfClothe.name : styleOfClothe.nameVN
+	};
+	// const styleOfClothe = getStyleOfClothe(designStyle)
+	// const styleOfClotheName = isENG ? styleOfClothe.name : styleOfClothe.nameVN
 
 	if (!measurements || !onMeasurementConfirm) return <Fragment />;
 	return (
 		<div className="c-msmt-online">
 			<div className="c-msmt-online-guideline">
+				<div className="c-msmt-online-guideline-top">
+					<div className="c-msmt-online-guideline-top__button-view">
+						<span className="c-msmt-online-guideline-top__button-view__text">View Full List</span>
+						<img src={IconList} alt="icon" className="c-msmt-online-guideline-top__icon" />
+					</div>
+					<div className="c-msmt-online-guideline-top__right">
+						<span>Get your lastet measurement</span>
+					</div>
+				</div>
 				<div className="c-msmt-online-guideline-slider">
-					<Slider swiperRef={swiperRef} onSlideChange={onSlideChange}>
+					{/* <Slider swiperRef={swiperRef} onSlideChange={onSlideChange}>
 						<div className="c-msmt-online-guideline-slider__item">
 							{measurements ? (
 								<Swiper {...params} ref={swiperRef}>
@@ -104,14 +116,23 @@ function OnlineMethod(props) {
 							) : (
 								<ListLoader />
 							)}
+							<img src={measurements[activeGuide.activeIndex].guideVN} />
 						</div>
-					</Slider>
+					</Slider> */}
+					{measurements && activeGuide ? (
+						<div className="c-msmt-online-guideline-slider__item">
+							<img src={measurements[activeGuide.activeIndex].guideVN} />
+						</div>
+					) : (
+						<ListLoader />
+					)}
 				</div>
 				<div className="c-msmt-online-guideline-bottom">
 					<span className="c-msmt-online-guideline-bottom__count">
-						TAILORWINGS - {t("measurement.guideFor")} {styleOfClotheName}:{' '}
 						{activeGuide
-							? `${ isENG ? activeGuide.label : activeGuide.labelVN } (${activeGuide.activeIndex + 1}/${measurements.length})`
+							? `${isENG ? activeGuide.label : activeGuide.labelVN} (${
+									activeGuide.activeIndex + 1
+							}/${measurements.length})`
 							: `...`}
 					</span>
 					{/* <SelectInput
@@ -121,8 +142,28 @@ function OnlineMethod(props) {
 					/> */}
 					{/* <ListOfMesurementDropdown /> */}
 				</div>
+				<div className="c-msmt-online-guideline-slider c-msmt-online-guideline-slider--custom">
+						<Slider swiperRef={swiperRef} onSlideChange={onSlideChange}>
+							<div className="c-msmt-online-guideline-slider__item">
+								{measurements ? (
+									<Swiper {...params} ref={swiperRef}>
+										{measurements.map((msmt, index) => {
+											return (
+												<div key={index} className="c-msmt-online-guideline-slider__input">
+													<input type="text"/>
+													<span>cm</span>
+												</div>
+											);
+										})}
+									</Swiper>
+								) : (
+									<ListLoader />
+								)}
+							</div>
+						</Slider>
+				</div>
 			</div>
-			<div className="c-msmt-online-input">
+			{/* <div className="c-msmt-online-input">
 				<MeasurementForm
 					measurements={measurements}
 					onSubmit={onMeasurementConfirm}
@@ -132,7 +173,7 @@ function OnlineMethod(props) {
 					isDisplayFull={true}
 					currentIndex={currentIndex}
 				/>
-			</div>
+			</div> */}
 			<ProcessAction backLink="/fabric" formID="msmt-form" />
 		</div>
 	);

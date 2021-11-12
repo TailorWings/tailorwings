@@ -6,7 +6,7 @@
 	}
 	&-method {
 		@include flex(center, center);
-		margin-bottom: 6rem;
+		margin-bottom: 4rem;
 		margin-right: -2rem;
 		&__item {
 			width: calc(33.33% - 2rem);
