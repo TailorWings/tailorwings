@@ -16,6 +16,7 @@
 @import './components/Form/shippingForm';
 
 @import './components/Dropdown/avatarDropdown';
+@import './components/Dropdown/languagesDropdown';
 
 @import './components/Loader/componentLoader';
 @import './components/Loader/pageLoader';
@@ -33,6 +34,8 @@
 @import './components/Upload/singleFileUpload';
 
 @import './components/Navbar/navbar';
+
+@import './components/LanguageSwitcher/languageSwitcher';
 
 @import './components/PaymentInfo/paymentInfo';
 
@@ -80,6 +83,7 @@
 @import './layout/FabricPage/fabricType';
 @import './layout/FabricPage/fabricTypeGallery';
 @import './layout/FabricPage/fabricPattern';
+@import './layout/FabricPage/fabricBottom';
 @import './layout/FabricPage/fabricOptions';
 
 @import './layout/MeasurementPage/msmtOptions';

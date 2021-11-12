@@ -32,6 +32,7 @@ import Popup from '../../../components/Popup';
 import OrderConfirmContent from '../../../components/Popup/OrderConfirmContent';
 import MaterialAlert from '../../../components/MaterialAlert';
 import emailjs from 'emailjs-com';
+import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 SummaryContent.propTypes = {
 	msmtMethod: PropTypes.object,
@@ -45,16 +46,26 @@ SummaryContent.defaultProps = {
 // 	return { name: size, active: size.toLowerCase() === 'm' };
 // });
 
-const NOTE_PLACEHOLDER = [
-	'Ex: I want the neck 5cm deeper in comparison to the model ...',
-	'Ex: I want a comfortable fit, but not too loose',
-	'Ex: My arm is quite big, I want to hide it',
-	"Ex: Let's stitch a margin as big as possible just incase my body become bigger",
-];
+const NOTE_PLACEHOLDER = {
+	"en": [
+		'Ex: I want the neck 5cm deeper in comparison to the model ...',
+		'Ex: I want a comfortable fit, but not too loose',
+		'Ex: My arm is quite big, I want to hide it',
+		"Ex: Let's stitch a margin as big as possible just incase my body become bigger"
+	],
+	"vn": [
+		'Vd: Tôi muốn cổ sâu hơn 5cm so với mẫu ...',
+		'Vd: Tôi muốn một bộ quần áo vừa vặn thoải mái nhưng không quá chật',
+		'Vd: Cánh tay của tôi khá to, tôi muốn giấu nó đi',
+		"Vd: Hãy khâu một lề càng lớn càng tốt để cơ thể tôi trở nên to hơn",
+	]
+};
 
 function SummaryContent(props) {
 	const history = useHistory();
 	const { msmtMethod } = props;
+	const { t, i18n } = useTranslation();
+	const isENG = i18n.language == 'en';
 	/*--------------*/
 	const currentCustomer = useSelector((state) => state.common.currentCustomer);
 	const orderDetail = useSelector((state) => state.common.orderDetail);
@@ -332,7 +343,7 @@ function SummaryContent(props) {
 		<div className="c-summary-content">
 			<div className="c-summary-content-note">
 				<div className="c-summary-content-note__title">
-					<Title title={NOTE_SUM_TITLE} subtitle={NOTE_SUM_SUBTITLE} />
+					<Title title={t('summary.title')} subtitle={t('summary.subTitle')} />
 				</div>
 				<div className="c-summary-content-note__form">
 					<RqmtNoteForm
@@ -343,7 +354,7 @@ function SummaryContent(props) {
 				</div>
 			</div>
 			<div className="c-summary-content__title">
-				<Title title={RQMT_SUM_TITLE} subtitle={RQMT_SUM_SUBTITLE} />
+				<Title title={t('summary.summary')} subtitle={t('summary.description')} />
 			</div>
 			<div className="c-summary-content__rqmt">
 				<RequiremmentSummary

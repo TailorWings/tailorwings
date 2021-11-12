@@ -1,6 +1,6 @@
 .c-fabric-pattern {
 	@include flex(flex-start, center, column);
-	margin-bottom: 10rem;
+	margin-bottom: 0;
 	&__title {
 		margin-bottom: 4rem;
 	}
@@ -51,7 +51,7 @@
 		}
 	}
 	& .c-slider {
-		margin-bottom: 10rem;
+		margin-bottom: 5.6rem;
 		& .swiper-wrapper {
 			min-height: 30rem;
 			& .swiper-slide {

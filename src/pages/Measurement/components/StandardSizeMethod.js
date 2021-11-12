@@ -3,6 +3,7 @@ import React, { Fragment } from 'react';
 import Picker from '../../../components/Picker';
 import ProcessAction from '../../../components/ProcessAction';
 import standardSizeImg from '../../../assets/images/standard-size.jpg';
+import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 StandardSizeMethod.propTypes = {
 	standardSizes: PropTypes.array,
@@ -18,11 +19,12 @@ StandardSizeMethod.defaultProps = {
 
 function StandardSizeMethod(props) {
 	const { standardSizes, onSizeClick, onNextClick } = props;
+	const { t, i18n } = useTranslation();
 
 	if (!standardSizes || !onSizeClick) return <Fragment />;
 	return (
 		<div className="c-msmt-standard-size">
-			<p className="c-msmt-standard-size__title">List of Standard Sizes</p>
+			<p className="c-msmt-standard-size__title">{t('measurement.listOfStandardSizes')}</p>
 			<div className="c-msmt-standard-size__selection">
 				<Picker list={standardSizes} onItemClick={onSizeClick} />
 			</div>

@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './app/store';
+// import i18n (needs to be bundled ;))
+import './i18n';
 
 ReactDOM.render(
 	<React.StrictMode>

@@ -2,6 +2,9 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import SmallButton1 from '../Button/SmallButton1';
 import { FABRIC_TYPES } from '../../constants';
+import {find} from 'lodash'
+import { useSelector } from 'react-redux';
+import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 RequiremmentSummary.propTypes = {
 	designStyle: PropTypes.string,
@@ -19,11 +22,21 @@ RequiremmentSummary.defaultProps = {
 
 function RequiremmentSummary(props) {
 	const { designStyle, designFiles, fabricType, fabricPattern } = props;
+	const { t, i18n } = useTranslation();
+	const isENG = i18n.language == 'en';
+	const stylesOfClothe = useSelector((state) => state.common.stylesOfClothe);
+	const getStyleOfClothe = (id) => {
+		return find(stylesOfClothe, {id: id})
+	}
+
 	if (!designStyle || !designFiles) return <Fragment />;
+	const styleOfClothe = getStyleOfClothe(designStyle)
+	const styleOfClotheName = isENG ? styleOfClothe.name : styleOfClothe.nameVN
+
 	return (
 		<div className="c-rqmt-sum">
 			<div className="c-rqmt-sum__style">
-				<SmallButton1 text={designStyle} isActive={true} />
+				<SmallButton1 text={styleOfClotheName} isActive={true} />
 			</div>
 			<div className="c-rqmt-sum-product">
 				{designFiles.map((file, index) => {

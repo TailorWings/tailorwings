@@ -23,6 +23,7 @@ import RequirementSummary from '../../../components/RequirementSummary';
 import { ONLINE_MEASUREMENTS, SHIPPING_INFO, STANDARD_SIZES } from '../../../constants';
 import { fetchCondition, setDocument, updateDocument } from '../../../services/API/firebaseAPI';
 import TailorOffer from './TailorOffer';
+import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 OrderDetail.propTypes = {
 	orderList: PropTypes.array,
@@ -37,6 +38,7 @@ OrderDetail.defaultProps = {
 function OrderDetail(props) {
 	const { orderList, onPopupStatusChange } = props;
 	const currentCustomer = useSelector((state) => state.common.currentCustomer);
+	const { t, i18n } = useTranslation();
 	/*--------------*/
 	const history = useHistory();
 	const location = useLocation();
@@ -283,9 +285,9 @@ function OrderDetail(props) {
 		<div className="c-order-detail">
 			<div className="c-order-detail__header">
 				<Link to="/account">
-					<MediumButton text="view all orders" />
+					<MediumButton text={t('account.viewAllOrders')} />
 				</Link>
-				<p className="c-order-detail__title">Order Detail</p>
+				<p className="c-order-detail__title">{t('account.orderDetail')}</p>
 			</div>
 			<div className="c-order-detail__offer">
 				<TailorOffer
@@ -303,7 +305,7 @@ function OrderDetail(props) {
 				/>
 			</div>
 			<div className="c-order-detail-summary">
-				<Accordion title="summary" isActive={false}>
+				<Accordion title={t('account.summary')} isActive={false}>
 					<div className="c-order-detail-summary__rqmt">
 						<RequirementSummary
 							designFiles={designFiles || null}
@@ -320,13 +322,13 @@ function OrderDetail(props) {
 						)}
 					</div>
 					<div className="c-order-detail-summary__note">
-						<p className="c-order-detail-summary__note-title">Requirement Note</p>
+						<p className="c-order-detail-summary__note-title">{t('account.requirementNote')}</p>
 						<RqmtNoteForm notes={notes} />
 					</div>
 				</Accordion>
 			</div>
 			<div className="c-order-detail-shipping-info">
-				<Accordion title="shipping information" isActive={false}>
+				<Accordion title={t('account.shippingInformation')} isActive={false}>
 					<div className="c-order-detail-shipping-info__form">
 						<ShippingForm
 							shippingInfo={shippingInfo}
@@ -342,15 +344,15 @@ function OrderDetail(props) {
 			{currentOrderDetail.status === 'finding' && (
 				<div className="c-order-detail__button">
 					<div className="-wrapper" onClick={() => setDeleteOpen(true)}>
-						<MediumButton text="Delete" />
+						<MediumButton text={t('delete')} />
 					</div>
 					{offers?.find((offer) => offer.picked) ? (
 						<div className="-wrapper" onClick={handleOrderConfirm}>
-							<MediumButton text="Place order" isActive />
+							<MediumButton text={t('account.placeOrder')} isActive />
 						</div>
 					) : (
 						<div className="-wrapper disabled" onClick={handleOrderConfirm}>
-							<MediumButton text="Place order" isActive />
+							<MediumButton text={t('account.placeOrder')} isActive />
 						</div>
 					)}
 				</div>

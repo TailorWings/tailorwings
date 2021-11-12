@@ -7,19 +7,23 @@ import { STYLES_OF_CLOTHE } from '../../constants';
 import RqmtDesignStyle from './components/RqmtDesignStyle';
 import RqmtDesignUpload from './components/RqmtDesignUpload';
 import RqmtFooter from './components/RqmtFooter';
+import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 function RequirementPage() {
 	const history = useHistory();
 	const currentCustomer = useSelector((state) => state.common.currentCustomer);
 	const orderDetail = useSelector((state) => state.common.orderDetail);
+	const stylesOfClothe = useSelector((state) => state.common.stylesOfClothe);
+	const fabricTypes = useSelector((state) => state.common.fabricTypes);
 	const dispatch = useDispatch();
 	/*--------------*/
 	const [alertOpen, setAlertOpen] = useState(false);
 	const [confirmDisable, setConfirmDisable] = useState(false);
 	const [designFiles, setDesignFiles] = useState([]);
+	const { t, i18n } = useTranslation();
 	const [styles, setStyles] = useState(
-		STYLES_OF_CLOTHE.map((style) => {
-			return { name: style, active: false };
+		stylesOfClothe.map((style) => {
+			return { id: style.id, name: i18n.language == 'en' ? style.name : style.nameVN, active: false };
 		})
 	);
 	/*--------------*/
@@ -29,12 +33,21 @@ function RequirementPage() {
 			behavior: 'smooth',
 		});
 	}, []);
+
+	useEffect(() => {
+		setStyles(
+			stylesOfClothe.map((style) => {
+				return { id: style.id, name: i18n.language == 'en' ? style.name : style.nameVN, active: false };
+			})
+		);
+	}, i18n.language);
+
 	useEffect(() => {
 		if (orderDetail) {
 			/*--------------*/
 			setStyles(
 				styles.map((style) => {
-					return { ...style, active: style.name === orderDetail.designStyle };
+					return { ...style, active: style.id === orderDetail.designStyle };
 				})
 			);
 			setDesignFiles([...orderDetail.designFiles]);
@@ -79,7 +92,7 @@ function RequirementPage() {
 		if (designFiles.length > 0 && !!styles.find((style) => style.active)) {
 			/*--------------*/
 			let updatedOrderDetail = { ...orderDetail };
-			updatedOrderDetail.designStyle = styles.find((style) => style.active).name || null;
+			updatedOrderDetail.designStyle = styles.find((style) => style.active).id || null;
 			updatedOrderDetail.designFiles = [...designFiles];
 			/*--------------*/
 			const action_setOrderDetail = setOrderDetail(updatedOrderDetail);
@@ -98,7 +111,7 @@ function RequirementPage() {
 			{styles?.find((style) => style.active) && (
 				<>
 					<RqmtDesignUpload setDesignFiles={setDesignFiles} />
-					<RqmtFooter onNextClick={handleNextClick} disabled={confirmDisable}/>
+					<RqmtFooter onNextClick={handleNextClick} disabled={confirmDisable} />
 				</>
 			)}
 			<MaterialAlert

@@ -1,15 +1,15 @@
 .c-msmt-method {
 	@include flex(center, center, column);
 	@include size(100%, auto);
-	min-height: 334px;
+	height: 175px;
 	padding: 2rem;
 	background-color: white;
 	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
 	border-radius: 20px;
-	border: 2px solid white;
 	transition: all 0.3s ease-in-out;
 	outline: none;
 	cursor: pointer;
+	border: 1px solid #EBEBEB;
 	&:hover {
 		box-shadow: 0px 0px 8px $primary-color;
 	}
@@ -42,6 +42,7 @@
 	}
 	&__button {
 		margin-top: auto;
+		min-width: 210px;
 	}
 	&--active {
 		background-color: $subthird-color;

@@ -5,6 +5,7 @@ import { Redirect, useLocation } from 'react-router-dom';
 import SummaryContent from './components/SummaryContent';
 
 function SummaryPage() {
+	console.log("SummaryPage")
 	/*--------------*/
 	const location = useLocation();
 	const msmtMethod = queryString.parse(location.search);
