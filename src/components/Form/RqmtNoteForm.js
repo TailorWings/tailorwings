@@ -6,7 +6,7 @@ import { useTranslation, withTranslation, Trans } from 'react-i18next';
 RqmtNoteForm.propTypes = {
 	notes: PropTypes.array,
 	onNoteChange: PropTypes.func,
-	placeHolder: PropTypes.array,
+	placeHolder: PropTypes.object,
 };
 
 RqmtNoteForm.defaultProps = {
