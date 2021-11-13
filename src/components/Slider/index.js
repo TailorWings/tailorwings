@@ -19,13 +19,14 @@ Slider.defaultProps = {
 function Slider(props) {
 	const { t } = useTranslation();
 
-	const { swiperRef, onSlideChange , isDisplayActionBtn} = props;
+	const { swiperRef, onSlideChange , onNext, onBack, isDisplayActionBtn} = props;
 	/*--------------*/
 	const goNext = () => {
 		if (swiperRef) {
 			if (swiperRef.current && swiperRef.current.swiper) {
 				swiperRef.current.swiper.slideNext();
 				onSlideChange && onSlideChange();
+				onNext && onNext();
 			}
 		}
 	};
@@ -34,6 +35,7 @@ function Slider(props) {
 			if (swiperRef.current && swiperRef.current.swiper) {
 				swiperRef.current.swiper.slidePrev();
 				onSlideChange && onSlideChange();
+				onBack && onBack();
 			}
 		}
 	};

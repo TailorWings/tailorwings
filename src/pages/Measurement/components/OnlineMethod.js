@@ -70,19 +70,19 @@ function OnlineMethod(props) {
 
 	const actionNext = () => {
 		console.log('actionNext');
-		var newIndex = currentIndex + 1;
-		if (newIndex > 0 && newIndex < measurements.length) {
-			setCurrentIndex(newIndex);
-			swiperRef.current.swiper.slideNext();
-		}
+		// var newIndex = currentIndex + 1;
+		// if (newIndex > 0 && newIndex < measurements.length) {
+		// 	setCurrentIndex(newIndex);
+		// 	swiperRef.current.swiper.slideNext();
+		// }
 	};
 	const actionBack = () => {
 		console.log('actionBack');
-		var newIndex = currentIndex - 1;
-		if (newIndex >= 0 && newIndex < measurements.length) {
-			setCurrentIndex(newIndex);
-			swiperRef.current.swiper.slidePrev();
-		}
+		// var newIndex = currentIndex - 1;
+		// if (newIndex >= 0 && newIndex < measurements.length) {
+		// 	setCurrentIndex(newIndex);
+		// 	swiperRef.current.swiper.slidePrev();
+		// }
 	};
 	// const styleOfClothe = getStyleOfClothe(designStyle)
 	// const styleOfClotheName = isENG ? styleOfClothe.name : styleOfClothe.nameVN
@@ -143,7 +143,7 @@ function OnlineMethod(props) {
 					{/* <ListOfMesurementDropdown /> */}
 				</div>
 				<div className="c-msmt-online-guideline-slider c-msmt-online-guideline-slider--custom">
-						<Slider swiperRef={swiperRef} onSlideChange={onSlideChange}>
+						<Slider swiperRef={swiperRef} onNext={actionNext} onBack={actionBack} onSlideChange={onSlideChange}>
 							<div className="c-msmt-online-guideline-slider__item">
 								{measurements ? (
 									<Swiper {...params} ref={swiperRef}>
