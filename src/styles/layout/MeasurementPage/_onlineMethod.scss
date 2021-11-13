@@ -20,7 +20,7 @@
 				border-radius: 10px;
 				padding: 1.2rem 1.6rem;
 				cursor: pointer;
-				&__text{
+				&__text {
 					font-size: 1.4rem;
 					font-weight: 600;
 					line-height: 1.7rem;
@@ -31,13 +31,16 @@
 				width: 1.5rem;
 				height: 1rem;
 			}
-			&__right{
-				span{
+			&__right {
+				span {
 					font-size: 1.4rem;
 					font-weight: 600;
 					color: $primary-color;
 					text-decoration-line: underline;
 					cursor: pointer;
+				}
+				&--mobile {
+					display: none;
 				}
 			}
 		}
@@ -51,34 +54,34 @@
 				border-radius: 20px;
 				overflow: hidden;
 			}
-			&--custom{
+			&--custom {
 				width: 53%;
 				margin: 0 auto;
 				margin-top: 1.6rem;
-				.c-msmt-online-guideline-slider__item{
+				.c-msmt-online-guideline-slider__item {
 					border-radius: 0;
 					width: 40%;
 				}
-				.c-slider__content .swiper-container{
+				.c-slider__content .swiper-container {
 					border-radius: 0;
 				}
 			}
-			&__input{
-				border: 2px solid #F68729;
+			&__input {
+				border: 2px solid #f68729;
 				display: flex;
 				justify-content: space-between;
 				padding: 1.1rem 1.8rem;
 				background-color: white;
 				border-radius: 12px;
-				input{
+				input {
 					border: none;
 					outline: none;
 					font-size: 1.4rem;
 					font-family: SVN-GilroyMedium, sans-serif;
 					width: 80%;
 				}
-				span{
-					color: #BDBDBD;
+				span {
+					color: #bdbdbd;
 				}
 			}
 		}
@@ -100,6 +103,18 @@
 		padding-bottom: 9rem;
 		&-guideline {
 			margin-bottom: 6.6rem;
+			&-top {
+				width: 100%;
+				&__right {
+					&--des {
+						display: none;
+					}
+					&--mobile {
+						display: block;
+						text-align: right;
+					}
+				}
+			}
 			&-slider {
 				@include flex(center, center);
 				margin-bottom: 2rem;
@@ -108,9 +123,15 @@
 					margin: 0 0;
 					background-color: $subthird-color;
 				}
+				&--custom {
+					width: 100%;
+					.c-msmt-online-guideline-slider__item {
+						width: 43%;
+					}
+				}
 			}
 			&-bottom {
-				@include flex(space-between, center);
+				@include flex(center, center);
 				padding: 0 0;
 				text-align: center;
 				&__count {

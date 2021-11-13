@@ -2,15 +2,42 @@
 	@include flex(center, center);
 	padding: 0 8.7rem;
 	&__style {
-		opacity: 0.7;
-		pointer-events: none
+		opacity: 1;
+		pointer-events: none;
+		width: 12rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 100%;
+		&__image{
+			@include size(12rem);
+			border-radius: 16px;
+			img{
+				border-radius: 16px;
+			}
+		}
+		.c-small-button-1--active{
+			background-color: #FFEBD8;
+			border: none;
+			img{
+				filter: invert(61%) sepia(60%) saturate(871%) hue-rotate(351deg) brightness(133%) contrast(93%);
+				opacity: 0.4;
+			}
+		}
+		.c-small-button-1{
+			min-width: 100px;
+		}
+		.c-small-button-1--active .c-small-button-1__text{
+			color: rgba(246, 135, 41, 0.4);;
+		}
 	}
 	&-product {
-		@include flex(center, center);
-		margin: 3.25rem;
+		@include flex(center, stretch);
+		// margin: 3.25rem;
+		// margin-left: 1.42rem;
 		&__image {
-			@include size(15.3rem, 23rem);
-			margin-right: 2rem;
+			@include size(15.7rem, 23.2rem);
+			margin-left: 1.42rem;
 			border-radius: 20px;
 			background-color: $solid-gray-color;
 			overflow: hidden;
@@ -23,60 +50,69 @@
 			margin-right: 0rem;
 		}
 	}
-	&-fabric {
-		@include flex(center, center, column);
-		&__image {
-			@include size(15.3rem);
-			border-radius: 20px;
-			background-color: $solid-gray-color;
-			overflow: hidden;
-			position: relative;
-			& > img {
-				@include midImg;
-			}
-			&:first-child {
-				@include flex(center, center);
-				position: relative;
-				z-index: 1;
-				& .-overlay {
-					@include size(100%);
-					position: absolute;
-					top: 50%;
-					left: 50%;
-					transform: translate(-50%, -50%);
-					background: $solid-black-color;
-					opacity: 0.3;
+	// &-fabric {
+	// 	@include flex(center, center, column);
+	// 	&__image {
+	// 		@include size(15.3rem);
+	// 		border-radius: 20px;
+	// 		background-color: $solid-gray-color;
+	// 		overflow: hidden;
+	// 		position: relative;
+	// 		& > img {
+	// 			@include midImg;
+	// 		}
+	// 		&:first-child {
+	// 			@include flex(center, center);
+	// 			position: relative;
+	// 			z-index: 1;
+	// 			& .-overlay {
+	// 				@include size(100%);
+	// 				position: absolute;
+	// 				top: 50%;
+	// 				left: 50%;
+	// 				transform: translate(-50%, -50%);
+	// 				background: $solid-black-color;
+	// 				opacity: 0.3;
 					
-					z-index: 2;
-				}
-				& span {
-					@include textStyle(h3);
-					color: white;
-					text-transform: uppercase;
-					position: absolute;
-					top: 50%;
-					left: 50%;
-					transform: translate(-50%, -50%);
-					z-index: 3;
-				}
-			}
-		}
-		& div:first-child {
-			margin-bottom: 1.4rem;
-		}
-	}
+	// 				z-index: 2;
+	// 			}
+	// 			& span {
+	// 				@include textStyle(h3);
+	// 				color: white;
+	// 				text-transform: uppercase;
+	// 				position: absolute;
+	// 				top: 50%;
+	// 				left: 50%;
+	// 				transform: translate(-50%, -50%);
+	// 				z-index: 3;
+	// 			}
+	// 		}
+	// 	}
+	// 	& div:first-child {
+	// 		margin-bottom: 1.4rem;
+	// 	}
+	// }
 
 	@include xs {
-		@include flex(center, center, column);
+		@include flex(center, center, row, wrap);
 		padding: 0 0;
+		&__style{
+			&--mobile-custom{
+				width: 48%;
+				display: flex;
+				justify-content: center;
+			}
+		}
 		&-product {
-			width: 100%;
-			@include flex(center, center);
-			margin: 3.25rem 0;
+			width: 95%;
+			@include flex(space-between, stretch, row, wrap);
+			// margin: 3.25rem 0;
 			&__image {
-				@include size(33.33%, 0);
-				padding-bottom: 50%;
-				margin-right: 0.4rem;
+				// @include size(33.33%, 0);
+				// padding-bottom: 50%;
+				// margin-right: 0.4rem;
+				margin-left: 0;
+				margin-bottom: 8px;
 				border-radius: 20px;
 				background-color: $solid-gray-color;
 				overflow: hidden;
@@ -89,22 +125,22 @@
 				margin-right: 0rem;
 			}
 		}
-		&-fabric {
-			@include flex(center, center, row);
-			&__image {
-				@include size(12.5rem);
-				border-radius: 20px;
-				background-color: $solid-gray-color;
-				overflow: hidden;
-				position: relative;
-				& > img {
-					@include midImg;
-				}
-			}
-			& div:first-child {
-				margin-bottom: 0;
-				margin-right: 0.4rem;
-			}
-		}
+		// &-fabric {
+		// 	@include flex(center, center, row);
+		// 	&__image {
+		// 		@include size(12.5rem);
+		// 		border-radius: 20px;
+		// 		background-color: $solid-gray-color;
+		// 		overflow: hidden;
+		// 		position: relative;
+		// 		& > img {
+		// 			@include midImg;
+		// 		}
+		// 	}
+		// 	& div:first-child {
+		// 		margin-bottom: 0;
+		// 		margin-right: 0.4rem;
+		// 	}
+		// }
 	}
 }

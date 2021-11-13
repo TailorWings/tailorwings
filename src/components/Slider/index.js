@@ -8,27 +8,32 @@ Slider.propTypes = {
 	swiperRef: PropTypes.object,
 	onSlideChange: PropTypes.func,
 	isDisplayActionBtn: PropTypes.bool,
+	onBeforeNext: PropTypes.func,
 };
 
 Slider.defaultProps = {
 	swiperRef: null,
 	onSlideChange: null,
 	isDisplayActionBtn: true,
+	onBeforeNext: null,
 };
 
 function Slider(props) {
 	const { t } = useTranslation();
 
-	const { swiperRef, onSlideChange , onNext, onBack, isDisplayActionBtn} = props;
+	const { swiperRef, onSlideChange , onNext, onBack, isDisplayActionBtn, onBeforeNext} = props;
 	/*--------------*/
 	const goNext = () => {
-		if (swiperRef) {
-			if (swiperRef.current && swiperRef.current.swiper) {
-				swiperRef.current.swiper.slideNext();
-				onSlideChange && onSlideChange();
-				onNext && onNext();
+		if(onBeforeNext()){
+			if (swiperRef) {
+				if (swiperRef.current && swiperRef.current.swiper) {
+					swiperRef.current.swiper.slideNext();
+					onSlideChange && onSlideChange();
+					onNext && onNext();
+				}
 			}
 		}
+		
 	};
 	const goPrev = () => {
 		if (swiperRef) {

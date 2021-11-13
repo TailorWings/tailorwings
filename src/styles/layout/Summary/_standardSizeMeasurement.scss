@@ -1,14 +1,29 @@
 .c-standard-size-msmt-sum {
 	padding: 0 8.7rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	&__title {
 		@include textStyle(h3);
 		color: $medium-black-color;
-		margin-bottom: 2.4rem;
+		// margin-bottom: 2.4rem;
 	}
 	& .c-picker {
 		justify-content: flex-start;
+		margin-left: 1.42rem;
 		&__item {
-			opacity: 1 ;
+			opacity: 1 !important;
+		}
+		.c-small-button-1--active{
+			background-color: #FFEBD8;
+			border: none;
+			img{
+				filter: invert(61%) sepia(60%) saturate(871%) hue-rotate(351deg) brightness(133%) contrast(93%);
+				opacity: 0.4;
+			}
+		}
+		.c-small-button-1--active .c-small-button-1__text{
+			color: rgba(246, 135, 41, 0.4);;
 		}
 	}
 
@@ -16,13 +31,14 @@
 		padding: 0 0;
 		&__title {
 			@include textStyle(h3);
-			font-size: 2.4rem;
+			font-size: 1.8rem;
 			color: $medium-black-color;
-			margin-bottom: 2.4rem;
+			// margin-bottom: 2.4rem;
 			text-align: center;
 		}
 		& .c-picker {
 			@include flex(center, center);
+			margin-bottom: 0;
 			&__item {
 				margin-bottom: 0;
 				margin-right: 0;

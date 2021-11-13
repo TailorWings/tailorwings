@@ -37,10 +37,10 @@
 		@include flex(space-between, center, column);
 		@include size(100%, auto);
 		position: relative;
-		&__left,
-		&__right {
-			display: none;
-		}
+		// &__left,
+		// &__right {
+		// 	display: none;
+		// }
 		&__content {
 			@include size(100%);
 			padding: 0 0;
@@ -54,6 +54,9 @@
 			@include font(fontMedium, 14px);
 			width: 100%;
 			color: $primary-color;
+
+			display: none;
+
 		}
 	}
 }

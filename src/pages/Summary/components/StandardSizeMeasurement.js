@@ -22,7 +22,7 @@ function StandardSizeMeasurement(props) {
 	return (
 		<div className="c-standard-size-msmt-sum">
 			<p className="c-standard-size-msmt-sum__title">{t('summary.yourStandardSize')}</p>
-			<Picker list={currentActiveSize ? new Array(1).fill(currentActiveSize) : []} onItemClick={onStandardSizeClick} />
+			<Picker list={currentActiveSize ? new Array(1).fill(currentActiveSize) : []} onItemClick={onStandardSizeClick}/>
 		</div>
 	);
 }
