@@ -304,6 +304,28 @@ function OrderDetail(props) {
 					onTailorPick={status === 'finding' ? onOfferPicked : null}
 				/>
 			</div>
+			<div className="c-order-detail-bill">
+				<div className="c-order-detail-bill__item">
+					<span>Price</span>
+					<span>800.000 vnd</span>
+				</div>
+				<div className="c-order-detail-bill__item">
+					<span>Shipping fee</span>
+					<span>20.000 vnd</span>
+				</div>
+				<div className="c-order-detail-bill__item">
+					<span>Total</span>
+					<span>820.000 vnd</span>
+				</div>
+				<div className="c-order-detail-bill__item">
+					<span>Payment method</span>
+					<span>COD</span>
+				</div>
+				<div className="c-order-detail-bill__item">
+					<span>Estimated Delivery Date</span>
+					<span>4 days</span>
+				</div>
+			</div>
 			<div className="c-order-detail-summary">
 				<Accordion title={t('account.summary')} isActive={false}>
 					<div className="c-order-detail-summary__rqmt">

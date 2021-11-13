@@ -10,7 +10,30 @@
 		margin-left: 2.7rem;
 	}
 	&__offer {
-		margin-bottom: 5.5rem;
+		margin-bottom: 3.2rem;
+	}
+	&-bill{
+		margin-bottom: 1.6rem;
+		border: 1px solid #E0E0E0;
+		border-radius: 12px;
+		padding: 2.5rem 3rem;
+		&__item{
+			margin-bottom: 1.78rem;
+			display: flex;
+			justify-content: space-between;
+			&:nth-last-child(1){
+				margin-bottom: 0;
+			}
+			span{
+				&:nth-child(1){
+					font-size: 1.42rem;
+				}
+				&:nth-child(2){
+					font-weight: 600;
+					font-size: 1.6rem;
+				}
+			}
+		}
 	}
 	&-summary {
 		margin-bottom: 1.5rem;

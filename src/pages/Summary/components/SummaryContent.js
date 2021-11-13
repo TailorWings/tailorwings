@@ -14,6 +14,7 @@ import {
 	RQMT_SUM_SUBTITLE,
 	RQMT_SUM_TITLE,
 	STANDARD_SIZES,
+	SHIPPING_INFO,
 } from '../../../constants';
 import {
 	fetchAll,
@@ -33,6 +34,10 @@ import OrderConfirmContent from '../../../components/Popup/OrderConfirmContent';
 import MaterialAlert from '../../../components/MaterialAlert';
 import emailjs from 'emailjs-com';
 import { useTranslation, withTranslation, Trans } from 'react-i18next';
+
+import ShippingForm from '../../../components/Form/ShippingForm';
+import Accordion from '../../../components/Accordion';
+import PaymentInfo from '../../../components/PaymentInfo';
 
 SummaryContent.propTypes = {
 	msmtMethod: PropTypes.object,
@@ -337,6 +342,14 @@ function SummaryContent(props) {
 				);
 		}
 	}
+
+	const [shippingInfo, setShippingInfo] = useState(
+		SHIPPING_INFO.map((info) => {
+			return info;
+		})
+	);
+
+
 	/************_END_****************/
 	if (!msmtMethod || !orderDetail) return <Fragment />;
 	return (
@@ -363,6 +376,20 @@ function SummaryContent(props) {
 					fabricType={orderDetail.fabric.type}
 					fabricPattern={orderDetail.fabric.pattern}
 				/>
+			</div>
+			<div className="c-order-detail-shipping-info">
+				<Accordion title={t('account.shippingInformation')} isActive={false}>
+					<div className="c-order-detail-shipping-info__form">
+						<ShippingForm
+							shippingInfo={shippingInfo}
+							// onInputChange={handleShippingInfoChange}
+							// disabled={currentOrderDetail.status !== 'finding'}
+						/>
+					</div>
+					<div className="c-order-detail-shipping-info__payment">
+						<PaymentInfo buttonText="Choose" />
+					</div>
+				</Accordion>
 			</div>
 			<div className="c-summary-content__msmt">{handleMeasurementInfoRender()}</div>
 
