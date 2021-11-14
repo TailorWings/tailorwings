@@ -105,7 +105,8 @@ function OnlineMethod(props) {
 			...state,
 			[msmt.label]: target.value,
 		}));
-		msmt.value = target.value
+		msmt.value = target.value;
+		
 		if (
 			target.value === null ||
 			target.value === '' ||
