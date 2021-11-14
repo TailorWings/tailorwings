@@ -82,12 +82,22 @@ function SummaryContent(props) {
 		})
 	);
 	const [tailors, setTailors] = useState(null);
+	const [shippingInfo, setShippingInfo] = useState(
+		SHIPPING_INFO.map((info) => {
+			return info;
+		})
+	);
 	/*---------*/
 	const [popupShow, setPopupShow] = useState(false);
 	const [isConfirmLoading, setIsConfirmLoading] = useState(false);
 	const [alertOpen, setAlertOpen] = useState(false);
 	const dispatch = useDispatch();
 	/*--------------*/
+	useEffect(() => {
+		if (currentCustomer?.shippingInfo) {
+			setShippingInfo(currentCustomer.shippingInfo);
+		}
+	}, [currentCustomer]);
 	useEffect(() => {
 		if (orderDetail) {
 			/*--------------*/
@@ -190,6 +200,7 @@ function SummaryContent(props) {
 	 *  Description: handle form confirm
 	 */
 	function onConfirm(phoneNumber) {
+		updateDocument('customers', currentCustomer.id, 'shippingInfo', shippingInfo);
 		if (orderDetail) {
 			setIsConfirmLoading(true);
 			const { designStyle, fabric, msmt, stdSize } = orderDetail;
@@ -201,6 +212,7 @@ function SummaryContent(props) {
 				receiveDate: null,
 				finishDate: null,
 				offers: [],
+				shippingInfo,
 				designFiles: [],
 				designStyle,
 				fabric: {
@@ -343,11 +355,14 @@ function SummaryContent(props) {
 		}
 	}
 
-	const [shippingInfo, setShippingInfo] = useState(
-		SHIPPING_INFO.map((info) => {
-			return info;
-		})
-	);
+	
+	function handleShippingInfoChange(id, e) {
+		let value = e.target.value;
+		let updatedShippingInfo = shippingInfo.map((info) => {
+			return { ...info, value: id === info.id ? value : info.value };
+		});
+		setShippingInfo(updatedShippingInfo);
+	}
 
 
 	/************_END_****************/
@@ -382,7 +397,7 @@ function SummaryContent(props) {
 					<div className="c-order-detail-shipping-info__form">
 						<ShippingForm
 							shippingInfo={shippingInfo}
-							// onInputChange={handleShippingInfoChange}
+							onInputChange={handleShippingInfoChange}
 							// disabled={currentOrderDetail.status !== 'finding'}
 						/>
 					</div>
