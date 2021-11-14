@@ -35,7 +35,7 @@ MeasurementForm.defaultProps = {
 
 function MeasurementForm(props) {
 	const { measurements, title, onSubmit, disabled, onGetLatestMsmt, currentIndex, isDisplayFull, onActionBack, onActionNext } = props;
-	console.log("MeasurementForm measurements", measurements)
+	// console.log("MeasurementForm measurements", measurements)
 	const { t, i18n } = useTranslation();
 	const isENG = i18n.language == 'en';
 	const msmtDefaultValue = Object.fromEntries(
@@ -64,6 +64,8 @@ function MeasurementForm(props) {
 		onSubmit(values, 'online');
 	}
 	/*--------------*/
+
+	console.log("form", measurements)
 	
 	if (!measurements) return <Fragment />;
 	return (

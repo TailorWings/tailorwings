@@ -11,8 +11,6 @@ import MaterialAlert from '../../../components/MaterialAlert';
 import ProcessAction from '../../../components/ProcessAction';
 import Slider from '../../../components/Slider';
 
-
-
 OnlineMethod.propTypes = {
 	measurements: PropTypes.array,
 	onMeasurementConfirm: PropTypes.func,
@@ -105,19 +103,24 @@ function OnlineMethod(props) {
 	const handleInputChange = (target, msmt) => {
 		setInputs((state) => ({
 			...state,
-			[isENG ? msmt.label : msmt.labelVN]: target.value,
-		}))
-		console.log(target.value);
-		if(target.value === null || target.value === '' || target.value === undefined || target.value === null){
-			setIsCheck(false)
-		}else{
-			setIsCheck(true)
+			[msmt.label]: target.value,
+		}));
+		msmt.value = target.value
+		if (
+			target.value === null ||
+			target.value === '' ||
+			target.value === undefined ||
+			target.value === null
+		) {
+			setIsCheck(false);
+		} else {
+			setIsCheck(true);
 		}
 	};
 
 	const onBeforeNext = () => {
 		const isCurrentInputValid = isCheck;
-		if(!isCurrentInputValid) {
+		if (!isCurrentInputValid) {
 			setIsClickedNext(true);
 		} else {
 			setIsCheck(false);
@@ -125,6 +128,8 @@ function OnlineMethod(props) {
 		}
 		return isCurrentInputValid;
 	};
+
+	console.log(measurements)
 
 	if (!measurements || !onMeasurementConfirm) return <Fragment />;
 	return (
@@ -136,8 +141,14 @@ function OnlineMethod(props) {
 						<img src={IconList} alt="icon" className="c-msmt-online-guideline-top__icon" />
 					</div>
 					<div className="c-msmt-online-guideline-top__right">
-						<span className="c-msmt-online-guideline-top__right--des">Get your lastet measurement</span>
-						<span className="c-msmt-online-guideline-top__right--mobile">Get your<br/>lastet measurement</span>
+						<span className="c-msmt-online-guideline-top__right--des">
+							Get your lastet measurement
+						</span>
+						<span className="c-msmt-online-guideline-top__right--mobile">
+							Get your
+							<br />
+							lastet measurement
+						</span>
 					</div>
 				</div>
 				<div className="c-msmt-online-guideline-slider">
@@ -208,11 +219,10 @@ function OnlineMethod(props) {
 														maxLength="3"
 														name={index}
 														onChange={({ target }) => handleInputChange(target, msmt)}
-														// value={inputs[index]}
+														value={inputs[msmt.label]}
 													/>
 													<span>cm</span>
 												</div>
-												{isClickedNext && !isCheck  && <div>Please set your value</div>}
 											</div>
 										);
 									})}
@@ -223,6 +233,13 @@ function OnlineMethod(props) {
 						</div>
 					</Slider>
 				</div>
+			</div>
+			<div className="c-msmt-online-guideline-error-input">
+				{isClickedNext && !isCheck && (
+					<span className="c-msmt-online-guideline-error-input__text">
+						{isENG ? 'Please set your value' : 'Vui lòng nhập số'}
+					</span>
+				)}
 			</div>
 			<div className="c-msmt-online-input">
 				<MeasurementForm

@@ -1,7 +1,7 @@
 .c-msmt-online {
 	padding-bottom: 9rem;
 	&-guideline {
-		margin-bottom: 6.6rem;
+		margin-bottom: 1rem;
 		&-top {
 			@include size(53%, auto);
 			margin: 0 auto;
@@ -85,6 +85,14 @@
 				}
 			}
 		}
+		&-error-input{
+			min-height: 19px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-bottom: 5.6rem;
+			color: red;
+		}
 		&-bottom {
 			@include flex(center, center);
 			padding: 0 8.2rem;
@@ -102,7 +110,7 @@
 	@include xs {
 		padding-bottom: 9rem;
 		&-guideline {
-			margin-bottom: 6.6rem;
+			margin-bottom: 1rem;
 			&-top {
 				width: 100%;
 				&__right {
