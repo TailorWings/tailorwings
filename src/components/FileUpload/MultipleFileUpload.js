@@ -36,6 +36,7 @@ function MultipleFileUpload(props) {
 				...acceptedFiles.map((file) =>
 					Object.assign(file, {
 						preview: URL.createObjectURL(file),
+						name: file.name
 					})
 				),
 			];

@@ -1,17 +1,17 @@
+import { find } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { Fragment, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Swiper from 'react-id-swiper';
+import { useSelector } from 'react-redux';
+import IconList from '../../../assets/icons/icon-list.svg';
 import ListLoader from '../../../components/ComponentLoader';
 import MeasurementForm from '../../../components/Form/MeasurementForm';
+import MaterialAlert from '../../../components/MaterialAlert';
 import ProcessAction from '../../../components/ProcessAction';
 import Slider from '../../../components/Slider';
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
-import { find } from 'lodash';
-import { useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
 
-import IconList from '../../../assets/icons/icon-list.svg';
-import { boolean } from 'yup/lib/locale';
+
 
 OnlineMethod.propTypes = {
 	measurements: PropTypes.array,
@@ -32,6 +32,7 @@ function OnlineMethod(props) {
 	const { t, i18n } = useTranslation();
 	const isENG = i18n.language == 'en';
 	const stylesOfClothe = useSelector((state) => state.common.stylesOfClothe);
+	const [alertOpen, setAlertOpen] = useState(false);
 
 	const getStyleOfClothe = (id) => {
 		return find(stylesOfClothe, { id: id });
@@ -99,6 +100,7 @@ function OnlineMethod(props) {
 
 	const [inputs, setInputs] = useState({});
 	const [isCheck, setIsCheck] = useState(false);
+	const [isClickedNext, setIsClickedNext] = useState(false);
 
 	const handleInputChange = (target, msmt) => {
 		setInputs((state) => ({
@@ -114,11 +116,14 @@ function OnlineMethod(props) {
 	};
 
 	const onBeforeNext = () => {
-		if(isCheck == true){
-			return true
-		}else{
-			return false
+		const isCurrentInputValid = isCheck;
+		if(!isCurrentInputValid) {
+			setIsClickedNext(true);
+		} else {
+			setIsCheck(false);
+			setIsClickedNext(false);
 		}
+		return isCurrentInputValid;
 	};
 
 	if (!measurements || !onMeasurementConfirm) return <Fragment />;
@@ -196,15 +201,18 @@ function OnlineMethod(props) {
 								<Swiper {...params} ref={swiperRef}>
 									{measurements.map((msmt, index) => {
 										return (
-											<div key={index} className="c-msmt-online-guideline-slider__input">
-												<input
-													type="text"
-													maxLength="3"
-													name={index}
-													onChange={({ target }) => handleInputChange(target, msmt)}
-													// value={inputs[index]}
-												/>
-												<span>cm</span>
+											<div>
+												<div key={index} className="c-msmt-online-guideline-slider__input">
+													<input
+														type="text"
+														maxLength="3"
+														name={index}
+														onChange={({ target }) => handleInputChange(target, msmt)}
+														// value={inputs[index]}
+													/>
+													<span>cm</span>
+												</div>
+												{isClickedNext && !isCheck  && <div>Please set your value</div>}
 											</div>
 										);
 									})}
