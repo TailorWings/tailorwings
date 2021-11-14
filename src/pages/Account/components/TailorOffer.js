@@ -35,14 +35,15 @@ function TailorOffer(props) {
 	console.log(`offerInfo`, offerInfo)
 	return (
 		<div className="c-tailor-offer">
+			<span className="c-tailor-offer__title-list-offer">List of Tailor Offers</span>
 			{offerInfo.map((offer, index) => {
 				let price = offer.price;
 				return (
-					<div key={index} className="c-tailor-offer__item">
+					<div key={index} className={classNames('c-tailor-offer__item', {
+						'c-tailor-offer__item--active': offer.picked,
+					})}>
 						<div
-							className={classNames('c-tailor-offer__index', {
-								'c-tailor-offer__index--active': offer.picked,
-							})}
+							className="c-tailor-offer__index"
 						>
 							<span>{index + 1}</span>
 						</div>
@@ -77,12 +78,12 @@ function TailorOffer(props) {
 								color={offer.duration > 6 ? 'primary' : 'secondary'}
 							/>
 						</div>
-						<div className="c-tailor-offer-estimate">
+						{/* <div className="c-tailor-offer-estimate">
 							<Label
 								title="Est.Fabric Length"
 								value={`${offer?.fabricNumber || 'Unknown'} m`}
 							/>
-						</div>
+						</div> */}
 						<div className="c-tailor-offer__price">
 							<span>{`${modifyPrice(price)} vnđ`}</span>
 						</div>
@@ -92,7 +93,7 @@ function TailorOffer(props) {
 							</div>
 						) : onTailorPick ? (
 							<div className="c-tailor-offer__button" onClick={() => onTailorPick(index)}>
-								<MediumButton text="Pick this tailor" />
+								<MediumButton text="Pick" />
 							</div>
 						) : (
 							<Fragment />

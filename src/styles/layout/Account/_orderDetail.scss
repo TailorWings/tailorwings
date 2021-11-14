@@ -3,7 +3,7 @@
 	margin-bottom: 5.4rem;
 	&__header {
 		@include flex(flex-start, center);
-		margin-bottom: 6.5rem;
+		margin-bottom: 2.84rem;
 	}
 	&__title {
 		@include font(fontBold, 3.6rem);
@@ -88,14 +88,15 @@
 		padding: 2rem;
 		margin-bottom: 5rem;
 		&__header {
-			@include flex(flex-start, center, column-reverse);
-			margin-bottom: 5rem;
+			@include flex(flex-start, center);
+			margin-bottom: 3.2rem;
 		}
 		&__title {
-			width: 100%;
+			// width: 100%;
 			margin-left: 0;
-			@include font(fontBold, 2.8rem);
+			@include font(fontBold, 2.14rem);
 			text-align: center;
+			padding-left: 1.6rem;
 		}
 		&__offer {
 			@include flex();

@@ -3,6 +3,12 @@
 	&.--no-offer {
 		width: 100%;
 	}
+	&__title-list-offer{
+		font-size: 1.6rem;
+		font-weight: 600;
+		color: #828282;
+		margin-bottom: 1.43rem;
+	}
 	&__annouce {
 		@include size(100%);
 		@include textStyle(h4);
@@ -19,24 +25,34 @@
 	&__item {
 		@include flex(space-between, center);
 		@include size(100%, auto);
-		padding: 1.5rem 2rem;
+		padding: 2rem;
+		margin-bottom: 1.42rem;
+		background-color: #FFFDFD;
+		border-radius: 12px;
+		border: 1px solid #E0E0E0;
+		&--active{
+			background: #FFEBD8;
+			border: 1px solid #F68729;
+		}
 	}
 	&__index {
 		@include flex(center, center);
 		@include size(2.4rem);
 		@include font(fontBold, 1.1rem);
-		border-radius: 10px;
-		background-color: $solid-gray-color;
-		color: $light-black-color;
-		&--active {
-			background-color: $primary-color;
-			color: white;
-		}
-	}
-	&__avatar {
-		@include size(5rem);
 		border-radius: 50%;
 		background-color: $solid-gray-color;
+		color: $light-black-color;
+	}
+	&__avatar {
+		@include size(4.18rem);
+		border-radius: 50%;
+		background-color: $solid-gray-color;
+		a{
+			border-radius: inherit;
+			img{
+				border-radius: inherit;
+			}
+		}
 	}
 	&-tailor {
 		@include flex(center, flex-start, column);
@@ -67,9 +83,20 @@
 		color: $medium-black-color;
 	}
 	&__button {
-		@include size(19.7rem, auto);
+		@include size(10.7rem, auto);
 		& > div {
 			text-transform: capitalize;
+			min-width: 0;
+			.c-medium-button__text{
+				min-width: 0;
+				font-size: 13px;
+				line-height: 100%;
+			}
+			.c-small-button-1__text{
+				min-width: 0;
+				font-size: 13px;
+				line-height: 100%;
+			}
 		}
 	}
 
@@ -80,6 +107,9 @@
 		margin-right: -0.5rem;
 		margin-bottom: -0.5rem;
 		padding: 1rem;
+		&__title-list-offer{
+			width: 100%;
+		}
 		&__annouce {
 			padding: 1rem 4rem;
 			border-radius: 20px;
@@ -138,6 +168,10 @@
 			@include size(100%, auto);
 			& > div {
 				text-transform: capitalize;
+				
+			}
+			.c-medium-button{
+				padding: 1rem 2.4rem;
 			}
 		}
 	}

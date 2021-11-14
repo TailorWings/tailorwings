@@ -350,7 +350,7 @@ function OrderDetail(props) {
 				</Accordion>
 			</div>
 			<div className="c-order-detail-shipping-info">
-				<Accordion title={t('account.shippingInformation')} isActive={false}>
+				<Accordion title={t('account.shippingInformation')} isActive={true}>
 					<div className="c-order-detail-shipping-info__form">
 						<ShippingForm
 							shippingInfo={shippingInfo}
