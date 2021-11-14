@@ -574,12 +574,14 @@ export const SHIPPING_INFO = [
 		label: 'Name',
 		labelVN: 'Tên',
 		value: '',
+		isRequired: true
 	},
 	{
 		id: 'phone',
 		label: 'Phone number',
 		labelVN: 'Số điện thoại',
 		value: '',
+		isRequired: true
 	},
 	// {
 	// 	label: 'City',
@@ -598,6 +600,7 @@ export const SHIPPING_INFO = [
 		label: 'Address',
 		labelVN: 'Địa chỉ',
 		value: '',
+		isRequired: true
 	},
 	{
 		id: 'notes',

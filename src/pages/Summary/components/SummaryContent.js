@@ -52,18 +52,18 @@ SummaryContent.defaultProps = {
 // });
 
 const NOTE_PLACEHOLDER = {
-	"en": [
+	en: [
 		'Ex: I want the neck 5cm deeper in comparison to the model ...',
 		'Ex: I want a comfortable fit, but not too loose',
 		'Ex: My arm is quite big, I want to hide it',
-		"Ex: Let's stitch a margin as big as possible just incase my body become bigger"
+		"Ex: Let's stitch a margin as big as possible just incase my body become bigger",
 	],
-	"vn": [
+	vn: [
 		'Vd: Tôi muốn cổ sâu hơn 5cm so với mẫu ...',
 		'Vd: Tôi muốn một bộ quần áo vừa vặn thoải mái nhưng không quá chật',
 		'Vd: Cánh tay của tôi khá to, tôi muốn giấu nó đi',
-		"Vd: Hãy khâu một lề càng lớn càng tốt để cơ thể tôi trở nên to hơn",
-	]
+		'Vd: Hãy khâu một lề càng lớn càng tốt để cơ thể tôi trở nên to hơn',
+	],
 };
 
 function SummaryContent(props) {
@@ -87,10 +87,12 @@ function SummaryContent(props) {
 			return info;
 		})
 	);
+
 	/*---------*/
 	const [popupShow, setPopupShow] = useState(false);
 	const [isConfirmLoading, setIsConfirmLoading] = useState(false);
 	const [alertOpen, setAlertOpen] = useState(false);
+	const [alertMessage, setAlertMessage] = useState(false);
 	const dispatch = useDispatch();
 	/*--------------*/
 	useEffect(() => {
@@ -187,7 +189,15 @@ function SummaryContent(props) {
 	/*********************************
 	 *  Description: on notes change
 	 */
+	 function checkShippingInfoValid() {
+		return shippingInfo.find(info => info.isRequired && !info.value) == null;
+	 }
 	function handleNextClick() {
+		if (!checkShippingInfoValid()) {
+			setAlertOpen(true);
+			setAlertMessage('Please fill in shipping info');
+			return;
+		}
 		if (currentCustomer) {
 			setPopupShow(true);
 		} else {
@@ -247,16 +257,8 @@ function SummaryContent(props) {
 							updateDocument('customers', currentCustomer.id, 'phoneNumber', phoneNumber);
 						}
 						/*--------------*/
-						const {
-							id,
-							designFiles,
-							designStyle,
-							fabric,
-							msmt,
-							notes,
-							stdSize,
-							orderDate,
-						} = currentOrderDetail;
+						const { id, designFiles, designStyle, fabric, msmt, notes, stdSize, orderDate } =
+							currentOrderDetail;
 						let newTailorOrder = {
 							orderID: id,
 							rqmt: {
@@ -290,6 +292,7 @@ function SummaryContent(props) {
 					.catch((error) => {
 						console.log(`error`, error);
 						setAlertOpen(true);
+						setAlertMessage('ORDER FAILED: Please try again!');
 						setIsConfirmLoading(false);
 					});
 			}
@@ -355,7 +358,6 @@ function SummaryContent(props) {
 		}
 	}
 
-	
 	function handleShippingInfoChange(id, e) {
 		let value = e.target.value;
 		let updatedShippingInfo = shippingInfo.map((info) => {
@@ -363,7 +365,6 @@ function SummaryContent(props) {
 		});
 		setShippingInfo(updatedShippingInfo);
 	}
-
 
 	/************_END_****************/
 	if (!msmtMethod || !orderDetail) return <Fragment />;
@@ -393,7 +394,7 @@ function SummaryContent(props) {
 				/>
 			</div>
 			<div className="c-order-detail-shipping-info">
-				<Accordion title={t('account.shippingInformation')} isActive={false}>
+				<Accordion title={t('account.shippingInformation')} isActive={true}>
 					<div className="c-order-detail-shipping-info__form">
 						<ShippingForm
 							shippingInfo={shippingInfo}
@@ -416,7 +417,7 @@ function SummaryContent(props) {
 			<MaterialAlert
 				open={alertOpen}
 				setOpen={setAlertOpen}
-				content="ORDER FAILED: Please try again!"
+				content={alertMessage}
 				serverity="error"
 			/>
 			<Popup show={popupShow} setPopupShow={setPopupShow}>

@@ -24,6 +24,7 @@ import { ONLINE_MEASUREMENTS, SHIPPING_INFO, STANDARD_SIZES } from '../../../con
 import { fetchCondition, setDocument, updateDocument } from '../../../services/API/firebaseAPI';
 import TailorOffer from './TailorOffer';
 import { useTranslation, withTranslation, Trans } from 'react-i18next';
+import { modifyPrice } from '../../../services/Functions/commonFunctions';
 
 OrderDetail.propTypes = {
 	orderList: PropTypes.array,
@@ -60,6 +61,7 @@ function OrderDetail(props) {
 	const [alertOpen, setAlertOpen] = useState(false);
 	const [deleteOpen, setDeleteOpen] = useState(false);
 	const [isPageLoad, setIsPageLoad] = useState(false);
+	const [pickedOffer, setPickedOffer] = useState(null);
 	/*--------------*/
 	const alertUser = (e) => {
 		e.preventDefault();
@@ -173,9 +175,11 @@ function OrderDetail(props) {
 		// if (updatedOffers) {
 		// 	setCurrentOrderDetail({ ...currentOrderDetail, offers: [...updatedOffers] });
 		// }
+		setPickedOffer(offers[pickedIndex]);
 		let updatedOffers = offers?.map((offer, index) => {
 			return { ...offer, picked: index === pickedIndex };
 		});
+
 
 		if (updatedOffers.length > 0) {
 			setOffers(updatedOffers);
@@ -304,18 +308,18 @@ function OrderDetail(props) {
 					onTailorPick={status === 'finding' ? onOfferPicked : null}
 				/>
 			</div>
-			<div className="c-order-detail-bill">
+			{pickedOffer && <div className="c-order-detail-bill">
 				<div className="c-order-detail-bill__item">
 					<span>Price</span>
-					<span>800.000 vnd</span>
+					<span>{modifyPrice(pickedOffer.price)} vnd</span>
 				</div>
 				<div className="c-order-detail-bill__item">
 					<span>Shipping fee</span>
-					<span>20.000 vnd</span>
+					<span>{modifyPrice(20000)} vnd</span>
 				</div>
 				<div className="c-order-detail-bill__item">
 					<span>Total</span>
-					<span>820.000 vnd</span>
+					<span>{modifyPrice(pickedOffer.price + 20000)} vnd</span>
 				</div>
 				<div className="c-order-detail-bill__item">
 					<span>Payment method</span>
@@ -323,9 +327,9 @@ function OrderDetail(props) {
 				</div>
 				<div className="c-order-detail-bill__item">
 					<span>Estimated Delivery Date</span>
-					<span>4 days</span>
+					<span>{Number(pickedOffer.duration) + 3} days</span>
 				</div>
-			</div>
+			</div>}
 			<div className="c-order-detail-summary">
 				<Accordion title={t('account.summary')} isActive={false}>
 					<div className="c-order-detail-summary__rqmt">
@@ -350,7 +354,7 @@ function OrderDetail(props) {
 				</Accordion>
 			</div>
 			<div className="c-order-detail-shipping-info">
-				<Accordion title={t('account.shippingInformation')} isActive={true}>
+				<Accordion title={t('account.shippingInformation')} isActive={false}>
 					<div className="c-order-detail-shipping-info__form">
 						<ShippingForm
 							shippingInfo={shippingInfo}

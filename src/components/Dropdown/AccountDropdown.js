@@ -55,7 +55,7 @@ function AccountDropdown(props) {
 					<Fragment />
 				)}
 				<Link to="/account" onClick={() => setDropdownOpen(!dropdownOpen)}>
-					<li>{t('yourOrder')}</li>
+					<li>{t('yourOrders')}</li>
 				</Link>
 				<li
 					onClick={() => {
