@@ -44,8 +44,9 @@
 		}
 		&__languages{
 			& > .c-languages-dropdown {
-				@include size(4rem);
+				@include size(8rem, 4rem);
 			}
 		}
+
 	}
 }

@@ -47,14 +47,17 @@
 		}
 		&__title {
 			@include flex(center, center);
-			margin: 3.2rem 0;
+			margin: 3rem 0;
 		}
 		&__rqmt {
-			margin-bottom: 5.8rem;
+			margin-bottom: 3rem;
 		}
 		&__msmt {
-			margin-bottom: 4rem;
-			padding-bottom: 6rem;
+			margin-bottom: 3rem;
+		}
+		&--mobile-custom{
+			display: flex;
+			flex-direction: column-reverse;
 		}
 	}
 }

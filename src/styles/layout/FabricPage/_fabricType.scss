@@ -12,7 +12,8 @@
 		max-width: 326px;
 		width: 326px;
 
-		h2, p {
+		h2,
+		p {
 			text-align: left;
 			font-size: 15px;
 		}
@@ -22,7 +23,7 @@
 		& > div.c-picker {
 			justify-content: center;
 			max-width: 530px;
-			.c-picker__item{
+			.c-picker__item {
 				margin-right: 12px;
 				margin-bottom: 12px;
 				.c-small-button-1 {
@@ -52,11 +53,17 @@
 
 	@include xs {
 		@include flex(center, center, column);
+		&__content-1 {
+			@include flex(center, center, column);
+			@include size(100%, auto);
+			margin-bottom: 2.5rem;
+		}
 		&__title {
 			@include flex(center, center);
 			width: 100%;
 			margin: 2rem 0 2rem;
-			h2, p {
+			h2,
+			p {
 				text-align: center;
 			}
 			.c-title {
@@ -69,7 +76,7 @@
 				justify-content: center;
 				margin-right: 0;
 				max-width: 100%;
-				.c-picker__item{
+				.c-picker__item {
 					margin-right: 1.2rem;
 					margin-bottom: 1.2rem;
 					.c-small-button-1 {
@@ -85,11 +92,19 @@
 		}
 		&__wrapper {
 			@include size(100%, auto);
-			
 		}
 		&__gallery {
 			@include size(100%, fit-content);
 			// margin-right: 1.6rem;
+		}
+		&__tooltip {
+			.c-slider__left,
+			.c-slider__right {
+				@include size(2rem);
+			}
+			.c-slider__content{
+				width: 85%;
+			}
 		}
 	}
 }

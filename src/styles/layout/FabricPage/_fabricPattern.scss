@@ -18,7 +18,6 @@
 	&__item {
 		height: 0;
 		padding-bottom: calc(100% - 4px);
-
 		background-color: transparent;
 		border-radius: 20px;
 		cursor: pointer;
@@ -80,7 +79,7 @@
 
 	@include xs {
 		@include flex(flex-start, center, column);
-		margin-bottom: 10rem;
+		// margin-bottom: 10rem;
 		&__title {
 			margin-bottom: 2rem;
 		}
@@ -97,10 +96,23 @@
 		}
 		&__item {
 			height: 0;
-			padding-bottom: calc(100% - 4px);
+			padding-bottom: calc(100% - 2px);
+			border: 2px solid transparent;
+			&.--selected {
+				border: 2px solid $primary-color;
+			}
 		}
 		& .c-slider {
 			margin-bottom: 5rem;
+			&__content{
+				width: 85%;
+			}
+			& .swiper-wrapper {
+				min-height: 0;
+			}
+			&__left, &__right{
+				@include size(2rem);
+			}
 		}
 	}
 

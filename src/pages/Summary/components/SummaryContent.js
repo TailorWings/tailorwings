@@ -189,9 +189,9 @@ function SummaryContent(props) {
 	/*********************************
 	 *  Description: on notes change
 	 */
-	 function checkShippingInfoValid() {
-		return shippingInfo.find(info => info.isRequired && !info.value) == null;
-	 }
+	function checkShippingInfoValid() {
+		return shippingInfo.find((info) => info.isRequired && !info.value) == null;
+	}
 	function handleNextClick() {
 		if (!checkShippingInfoValid()) {
 			setAlertOpen(true);
@@ -257,8 +257,16 @@ function SummaryContent(props) {
 							updateDocument('customers', currentCustomer.id, 'phoneNumber', phoneNumber);
 						}
 						/*--------------*/
-						const { id, designFiles, designStyle, fabric, msmt, notes, stdSize, orderDate } =
-							currentOrderDetail;
+						const {
+							id,
+							designFiles,
+							designStyle,
+							fabric,
+							msmt,
+							notes,
+							stdSize,
+							orderDate,
+						} = currentOrderDetail;
 						let newTailorOrder = {
 							orderID: id,
 							rqmt: {
@@ -393,21 +401,23 @@ function SummaryContent(props) {
 					fabricPattern={orderDetail.fabric.pattern}
 				/>
 			</div>
-			<div className="c-order-detail-shipping-info">
-				<Accordion title={t('account.shippingInformation')} isActive={true}>
-					<div className="c-order-detail-shipping-info__form">
-						<ShippingForm
-							shippingInfo={shippingInfo}
-							onInputChange={handleShippingInfoChange}
-							// disabled={currentOrderDetail.status !== 'finding'}
-						/>
-					</div>
-					<div className="c-order-detail-shipping-info__payment">
-						<PaymentInfo buttonText="Choose" />
-					</div>
-				</Accordion>
+			<div className="c-summary-content--mobile-custom">
+				<div className="c-order-detail-shipping-info">
+					<Accordion title={t('account.shippingInformation')} isActive={true}>
+						<div className="c-order-detail-shipping-info__form">
+							<ShippingForm
+								shippingInfo={shippingInfo}
+								onInputChange={handleShippingInfoChange}
+								// disabled={currentOrderDetail.status !== 'finding'}
+							/>
+						</div>
+						<div className="c-order-detail-shipping-info__payment">
+							<PaymentInfo buttonText="Choose" />
+						</div>
+					</Accordion>
+				</div>
+				<div className="c-summary-content__msmt">{handleMeasurementInfoRender()}</div>
 			</div>
-			<div className="c-summary-content__msmt">{handleMeasurementInfoRender()}</div>
 
 			<ProcessAction
 				backLink={`/measurement/${msmtMethod.method}`}
