@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import PropTypes from 'prop-types';
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { removeWhiteSpace } from '../../services/Functions/commonFunctions';
@@ -10,6 +10,7 @@ import leftArrowIcon from '../../assets/icons/slider-arrow-left.png'
 import rightArrowIcon from '../../assets/icons/slider-arrow-right.png'
 import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
+
 MeasurementForm.propTypes = {
 	measurements: PropTypes.array,
 	title: PropTypes.string,
@@ -18,8 +19,6 @@ MeasurementForm.propTypes = {
 	onActionNext: PropTypes.func,
 	disabled: PropTypes.bool,
 	onGetLatestMsmt: PropTypes.func,
-	currentIndex: PropTypes.number,
-	isDisplayFull: PropTypes.bool
 };
 
 MeasurementForm.defaultProps = {
@@ -27,14 +26,12 @@ MeasurementForm.defaultProps = {
 	title: 'Measurement',
 	onSubmit: null,
 	disabled: false,
-	currentIndex: 0,
-	isDisplayFull: true,
 	onActionBack: null,
 	onActionNext: null,
 };
 
 function MeasurementForm(props) {
-	const { measurements, title, onSubmit, disabled, onGetLatestMsmt, currentIndex, isDisplayFull, onActionBack, onActionNext } = props;
+	const { measurements, title, onSubmit, disabled, onGetLatestMsmt, isDisplayFull, onActionBack, onActionNext } = props;
 	// console.log("MeasurementForm measurements", measurements)
 	const { t, i18n } = useTranslation();
 	const isENG = i18n.language == 'en';
@@ -58,6 +55,12 @@ function MeasurementForm(props) {
 		defaultValues: { ...msmtDefaultValue },
 		resolver: yupResolver(schema),
 	});
+	useEffect(() => {
+		measurements.forEach((msmt, index) => {
+			form.setValue(removeWhiteSpace(msmt.label), msmt.value);
+		})
+		
+	}, [measurements]);
 	/*--------------*/
 	function handleSubmit(values) {
 		console.log("handleSubmit values", values);
@@ -96,7 +99,7 @@ function MeasurementForm(props) {
 			>
 				{measurements.map((measurement, index) => {
 					return (
-						<div key={index} className={`c-msmt-form__item ${(isDisplayFull || (currentIndex == index)) ? '' : 'c-msmt-form__item-hidden'}`}>
+						<div key={index} className="c-msmt-form__item">
 							{disabled ? (
 								<TextInput
 									label={ ( isENG ? measurement.label : measurement.labelVN ) || ''}
@@ -113,6 +116,7 @@ function MeasurementForm(props) {
 									// placeHolder="(cm)"
 									suffix="(cm)"
 									form={form}
+									value={measurement.value}
 									maxValue={999}
 								/>
 							)}

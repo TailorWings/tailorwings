@@ -31,7 +31,8 @@ function OnlineMethod(props) {
 	const isENG = i18n.language == 'en';
 	const stylesOfClothe = useSelector((state) => state.common.stylesOfClothe);
 	const [alertOpen, setAlertOpen] = useState(false);
-
+	const [isFormSubmitted, setFormSubmitted] = useState(false);
+	const [measurementStates, setMeasurements] = useState(measurements);
 	const getStyleOfClothe = (id) => {
 		return find(stylesOfClothe, { id: id });
 	};
@@ -43,7 +44,7 @@ function OnlineMethod(props) {
 		// spaceBetween: 16,
 		slidesPerColumnFill: 'row',
 		noSwiping: true,
-		loop: true,
+		loop: false,
 		navigation: {
 			nextEl: '.swiper-button-next',
 			prevEl: '.swiper-button-prev',
@@ -53,18 +54,18 @@ function OnlineMethod(props) {
 		},
 	};
 	const [activeGuide, setActiveGuide] = useState(null);
-	const [currentIndex, setCurrentIndex] = useState(false);
 
 	useEffect(() => {
 		if (measurements) {
 			setActiveGuide({ ...measurements[0], activeIndex: 0 });
+			setMeasurements(measurements);
 		}
 	}, [measurements]);
 
 	function onSlideChange() {
 		if (swiperRef.current) {
 			let currentSwiper = swiperRef.current.swiper;
-			let currentGuide = measurements[currentSwiper.realIndex];
+			let currentGuide = measurementStates[currentSwiper.realIndex];
 			setActiveGuide({ ...currentGuide, activeIndex: currentSwiper.realIndex });
 		}
 	}
@@ -96,43 +97,31 @@ function OnlineMethod(props) {
 	// const styleOfClothe = getStyleOfClothe(designStyle)
 	// const styleOfClotheName = isENG ? styleOfClothe.name : styleOfClothe.nameVN
 
-	const [inputs, setInputs] = useState({});
-	const [isCheck, setIsCheck] = useState(false);
-	const [isClickedNext, setIsClickedNext] = useState(false);
-
-	const handleInputChange = (target, msmt) => {
-		setInputs((state) => ({
-			...state,
-			[msmt.label]: target.value,
-		}));
-		msmt.value = target.value;
-		
-		if (
-			target.value === null ||
-			target.value === '' ||
-			target.value === undefined ||
-			target.value === null
-		) {
-			setIsCheck(false);
-		} else {
-			setIsCheck(true);
-		}
+	// const onNextClick = () => {
+	// 	// onMeasurementConfirm();
+	// }
+	const handleInputChange = (target, msmt, index) => {
+		measurementStates[index].value = target.value;
+		setMeasurements([...measurementStates]);
+		setActiveGuide({ ...measurementStates[index], activeIndex: index });
 	};
 
 	const onBeforeNext = () => {
-		const isCurrentInputValid = isCheck;
-		if (!isCurrentInputValid) {
-			setIsClickedNext(true);
-		} else {
-			setIsCheck(false);
-			setIsClickedNext(false);
-		}
+		const currentIndex = swiperRef.current.swiper.realIndex;
+		const isCurrentInputValid = !!measurementStates[currentIndex].value;
+		setFormSubmitted(true);
 		return isCurrentInputValid;
 	};
+	const onPageNextClick = () => {
+		setFormSubmitted(true);
+		const idx = measurementStates.findIndex(m => !m.value);
+		if (idx >= 0) {
+			swiperRef.current.swiper.slideTo(idx);
+		}
+	}
 
-	console.log(measurements)
 
-	if (!measurements || !onMeasurementConfirm) return <Fragment />;
+	if (!measurementStates || !onMeasurementConfirm) return <Fragment />;
 	return (
 		<div className="c-msmt-online">
 			<div className="c-msmt-online-guideline">
@@ -209,21 +198,19 @@ function OnlineMethod(props) {
 						onBeforeNext={onBeforeNext}
 					>
 						<div className="c-msmt-online-guideline-slider__item">
-							{measurements && activeGuide ? (
+							{measurementStates && activeGuide ? (
 								<Swiper {...params} ref={swiperRef}>
-									{measurements.map((msmt, index) => {
+									{measurementStates.map((msmt, index) => {
 										return (
-											<div>
-												<div key={index} className="c-msmt-online-guideline-slider__input">
-													<input
-														type="text"
-														maxLength="3"
-														name={index}
-														onChange={({ target }) => handleInputChange(target, msmt)}
-														value={inputs[msmt.label]}
-													/>
-													<span>cm</span>
-												</div>
+											<div key={index} className="c-msmt-online-guideline-slider__input">
+												<input
+													type="text"
+													maxLength="3"
+													name={index}
+													onChange={({ target }) => handleInputChange(target, msmt, index)}
+													value={measurementStates[index].value}
+												/>
+												<span>cm</span>
 											</div>
 										);
 									})}
@@ -236,7 +223,7 @@ function OnlineMethod(props) {
 				</div>
 			</div>
 			<div className="c-msmt-online-guideline-error-input">
-				{isClickedNext && !isCheck && (
+				{isFormSubmitted && !activeGuide.value && (
 					<span className="c-msmt-online-guideline-error-input__text">
 						{isENG ? 'Please set your value' : 'Vui lòng nhập số'}
 					</span>
@@ -244,16 +231,14 @@ function OnlineMethod(props) {
 			</div>
 			<div className="c-msmt-online-input">
 				<MeasurementForm
-					measurements={measurements}
+					measurements={measurementStates}
 					onSubmit={onMeasurementConfirm}
 					onGetLatestMsmt={onGetLatestMsmt}
 					onActionBack={actionBack}
 					onActionNext={actionNext}
-					isDisplayFull={true}
-					currentIndex={currentIndex}
 				/>
 			</div>
-			<ProcessAction backLink="/fabric" formID="msmt-form" />
+			<ProcessAction onNextClick={onPageNextClick} backLink="/fabric" formID="msmt-form" />
 		</div>
 	);
 }
