@@ -325,7 +325,7 @@ export const MSMT_METHODS = [
 	},
 ];
 
-const MEASUREMENTS_STYLES = {
+export const MEASUREMENTS_STYLES = {
 	'abdomen': {
 		id: 'abdomen',
 		label: 'abdomen',
