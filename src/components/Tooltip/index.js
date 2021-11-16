@@ -52,6 +52,7 @@ function Tooltip(props) {
 		// 	nextEl: '.swiper-button-next',
 		// 	prevEl: '.swiper-button-prev',
 		// },
+		rebuildOnUpdate: true,
 		pagination: {
 			el: '.swiper-pagination',
 			clickable: true,
