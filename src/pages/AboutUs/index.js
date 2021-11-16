@@ -1,6 +1,9 @@
 import { ABOUT_CONTENT } from '../../constants';
+import { useTranslation } from 'react-i18next';
 
 function AboutUsPage() {
+	const { t, i18n } = useTranslation();
+	const isENG = i18n.language == 'en';
 	return (
 		<div className="l-about-us">
 			{ABOUT_CONTENT &&
@@ -10,8 +13,8 @@ function AboutUsPage() {
 							<div className="-wrapper">
 								<div className="about-us-content__text">
 									<div className="-text-box">
-										<h2>{content.title}</h2>
-										<pre>{content.content}</pre>
+										<h2>{isENG ? content.title : content.titleVN}</h2>
+										<pre>{isENG ? content.content : content.contentVN}</pre>
 									</div>
 								</div>
 								<div className="about-us-content__image">

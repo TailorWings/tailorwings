@@ -114,12 +114,11 @@ function OnlineMethod(props) {
 	};
 	const onPageNextClick = () => {
 		setFormSubmitted(true);
-		const idx = measurementStates.findIndex(m => !m.value);
+		const idx = measurementStates.findIndex((m) => !m.value);
 		if (idx >= 0) {
 			swiperRef.current.swiper.slideTo(idx);
 		}
-	}
-
+	};
 
 	if (!measurementStates || !onMeasurementConfirm) return <Fragment />;
 	return (
@@ -127,18 +126,26 @@ function OnlineMethod(props) {
 			<div className="c-msmt-online-guideline">
 				<div className="c-msmt-online-guideline-top">
 					<div className="c-msmt-online-guideline-top__button-view">
-						<span className="c-msmt-online-guideline-top__button-view__text">View Full List</span>
+						<span className="c-msmt-online-guideline-top__button-view__text">
+							{isENG ? 'View Full List' : 'Xem toàn bộ số đo'}
+						</span>
 						<img src={IconList} alt="icon" className="c-msmt-online-guideline-top__icon" />
 					</div>
 					<div className="c-msmt-online-guideline-top__right">
 						<span className="c-msmt-online-guideline-top__right--des">
-							Get your lastet measurement
+							{isENG ? 'Get your lastet measurement' : 'Sử dụng số đo đã lưu'}
 						</span>
-						<span className="c-msmt-online-guideline-top__right--mobile">
-							Get your
-							<br />
-							lastet measurement
-						</span>
+						{isENG ? (
+							<span className="c-msmt-online-guideline-top__right--mobile">
+								Get your
+								<br />
+								lastet measurement
+							</span>
+						) : (
+							<span className="c-msmt-online-guideline-top__right--mobile">
+								Sử dụng số đo đã lưu
+							</span>
+						)}
 					</div>
 				</div>
 				<div className="c-msmt-online-guideline-slider">

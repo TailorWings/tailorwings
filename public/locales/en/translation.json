@@ -13,9 +13,9 @@
     "aboutUs": "About Us",
     "contact": "Contact",
     "companyName": "TAILOR WINGS COMPANY LIMITED / Tax code: 0316695125",
-    "minImageRequirement": "Minimum image size 500 KB. The higher the quality, the better the results.",
+    "minImageRequirement": "Clear images will help the best sewing product.",
     "requirement": {
-        "title": "What do you want to be tailored?",
+        "title": "What do you want to get tailored?",
         "description": "Please send us at least 03 pictures of the design you want to make. More detail picture more better results of clothes be made.",
         "uploadImageDescription": "Upload your image here, or",
         "browse": "browse",
@@ -63,7 +63,7 @@
     },
     "summary": {
         "title": "Personalizing Your Clothes",
-        "subTitle": "This is an important step. The product will be tailored to fit the way you want. Please describe below your needs with as much detail as possible. If you include parts of your body that you consider your weaknesses, our tailors will help you deduct them.",
+        "subTitle": "This is an important step. The product will be made exactly what you requested at this step. Detailed and clear requirements will help tailors meet your wishes best.",
         "note": "Note",
         "summary": "Summary",
         "description": "Almost done!!! Your idea is awesome and our Tailor cannot wait to tailor it right away for you.",

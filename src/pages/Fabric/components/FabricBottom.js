@@ -19,7 +19,7 @@ FabricBottom.propTypes = {
 	onNextClick: PropTypes.func,
 	// estPrice: PropTypes.string,
 	isConfirmDisabled: PropTypes.bool,
-	currentDesign: PropTypes.string
+	currentDesign: PropTypes.string,
 };
 
 FabricBottom.defaultProps = {
@@ -35,21 +35,22 @@ FabricBottom.defaultProps = {
 const PHOTO_SWIPE_SIZE = 500;
 
 function FabricBottom(props) {
-	const {
-		onNextClick,
-		estPrice,
-		isConfirmDisabled,
-		currentDesign
-	} = props;
+	const { onNextClick, estPrice, isConfirmDisabled, currentDesign } = props;
 	/*--------------*/
 	// if (!collections || !onCollectionClick || !onPatternClick) return <Fragment />;
-	console.log(currentDesign)
+
 	return (
 		<div className="c-fabric-bottom">
 			{estPrice && currentDesign ? (
 				<div className="c-fabric-bottom__estprice">
-					<p>{currentDesign.id === 'others'? '': '~'}{` ${modifyPrice(estPrice)} VND`}</p>
-					<p>{`Order's estimated price`}</p>
+					{currentDesign.id === 'others' ? (
+						''
+					) : (
+						<Fragment>
+							<p>{`~ ${modifyPrice(estPrice)} VND`}</p>
+							<p>{`Order's estimated price`}</p>
+						</Fragment>
+					)}
 				</div>
 			) : (
 				<Fragment />

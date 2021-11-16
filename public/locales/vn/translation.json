@@ -6,30 +6,30 @@
     "select": "Chọn",
     "signIn": "Đăng Nhập",
     "getStarted": "BẮT ĐẦU NGAY",
-    "mainTitle": "Có được bất kỳ bộ đồ nào bạn mong muốn bằng cách đơn giản nhất ",
-    "mainSubTitle": "Mỗi người phụ nữ sở hữu một vẻ đẹp hình thể riêng biệt, vậy tại sao chúng ta lại mặc theo size của người mẫu? Do đó, bằng việc kết hợp thợ may tay nghề cao cùng với công nghệ, Tailor Wings giúp bạn đơn giản hóa việc may đo, đồng thời cam kết đem tới những bộ thời trang vừa vặn và hợp túi tiền của riêng bạn.",
+    "mainTitle": "Đặt may bất kỳ bộ đồ nào bạn yêu thích theo cách đơn giản nhất",
+    "mainSubTitle": "Mỗi người phụ nữ sở hữu một vẻ đẹp hình thể riêng biệt, vậy tại sao chúng ta phải mặc theo size của người mẫu? Bằng việc kết hợp thợ may tay nghề cao cùng với công nghệ, Tailor Wings giúp bạn đơn giản hóa việc may đo, đồng thời cam kết đem tới những bộ thời trang vừa vặn và hợp túi tiền của riêng bạn.",
     "terms": "Điều khoản",
     "faqs": "Câu hỏi thường gặp",
     "aboutUs": "Về chúng tôi",
     "contact": "Liên hệ",
     "companyName": "CÔNG TY TNHH TAILOR WINGS/ MST:0316695125",
-    "minImageRequirement": "Dung lượng hình ảnh tối thiểu 500KB. Chất lượng hình ảnh tốt giúp sản phẩm cuối cùng tốt hơn.",
+    "minImageRequirement": "Hình ảnh rõ nét sẽ giúp sản phẩm may được tốt nhất.",
     "requirement": {
-        "title": "Bạn muốn may đồ gì?",
-        "description":"Vui lòng cung cấp ít nhất 3 hình ảnh của thiết kế bạn muốn đặt may. Hình ảnh càng chi tiết sản phẩm may sẽ càng đúng với mong muốn của bạn.",
+        "title": "Bạn muốn đặt may gì?",
+        "description":"Cung cấp ít nhất 03 hình ảnh của thiết kế bạn muốn đặt may. Hình ảnh càng chi tiết sản phẩm may sẽ càng đúng với mong muốn của bạn.",
         "uploadImageDescription": "Tải lên hình ảnh tại đây",
         "browse": "tại đây",
         "supports": "Hỗ trợ"
     },
     "fabric": {
-        "title": "Chọn vải cho thiết kế của bạn",
+        "title": "Chọn vải cho thiết kế",
         "typeTitle": "Vải có sẵn của Tailor Wings",
         "typeSubTitle": "Chúng tôi sẽ liên hệ để tư vấn và giúp bạn mua vải mà bạn yêu thích sau bước đặt hàng",
         "toolTipTitle": "CHI TIẾT VẢI"
     },
     "measurement": {
         "title": "Số đo của bạn",
-        "subTitle": "Xây dựng bộ số đo cho riêng bạn chỉ trong ít phút. Và kể từ sau, bạn sẽ được tận hưởng sự vừa vặn cho tất cả sản phẩm thời trang của mình.",
+        "subTitle": "Tận hưởng sự vừa vặn của tất cả quần áo bạn mặc chỉ với vài phút xây dựng bộ số đo riêng",
         "measureOnline": {
             "title": "Đo online",
             "subTitle": "Đơn giản mà có được sự vừa vặn, vui lòng thực hiện theo hướng dẫn",
@@ -41,7 +41,7 @@
             "buttonText": "Chọn size"
         },
         "pleaseSelectSize": "Vui lòng chọn kích thước tiêu chuẩn phù hợp với bạn!",
-        "listOfStandardSizes": "Danh sách size chuẩn",
+        "listOfStandardSizes": "Bảng size chuẩn",
         "guideFor": "Hướng dẫn đo cho",
         "viewFullList": "Xem toàn bộ số đo",
         "getYourLasted": "Sử dụng số đo gần nhất",
@@ -62,11 +62,11 @@
         "highHip": "Hông"
     },
     "summary": {
-        "title": "Tùy chỉnh cho bộ đồ của bạn",
-        "subTitle": "Đây là bước quan trọng. Sản phẩm sẽ được may theo đúng những gì bạn yêu cầu tại bước này. Hãy chia sẻ bất kỳ điều gì, yêu cầu càng chi tiết sẽ càng tốt cho thợ may đáp ứng được mong muốn của bạn.",
+        "title": "Tùy chỉnh cho thiết kế",
+        "subTitle": "Đây là bước quan trọng. Sản phẩm sẽ được may theo đúng những gì bạn yêu cầu tại bước này. Yêu cầu chi tiết và rõ ràng sẽ giúp thợ may đáp ứng đúng mong muốn của bạn nhất.",
         "note": "Lưu ý",
         "summary": "Thông tin đơn hàng",
-        "description": "Sắp hoàn tất rồi! Thiết kế bạn chọn để may thật tuyệt, thợ may đang rất háo hức để được may nó cho bạn.",
+        "description": "Sắp hoàn tất rồi! Thiết kế bạn chọn để may thật tuyệt, thợ may rất háo hức để may nó cho bạn.",
         "placeholder": {
             "note1": "Vd: Tôi muốn cổ sâu hơn 5cm so với mẫu ...",
             "note2": "Vd: Tôi muốn một bộ quần áo vừa vặn thoải mái nhưng không quá chật",
@@ -77,21 +77,21 @@
     },
     "orderConfirmDialog": {
         "title": "Cảm ơn bạn đã cung cấp thông tin",
-        "description1": "Bước tiếp theo, hãy chọn thợ may tại mục từ tài khoản của bạn",
+        "description1": "Bước tiếp theo, hãy chọn Thợ may tại mục Quản lý đơn hàng từ tài khoản của bạn",
         "description2": "Quản lý đơn hàng",
         "description3": "từ tài khoản của bạn",
         "errorPhoneNumber": "Vui lòng cung cấp số điện thoại hợp lệ của bạn!"
     },
     "findTailor": "Tìm thợ may",
     "delete": "Xóa",
-    "yourOrders": "Đơn hàng của bạn",
+    "yourOrders": "Đơn hàng",
     "signOut": "Thoát",
     "account": {
         "orderManagement": "Quản lý đơn hàng",
         "orderDetail": "Chi tiết đơn may",
         "orderDetails": "Chi tiết các đơn may",
         "viewAllOrders": "Xem tất cả đơn hàng",
-        "orderDetailNote": "Chúng tôi sẽ gửi email cho bạn khi có thợ may nhận đơn và báo giá. Thông thường thợ may cần 30 phút( trong giờ làm việc) để phản hồi.",
+        "orderDetailNote": "Chúng tôi sẽ gửi email cho bạn khi có Thợ may báo giá. Thông thường Thợ may cần 30 phút( trong giờ làm việc) để phản hồi",
         "summary": "Thông tin đơn hàng",
         "requirementNote": "Yêu cầu của bạn",
         "shippingInformation": "Thông tin giao hàng",

@@ -161,7 +161,7 @@ function Login() {
 						{isLoggin ? (
 							<div onClick={onLoginClose}>
 								<button className="c-login__go-to-admin">
-									<span>continue</span>
+									<span>Continue</span>
 								</button>
 							</div>
 						) : (

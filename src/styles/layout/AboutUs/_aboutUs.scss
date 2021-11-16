@@ -41,6 +41,7 @@
 				max-width: 67%;
 				@include font(fontRegular, 18px);
 				white-space: pre-line;
+				text-align: justify;
 			}
 		}
 		&__image {

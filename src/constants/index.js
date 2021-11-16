@@ -114,10 +114,10 @@ export const FABRIC_BUY_TYPES = [
 	},
 	{
 		id: 'TAILOR_WINGS_PARTNER',
-		title: "Fabric form Tailor Wings's partner",
-		description: 'We will get in contact to help you buy fabric you love right after you place the order.',
-		titleVN: "Vải từ đối tác của Tailor Wings",
-		descriptionVN: 'Chúng tôi sẽ liên hệ để tư vấn và giúp bạn mua vải mà bạn yêu thích sau bước đặt hàng',
+		title: "Other supplier's fabric",
+		description: 'We will get in contact to help you buy fabric after you place the order.',
+		titleVN: "Vải của nhà cung cấp khác",
+		descriptionVN: 'Chúng tôi sẽ liên hệ để giúp bạn mua vải sau bước đặt hàng',
 	},
 ];
 export const FABRIC_TYPES = [
@@ -615,21 +615,31 @@ export const SHIPPING_INFO = [
 export const ABOUT_CONTENT = [
 	{
 		title: 'Who We Are',
+		titleVN: 'Chúng tôi là ai?',
 		content: `Tailor Wings - The place for connecting the skilled tailors with the modern consumers. We would love to celebrate diversity of each individual by made-to-order all your fashion product. 
 		Our (almost) zero-waste sustainable manufacturing model offers unparalleled choice without harming the Earth. At the same time it brings worthy remuneration for the tailor who actually created it.`,
+		contentVN: `Tailor Wings - Nơi kết nối những Thợ may tay nghề cao với khách hàng thông thái. Chúng tôi muốn tôn vinh sự đa dạng của mỗi cá nhân bằng việc chỉ may theo số đo và yêu cầu của từng khách hàng. Với bất kỳ sản phẩm có thể may nào, Tailor Wings sẽ đem tới sự hài lòng cho bạn.
+		Mô hình sản xuất bền vững (hầu như) không chất thải của chúng tôi mang đến sự lựa chọn tuyệt vời mà không gây hại cho môi trường. Đồng thời mang lại những đãi ngộ xứng đáng cho những người thợ may tận tụy đã thực sự tạo ra sản phẩm giúp bạn đẹp mỗi ngày. `,
 		image: about_team,
 	},
 	{
 		title: `The Problem`,
+		titleVN: 'Vấn đề',
 		content: `Overproduction in the fashion industry is the cause behind many global problems, from wasted CO2 to excess items being landfilled or burned.
 		The violations of workers’ rights in garment and textile factories because of excessive overtime work, sometimes forced or not paid at the correct rate, productivity pressure and a lack of fire safety regulations.`,
+		contentVN: `Sản xuất hàng loạt và dư thừa trong ngành công nghiệp thời trang là nguyên nhân của nhiều vấn đề toàn cầu, từ lượng CO2 thải ra vượt mức đến các mặt hàng dư thừa bị chôn lấp hoặc đốt ngoài môi trường.
+		Tình trạng vi phạm quyền của người lao động trong các nhà máy dệt may do làm thêm giờ quá nhiều, đôi khi bị ép buộc hoặc trả lương không đúng mức, áp lực năng suất và thiếu các quy định về an toàn lao động.`,
 		image: about_polution,
 	},
 	{
 		title: `Our Vision`,
+		titleVN: `Tầm nhìn`,
 		content: `The growing of “to be different” demand of consumer cannot be met in the way that traditional fashion distribution has done - which has caused serious environmental damage to date. 
 		We pursue sustainable fashion by being a leader of custom and also re-distribute value to stakeholders by the sharing economy model. 
 		Thereby our women they are not only beautiful because the clothes are made for herself, but she is more beautiful because of her responsible actions for the environment and society in where her live.`,
+		contentVN: `Nhu cầu “trở nên khác biệt” ngày càng tăng của người tiêu dùng không thể được đáp ứng theo cách mà chuỗi cung ứng thời trang truyền thống đã  và đang làm - điều đã gây ra thiệt hại nghiêm trọng tới môi trường cho đến nay.
+		Do đó, Tailor Wings theo đuổi mô hình thời trang bền vững bằng cách trở thành người đi đầu trong lĩnh vực tùy biến và cá nhân hóa sản phẩm thời trang. Đồng thời phân phối lại giá trị cho các bên liên quan dựa trên mô hình kinh tế chia sẻ.
+		Nhờ vậy, phụ nữ chúng ta không chỉ đẹp vì những bộ quần áo được may cho chính mình, mà cô ấy đẹp hơn vì những hành động có trách nhiệm với môi trường và xã hội nơi chúng ta sống.`,
 		image: about_vision,
 	},
 ];
@@ -638,6 +648,7 @@ export const ABOUT_CONTENT = [
 
 export const FAQ_TITLE = {
 	title: 'Frequently asked questions',
+	titleVN: 'CÂU HỎI THƯỜNG GẶP',
 	subtitle: ``
 };
 

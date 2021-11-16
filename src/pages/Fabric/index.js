@@ -42,7 +42,7 @@ function FabricPage() {
 		fabricTypes && fabricTypes.length
 			? fabricTypes.map((type) => {
 					return { ...type, active: false };
-			})
+			  })
 			: []
 	);
 	const [patternCollection, setPatternCollection] = useState(
@@ -147,11 +147,14 @@ function FabricPage() {
 				(price) => price.id === orderDetail.designStyle
 			);
 			if (designEstimate) {
-				let currentEstPrice = estimatePriceCalc(
-					designEstimate.estPrice,
-					currentFabricType.price,
-					designEstimate.fabricLength
-				);
+				let currentEstPrice = 0;
+				if (designEstimate !== 'orthers') {
+					currentEstPrice = estimatePriceCalc(
+						designEstimate.estPrice,
+						currentFabricType.price,
+						designEstimate.fabricLength
+					);
+				}
 				setEstPrice(currentEstPrice);
 				setCurrentDesign(designEstimate);
 			}
@@ -289,7 +292,7 @@ function FabricPage() {
 		}
 	}
 	/************_END_****************/
-	
+
 	if (!orderDetail.designStyle || !orderDetail.designFiles) return <Redirect to="/requirement" />;
 	return (
 		<div className="l-fabric container">
