@@ -15,16 +15,17 @@ Slider.defaultProps = {
 	swiperRef: null,
 	onSlideChange: null,
 	isDisplayActionBtn: true,
-	onBeforeNext: null,
+	onBeforeNext: () => true,
 };
 
 function Slider(props) {
 	const { t } = useTranslation();
 
-	const { swiperRef, onSlideChange , onNext, onBack, isDisplayActionBtn, onBeforeNext} = props;
+	const { swiperRef, onSlideChange, onNext, onBack, isDisplayActionBtn, onBeforeNext } = props;
 	/*--------------*/
 	const goNext = () => {
-		if(onBeforeNext()){
+		console.log(onBeforeNext);
+		if (typeof onBeforeNext === 'function' && onBeforeNext()) {
 			if (swiperRef) {
 				if (swiperRef.current && swiperRef.current.swiper) {
 					swiperRef.current.swiper.slideNext();
@@ -33,7 +34,6 @@ function Slider(props) {
 				}
 			}
 		}
-		
 	};
 	const goPrev = () => {
 		if (swiperRef) {
@@ -47,13 +47,13 @@ function Slider(props) {
 	/*--------------*/
 	return (
 		<div className="c-slider">
-				<button className="c-slider__left" onClick={goPrev}>
-					<img src={leftArrowIcon} alt="icon" />
-				</button>
+			<button className="c-slider__left" onClick={goPrev}>
+				<img src={leftArrowIcon} alt="icon" />
+			</button>
 			<div className="c-slider__content">{props.children}</div>
-				<button className="c-slider__right" onClick={goNext}>
-					<img src={rightArrowIcon} alt="icon" />
-				</button>
+			<button className="c-slider__right" onClick={goNext}>
+				<img src={rightArrowIcon} alt="icon" />
+			</button>
 			<div className="c-slider__mobile-btn">
 				<div className="--left" onClick={goPrev}>
 					<span>{t('previous')}</span>

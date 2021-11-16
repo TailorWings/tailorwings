@@ -22,9 +22,15 @@ function RequirementPage() {
 	const [designFiles, setDesignFiles] = useState([]);
 	const { t, i18n } = useTranslation();
 	const [styles, setStyles] = useState(
-		stylesOfClothe.map((style) => {
-			return { id: style.id, name: i18n.language == 'en' ? style.name : style.nameVN, active: false };
-		})
+		stylesOfClothe && stylesOfClothe.length
+			? stylesOfClothe.map((style) => {
+					return {
+						id: style.id,
+						name: i18n.language == 'en' ? style.name : style.nameVN,
+						active: false,
+					};
+			  })
+			: []
 	);
 	/*--------------*/
 	useEffect(() => {
@@ -36,9 +42,15 @@ function RequirementPage() {
 
 	useEffect(() => {
 		setStyles(
-			stylesOfClothe.map((style) => {
-				return { id: style.id, name: i18n.language == 'en' ? style.name : style.nameVN, active: false };
-			})
+			stylesOfClothe && stylesOfClothe.length
+				? stylesOfClothe.map((style) => {
+						return {
+							id: style.id,
+							name: i18n.language == 'en' ? style.name : style.nameVN,
+							active: false,
+						};
+				})
+				: []
 		);
 	}, i18n.language);
 
