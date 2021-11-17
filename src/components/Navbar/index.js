@@ -90,7 +90,7 @@ function Navbar({type}) {
 			<div className="wrapper">
 				<div className="container c-navbar__container">
 					{logo && (
-						<Link to="/">
+						<Link to="/" style={{display: 'flex'}}>
 							<img src={logo} alt="logo" className="c-navbar__logo" />
 						</Link>
 					)}

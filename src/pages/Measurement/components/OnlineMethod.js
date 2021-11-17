@@ -175,6 +175,11 @@ function OnlineMethod(props) {
 										? measurements[activeGuide.activeIndex].guide
 										: measurements[activeGuide.activeIndex].guideVN
 								}
+								key={
+									isENG
+										? measurements[activeGuide.activeIndex].guide
+										: measurements[activeGuide.activeIndex].guideVN
+								}
 							/>
 						</div>
 					) : (

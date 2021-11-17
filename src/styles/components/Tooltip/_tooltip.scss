@@ -21,6 +21,7 @@
 	}
 	&__value {
 		color: $black-color-33;
+		// width: 60%;
 	}
 	&__item {
 		margin-bottom: 2rem;
@@ -28,11 +29,22 @@
 	&__item-text {
 		@include flex(left, center);
 		gap: 2rem;
+		width: 100%;
 		p {
 			width: 100px;
 		}
 	}
 	&__slider {
 		margin-top: 1.2rem;
+	}
+	@include xs{
+		&__item-text{
+			p{
+				width: 40%;
+			}
+		}
+		&__value{
+			width: 60%;
+		}
 	}
 }
