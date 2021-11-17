@@ -1,10 +1,16 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import Title from '../../../components/Title';
-import { FABRIC_TYPE_SUBTITLE, FABRIC_TYPE_TITLE, FABRIC_TOOLTIP_TITLE, STYLES_OF_CLOTHE , FABRIC_TYPES} from '../../../constants';
+import {
+	FABRIC_TYPE_SUBTITLE,
+	FABRIC_TYPE_TITLE,
+	FABRIC_TOOLTIP_TITLE,
+	STYLES_OF_CLOTHE,
+	FABRIC_TYPES,
+} from '../../../constants';
 import Tooltip from '../../../components/Tooltip';
 import FabricTypeGallery from './FabricTypeGallery';
-import { map } from 'lodash'
+import { map } from 'lodash';
 import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 import Picker from '../../../components/Picker';
@@ -20,8 +26,6 @@ FabricType.defaultProps = {
 	setFabricType: null,
 };
 
-
-
 function FabricType(props) {
 	const { fabricType, setFabricType } = props;
 	const { t } = useTranslation();
@@ -32,11 +36,11 @@ function FabricType(props) {
 			return { name: style, active: false };
 		})
 	);
-	const onStyleClick = function(activeIndex) {
+	const onStyleClick = function (activeIndex) {
 		let newStatus = fabricTypes.map((style, index) => {
 			return { ...style, active: activeIndex === index };
 		});
-	
+
 		if (newStatus) {
 			setStyles(newStatus);
 		}
@@ -47,8 +51,7 @@ function FabricType(props) {
 		if (updatedFabricType) {
 			setFabricType(updatedFabricType);
 		}
-
-	}
+	};
 
 	if (!fabricType) return <Fragment />;
 	return (

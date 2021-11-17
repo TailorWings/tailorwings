@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router';
 import { setOrderDetail, setPatterns } from '../../app/ReduxSlices/commonSlice';
@@ -122,24 +122,6 @@ function FabricPage() {
 		}
 	}, [fabricType, renderPatterns]);
 	/*------------------------------*/
-	// useEffect(() => {
-	// handleCollectionStatus(0);
-	/*------------------------------*/
-	// let newRenderPatterns = patterns?.filter((pattern) =>
-	// 	pattern?.idFabricType?.includes(fabricType?.find((type) => type?.active)?.id)
-	// );
-	// if (newRenderPatterns) {
-	// 	setRenderPatterns(null);
-	// 	setTimeout(() => {
-	// 		setRenderPatterns(
-	// 			newRenderPatterns.map((pattern) => {
-	// 				return { ...pattern, active: false };
-	// 			})
-	// 		);
-	// 	}, 500);
-	// }
-	// }, [patterns, fabricType]);
-	/*------------------------------*/
 	useEffect(() => {
 		let currentFabricType = fabricType.find((type) => type.active);
 		if (orderDetail.designStyle && currentFabricType) {
@@ -186,26 +168,17 @@ function FabricPage() {
 		);
 		if (newRenderPatterns) {
 			setRenderPatterns(null);
-			setTimeout(() => {
-				setRenderPatterns(
-					newRenderPatterns.map((pattern) => {
-						return { ...pattern, active: false };
-					})
-				);
-			}, 500);
+			setRenderPatterns(
+				newRenderPatterns.map((pattern) => {
+					return { ...pattern, active: false };
+				})
+			);
 		}
 		/*------------------------------*/
 		setFabricType(thisFabricType);
-		// let widthScreen = window.innerWidth;
-		// let patternSection = document.querySelector('.c-fabric-type .c-fabric-type__gallery');
-		// if (widthScreen < 769) {
-		// if (patternSection) {
-		// 	window.scrollTo({
-		// 		top: patternSection.offsetTop - 40,
-		// 		behavior: 'smooth',
-		// 	});
-		// }
-		// }
+		setTimeout(() => {
+			window.scrollTo({ top: locationScroll.current.offsetTop, behavior: 'smooth' });
+		}, 500);
 	}
 	/************_END_****************/
 	/*********************************
@@ -244,9 +217,7 @@ function FabricPage() {
 		}
 		if (newRenderPatterns) {
 			setRenderPatterns(null);
-			setTimeout(() => {
-				setRenderPatterns([...newRenderPatterns]);
-			}, 500);
+			setRenderPatterns([...newRenderPatterns]);
 		}
 	}
 	/************_END_****************/
@@ -291,6 +262,9 @@ function FabricPage() {
 			setAlertOpen(true);
 		}
 	}
+
+	const locationScroll = useRef(null);
+
 	/************_END_****************/
 
 	if (!orderDetail.designStyle || !orderDetail.designFiles) return <Redirect to="/requirement" />;
@@ -300,18 +274,19 @@ function FabricPage() {
 			{fabricBuyType == FABRIC_BUY_TYPES[0].id && (
 				<Fragment>
 					<FabricType fabricType={fabricType} setFabricType={onFabricTypeSet} />
-
-					{fabricType.find((type) => type.active) && (
-						<FabricPattern
-							collections={patternCollection}
-							patterns={renderPatterns}
-							onCollectionClick={handleCollectionStatus}
-							onPatternClick={handlePatternSelect}
-							onNextClick={handleConfirm}
-							estPrice={estPrice}
-							isConfirmDisabled={isConfirmDisabled}
-						/>
-					)}
+					<div ref={locationScroll}>
+						{fabricType.find((type) => type.active) && (
+							<FabricPattern
+								collections={patternCollection}
+								patterns={renderPatterns}
+								onCollectionClick={handleCollectionStatus}
+								onPatternClick={handlePatternSelect}
+								onNextClick={handleConfirm}
+								estPrice={estPrice}
+								isConfirmDisabled={isConfirmDisabled}
+							/>
+						)}
+					</div>
 
 					<div className="c-fabric-type__wrapper">
 						<div className="c-fabric-type__tooltip">

@@ -5,7 +5,7 @@
 	&__content-1 {
 		@include flex(center, center);
 		@include size(100%, auto);
-		margin-bottom: 5.6rem;
+		margin-bottom: 1.5rem;
 	}
 	&__title {
 		@include flex(center, center);
@@ -52,6 +52,9 @@
 		.c-fabric-pattern__item{
 			padding-bottom: calc(133% - 4px);
 		}
+		.swiper-wrapper{
+			max-height: 20vh;
+		}
 	}
 
 	@include xs {
@@ -59,7 +62,7 @@
 		&__content-1 {
 			@include flex(center, center, column);
 			@include size(100%, auto);
-			margin-bottom: 2.5rem;
+			margin-bottom: 1.5rem;
 		}
 		&__title {
 			@include flex(center, center);
@@ -107,6 +110,9 @@
 			}
 			.c-slider__content{
 				width: 85%;
+			}
+			.swiper-wrapper{
+				max-height: 17vh;
 			}
 		}
 	}
