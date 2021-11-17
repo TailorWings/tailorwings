@@ -249,9 +249,10 @@ function FabricPage() {
 		}
 		if (newRenderPatterns) {
 			setRenderPatterns(null);
-			setTimeout(() => {
-				setRenderPatterns([...newRenderPatterns]);
-			}, 500);
+			// setTimeout(() => {
+			// 	setRenderPatterns([...newRenderPatterns]);
+			// }, 500);
+			setRenderPatterns([...newRenderPatterns]);
 		}
 	}
 	/************_END_****************/
@@ -300,9 +301,8 @@ function FabricPage() {
 	function handleScroll(check) {
 		if (check === true) {
 			setTimeout(() => {
-				window.scrollTo({ top: locationScroll.current.offsetTop, behavior: 'smooth' });
-			}, 500)
-			
+				window.scrollTo({top: locationScroll.current.offsetTop, behavior: "smooth"});
+			}, 500);
 		}
 	}
 
