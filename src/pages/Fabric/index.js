@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router';
 import { setOrderDetail, setPatterns } from '../../app/ReduxSlices/commonSlice';
@@ -291,6 +291,17 @@ function FabricPage() {
 			setAlertOpen(true);
 		}
 	}
+
+	function handleScroll(check) {
+		// const {innerHeight: height} = window;
+		// console.log(height)
+		if (check === true) {
+			window.scrollTo({ top: locationScroll.current.offsetTop, behavior: 'smooth' });
+		}
+	}
+
+	const locationScroll = useRef(null);
+
 	/************_END_****************/
 
 	if (!orderDetail.designStyle || !orderDetail.designFiles) return <Redirect to="/requirement" />;
@@ -299,19 +310,24 @@ function FabricPage() {
 			<FabricOptions setType={setFabricBuyType} type={fabricBuyType} />
 			{fabricBuyType == FABRIC_BUY_TYPES[0].id && (
 				<Fragment>
-					<FabricType fabricType={fabricType} setFabricType={onFabricTypeSet} />
-
-					{fabricType.find((type) => type.active) && (
-						<FabricPattern
-							collections={patternCollection}
-							patterns={renderPatterns}
-							onCollectionClick={handleCollectionStatus}
-							onPatternClick={handlePatternSelect}
-							onNextClick={handleConfirm}
-							estPrice={estPrice}
-							isConfirmDisabled={isConfirmDisabled}
-						/>
-					)}
+					<FabricType
+						fabricType={fabricType}
+						setFabricType={onFabricTypeSet}
+						handleScroll={handleScroll}
+					/>
+					<div ref={locationScroll}>
+						{fabricType.find((type) => type.active) && (
+							<FabricPattern
+								collections={patternCollection}
+								patterns={renderPatterns}
+								onCollectionClick={handleCollectionStatus}
+								onPatternClick={handlePatternSelect}
+								onNextClick={handleConfirm}
+								estPrice={estPrice}
+								isConfirmDisabled={isConfirmDisabled}
+							/>
+						)}
+					</div>
 
 					<div className="c-fabric-type__wrapper">
 						<div className="c-fabric-type__tooltip">

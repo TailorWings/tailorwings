@@ -13,17 +13,19 @@ import Picker from '../../../components/Picker';
 FabricType.propTypes = {
 	fabricType: PropTypes.array,
 	setFabricType: PropTypes.func,
+	handleScroll: PropTypes.func,
 };
 
 FabricType.defaultProps = {
 	fabricType: null,
 	setFabricType: null,
+	handleScroll: null,
 };
 
 
 
 function FabricType(props) {
-	const { fabricType, setFabricType } = props;
+	const { fabricType, setFabricType, handleScroll } = props;
 	const { t } = useTranslation();
 
 	const fabricTypesList = map(fabricType, 'name');
@@ -47,6 +49,9 @@ function FabricType(props) {
 		if (updatedFabricType) {
 			setFabricType(updatedFabricType);
 		}
+
+		handleScroll(true);
+
 
 	}
 

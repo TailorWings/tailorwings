@@ -50,9 +50,9 @@
 		}
 	}
 	& .c-slider {
-		margin-bottom: 5.6rem;
+		padding: 2.5rem 0;
+		margin-bottom: 1.5rem;
 		& .swiper-wrapper {
-			min-height: 30rem;
 			& .swiper-slide {
 				overflow: hidden;
 				border-radius: 20px;
@@ -103,7 +103,8 @@
 			}
 		}
 		& .c-slider {
-			margin-bottom: 5rem;
+			padding: 2.5rem 0;
+			margin-bottom: 1.5rem;
 			&__content{
 				width: 85%;
 			}
