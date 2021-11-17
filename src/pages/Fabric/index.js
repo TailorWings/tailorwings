@@ -186,13 +186,18 @@ function FabricPage() {
 		);
 		if (newRenderPatterns) {
 			setRenderPatterns(null);
-			setTimeout(() => {
-				setRenderPatterns(
-					newRenderPatterns.map((pattern) => {
-						return { ...pattern, active: false };
-					})
-				);
-			}, 500);
+			// setTimeout(() => {
+			// 	setRenderPatterns(
+			// 		newRenderPatterns.map((pattern) => {
+			// 			return { ...pattern, active: false };
+			// 		})
+			// 	);
+			// }, 500);
+			setRenderPatterns(
+				newRenderPatterns.map((pattern) => {
+					return { ...pattern, active: false };
+				})
+			);
 		}
 		/*------------------------------*/
 		setFabricType(thisFabricType);
@@ -293,10 +298,11 @@ function FabricPage() {
 	}
 
 	function handleScroll(check) {
-		// const {innerHeight: height} = window;
-		// console.log(height)
 		if (check === true) {
-			window.scrollTo({ top: locationScroll.current.offsetTop, behavior: 'smooth' });
+			setTimeout(() => {
+				window.scrollTo({ top: locationScroll.current.offsetTop, behavior: 'smooth' });
+			}, 500)
+			
 		}
 	}
 

@@ -56,6 +56,7 @@ function FabricPattern(props) {
 		spaceBetween: screenWidth < 769 ? 5 : 16,
 		slidesPerColumnFill: 'row',
 		lazy: true,
+		rebuildOnUpdate: true,
 		// navigation: {
 		// 	nextEl: '.swiper-button-next',
 		// 	prevEl: '.swiper-button-prev',
