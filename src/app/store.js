@@ -37,7 +37,7 @@ const store = configureStore({
 		serializableCheck: false,
 	}),
 	reducer: rootReducer,
-	// preloadedState: persistedState,
+	preloadedState: persistedState,
 });
 // store.subscribe(throttle(() => {
 // 	saveState(store.getState());

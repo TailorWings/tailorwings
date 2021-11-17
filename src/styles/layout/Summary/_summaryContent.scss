@@ -24,6 +24,10 @@
 			@include size(100%, auto);
 		}
 	}
+	&--mobile-custom {
+		display: flex;
+		flex-direction: column-reverse;
+	}
 
 	@include xs {
 		&-note {
@@ -54,10 +58,6 @@
 		}
 		&__msmt {
 			margin-bottom: 3rem;
-		}
-		&--mobile-custom{
-			display: flex;
-			flex-direction: column-reverse;
 		}
 	}
 }

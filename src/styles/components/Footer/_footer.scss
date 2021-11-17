@@ -1,7 +1,7 @@
 .c-footer {
 	@include flex(flex-start, center, column);
-	@include size(100%, 23rem);
-	min-height: 23rem;
+	@include size(100%, 24rem);
+	min-height: 24rem;
 	padding: 3rem 0;
 	background-color: $primary-color;
 
@@ -46,12 +46,19 @@
 	@include xs {
 		overflow: hidden;
 		&__menu {
-			margin-right: -1.6rem;
+			margin-right: 0rem;
 			margin-bottom: 3rem;
+			display: flex;
+			justify-content: center;
+			flex-wrap: wrap;
 		}
 		&__item {
 			font-size: 1.4rem;
 			margin-right: 1.6rem;
+			&--VN{
+				margin-right: 0;
+				margin-top: 1rem;
+			}
 		}
 
 		&__social-media {

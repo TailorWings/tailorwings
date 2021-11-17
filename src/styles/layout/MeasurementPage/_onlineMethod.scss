@@ -53,6 +53,10 @@
 				// background-color: $subthird-color;
 				border-radius: 20px;
 				overflow: hidden;
+				img{
+					min-height: 540px;
+					background-color: #bdbdbd;
+				}
 			}
 			&--custom {
 				width: 53%;
@@ -81,7 +85,7 @@
 					width: 80%;
 				}
 				span {
-					color: #bdbdbd;
+					color: #e1e1e1;
 				}
 			}
 		}
@@ -134,6 +138,9 @@
 					@include size(100%, auto);
 					margin: 0 0;
 					background-color: $subthird-color;
+					img{
+						min-height: 51vh;
+					}
 				}
 				&--custom {
 					width: 100%;

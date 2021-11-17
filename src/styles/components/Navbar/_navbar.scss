@@ -35,16 +35,34 @@
 		max-height: 6rem;
 		height: 6rem;
 		&__logo {
-			@include size(18rem, 2rem);
+			@include size(15rem, 1.6rem);
 		}
 		&__account {
 			& > .c-account-dropdown {
-				@include size(4rem);
+				@include size(3rem);
 			}
+			.c-medium-button__text{
+				line-height: 100% !important;
+				font-size: 1.5rem !important;
+				min-width: 0;
+				
+			}
+			.c-medium-button{
+				padding: 0 1rem;
+				@include size(auto, 3rem);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				border-radius: 6px;
+			}
+		}
+		&__right-content{
+			gap: .5rem;
 		}
 		&__languages{
 			& > .c-languages-dropdown {
-				@include size(8rem, 4rem);
+				@include size(auto, 3rem);
+				padding: 0 1rem;
 			}
 		}
 

@@ -4,10 +4,11 @@ import facebookIcon from '../../assets/icons/facebook.svg';
 import messengerIcon from '../../assets/icons/messenger.svg';
 import youtubeIcon from '../../assets/icons/youtube.svg';
 import { useTranslation, withTranslation, Trans } from 'react-i18next';
-
+import classNames from 'classnames';
 
 function Footer() {
-	const { t } = useTranslation();
+	const { t, i18n } = useTranslation();
+	const isENG = i18n.language == 'en';
 	return (
 		<footer className="c-footer">
 			<ul className="c-footer__menu">
@@ -20,18 +21,8 @@ function Footer() {
 					{t('terms')}
 				</a>
 				<li className="c-footer__item">|</li>
-				<Link
-					to="/faq"
-					className="c-footer__item"
-				>
+				<Link to="/faq" className="c-footer__item">
 					{t('faqs')}
-				</Link>
-				<li className="c-footer__item">|</li>
-				<Link
-					to="/about"
-					className="c-footer__item"
-				>
-					{t('aboutUs')}
 				</Link>
 				<li className="c-footer__item">|</li>
 				<a
@@ -42,6 +33,10 @@ function Footer() {
 				>
 					{t('contact')}
 				</a>
+				{isENG ? <li className="c-footer__item">|</li> : <br />}
+				<Link to="/about" className={`c-footer__item ${isENG ? '' : 'c-footer__item--VN'}`}>
+					{t('aboutUs')}
+				</Link>
 			</ul>
 			<div className="c-footer__social-media">
 				<a href="https://www.facebook.com/TailorWings" target="_blank" rel="noreferrer">

@@ -49,6 +49,9 @@
 		& .c-tooltip {
 			height: 100%;
 		}
+		.c-fabric-pattern__item{
+			padding-bottom: calc(115% - 4px);
+		}
 	}
 
 	@include xs {

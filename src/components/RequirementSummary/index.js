@@ -43,13 +43,14 @@ function RequiremmentSummary(props) {
 								<img src={fabricPattern.image.normal} alt="fabric-pattern" />
 							</div>
 						)}
-						<SmallButton1 text={styleOfClotheName} isActive={true} />
 						{fabricType && (
 							<SmallButton1
 								text={FABRIC_TYPES.find((type) => type.id === fabricType)?.name || ''}
 								isActive={true}
 							/>
 						)}
+						<SmallButton1 text={styleOfClotheName} isActive={true} />
+						
 					</div>
 				</div>
 

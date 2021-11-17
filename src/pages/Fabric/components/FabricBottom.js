@@ -10,6 +10,7 @@ import { FABRIC_PATTERN_SUBTITLE, FABRIC_PATTERN_TITLE } from '../../../constant
 import { PhotoSwipe } from 'react-photoswipe-2';
 import MediumButton from '../../../components/Button/MediumButton';
 import { modifyPrice } from '../../../services/Functions/commonFunctions';
+import { useTranslation } from 'react-i18next';
 
 FabricBottom.propTypes = {
 	collections: PropTypes.array,
@@ -36,6 +37,10 @@ const PHOTO_SWIPE_SIZE = 500;
 
 function FabricBottom(props) {
 	const { onNextClick, estPrice, isConfirmDisabled, currentDesign } = props;
+
+	const { t, i18n } = useTranslation();
+	const isENG = i18n.language == 'en';
+
 	/*--------------*/
 	// if (!collections || !onCollectionClick || !onPatternClick) return <Fragment />;
 
@@ -48,7 +53,7 @@ function FabricBottom(props) {
 					) : (
 						<Fragment>
 							<p>{`~ ${modifyPrice(estPrice)} VND`}</p>
-							<p>{`Order's estimated price`}</p>
+							<p>{isENG ? `Order's estimated price`: 'Giá cả tham khảo'}</p>
 						</Fragment>
 					)}
 				</div>

@@ -17,14 +17,14 @@
     "requirement": {
         "title": "Bạn muốn đặt may gì?",
         "description":"Cung cấp ít nhất 03 hình ảnh của thiết kế bạn muốn đặt may. Hình ảnh càng chi tiết sản phẩm may sẽ càng đúng với mong muốn của bạn.",
-        "uploadImageDescription": "Tải lên hình ảnh tại đây",
+        "uploadImageDescription": "Tải lên hình ảnh",
         "browse": "tại đây",
         "supports": "Hỗ trợ"
     },
     "fabric": {
         "title": "Chọn vải cho thiết kế",
         "typeTitle": "Vải có sẵn của Tailor Wings",
-        "typeSubTitle": "Chúng tôi sẽ liên hệ để tư vấn và giúp bạn mua vải mà bạn yêu thích sau bước đặt hàng",
+        "typeSubTitle": "Chúng tôi sẽ liên hệ để giúp bạn mua vải sau bước đặt hàng",
         "toolTipTitle": "CHI TIẾT VẢI"
     },
     "measurement": {
