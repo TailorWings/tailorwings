@@ -25,7 +25,8 @@
         "title": "Choose a fabric for your order",
         "typeTitle": "Tailor Wings available fabrics",
         "typeSubTitle": "Here you can find all of our available fabrics (more will be added by time).",
-        "toolTipTitle": "FABRIC INFORMATION"
+        "toolTipTitle": "FABRIC INFORMATION",
+		"estimated": "Order's estimated price"
     },
     "measurement": {
         "title": "Your measurement",

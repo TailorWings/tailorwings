@@ -148,6 +148,7 @@ function SummaryContent(props) {
 	/*********************************
 	 *  Description:
 	 */
+
 	function handleMeasurementInfoRender() {
 		let renderComponent = <Fragment />;
 		switch (msmtMethod.method) {

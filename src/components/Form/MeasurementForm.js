@@ -63,12 +63,10 @@ function MeasurementForm(props) {
 	}, [measurements]);
 	/*--------------*/
 	function handleSubmit(values) {
-		console.log("handleSubmit values", values);
+		// console.log("handleSubmit values", values);
 		onSubmit(values, 'online');
 	}
 	/*--------------*/
-
-	console.log("form", measurements)
 	
 	if (!measurements) return <Fragment />;
 	return (

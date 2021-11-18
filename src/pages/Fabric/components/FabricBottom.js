@@ -53,7 +53,8 @@ function FabricBottom(props) {
 					) : (
 						<Fragment>
 							<p>{`~ ${modifyPrice(estPrice)} VND`}</p>
-							<p>{isENG ? `Order's estimated price`: 'Giá cả tham khảo'}</p>
+							{/* <p>{isENG ? `Order's estimated price`: 'Giá cả tham khảo'}</p> */}
+							<p>{t('fabric.estimated')}</p>
 						</Fragment>
 					)}
 				</div>

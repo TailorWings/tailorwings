@@ -133,7 +133,7 @@ function OnlineMethod(props) {
 					</div>
 					<div className="c-msmt-online-guideline-top__right">
 						<span className="c-msmt-online-guideline-top__right--des">
-							{isENG ? 'Get your lastet measurement' : 'Sử dụng số đo đã lưu'}
+							{t('measurement.viewFullList')}
 						</span>
 						{isENG ? (
 							<span className="c-msmt-online-guideline-top__right--mobile">
@@ -191,7 +191,7 @@ function OnlineMethod(props) {
 						{activeGuide
 							? `${isENG ? activeGuide.label : activeGuide.labelVN} (${
 									activeGuide.activeIndex + 1
-							  }/${measurements.length})`
+							}/${measurements.length})`
 							: `...`}
 					</span>
 					{/* <SelectInput
