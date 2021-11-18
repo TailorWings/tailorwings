@@ -127,13 +127,13 @@ function OnlineMethod(props) {
 				<div className="c-msmt-online-guideline-top">
 					<div className="c-msmt-online-guideline-top__button-view">
 						<span className="c-msmt-online-guideline-top__button-view__text">
-							{isENG ? 'View Full List' : 'Xem toàn bộ số đo'}
+							{t('measurement.viewFullList')}
 						</span>
 						<img src={IconList} alt="icon" className="c-msmt-online-guideline-top__icon" />
 					</div>
 					<div className="c-msmt-online-guideline-top__right">
 						<span className="c-msmt-online-guideline-top__right--des">
-							{t('measurement.viewFullList')}
+							{t('measurement.getYourLasted')}
 						</span>
 						{isENG ? (
 							<span className="c-msmt-online-guideline-top__right--mobile">
@@ -191,7 +191,7 @@ function OnlineMethod(props) {
 						{activeGuide
 							? `${isENG ? activeGuide.label : activeGuide.labelVN} (${
 									activeGuide.activeIndex + 1
-							}/${measurements.length})`
+							  }/${measurements.length})`
 							: `...`}
 					</span>
 					{/* <SelectInput
