@@ -39,6 +39,8 @@ import ShippingForm from '../../../components/Form/ShippingForm';
 import Accordion from '../../../components/Accordion';
 import PaymentInfo from '../../../components/PaymentInfo';
 
+import { removeWhiteSpace } from '../../../services/Functions/commonFunctions';
+
 SummaryContent.propTypes = {
 	msmtMethod: PropTypes.object,
 };
@@ -112,7 +114,7 @@ function SummaryContent(props) {
 					modifiedOnlineMsmt = onlineMsmtTitle.msmts.map((msmt) => {
 						return {
 							...msmt,
-							value: orderDetail.msmt[msmt.id],
+							value: orderDetail.msmt[removeWhiteSpace(msmt.label)],
 						};
 					});
 				} else {

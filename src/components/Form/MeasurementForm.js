@@ -63,7 +63,7 @@ function MeasurementForm(props) {
 	}, [measurements]);
 	/*--------------*/
 	function handleSubmit(values) {
-		// console.log("handleSubmit values", values);
+		console.log("handleSubmit values", values);
 		onSubmit(values, 'online');
 	}
 	/*--------------*/
