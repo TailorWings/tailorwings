@@ -431,8 +431,8 @@ export const MEASUREMENTS_STYLES = {
 		labelVN: 'Bắp Đùi',
 		guideVN: thighVN,
 	},
-	'topdresslength': {
-		id: 'topdresslength',
+	'shirt/dresslength': {
+		id: 'shirt/dresslength',
 		label: 'shirt/ dress length',
 		guide: topDressLength,
 		labelVN: 'Dài Áo/ Đầm',
@@ -461,7 +461,7 @@ export const ONLINE_MEASUREMENTS = [
 			MEASUREMENTS_STYLES['shouldertowaistback'],
 			MEASUREMENTS_STYLES['hip'],
 			MEASUREMENTS_STYLES['crothdepth'],
-			MEASUREMENTS_STYLES['topdresslength'],
+			MEASUREMENTS_STYLES['shirt/dresslength'],
 			MEASUREMENTS_STYLES['thigh'],
 			MEASUREMENTS_STYLES['highhip'],
 		],
@@ -478,7 +478,7 @@ export const ONLINE_MEASUREMENTS = [
 			MEASUREMENTS_STYLES['shouldertowaistfront'],
 			MEASUREMENTS_STYLES['shouldertowaistback'],
 			MEASUREMENTS_STYLES['hip'],
-			MEASUREMENTS_STYLES['topdresslength'],
+			MEASUREMENTS_STYLES['shirt/dresslength'],
 			MEASUREMENTS_STYLES['highhip'],
 		],
 	},
@@ -516,7 +516,7 @@ export const ONLINE_MEASUREMENTS = [
 			MEASUREMENTS_STYLES['shouldertowaistfront'],
 			MEASUREMENTS_STYLES['shouldertowaistback'],
 			MEASUREMENTS_STYLES['hip'],
-			MEASUREMENTS_STYLES['topdresslength'],
+			MEASUREMENTS_STYLES['shirt/dresslength'],
 		],
 	},
 	{
@@ -531,7 +531,7 @@ export const ONLINE_MEASUREMENTS = [
 			MEASUREMENTS_STYLES['shouldertowaistfront'],
 			MEASUREMENTS_STYLES['shouldertowaistback'],
 			MEASUREMENTS_STYLES['hip'],
-			MEASUREMENTS_STYLES['topdresslength'],
+			MEASUREMENTS_STYLES['shirt/dresslength'],
 		],
 	},
 ];
