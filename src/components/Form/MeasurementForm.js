@@ -36,11 +36,11 @@ function MeasurementForm(props) {
 	const { t, i18n } = useTranslation();
 	const isENG = i18n.language == 'en';
 	const msmtDefaultValue = Object.fromEntries(
-		measurements.map((msmt) => [removeWhiteSpace(msmt.label), msmt.value])
+		measurements.map((msmt) => [msmt.id, msmt.value])
 	);
 	const schemaValidateShape = Object.fromEntries(
 		measurements.map((msmt) => [
-			removeWhiteSpace(msmt.label),
+			msmt.id,
 			yup
 				.number('Vui lòng nhập số')
 				.max(999)
@@ -57,7 +57,7 @@ function MeasurementForm(props) {
 	});
 	useEffect(() => {
 		measurements.forEach((msmt, index) => {
-			form.setValue(removeWhiteSpace(msmt.label), msmt.value);
+			form.setValue(msmt.id, msmt.value);
 		})
 		
 	}, [measurements]);
@@ -109,7 +109,7 @@ function MeasurementForm(props) {
 								/>
 							) : (
 								<InputField
-									name={removeWhiteSpace(measurement.label)}
+									name={measurement.id}
 									label={isENG ? measurement.label : measurement.labelVN }
 									// placeHolder="(cm)"
 									suffix="(cm)"

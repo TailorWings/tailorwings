@@ -127,7 +127,7 @@ function MeasurementContent(props) {
 	 *  Description: handle form submit
 	 */
 	function handleOnlineConfirm(value) {
-		// console.log("handleOnlineConfirm value = ", value)
+		console.log("handleOnlineConfirm value = ", value)
 		/*--------------*/
 		const action_setOrderDetail = setOrderDetail({ ...orderDetail, msmt: { ...value } });
 		dispatch(action_setOrderDetail);
