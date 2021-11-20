@@ -4,6 +4,7 @@ import { NavLink, Redirect, Route, Switch, useRouteMatch } from 'react-router-do
 import CustomerManagement from './CustomerManagement';
 import OrderManagement from './OrderManagement';
 import PatternManagement from './PatternManagement';
+import TailorManagement from './TailorManagement';
 
 AdminLayout.propTypes = {
 	orders: PropTypes.object,
@@ -13,7 +14,7 @@ AdminLayout.defaultProps = {
 	orders: null,
 };
 
-const TABS = ['orders', 'customers', 'patterns'];
+const TABS = ['orders', 'customers', 'patterns', 'tailors'];
 
 function AdminLayout(props) {
 	const { orders } = props;
@@ -95,7 +96,8 @@ function AdminLayout(props) {
 						<Route path={`${url}/orders`} component={() => <OrderManagement orders={orders} />} />
 						<Route path={`${url}/customers`} component={() => <CustomerManagement />} />
 						<Route path={`${url}/patterns`} component={() => <PatternManagement />} />
-						<Redirect from={`${url}`} to={`${url}/orders`}/>
+						<Route path={`${url}/tailors`} component={() => <TailorManagement />} />
+						<Redirect from={`${url}`} to={`${url}/orders`} />
 					</Switch>
 				</div>
 			</div>

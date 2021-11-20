@@ -1,0 +1,67 @@
+.c-admin-tailor-add{
+    width: 80%;
+    margin: 0 auto;
+    &__avatar{
+        .c-multiple-file-upload__wrapper{
+            margin: 0 auto;
+        }
+    }
+    &__title{
+        font-size: 2rem;
+    }
+    &__input{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        &--item{
+            display: flex;
+            flex-direction: column;
+            width: calc(50% - 1rem);
+            margin-top: 1rem;
+            input{
+                outline: none;
+                border: 1px solid $primary-color;
+                border-radius: 12px;
+                font-size: 1.6rem;
+                padding: 1rem;
+                margin-top: 0.5rem;
+            }
+            &:nth-last-child(1){
+                width: 100%;
+            }
+        }
+    }
+    &__speciality{
+        margin-top: 1rem;
+        &--list{
+            display: flex;
+            margin-top: .5rem;
+        }
+        &--item{
+            margin-right: 2rem;
+            label{
+                font-size: 2rem;
+                margin-left: 0.3rem;
+            }
+            input{
+                font-size: 2rem;
+                &:checked::before{
+                    background-color: $primary-color;
+                }
+            }
+        }
+    }
+    &__button{
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 1rem;
+        &--item {
+            background-color: $primary-color;
+            font-size: 2rem;
+            color: white;
+            padding: .5rem 4rem;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+    }
+}
