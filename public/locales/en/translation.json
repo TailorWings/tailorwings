@@ -106,7 +106,13 @@
         "orderDate": "Order date",
         "tailorOffer": "Tailor Offer", 
         "tailoring": "Tailoring",
-        "history": "History"
+        "history": "History",
+        "price":"Price",
+        "shippingFee":"Shipping fee",
+        "total":"Total",
+        "paymentMethod":"Payment method",
+        "estimatedDeliveryDate": "Estimated Delivery Date",
+        "days":"days"
     }
     
 

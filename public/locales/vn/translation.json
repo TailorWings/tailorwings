@@ -106,7 +106,13 @@
 		"orderDate": "Ngày đặt may",
 		"tailorOffer": "Báo giá của thợ may",
 		"tailoring": "Đơn đang may",
-		"history": "Lịch sử"
+		"history": "Lịch sử",
+		"price":"Tạm Tính",
+        "shippingFee":"Phí Ship",
+        "total":"Tổng Tiền",
+        "paymentMethod":"Phương Thức Thanh Toán",
+        "estimatedDeliveryDate": "Ngày Giao Hàng Dự Kiến",
+        "days":"ngày"
 	},
 	"yourOrder": "Đơn hàng"
 }
