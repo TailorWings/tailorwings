@@ -1,0 +1,105 @@
+.admin-often-used-mgmt {
+	width: 100%;
+	@include flex(center, center, column);
+	& > h2 {
+		@include font(fontBold, 24px);
+		margin-bottom: 20px;
+	}
+	& > h3 {
+		margin-bottom: 2rem;
+	}
+	&__table {
+		width: 100%;
+        & th {
+            @include font(fontBold, 14px);
+        }
+		& td {
+			@include font(fontMedium, 14px);
+			& .image-wraper {
+				width: 100px;
+				height: 100px;
+				overflow: hidden;
+				position: relative;
+				margin: 0 auto;
+				display: block;
+				& > img {
+					@include size(100%);
+					object-fit: cover;
+				}
+			}
+
+			& .-delete-btn {
+				& > .c-medium-button {
+					width: fit-content;
+                    padding: 5px 8px;
+					& p {
+						font-size: 14px !important;
+					}
+				}
+			}
+		}
+	}
+	&__picker {
+		width: 80%;
+		margin-bottom: 3rem;
+	}
+	&__image-list {
+		@include flex(center, center, row, wrap);
+		gap: 2rem;
+		width: 80%;
+		&__image-content{
+			width: 200px;
+			height: 330px;
+			padding: 1rem;
+			background-color: white;
+			box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 10px 0px;
+			border-radius: 1rem;
+		}
+		img {
+			width: 200px;
+			height: 250px;
+			margin-bottom: 1rem;
+			object-fit: contain;
+		}
+	}
+	& .-group-btn {
+		@include flex(center, center, row);
+		gap: 1rem;
+	}
+	& .-upload-btn {
+		& > .c-medium-button {
+			width: 90px;
+			padding: 5px 8px;
+			& p {
+				font-size: 12px !important;
+				min-width: 1rem;
+			}
+		}
+	}
+	& .-cancel-btn {
+		& > .c-medium-button {
+			width: 90px;
+			padding: 5px 8px;
+			& p {
+				font-size: 12px !important;
+				min-width: 1rem;
+			}
+		}
+	}
+	&__add-more-images {
+		@include flex(center, center, column);
+		width: 200px;
+		height: 330px;
+		// padding: 1rem;
+		background-color: white;
+		// box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 10px 0px;
+		border-radius: 1rem;
+		// border: 2px solid #f68729;
+		cursor: pointer;
+		& .-add-more-btn {
+			& > div {
+				border: none;
+			}
+		}
+	}
+}
