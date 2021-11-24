@@ -13,25 +13,23 @@ function TailorFindingOrders() {
 		});
 	}, []);
 
-	if (findingOrders) {
-		const sortFindingOrders = Object.values(findingOrders) || [];
-		sortFindingOrders.sort(function (x, y) {
-			return y.timestamp - x.timestamp;
-		});
+	const findingOrdersSort = [...findingOrders]
+	findingOrdersSort.sort(function (x, y) {
+		return y.timestamp - x.timestamp;
+	});
 
-		/*------------------------------*/
-		return (
-			<div className="tailor-finding-orders" style={{ width: '100%' }}>
-				{sortFindingOrders.map((order) => {
-					return (
-						<div key={order.id}>
-							<TailorOrder order={order} tailor={tailor} type="f" />
-						</div>
-					);
-				})}
-			</div>
-		);
-	}
+	/*------------------------------*/
+	return (
+		<div className="tailor-finding-orders" style={{ width: '100%' }}>
+			{findingOrdersSort.map((order) => {
+				return (
+					<div key={order.id}>
+						<TailorOrder order={order} tailor={tailor} type="f" />
+					</div>
+				);
+			})}
+		</div>
+	);
 }
 
 export default TailorFindingOrders;
