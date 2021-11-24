@@ -47,24 +47,31 @@ function TailorTailoringOrders() {
 				});
 		}
 	}
-	/*------------------------------*/
-	return (
-		<div className="tailor-finding-orders" style={{ width: '100%' }}>
-			{tailoringOrders?.map((order) => {
-				return (
-					<div key={order.id}>
-						<TailorOrder order={order} onTailorDone={onTailorDone} type="t" />
-					</div>
-				);
-			})}
-			<MaterialAlert
-				open={alertOpen}
-				setOpen={setAlertOpen}
-				content={alertContent?.content || ''}
-				serverity={alertContent?.serverity || 'success'}
-			/>
-		</div>
-	);
+
+	if (tailoringOrders) {
+		const sortTailoringOrders = Object.values(tailoringOrders) || [];
+		sortTailoringOrders.sort(function (x, y) {
+			return y.timestamp - x.timestamp;
+		});
+		/*------------------------------*/
+		return (
+			<div className="tailor-finding-orders" style={{ width: '100%' }}>
+				{sortTailoringOrders?.map((order) => {
+					return (
+						<div key={order.id}>
+							<TailorOrder order={order} onTailorDone={onTailorDone} type="t" />
+						</div>
+					);
+				})}
+				<MaterialAlert
+					open={alertOpen}
+					setOpen={setAlertOpen}
+					content={alertContent?.content || ''}
+					serverity={alertContent?.serverity || 'success'}
+				/>
+			</div>
+		);
+	}
 }
 
 export default TailorTailoringOrders;

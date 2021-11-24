@@ -21,18 +21,24 @@ function TailorTailoringOrders() {
 			setFinishOrders(finishList);
 		}
 	}, [pickedOrders]);
-	/*------------------------------*/
-	return (
-		<div className="tailor-finding-orders" style={{ width: '100%' }}>
-			{finishOrders?.map((order) => {
-				return (
-					<div key={order.id}>
-						<TailorOrder order={order} type="d" />
-					</div>
-				);
-			})}
-		</div>
-	);
+	if (finishOrders) {
+		const sortFinishOrders = Object.values(finishOrders) || [];
+		sortFinishOrders.sort(function (x, y) {
+			return y.timestamp - x.timestamp;
+		});
+		/*------------------------------*/
+		return (
+			<div className="tailor-finding-orders" style={{ width: '100%' }}>
+				{sortFinishOrders?.map((order) => {
+					return (
+						<div key={order.id}>
+							<TailorOrder order={order} type="d" />
+						</div>
+					);
+				})}
+			</div>
+		);
+	}
 }
 
 export default TailorTailoringOrders;
