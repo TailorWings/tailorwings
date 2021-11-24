@@ -25,6 +25,7 @@ import { fetchCondition, setDocument, updateDocument } from '../../../services/A
 import TailorOffer from './TailorOffer';
 import { useTranslation, withTranslation, Trans } from 'react-i18next';
 import { modifyPrice } from '../../../services/Functions/commonFunctions';
+import emailjs from 'emailjs-com';
 
 OrderDetail.propTypes = {
 	orderList: PropTypes.array,
@@ -141,7 +142,7 @@ function OrderDetail(props) {
 		async function fetchOffers() {
 			try {
 				let tailorOrder = await fetchCondition('tailorOrders', 'orderID', '==', orderID.id);
-				console.log(`tailorOrder`, tailorOrder)
+				console.log(`tailorOrder`, tailorOrder);
 				if (tailorOrder?.length === 1) {
 					setOffers(tailorOrder[0]?.offers || []);
 					setTailorOrder(tailorOrder[0]);
@@ -180,7 +181,6 @@ function OrderDetail(props) {
 			return { ...offer, picked: index === pickedIndex };
 		});
 
-
 		if (updatedOffers.length > 0) {
 			setOffers(updatedOffers);
 		}
@@ -200,7 +200,8 @@ function OrderDetail(props) {
 	/*********************************
 	 *  Description: handle order confirm
 	 */
-	function handleOrderConfirm() {
+	
+	async function handleOrderConfirm() {
 		// let offerVerify = !!currentOrderDetail.offers.find((offer) => offer.picked);
 		let offerVerify = !!offers?.find((offer) => offer.picked);
 		if (offerVerify && shippingInfo[0].value && shippingInfo[1].value && shippingInfo[2].value) {
@@ -242,6 +243,8 @@ function OrderDetail(props) {
 						setLoading(false);
 					});
 			}
+			// let emailTailorPicked = await fetchCondition('tailors', 'id', '==', pickedOffer.tailor.id);
+			// console.log(emailTailorPicked)
 			/*------------------------------*/
 		} else {
 			setAlertOpen(true);
@@ -284,7 +287,6 @@ function OrderDetail(props) {
 		return <Redirect to="/account" />;
 	}
 	const { designFiles, designStyle, fabric, msmt, notes, status } = currentOrderDetail;
-	console.log('offers :>> ', offers);
 	return (
 		<div className="c-order-detail">
 			<div className="c-order-detail__header">
@@ -308,28 +310,32 @@ function OrderDetail(props) {
 					onTailorPick={status === 'finding' ? onOfferPicked : null}
 				/>
 			</div>
-			{pickedOffer && <div className="c-order-detail-bill">
-				<div className="c-order-detail-bill__item">
-					<span>Price</span>
-					<span>{modifyPrice(pickedOffer.price)} vnd</span>
+			{pickedOffer && (
+				<div className="c-order-detail-bill">
+					<div className="c-order-detail-bill__item">
+						<span>{t('account.price')}</span>
+						<span>{modifyPrice(pickedOffer.price)} vnd</span>
+					</div>
+					<div className="c-order-detail-bill__item">
+						<span>{t('account.shippingFee')}</span>
+						<span>{modifyPrice(20000)} vnd</span>
+					</div>
+					<div className="c-order-detail-bill__item">
+						<span>{t('account.total')}</span>
+						<span>{modifyPrice(pickedOffer.price + 20000)} vnd</span>
+					</div>
+					<div className="c-order-detail-bill__item">
+						<span>{t('account.paymentMethod')}</span>
+						<span>COD</span>
+					</div>
+					<div className="c-order-detail-bill__item">
+						<span>{t('account.estimatedDeliveryDate')}</span>
+						<span>
+							{Number(pickedOffer.duration) + 3} {t('account.days')}
+						</span>
+					</div>
 				</div>
-				<div className="c-order-detail-bill__item">
-					<span>Shipping fee</span>
-					<span>{modifyPrice(20000)} vnd</span>
-				</div>
-				<div className="c-order-detail-bill__item">
-					<span>Total</span>
-					<span>{modifyPrice(pickedOffer.price + 20000)} vnd</span>
-				</div>
-				<div className="c-order-detail-bill__item">
-					<span>Payment method</span>
-					<span>COD</span>
-				</div>
-				<div className="c-order-detail-bill__item">
-					<span>Estimated Delivery Date</span>
-					<span>{Number(pickedOffer.duration) + 3} days</span>
-				</div>
-			</div>}
+			)}
 			<div className="c-order-detail-summary">
 				<Accordion title={t('account.summary')} isActive={false}>
 					<div className="c-order-detail-summary__rqmt">

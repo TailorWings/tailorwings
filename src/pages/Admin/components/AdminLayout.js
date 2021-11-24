@@ -5,6 +5,7 @@ import CustomerManagement from './CustomerManagement';
 import OrderManagement from './OrderManagement';
 import PatternManagement from './PatternManagement';
 import OftenUsedManagement from './OftenUsedManagement';
+import TailorManagement from './TailorManagement';
 
 AdminLayout.propTypes = {
 	orders: PropTypes.object,
@@ -14,7 +15,7 @@ AdminLayout.defaultProps = {
 	orders: null,
 };
 
-const TABS = ['orders', 'customers', 'patterns', 'often used'];
+const TABS = ['orders', 'customers', 'patterns', 'often used', 'tailors'];
 
 function AdminLayout(props) {
 	const { orders } = props;
@@ -97,7 +98,8 @@ function AdminLayout(props) {
 						<Route path={`${url}/customers`} component={() => <CustomerManagement />} />
 						<Route path={`${url}/patterns`} component={() => <PatternManagement />} />
 						<Route path={`${url}/often-used`} component={() => <OftenUsedManagement />} />
-						<Redirect from={`${url}`} to={`${url}/orders`}/>
+						<Route path={`${url}/tailors`} component={() => <TailorManagement />} />
+						<Redirect from={`${url}`} to={`${url}/orders`} />
 					</Switch>
 				</div>
 			</div>
