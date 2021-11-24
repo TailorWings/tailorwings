@@ -200,11 +200,12 @@ function OrderDetail(props) {
 	/*********************************
 	 *  Description: handle order confirm
 	 */
+	
 	async function handleOrderConfirm() {
 		// let offerVerify = !!currentOrderDetail.offers.find((offer) => offer.picked);
 		let offerVerify = !!offers?.find((offer) => offer.picked);
 		if (offerVerify && shippingInfo[0].value && shippingInfo[1].value && shippingInfo[2].value) {
-			// setLoading(true);
+			setLoading(true);
 			/*------------------------------*/
 			let updatedCustomer = {
 				...currentCustomer,
@@ -222,46 +223,28 @@ function OrderDetail(props) {
 					}
 				}),
 			};
-			// /*------------------------------*/
-			// if (updatedCustomer) {
-			// 	setDocument('customers', updatedCustomer, updatedCustomer.id);
-			// }
-			// /*------------------------------*/
-			// let updatedTailorOrder = tailorOrder && JSON.parse(JSON.stringify(tailorOrder));
-			// if (updatedTailorOrder) {
-			// 	updatedTailorOrder.pickedTailor = offers?.find((offer) => offer.picked)?.tailor?.id || null;
-			// 	updatedTailorOrder.status = 'tailoring';
-			// 	updatedTailorOrder.offers = [...offers];
+			/*------------------------------*/
+			if (updatedCustomer) {
+				setDocument('customers', updatedCustomer, updatedCustomer.id);
+			}
+			/*------------------------------*/
+			let updatedTailorOrder = tailorOrder && JSON.parse(JSON.stringify(tailorOrder));
+			if (updatedTailorOrder) {
+				updatedTailorOrder.pickedTailor = offers?.find((offer) => offer.picked)?.tailor?.id || null;
+				updatedTailorOrder.status = 'tailoring';
+				updatedTailorOrder.offers = [...offers];
 
-			// 	setDocument('tailorOrders', updatedTailorOrder, updatedTailorOrder.id)
-			// 		.then(() => {
-			// 			setLoading(false);
-			// 			onPopupStatusChange && onPopupStatusChange(true);
-			// 		})
-			// 		.catch((error) => {
-			// 			setLoading(false);
-			// 		});
-			// }
-
-			let emailTailorPicked = await fetchCondition('tailors', 'id', '==', pickedOffer.tailor.id);
-			console.log(emailTailorPicked)
-
-			// emailjs
-			// 	.send(
-			// 		'service_gmail',
-			// 		'template_new_order',
-			// 		{ cusName: currentCustomer?.displayName || '', email: 'tranphuongnam21.06.99@gmail.com' },
-			// 		'user_v3OrYsKqdHUnLHpgB4CgD'
-			// 	)
-			// 	.then(
-			// 		(result) => {
-			// 			console.log(result.text);
-			// 		},
-			// 		(error) => {
-			// 			console.log(error.text);
-			// 		}
-			// 	);
-
+				setDocument('tailorOrders', updatedTailorOrder, updatedTailorOrder.id)
+					.then(() => {
+						setLoading(false);
+						onPopupStatusChange && onPopupStatusChange(true);
+					})
+					.catch((error) => {
+						setLoading(false);
+					});
+			}
+			// let emailTailorPicked = await fetchCondition('tailors', 'id', '==', pickedOffer.tailor.id);
+			// console.log(emailTailorPicked)
 			/*------------------------------*/
 		} else {
 			setAlertOpen(true);
