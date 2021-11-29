@@ -80,7 +80,12 @@ function FabricPattern(props) {
 		closeOnScroll: false,
 		isClickableElement: function (el) {
 			let clickedIndex = startIndex;
-			if (clickedIndex && clickedIndex > -1 && el.tagName === "BUTTON" && !el.className.includes("pswp__button")) {
+			if (
+				clickedIndex!= null &&
+				clickedIndex > -1 &&
+				el.tagName === 'BUTTON' &&
+				!el.className.includes('pswp__button')
+			) {
 				let updatedPattern = patterns.map((pattern, index) => {
 					return { ...pattern, active: index === Number(clickedIndex) };
 				});
@@ -105,7 +110,9 @@ function FabricPattern(props) {
 					// src: pattern.image.normal,
 					w: PHOTO_SWIPE_SIZE,
 					h: PHOTO_SWIPE_SIZE,
-					html: `<div className="c-fabric-pattern__select-btn"><img src=${pattern.image.normal} /><button id=${index}>${t('select')}</button></div>`,
+					html: `<div className="c-fabric-pattern__select-btn"><img src=${
+						pattern.image.normal
+					} /><button id=${index}>${t('select')}</button></div>`,
 				};
 			});
 			if (photos) {
@@ -129,7 +136,9 @@ function FabricPattern(props) {
 					return {
 						w: PHOTO_SWIPE_SIZE,
 						h: PHOTO_SWIPE_SIZE,
-						html: `<div className="c-fabric-pattern__select-btn"><img src=${img} /><button className="select-btn" id=${index}>${t('select')}</button></div>`,
+						html: `<div className="c-fabric-pattern__select-btn"><img src=${img} /><button className="select-btn" id=${index}>${t(
+							'select'
+						)}</button></div>`,
 					};
 				})
 			);
@@ -139,8 +148,9 @@ function FabricPattern(props) {
 					// src: pattern.image.normal,
 					w: PHOTO_SWIPE_SIZE,
 					h: PHOTO_SWIPE_SIZE,
-					html: `<div className="c-fabric-pattern__select-btn"><img src=${selectedPattern.image.normal
-						} /><button className="select-btn" id=${0}>${t('select')}</button></div>`,
+					html: `<div className="c-fabric-pattern__select-btn"><img src=${
+						selectedPattern.image.normal
+					} /><button className="select-btn" id=${0}>${t('select')}</button></div>`,
 				},
 			]);
 		}
@@ -169,8 +179,9 @@ function FabricPattern(props) {
 								return (
 									<div key={index}>
 										<li
-											className={`c-fabric-pattern__item ${pattern.active ? '--selected' : ''} ${!pattern.image ? '--no-image' : ''
-												}`}
+											className={`c-fabric-pattern__item ${pattern.active ? '--selected' : ''} ${
+												!pattern.image ? '--no-image' : ''
+											}`}
 											onClick={() => onPatternSelect(index)}
 										>
 											{pattern.image ? <img src={pattern.image.normal} alt="icon" /> : <Fragment />}
