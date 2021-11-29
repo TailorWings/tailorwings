@@ -1,0 +1,32 @@
+.c-admin-users{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+    &__input{
+        input{
+            font-size: 1.6rem;
+            padding: .5rem 1rem;
+            border-radius: 12px;
+            border: 1px solid $primary-color;
+            outline: $primary-color;
+            width: 500px;
+        }
+    }
+    &__button{
+        margin-left: 1rem;
+        background-color: $primary-color;
+        font-size: 1.6rem;
+        padding: .5rem 1rem;
+        border-radius: 12px;
+        color: white;
+        cursor: pointer;
+    }
+    &__notification{
+        width: 100%;
+        text-align: center;
+        margin-top: 1rem;
+        font-size: 1.4rem;
+    }
+}
