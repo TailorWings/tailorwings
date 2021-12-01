@@ -302,7 +302,7 @@ function TailorOrderDetail() {
 						rqmt.notes.map((note, i) => {
 							return (
 								<div key={i} className="-note">
-									<TailorSquareTag title={`Ghi chú ${i + 1}`} value={note} isActive />
+									<TailorSquareTag title={`Ghi chú ${i + 1}`} value={note} isActive titleVN={rqmt.notesVN && rqmt.notesVN[i]}/>
 								</div>
 							);
 						})

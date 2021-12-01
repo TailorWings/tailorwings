@@ -16,7 +16,7 @@ RqmtNoteForm.defaultProps = {
 };
 
 function RqmtNoteForm(props) {
-	const { notes, onNoteChange, placeHolder } = props;
+	const { notes, notesVN, onNoteChange, placeHolder } = props;
 	const { t, i18n } = useTranslation();
 	const isENG = i18n.language == 'en';
 
@@ -34,12 +34,15 @@ function RqmtNoteForm(props) {
 								placeHolder={placeHolder ? placeHolder[i18n.language][index] : null}
 							/>
 						) : (
+							<>
 							<TextInput
 								label={`${t('summary.note')} ${index + 1}`}
 								value={note}
 								// onChange={(e) => onNoteChange(e, index)}
 								disabled
 							/>
+							<div className="c-rqmt-note-form__translate">{notesVN && notesVN[index] ? `(${notesVN[index]})`: ""}</div> 
+							</>
 						)}
 					</div>
 				);

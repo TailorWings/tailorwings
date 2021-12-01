@@ -31,7 +31,7 @@ function RequiremmentSummary(props) {
 
 	if (!designStyle || !designFiles) return <Fragment />;
 	const styleOfClothe = getStyleOfClothe(designStyle);
-	const styleOfClotheName = isENG ? styleOfClothe.name : styleOfClothe.nameVN;
+	const styleOfClotheName = isENG ? styleOfClothe?.name : styleOfClothe?.nameVN;
 
 	return (
 		<div className="c-rqmt-sum">

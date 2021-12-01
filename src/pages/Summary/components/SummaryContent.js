@@ -16,6 +16,7 @@ import {
 	STANDARD_SIZES,
 	SHIPPING_INFO,
 } from '../../../constants';
+import fetch from 'node-fetch';
 import {
 	fetchAll,
 	fileUpload,
@@ -210,11 +211,24 @@ function SummaryContent(props) {
 	/*********************************
 	 *  Description: handle form confirm
 	 */
-	function onConfirm(phoneNumber) {
+	const onConfirm = async (phoneNumber) => {
 		updateDocument('customers', currentCustomer.id, 'shippingInfo', shippingInfo);
 		if (orderDetail) {
 			setIsConfirmLoading(true);
 			const { designStyle, fabric, msmt, stdSize } = orderDetail;
+			const notesVN = []
+			for (var i = 0; i< notes.length; i++) {
+				const note = notes[i];
+				var noteVN = "";
+				if(note) {
+					const response = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=vi&dt=t&q=${note}`);
+					const data = await response.json();
+					if(data && data[0] && data[0][0] && data[0][0][0]) {
+						noteVN = data[0][0][0];
+					}
+				}
+				notesVN.push(noteVN)
+			}
 			let orderDetailId = uuidv4();
 			let currentOrderDetail = {
 				id: orderDetailId,
@@ -238,6 +252,7 @@ function SummaryContent(props) {
 				msmt,
 				stdSize,
 				notes: [...notes],
+				notesVN: [...notesVN]
 			};
 			let uploadOrderDetail = currentCustomer.orders ? [...currentCustomer.orders] : [];
 			/*--------------*/
@@ -265,6 +280,7 @@ function SummaryContent(props) {
 							fabric,
 							msmt,
 							notes,
+							notesVN,
 							stdSize,
 							orderDate,
 						} = currentOrderDetail;
@@ -276,6 +292,7 @@ function SummaryContent(props) {
 								fabric,
 								msmt,
 								notes,
+								notesVN,
 								stdSize,
 							},
 							pickedTailor: null,

@@ -286,7 +286,7 @@ function OrderDetail(props) {
 	if (!currentOrderDetail) {
 		return <Redirect to="/account" />;
 	}
-	const { designFiles, designStyle, fabric, msmt, notes, status } = currentOrderDetail;
+	const { designFiles, designStyle, fabric, msmt, notes, notesVN, status } = currentOrderDetail;
 	return (
 		<div className="c-order-detail">
 			<div className="c-order-detail__header">
@@ -355,7 +355,7 @@ function OrderDetail(props) {
 					</div>
 					<div className="c-order-detail-summary__note">
 						<p className="c-order-detail-summary__note-title">{t('account.requirementNote')}</p>
-						<RqmtNoteForm notes={notes} />
+						<RqmtNoteForm notes={notes} notesVN={notesVN} />
 					</div>
 				</Accordion>
 			</div>
