@@ -54,6 +54,7 @@ function OnlineMethod(props) {
 		},
 	};
 	const [activeGuide, setActiveGuide] = useState(null);
+	const [isShowFullList, setIsShowFullList] = useState(null);
 
 	useEffect(() => {
 		if (measurements) {
@@ -125,24 +126,45 @@ function OnlineMethod(props) {
 		<div className="c-msmt-online">
 			<div className="c-msmt-online-guideline">
 				<div className="c-msmt-online-guideline-top">
-					<div className="c-msmt-online-guideline-top__button-view">
+					<div
+						className="c-msmt-online-guideline-top__button-view"
+						onClick={() => setIsShowFullList(true)}
+					>
 						<span className="c-msmt-online-guideline-top__button-view__text">
 							{t('measurement.viewFullList')}
 						</span>
 						<img src={IconList} alt="icon" className="c-msmt-online-guideline-top__icon" />
 					</div>
 					<div className="c-msmt-online-guideline-top__right">
-						<span className="c-msmt-online-guideline-top__right--des">
+						<span
+							className="c-msmt-online-guideline-top__right--des"
+							onClick={() => {
+								onGetLatestMsmt();
+								setIsShowFullList(true);
+							}}
+						>
 							{t('measurement.getYourLasted')}
 						</span>
 						{isENG ? (
-							<span className="c-msmt-online-guideline-top__right--mobile">
+							<span
+								className="c-msmt-online-guideline-top__right--mobile"
+								onClick={() => {
+									onGetLatestMsmt();
+									setIsShowFullList(true);
+								}}
+							>
 								Get your
 								<br />
 								lastet measurement
 							</span>
 						) : (
-							<span className="c-msmt-online-guideline-top__right--mobile">
+							<span
+								className="c-msmt-online-guideline-top__right--mobile"
+								onClick={() => {
+									onGetLatestMsmt();
+									setIsShowFullList(true);
+								}}
+							>
 								Sử dụng số đo đã lưu
 							</span>
 						)}
@@ -241,15 +263,19 @@ function OnlineMethod(props) {
 					</span>
 				)}
 			</div>
-			<div className="c-msmt-online-input">
-				<MeasurementForm
-					measurements={measurementStates}
-					onSubmit={onMeasurementConfirm}
-					onGetLatestMsmt={onGetLatestMsmt}
-					onActionBack={actionBack}
-					onActionNext={actionNext}
-				/>
-			</div>
+			{isShowFullList ? (
+				<div className="c-msmt-online-input">
+					<MeasurementForm
+						measurements={measurementStates}
+						onSubmit={onMeasurementConfirm}
+						onActionBack={actionBack}
+						onActionNext={actionNext}
+					/>
+				</div>
+			) : (
+				<Fragment />
+			)}
+
 			<ProcessAction onNextClick={onPageNextClick} backLink="/fabric" formID="msmt-form" />
 		</div>
 	);
