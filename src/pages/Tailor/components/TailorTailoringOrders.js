@@ -47,10 +47,12 @@ function TailorTailoringOrders() {
 				});
 		}
 	}
-	const sortTailoringOrders = [...tailoringOrders];
+
+	const sortTailoringOrders = [...(tailoringOrders || [])];
 	sortTailoringOrders.sort(function (x, y) {
 		return y.timestamp - x.timestamp;
 	});
+
 	/*------------------------------*/
 	return (
 		<div className="tailor-finding-orders" style={{ width: '100%' }}>

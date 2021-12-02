@@ -14,13 +14,14 @@ export const modifyPrice = (price) => {
 };
 
 export const estimatePriceCalc = (designPrice, fabricPrice, fabricLength) => {
-	return 1.2 * (designPrice + (fabricPrice * fabricLength)) + 60000;
+	// return 1.2 * (designPrice + (fabricPrice * fabricLength)) + 60000;
+	return designPrice + (fabricPrice * fabricLength);
 };
 
 export const finalPriceCalc = (wage, fabricPrice, fabricLength, isFabric) => {
 	if (isFabric) {
-		return 1.2 * ((wage + (fabricPrice * fabricLength)) + 60000);
+		return (wage + (fabricPrice * fabricLength)) + 240000;
 	} else {
-		return (1.2 * wage) + 160000;
+		return wage + 260000;
 	}
 };

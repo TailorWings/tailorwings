@@ -22,10 +22,11 @@ function TailorTailoringOrders() {
 		}
 	}, [pickedOrders]);
 
-	const sortFinishOrders = [...finishOrders];
+	const sortFinishOrders = [...(finishOrders || [])];
 	sortFinishOrders.sort(function (x, y) {
 		return y.timestamp - x.timestamp;
 	});
+
 	/*------------------------------*/
 	return (
 		<div className="tailor-finding-orders" style={{ width: '100%' }}>

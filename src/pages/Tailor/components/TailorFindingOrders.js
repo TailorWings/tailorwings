@@ -13,7 +13,7 @@ function TailorFindingOrders() {
 		});
 	}, []);
 
-	const findingOrdersSort = [...findingOrders]
+	const findingOrdersSort = [...(findingOrders || [])];
 	findingOrdersSort.sort(function (x, y) {
 		return y.timestamp - x.timestamp;
 	});

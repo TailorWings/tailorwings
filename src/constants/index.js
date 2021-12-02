@@ -63,27 +63,27 @@ export const STYLES_OF_CLOTHE = ['dress', 'shirts', 'pants', 'skirts', 'ao dai',
 export const STYLE_ESTIMATE_PRICE = [
 	{
 		id: 'dress',
-		estPrice: 300000,
+		estPrice: 400000,
 		fabricLength: 2,
 	},
 	{
 		id: 'shirts',
-		estPrice: 200000,
+		estPrice: 300000,
 		fabricLength: 1.5,
 	},
 	{
 		id: 'pants',
-		estPrice: 250000,
+		estPrice: 300000,
 		fabricLength: 1.5,
 	},
 	{
 		id: 'skirts',
-		estPrice: 200000,
+		estPrice: 250000,
 		fabricLength: 1.5,
 	},
 	{
 		id: 'ao dai',
-		estPrice: 700000,
+		estPrice: 800000,
 		fabricLength: 3.5,
 	},
 	{
@@ -165,7 +165,7 @@ export const FABRIC_TYPES = [
 		id: 'SIL',
 		name: 'Silk',
 		image: silk,
-		price: 240000,
+		price: 480000,
 		info: [
 			{
 				label: 'Fabric Types',
@@ -205,7 +205,7 @@ export const FABRIC_TYPES = [
 		id: 'CIF',
 		name: 'Chiffon',
 		image: chiffon,
-		price: 80000,
+		price: 100000,
 		info: [
 			{
 				label: 'Fabric Types',
@@ -225,7 +225,7 @@ export const FABRIC_TYPES = [
 		id: 'SAT',
 		name: 'Satin',
 		image: satin,
-		price: 90000,
+		price: 120000,
 		info: [
 			{
 				label: 'Fabric Types',
@@ -245,7 +245,7 @@ export const FABRIC_TYPES = [
 		id: 'WOO',
 		name: 'Wool',
 		image: wool,
-		price: 90000,
+		price: 150000,
 		info: [
 			{
 				label: 'Fabric Types',
@@ -265,7 +265,7 @@ export const FABRIC_TYPES = [
 		id: 'STR',
 		name: 'Stretch',
 		image: stretch,
-		price: 90000,
+		price: 120000,
 		info: [
 			{
 				label: 'Fabric Types',
