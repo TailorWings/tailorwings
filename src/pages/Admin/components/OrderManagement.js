@@ -409,7 +409,13 @@ function OrderManagement(props) {
 			/*--------------*/
 			if (updatedOnlineMsmt) {
 				updatedOnlineMsmt.forEach((msmt) => {
-					msmt.value = clickedOrder.msmt ? clickedOrder.msmt[msmt.id] : '';
+					let val = '';
+					try {
+						val = clickedOrder.msmt.find(_m => _m.id == msmt.id)?.value || '';
+					} catch (error) {
+						
+					}
+					msmt.value = val;
 				});
 
 				setOnlineMsmt(updatedOnlineMsmt);
