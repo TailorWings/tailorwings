@@ -47,10 +47,16 @@ function TailorTailoringOrders() {
 				});
 		}
 	}
+
+	const sortTailoringOrders = [...(tailoringOrders || [])];
+	sortTailoringOrders.sort(function (x, y) {
+		return y.timestamp - x.timestamp;
+	});
+
 	/*------------------------------*/
 	return (
 		<div className="tailor-finding-orders" style={{ width: '100%' }}>
-			{tailoringOrders?.map((order) => {
+			{sortTailoringOrders?.map((order) => {
 				return (
 					<div key={order.id}>
 						<TailorOrder order={order} onTailorDone={onTailorDone} type="t" />

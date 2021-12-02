@@ -12,13 +12,19 @@ function TailorFindingOrders() {
 			behavior: 'smooth',
 		});
 	}, []);
+
+	const findingOrdersSort = [...(findingOrders || [])];
+	findingOrdersSort.sort(function (x, y) {
+		return y.timestamp - x.timestamp;
+	});
+
 	/*------------------------------*/
 	return (
 		<div className="tailor-finding-orders" style={{ width: '100%' }}>
-			{findingOrders.map((order) => {
+			{findingOrdersSort.map((order) => {
 				return (
 					<div key={order.id}>
-						<TailorOrder order={order} tailor={tailor} type="f"/>
+						<TailorOrder order={order} tailor={tailor} type="f" />
 					</div>
 				);
 			})}

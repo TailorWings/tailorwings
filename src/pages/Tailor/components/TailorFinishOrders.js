@@ -21,10 +21,16 @@ function TailorTailoringOrders() {
 			setFinishOrders(finishList);
 		}
 	}, [pickedOrders]);
+
+	const sortFinishOrders = [...(finishOrders || [])];
+	sortFinishOrders.sort(function (x, y) {
+		return y.timestamp - x.timestamp;
+	});
+
 	/*------------------------------*/
 	return (
 		<div className="tailor-finding-orders" style={{ width: '100%' }}>
-			{finishOrders?.map((order) => {
+			{sortFinishOrders?.map((order) => {
 				return (
 					<div key={order.id}>
 						<TailorOrder order={order} type="d" />
