@@ -83,14 +83,14 @@ function CustomerManagement(props) {
 		</div>
 	);
 	function handleShowCusInfo() {
-		if (Object.entries(clickedOrder).length > 0) {
+		if (clickedOrder || Object.keys(clickedOrder) > 0) {
 			console.log(clickedOrder);
 			return (
 				<div className="c-admin-customer-mgmt__info">
 					<p className="c-admin-customer-mgmt__info--title">CUSTOMER INFOMATION</p>
 					<div className="c-admin-customer-mgmt__info-measurement">
 						<p className="c-admin-customer-mgmt__info-measurement--title">Measurement</p>
-						{Object.entries(clickedOrder.msmt).length > 0 ? (
+						{clickedOrder.msmt ? (
 							<div className="c-admin-customer-mgmt__info-measurement__list">
 								{Object.keys(clickedOrder.msmt).map((msmt, index) => {
 									return (
