@@ -195,6 +195,12 @@ function MeasurementContent(props) {
 	}
 	/************_END_****************/
 
+	const [ isViewFullList, setIsViewFullList ] = useState(false)
+
+	function handleShowFullList(){
+		setIsViewFullList(true)
+	}
+
 	if (!match) return <Fragment />;
 	return (
 		<div className="c-measurement-content">
@@ -222,6 +228,8 @@ function MeasurementContent(props) {
 							designStyle={orderDetail.designStyle}
 							onMeasurementConfirm={handleOnlineConfirm}
 							onGetLatestMsmt={currentCustomer?.msmt && handleGetLatestMsmt}
+							handleShowFullList={handleShowFullList}
+							isViewFullList={isViewFullList}
 						/>
 					)}
 					exact

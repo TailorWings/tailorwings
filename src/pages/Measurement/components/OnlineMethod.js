@@ -16,6 +16,8 @@ OnlineMethod.propTypes = {
 	onMeasurementConfirm: PropTypes.func,
 	onGetLatestMsmt: PropTypes.func,
 	designStyle: PropTypes.string,
+	handleShowFullList: PropTypes.func,
+	isViewFullList: PropTypes.bool
 };
 
 OnlineMethod.defaultProps = {
@@ -23,10 +25,19 @@ OnlineMethod.defaultProps = {
 	onMeasurementConfirm: null,
 	onGetLatestMsmt: null,
 	designStyle: '',
+	handleShowFullList: null,
+	isViewFullList: false
 };
 
 function OnlineMethod(props) {
-	const { measurements, onMeasurementConfirm, onGetLatestMsmt, designStyle } = props;
+	const {
+		measurements,
+		onMeasurementConfirm,
+		onGetLatestMsmt,
+		designStyle,
+		handleShowFullList,
+		isViewFullList,
+	} = props;
 	const { t, i18n } = useTranslation();
 	const isENG = i18n.language == 'en';
 	const stylesOfClothe = useSelector((state) => state.common.stylesOfClothe);
@@ -128,7 +139,7 @@ function OnlineMethod(props) {
 				<div className="c-msmt-online-guideline-top">
 					<div
 						className="c-msmt-online-guideline-top__button-view"
-						onClick={() => setIsShowFullList(true)}
+						onClick={() => handleShowFullList()}
 					>
 						<span className="c-msmt-online-guideline-top__button-view__text">
 							{t('measurement.viewFullList')}
@@ -136,22 +147,13 @@ function OnlineMethod(props) {
 						<img src={IconList} alt="icon" className="c-msmt-online-guideline-top__icon" />
 					</div>
 					<div className="c-msmt-online-guideline-top__right">
-						<span
-							className="c-msmt-online-guideline-top__right--des"
-							onClick={() => {
-								onGetLatestMsmt();
-								setIsShowFullList(true);
-							}}
-						>
+						<span className="c-msmt-online-guideline-top__right--des" onClick={onGetLatestMsmt}>
 							{t('measurement.getYourLasted')}
 						</span>
 						{isENG ? (
 							<span
 								className="c-msmt-online-guideline-top__right--mobile"
-								onClick={() => {
-									onGetLatestMsmt();
-									setIsShowFullList(true);
-								}}
+								onClick={onGetLatestMsmt}
 							>
 								Get your
 								<br />
@@ -160,10 +162,7 @@ function OnlineMethod(props) {
 						) : (
 							<span
 								className="c-msmt-online-guideline-top__right--mobile"
-								onClick={() => {
-									onGetLatestMsmt();
-									setIsShowFullList(true);
-								}}
+								onClick={onGetLatestMsmt}
 							>
 								Sử dụng số đo đã lưu
 							</span>
@@ -263,7 +262,7 @@ function OnlineMethod(props) {
 					</span>
 				)}
 			</div>
-			{isShowFullList ? (
+			{isViewFullList ? (
 				<div className="c-msmt-online-input">
 					<MeasurementForm
 						measurements={measurementStates}
