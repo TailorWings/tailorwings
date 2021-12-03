@@ -127,7 +127,7 @@ function MeasurementContent(props) {
 	 *  Description: handle form submit
 	 */
 	function handleOnlineConfirm(value) {
-		console.log("handleOnlineConfirm value = ", value)
+		console.log('handleOnlineConfirm value = ', value);
 		/*--------------*/
 		const action_setOrderDetail = setOrderDetail({ ...orderDetail, msmt: { ...value } });
 		dispatch(action_setOrderDetail);
@@ -153,7 +153,7 @@ function MeasurementContent(props) {
 			setAlertOpen(true);
 		} else {
 			let updatedOrderDetail = { ...orderDetail, stdSize: activeStandardSize.name };
-			console.log("updatedOrderDetail", updatedOrderDetail)
+			console.log('updatedOrderDetail', updatedOrderDetail);
 			const action_setOrderDetail = setOrderDetail(updatedOrderDetail);
 			dispatch(action_setOrderDetail);
 			/*--------------*/
@@ -195,10 +195,10 @@ function MeasurementContent(props) {
 	}
 	/************_END_****************/
 
-	const [ isViewFullList, setIsViewFullList ] = useState(false)
+	const [isViewFullList, setIsViewFullList] = useState(false);
 
-	function handleShowFullList(){
-		setIsViewFullList(true)
+	function handleShowFullList() {
+		setIsViewFullList(true);
 	}
 
 	if (!match) return <Fragment />;
@@ -230,6 +230,7 @@ function MeasurementContent(props) {
 							onGetLatestMsmt={currentCustomer?.msmt && handleGetLatestMsmt}
 							handleShowFullList={handleShowFullList}
 							isViewFullList={isViewFullList}
+							currentCustomerMSMT={currentCustomer.msmt || null}
 						/>
 					)}
 					exact

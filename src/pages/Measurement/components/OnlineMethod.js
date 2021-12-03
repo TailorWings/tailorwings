@@ -17,7 +17,8 @@ OnlineMethod.propTypes = {
 	onGetLatestMsmt: PropTypes.func,
 	designStyle: PropTypes.string,
 	handleShowFullList: PropTypes.func,
-	isViewFullList: PropTypes.bool
+	isViewFullList: PropTypes.bool,
+	currentCustomerMSMT: PropTypes.object,
 };
 
 OnlineMethod.defaultProps = {
@@ -26,7 +27,8 @@ OnlineMethod.defaultProps = {
 	onGetLatestMsmt: null,
 	designStyle: '',
 	handleShowFullList: null,
-	isViewFullList: false
+	isViewFullList: false,
+	currentCustomerMSMT: null,
 };
 
 function OnlineMethod(props) {
@@ -37,6 +39,7 @@ function OnlineMethod(props) {
 		designStyle,
 		handleShowFullList,
 		isViewFullList,
+		currentCustomerMSMT,
 	} = props;
 	const { t, i18n } = useTranslation();
 	const isENG = i18n.language == 'en';
@@ -131,6 +134,7 @@ function OnlineMethod(props) {
 			swiperRef.current.swiper.slideTo(idx);
 		}
 	};
+	console.log(currentCustomerMSMT);
 
 	if (!measurementStates || !onMeasurementConfirm) return <Fragment />;
 	return (
@@ -147,13 +151,24 @@ function OnlineMethod(props) {
 						<img src={IconList} alt="icon" className="c-msmt-online-guideline-top__icon" />
 					</div>
 					<div className="c-msmt-online-guideline-top__right">
-						<span className="c-msmt-online-guideline-top__right--des" onClick={onGetLatestMsmt}>
+						<span
+							className={
+								currentCustomerMSMT
+									? 'c-msmt-online-guideline-top__right--des'
+									: 'c-msmt-online-guideline-top__right--des c-msmt-online-guideline-top__right--disable'
+							}
+							onClick={currentCustomerMSMT ? onGetLatestMsmt : undefined}
+						>
 							{t('measurement.getYourLasted')}
 						</span>
 						{isENG ? (
 							<span
-								className="c-msmt-online-guideline-top__right--mobile"
-								onClick={onGetLatestMsmt}
+								className={
+									currentCustomerMSMT
+										? 'c-msmt-online-guideline-top__right--mobile'
+										: 'c-msmt-online-guideline-top__right--mobile c-msmt-online-guideline-top__right--disable'
+								}
+								onClick={currentCustomerMSMT ? onGetLatestMsmt : undefined}
 							>
 								Get your
 								<br />
@@ -161,8 +176,12 @@ function OnlineMethod(props) {
 							</span>
 						) : (
 							<span
-								className="c-msmt-online-guideline-top__right--mobile"
-								onClick={onGetLatestMsmt}
+								className={
+									currentCustomerMSMT
+										? 'c-msmt-online-guideline-top__right--mobile'
+										: 'c-msmt-online-guideline-top__right--mobile c-msmt-online-guideline-top__right--disable'
+								}
+								onClick={currentCustomerMSMT ? onGetLatestMsmt : undefined}
 							>
 								Sử dụng số đo đã lưu
 							</span>
