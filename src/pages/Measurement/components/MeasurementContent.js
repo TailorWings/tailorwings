@@ -184,10 +184,11 @@ function MeasurementContent(props) {
 	function handleGetLatestMsmt() {
 		if (currentCustomer && currentCustomer?.msmt) {
 			let customerMsmt = currentCustomer.msmt && { ...currentCustomer.msmt };
+			console.log(onlineMsmt)
 			let updatedOnlineMsmt = [...onlineMsmt];
 			if (customerMsmt) {
 				updatedOnlineMsmt.forEach((msmt) => {
-					msmt.value = customerMsmt[msmt.id] || msmt.value;
+					msmt.value = customerMsmt[msmt.id] || "";
 				});
 				setOnlineMsmt(updatedOnlineMsmt);
 			}

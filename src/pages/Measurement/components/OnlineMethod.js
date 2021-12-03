@@ -134,7 +134,6 @@ function OnlineMethod(props) {
 			swiperRef.current.swiper.slideTo(idx);
 		}
 	};
-	console.log(currentCustomerMSMT);
 
 	if (!measurementStates || !onMeasurementConfirm) return <Fragment />;
 	return (
