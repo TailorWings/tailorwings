@@ -100,23 +100,23 @@ function OrderDetail(props) {
 						}) || null;
 				}
 				/*--------------*/
-				let msmtOfStyle = ONLINE_MEASUREMENTS.find(
-					(msmtInfo) => msmtInfo.style === newOrderDetail.designStyle
-				);
-				if (newOrderDetail.msmt) {
-					let modifiedMsmt = msmtOfStyle
-						? msmtOfStyle.msmts.map((msmtInfo) => {
-								return {
-									...msmtInfo,
-									value:
-										newOrderDetail.msmt[msmtInfo.id] ||
-										// newOrderDetail.msmt.find((elem) => elem.id === msmtInfo.id)?.value ||
-										'',
-								};
-						  })
-						: [];
-					newOrderDetail.msmt = [...modifiedMsmt];
-				}
+				// let msmtOfStyle = ONLINE_MEASUREMENTS.find(
+				// 	(msmtInfo) => msmtInfo.style === newOrderDetail.designStyle
+				// );
+				// if (newOrderDetail.msmt) {
+				// 	let modifiedMsmt = msmtOfStyle
+				// 		? msmtOfStyle.msmts.map((msmtInfo) => {
+				// 				return {
+				// 					...msmtInfo,
+				// 					value:
+				// 						newOrderDetail.msmt[msmtInfo.id] ||
+				// 						// newOrderDetail.msmt.find((elem) => elem.id === msmtInfo.id)?.value ||
+				// 						'',
+				// 				};
+				// 		  })
+				// 		: [];
+				// 	newOrderDetail.msmt = [...modifiedMsmt];
+				// }
 				/*--------------*/
 				if (newOrderDetail.stdSize) {
 					setStandardSizes(
@@ -286,7 +286,9 @@ function OrderDetail(props) {
 	if (!currentOrderDetail) {
 		return <Redirect to="/account" />;
 	}
-	const { designFiles, designStyle, fabric, msmt, notes, notesVN, status } = currentOrderDetail;
+	const { designFiles, designStyle, fabric, notes, notesVN, status } = currentOrderDetail;
+	const msmtList = convertToMsmtList(currentOrderDetail);
+
 	return (
 		<div className="c-order-detail">
 			<div className="c-order-detail__header">
@@ -347,8 +349,8 @@ function OrderDetail(props) {
 						/>
 					</div>
 					<div className="c-order-detail-summary__msmt">
-						{msmt ? (
-							<MeasurementForm measurements={msmt} title="Your Measurements" disabled />
+						{msmtList ? (
+							<MeasurementForm measurements={msmtList} title="Your Measurements" disabled />
 						) : (
 							<Picker list={standardSizes} />
 						)}
@@ -418,6 +420,24 @@ function OrderDetail(props) {
 			</Dialog>
 		</div>
 	);
+
+	function convertToMsmtList(order) {
+		const msmtOfStyle = ONLINE_MEASUREMENTS.find(
+			(msmtInfo) => msmtInfo.style === order.designStyle
+		);
+		if (order.msmt) {
+			return msmtOfStyle
+				? msmtOfStyle.msmts.map((msmtInfo) => {
+					return {
+						...msmtInfo,
+						value: order.msmt[msmtInfo.id] || '',
+					};
+				})
+				: [];
+		} else {
+			return [];
+		}
+	}
 }
 
 export default OrderDetail;
