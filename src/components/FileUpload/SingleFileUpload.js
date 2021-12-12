@@ -5,9 +5,17 @@ import { useDropzone } from 'react-dropzone';
 import SmallButton2 from '../Button/SmallButton2';
 import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
-SingleFileUpload.propTypes = {};
+
+SingleFileUpload.propTypes = {
+	setFile: PropTypes.func,
+};
+
+SingleFileUpload.defaultProps = {
+	setFile: null,
+};
 
 function SingleFileUpload(props) {
+	const { setFile } = props;
 
 	const { t } = useTranslation();
 
@@ -17,19 +25,25 @@ function SingleFileUpload(props) {
 		accept: 'image/jpeg, image/png, image/jpg',
 		maxFiles: 1,
 		onDrop: (acceptedFiles) => {
-			setFiles(
-				acceptedFiles.map((file) =>
-					Object.assign(file, {
-						preview: URL.createObjectURL(file),
-					})
-				)
+			var tempFiles = acceptedFiles.map((file) =>
+				Object.assign(file, {
+					preview: URL.createObjectURL(file),
+				})
 			);
+			setFiles(
+				tempFiles
+			);
+			setFile && setFile(tempFiles[0]);
 		},
 	});
 	/*--------------*/
 	useEffect(() => {
 		// Make sure to revoke the data uris to avoid memory leaks
-		files.forEach((file) => URL.revokeObjectURL(file.preview));
+		files.forEach((file) => {
+			if (!file.preview) {
+				URL.revokeObjectURL(file.preview);
+			}
+		});
 	}, [files]);
 	/*--------------*/
 	/*********************************
@@ -42,7 +56,10 @@ function SingleFileUpload(props) {
 				return file;
 			}
 		});
-		if (newFiles) setFiles(newFiles);
+		if (newFiles) {
+			setFiles(newFiles);
+			setFile(newFiles);
+		}
 		/*--------------*/
 	}
 	/************_END_****************/

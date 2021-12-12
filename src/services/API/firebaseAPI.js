@@ -102,12 +102,12 @@ export const fetchVisible = (collection) => {
 /*--------------*/
 
 export const addDocument = (collection, newItem) => {
-	database
+	return database
 		.collection(collection)
 		.add(newItem)
-		.then(function () {
-			let isSuccess = true;
-			return isSuccess;
+		.then(function (docRef) {
+			console.log("firebaseAPI addDocument docRef.id", docRef.id);
+			return docRef.id;
 		})
 		.catch(function (error) {
 			let isSuccess = false;

@@ -2,8 +2,15 @@
     width: 80%;
     margin: 0 auto;
     &__avatar{
-        .c-multiple-file-upload__wrapper{
+        .c-single-file-upload__wrapper{
             margin: 0 auto;
+            .c-single-file-upload__preview{
+                img {
+                    height: 250px;
+                    width: 250px;
+                    border-radius: 50%;
+                }
+            }
         }
     }
     &__title{
@@ -39,11 +46,14 @@
         }
         &--item{
             margin-right: 2rem;
+            cursor: pointer;
             label{
                 font-size: 2rem;
                 margin-left: 0.3rem;
+                cursor: pointer;
             }
             input{
+                cursor: pointer;
                 font-size: 2rem;
                 &:checked::before{
                     background-color: $primary-color;
@@ -63,5 +73,21 @@
             border-radius: 12px;
             cursor: pointer;
         }
+    }
+    &__products{
+        margin-top: 2rem;
+        .c-multiple-file-upload__wrapper{
+            margin: 0 auto;
+        }
+    }
+    .c-text-input {
+        margin-bottom: 1rem;
+    }
+    .c-text-input__label {
+        font-size: 2rem;
+        color: black;
+    }
+    .c-text-input__error{
+        margin-top: 1rem;
     }
 }
