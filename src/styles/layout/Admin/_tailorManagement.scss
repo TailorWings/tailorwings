@@ -1,0 +1,121 @@
+.c-admin-tailor-mgmt {
+	margin-top: 5rem;
+	th {
+		max-width: 30rem;
+		@include textStyle(body);
+		text-transform: capitalize;
+		text-align: center;
+	}
+	td {
+		@include textStyle(caption);
+		max-width: 30rem;
+		// text-transform: capitalize;
+		&:first-child {
+			@include flex(center, center);
+		}
+	}
+	tr{
+		cursor: pointer;
+	}
+	// tr {
+	// 	cursor: pointer;
+	// }
+	tbody {
+		max-height: 50rem;
+		overflow: hidden;
+	}
+	.image-wraper {
+		@include size(50px);
+		border-radius: 50%;
+		overflow: hidden;
+		position: relative;
+		& > img {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			object-fit: cover;
+			@include size(100%);
+		}
+	}
+	&__info {
+		margin-top: 3rem;
+		padding-bottom: 3rem;
+		&--title {
+			@include textStyle(h2);
+			text-transform: uppercase;
+			text-align: center;
+			padding: 1rem;
+			border-top: 1px solid rgba(0, 0, 0, 0.16);
+		}
+		&-measurement {
+			&--title {
+				font-size: 2.5rem;
+				margin-top: 1rem;
+			}
+			&__list {
+				display: flex;
+				flex-wrap: wrap;
+			}
+			&__item {
+				display: flex;
+				flex-direction: column;
+				width: 20%;
+				padding: .5rem;
+				&--label{
+					font-size: 2rem;
+					text-transform: capitalize;
+				}
+				&--msmt{
+					font-size: 1.8rem;
+					border: 1px solid $primary-color;
+					padding: 1rem;
+					border-radius: 12px;
+					margin-top: 1rem;
+				}
+			}
+		}
+		&-ship{
+			&__item {
+				display: flex;
+				flex-direction: column;
+				width: 50%;
+				padding: .5rem;
+				&--label{
+					font-size: 2rem;
+					text-transform: capitalize;
+				}
+				&--info{
+					font-size: 1.8rem;
+					border: 1px solid $primary-color;
+					padding: 1rem;
+					border-radius: 12px;
+					margin-top: 1rem;
+				}
+			}
+		}
+	}
+	.bg-white {
+		background: white;
+	}
+	.bg-e8 {
+		background: #e8e8e8;
+	}
+	&__details {
+		margin-top: 3rem;
+		padding-bottom: 3rem;
+		&__title{
+			width: 100%;
+			text-align: center;
+		}
+		&__avatar{
+			display: flex;
+			justify-content: center;
+			img {
+				width: 200px;
+				height: 200px;
+				border-radius: 50%;
+			}
+		}
+	}
+}
