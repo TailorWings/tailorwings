@@ -62,7 +62,7 @@ const TABLE_HEAD_FINISH = [
 	'price',
 ];
 
-const ORDER_STATUS = ['finding', 'tailoring', 'finish'];
+const ORDER_STATUS = ['finding', 'quoted', 'tailoring', 'finish'];
 
 function OrderManagement(props) {
 	const { orders } = props;
@@ -125,70 +125,16 @@ function OrderManagement(props) {
 			switch (currentStatus) {
 				case 'finding':
 					let rowContentFinding =
-						orders?.finding.length > 0
-							? orders.finding.map((order) => {
-									const { designFiles, customer, orderDate } = order;
-									let tailorOrder = tailorFindingOrders?.find(
-										(tailorOrder) => tailorOrder.orderID === order.id
-									);
-									return {
-										image: designFiles[0],
-										customer: customer.displayName || customer.phone,
-										orderDate,
-										offers: tailorOrder?.offers || null,
-										picked:
-											tailorOrder?.offers?.length > 0
-												? !!tailorOrder?.offers?.find((offer) => offer.picked)
-												: false,
-										tailorOrder,
-									};
-							  })
-							: [];
+						getFindingOrders(false);
 					render = (
-						<div className="c-admin-order__table">
-							<Paper className={classes.root}>
-								<TableContainer className={classes.container}>
-									<Table stickyHeader aria-label="sticky table">
-										<TableHead>
-											<TableRow>
-												{TABLE_HEAD_FINDING.map((header, index) => {
-													return (
-														<TableCell key={index} align="center">
-															{header}
-														</TableCell>
-													);
-												})}
-											</TableRow>
-										</TableHead>
-										<TableBody>
-											{rowContentFinding.length > 0 ? (
-												rowContentFinding.map((row, index) => (
-													<TableRow
-														key={index}
-														onClick={() => onRowClick(index, 'finding', row.tailorOrder)}
-													>
-														<TableCell align="center">{row.customer}</TableCell>
-														<TableCell align="center">
-															<div className="image-wraper">
-																<img src={row.image} alt="design file" />
-															</div>
-														</TableCell>
-														<TableCell align="center">{row.orderDate}</TableCell>
-														<TableCell align="center">{row.offers?.length || 0}</TableCell>
-													</TableRow>
-												))
-											) : (
-												<TableRow>
-													<TableCell>
-														<p style={{ textAlign: 'center' }}>No order</p>
-													</TableCell>
-												</TableRow>
-											)}
-										</TableBody>
-									</Table>
-								</TableContainer>
-							</Paper>
-						</div>
+						renderFindingOrders(rowContentFinding)
+					);
+					break;
+				case 'quoted':
+					let quotedOrders =
+						getFindingOrders(true);
+					render = (
+						renderFindingOrders(quotedOrders)
 					);
 					break;
 				case 'tailoring':
@@ -391,6 +337,73 @@ function OrderManagement(props) {
 		}
 		return render;
 	}
+	function renderFindingOrders(rowContentFinding) {
+		return <div className="c-admin-order__table">
+			<Paper className={classes.root}>
+				<TableContainer className={classes.container}>
+					<Table stickyHeader aria-label="sticky table">
+						<TableHead>
+							<TableRow>
+								{TABLE_HEAD_FINDING.map((header, index) => {
+									return (
+										<TableCell key={index} align="center">
+											{header}
+										</TableCell>
+									);
+								})}
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							{rowContentFinding.length > 0 ? (
+								rowContentFinding.map((row, index) => (
+									<TableRow
+										key={index}
+										onClick={() => onRowClick(index, 'finding', row.tailorOrder)}
+									>
+										<TableCell align="center">{row.customer}</TableCell>
+										<TableCell align="center">
+											<div className="image-wraper">
+												<img src={row.image} alt="design file" />
+											</div>
+										</TableCell>
+										<TableCell align="center">{row.orderDate}</TableCell>
+										<TableCell align="center">{row.offers?.length || 0}</TableCell>
+									</TableRow>
+								))
+							) : (
+								<TableRow>
+									<TableCell>
+										<p style={{ textAlign: 'center' }}>No order</p>
+									</TableCell>
+								</TableRow>
+							)}
+						</TableBody>
+					</Table>
+				</TableContainer>
+			</Paper>
+		</div>;
+	}
+
+	function getFindingOrders(isQuoted) {
+		return (orders?.finding || []).map((order) => {
+				const { designFiles, customer, orderDate } = order;
+				let tailorOrder = tailorFindingOrders?.find(
+					(tailorOrder) => tailorOrder.orderID === order.id
+				);
+				return {
+					image: designFiles[0],
+					customer: customer.displayName || customer.phone,
+					orderDate,
+					offers: tailorOrder?.offers || [],
+					picked: tailorOrder?.offers?.length > 0
+						? !!tailorOrder?.offers?.find((offer) => offer.picked)
+						: false,
+					tailorOrder,
+				};
+			}).filter(o => (!isQuoted && o.offers.length == 0) || (isQuoted && o.offers.length > 0 && !o.picked))
+
+	}
+
 	/************_END_****************/
 	/*********************************
 	 *  Description: onRowClick
