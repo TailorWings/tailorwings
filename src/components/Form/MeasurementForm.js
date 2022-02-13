@@ -71,7 +71,7 @@ function MeasurementForm(props) {
 	if (!measurements) return <Fragment />;
 	return (
 		<div className="c-msmt-form">
-			<div className="c-msmt-form__title">
+			{/* <div className="c-msmt-form__title">
 				{ isDisplayFull && <span>{title}</span>}
 				{!disabled && onGetLatestMsmt ? (
 					<span onClick={onGetLatestMsmt} className="c-msmt-form__title-sync">
@@ -80,7 +80,7 @@ function MeasurementForm(props) {
 				) : (
 					<Fragment />
 				)}
-			</div>
+			</div> */}
 			{/* <div className="c-msmt-form__container">
 				<button className="c-msmt-form__btn-left" onClick={onActionBack}>
 					<img src={leftArrowIcon} alt="icon" />

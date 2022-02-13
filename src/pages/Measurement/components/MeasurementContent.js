@@ -127,7 +127,7 @@ function MeasurementContent(props) {
 	 *  Description: handle form submit
 	 */
 	function handleOnlineConfirm(value) {
-		console.log("handleOnlineConfirm value = ", value)
+		console.log('handleOnlineConfirm value = ', value);
 		/*--------------*/
 		const action_setOrderDetail = setOrderDetail({ ...orderDetail, msmt: { ...value } });
 		dispatch(action_setOrderDetail);
@@ -153,7 +153,7 @@ function MeasurementContent(props) {
 			setAlertOpen(true);
 		} else {
 			let updatedOrderDetail = { ...orderDetail, stdSize: activeStandardSize.name };
-			console.log("updatedOrderDetail", updatedOrderDetail)
+			console.log('updatedOrderDetail', updatedOrderDetail);
 			const action_setOrderDetail = setOrderDetail(updatedOrderDetail);
 			dispatch(action_setOrderDetail);
 			/*--------------*/
@@ -184,16 +184,23 @@ function MeasurementContent(props) {
 	function handleGetLatestMsmt() {
 		if (currentCustomer && currentCustomer?.msmt) {
 			let customerMsmt = currentCustomer.msmt && { ...currentCustomer.msmt };
+			console.log(onlineMsmt)
 			let updatedOnlineMsmt = [...onlineMsmt];
 			if (customerMsmt) {
 				updatedOnlineMsmt.forEach((msmt) => {
-					msmt.value = customerMsmt[msmt.id] || msmt.value;
+					msmt.value = customerMsmt[msmt.id] || "";
 				});
 				setOnlineMsmt(updatedOnlineMsmt);
 			}
 		}
 	}
 	/************_END_****************/
+
+	const [isViewFullList, setIsViewFullList] = useState(false);
+
+	function handleShowFullList() {
+		setIsViewFullList(true);
+	}
 
 	if (!match) return <Fragment />;
 	return (
@@ -222,6 +229,9 @@ function MeasurementContent(props) {
 							designStyle={orderDetail.designStyle}
 							onMeasurementConfirm={handleOnlineConfirm}
 							onGetLatestMsmt={currentCustomer?.msmt && handleGetLatestMsmt}
+							handleShowFullList={handleShowFullList}
+							isViewFullList={isViewFullList}
+							currentCustomerMSMT={currentCustomer.msmt || null}
 						/>
 					)}
 					exact
