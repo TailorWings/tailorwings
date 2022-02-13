@@ -14,11 +14,17 @@ InputField.propTypes = {
 };
 
 function InputField(props) {
-	const { form, name, label, disabled, placeHolder, suffix } = props;
+	const { form, name, label, disabled, placeHolder, suffix, onChange: onChangeProp } = props;
 	const { register, errors, formState } = form;
 	const hasError = !!errors[name];
 	const { t, i18n } = useTranslation();
 	const isENG = i18n.language == 'en';
+	function onChangeTotal(fn1, fn2) {
+		return function(val) {
+			fn1(val);
+			fn2(val);
+		}
+	}
 	return (
 		<Controller
 			name={name}
@@ -27,7 +33,7 @@ function InputField(props) {
 				<TextInput
 					label={label}
 					disabled={disabled}
-					onChange={onChange}
+					onChange={(val) => {onChange(val); onChangeProp(val); }}
 					value={value}
 					register={register}
 					hasError={hasError}

@@ -120,6 +120,10 @@ function OnlineMethod(props) {
 		setMeasurements([...measurementStates]);
 		setActiveGuide({ ...measurementStates[index], activeIndex: index });
 	};
+	function onFormChange(values) {
+		measurementStates.forEach(o => o.value= values[o.id]);
+		setMeasurements([...measurementStates]);
+	}
 
 	const onBeforeNext = () => {
 		const currentIndex = swiperRef.current.swiper.realIndex;
@@ -287,6 +291,7 @@ function OnlineMethod(props) {
 						onSubmit={onMeasurementConfirm}
 						onActionBack={actionBack}
 						onActionNext={actionNext}
+						onFormChange={onFormChange}
 					/>
 				</div>
 			) : (

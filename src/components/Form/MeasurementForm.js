@@ -15,6 +15,7 @@ MeasurementForm.propTypes = {
 	measurements: PropTypes.array,
 	title: PropTypes.string,
 	onSubmit: PropTypes.func,
+	onFormChange: PropTypes.func,
 	onActionBack: PropTypes.func,
 	onActionNext: PropTypes.func,
 	disabled: PropTypes.bool,
@@ -28,10 +29,11 @@ MeasurementForm.defaultProps = {
 	disabled: false,
 	onActionBack: null,
 	onActionNext: null,
+	onFormChange:null
 };
 
 function MeasurementForm(props) {
-	const { measurements, title, onSubmit, disabled, onGetLatestMsmt, isDisplayFull, onActionBack, onActionNext } = props;
+	const { measurements, title, onSubmit, disabled, onGetLatestMsmt, isDisplayFull, onActionBack, onActionNext, onFormChange } = props;
 	// console.log("MeasurementForm measurements", measurements)
 	const { t, i18n } = useTranslation();
 	const isENG = i18n.language == 'en';
@@ -55,6 +57,11 @@ function MeasurementForm(props) {
 		defaultValues: { ...msmtDefaultValue },
 		resolver: yupResolver(schema),
 	});
+	// React.useEffect(() => {
+	// 	const subscription = form.watch((value, { name, type }) => console.log(value, name, type));
+		
+	// 	console.log('formchanged');
+	//   }, []);
 	useEffect(() => {
 		measurements.forEach((msmt, index) => {
 			form.setValue(msmt.id, msmt.value);
@@ -62,6 +69,10 @@ function MeasurementForm(props) {
 		
 	}, [measurements]);
 	/*--------------*/
+	function notifyParent() {
+		console.log(form.getValues())
+		onFormChange(form.getValues())
+	}
 	function handleSubmit(values) {
 		console.log("handleSubmit values", values);
 		onSubmit(values, 'online');
@@ -116,6 +127,7 @@ function MeasurementForm(props) {
 									form={form}
 									value={measurement.value}
 									maxValue={999}
+									onChange={notifyParent}
 								/>
 							)}
 						</div>
