@@ -155,6 +155,7 @@ function OrderManagement(props) {
 									let pickedOffer = tailorOrder?.offers?.find((offer) => offer?.picked);
 									const { designFiles, customer, orderDate } = order;
 									return {
+										id: order.id,
 										image: designFiles[0],
 										customer: customer?.displayName || customer?.phone || 'none',
 										orderDate,
@@ -197,7 +198,7 @@ function OrderManagement(props) {
 													return (
 														<TableRow
 															key={index}
-															onClick={() => onRowClick(index, 'tailoring', row.tailorOrder)}
+															onClick={() => onRowClick(row, 'tailoring')}
 														>
 															<TableCell align="center">{row.customer}</TableCell>
 															<TableCell align="center">
@@ -265,6 +266,7 @@ function OrderManagement(props) {
 									let pickedOffer = tailorOrder?.offers?.find((offer) => offer?.picked);
 									const { designFiles, customer, orderDate, finishDate } = order;
 									return {
+										id: order.id,
 										image: designFiles[0],
 										customer: customer.displayName || customer.phone,
 										orderDate,
@@ -299,7 +301,7 @@ function OrderManagement(props) {
 												rowContentFinish.map((row, index) => (
 													<TableRow
 														key={index}
-														onClick={() => onRowClick(index, 'finish', row.tailorOrder)}
+														onClick={() => onRowClick(row, 'finish')}
 													>
 														<TableCell align="center">{row.customer}</TableCell>
 														<TableCell align="center">
@@ -358,7 +360,7 @@ function OrderManagement(props) {
 								rowContentFinding.map((row, index) => (
 									<TableRow
 										key={index}
-										onClick={() => onRowClick(index, 'finding', row.tailorOrder)}
+										onClick={() => onRowClick(row, 'finding')}
 									>
 										<TableCell align="center">{row.customer}</TableCell>
 										<TableCell align="center">
@@ -391,6 +393,7 @@ function OrderManagement(props) {
 					(tailorOrder) => tailorOrder.orderID === order.id
 				);
 				return {
+					id: order.id,
 					image: designFiles[0],
 					customer: customer.displayName || customer.phone,
 					orderDate,
@@ -408,10 +411,12 @@ function OrderManagement(props) {
 	/*********************************
 	 *  Description: onRowClick
 	 */
-	function onRowClick(clickedIndex, clickedStatus, tailorOrder) {
-		let clickedStatusOrders = orders[clickedStatus] ? [...orders[clickedStatus]] : [];
-		let clickedOrder = clickedStatusOrders[clickedIndex] && {
-			...clickedStatusOrders[clickedIndex],
+	function onRowClick(cOrder, clickedStatus) {
+		let tailorOrder = cOrder.tailorOrder;
+		let clickedStatusOrders = orders[clickedStatus] || [];
+		let clickedOrder = clickedStatusOrders.find(o => o.id == cOrder.id);
+		clickedOrder = {
+			...clickedOrder,
 			offers: tailorOrder?.offers && [...tailorOrder.offers],
 			tailorOrder,
 		};
