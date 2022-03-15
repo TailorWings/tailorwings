@@ -18,8 +18,8 @@ export const estimatePriceCalc = (designPrice, fabricPrice, fabricLength) => {
 	return designPrice + (fabricPrice * fabricLength);
 };
 
-export const finalPriceCalc = (wage, fabricPrice, fabricLength, isFabric) => {
-	if (isFabric) {
+export const finalPriceCalc = (wage, fabricPrice, fabricLength, customerHasFabric) => {
+	if (!customerHasFabric) {
 		return (wage + (fabricPrice * fabricLength)) + 240000;
 	} else {
 		return wage + 260000;

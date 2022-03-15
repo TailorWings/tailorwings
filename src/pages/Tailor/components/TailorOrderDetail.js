@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import ListLoader from '../../../components/ComponentLoader';
 import TailorRoundTag from '../../../components/Tag/TailorRoundTag';
 import TailorSquareTag from '../../../components/Tag/TailorSquareTag';
-import { FABRIC_TYPES, ONLINE_MEASUREMENTS } from '../../../constants';
+import { FABRIC_BUY_TYPES, FABRIC_TYPES, ONLINE_MEASUREMENTS } from '../../../constants';
 import TailorHeader from './TailorHeader';
 import Flickity from 'react-flickity-component';
 import TextInput from '../../../components/Input/TextInput';
@@ -161,12 +161,9 @@ function TailorOrderDetail() {
 		const { rqmt } = currentOrder;
 		let wage = Number(offer?.wage) || 0;
 		let fabricNumber = Number(offer?.fabricNumber) || 0;
-		if (rqmt?.fabric?.isOnline) {
-			let fabricPrice = Number(rqmt.fabric.price);
-			return finalPriceCalc(wage, fabricPrice, fabricNumber, true);
-		} else {
-			return finalPriceCalc(wage, 0, 0, false);
-		}
+		let customerHasFabric = rqmt?.fabric?.fabricBuyType == FABRIC_BUY_TYPES[1].id; // MY_OWN
+		let fabricPrice = Number(rqmt.fabric.price);
+		return finalPriceCalc(wage, fabricPrice, fabricNumber, customerHasFabric);
 	}
 	function sendMail() {
 		const { id, name, email } = currentOrder.customer;
