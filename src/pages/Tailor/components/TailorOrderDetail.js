@@ -16,6 +16,7 @@ import emailjs from 'emailjs-com';
 
 function TailorOrderDetail() {
 	/*------------------------------*/
+	const BUFFER_TIME = 3; // days
 	const { params } = useRouteMatch();
 	const { search } = useLocation();
 	const type = queryString.parse(search)?.t;
@@ -116,6 +117,8 @@ function TailorOrderDetail() {
 				newOffer.price = price;
 			}
 			/*------------------------------*/
+			newOffer.customerDisplayDuration = Number(newOffer.duration) + BUFFER_TIME;
+
 			let newOffers = currentOrder?.offers ? [...currentOrder?.offers, newOffer] : [newOffer];
 			if (newOffers) {
 				updateDocument('tailorOrders', currentOrder.id, 'offers', newOffers)
@@ -144,6 +147,7 @@ function TailorOrderDetail() {
 		}
 		/*------------------------------*/
 		if (JSON.stringify(adjustOffer) !== JSON.stringify(adjustOffers[adjustOfferIndex])) {
+			adjustOffer.customerDisplayDuration = Number(adjustOffer.duration) + BUFFER_TIME;
 			if (adjustOffers) {
 				adjustOffers[adjustOfferIndex] = { ...adjustOffer };
 			} else {

@@ -74,7 +74,7 @@ function TailorOffer(props) {
 						<div className="c-tailor-offer-estimate">
 							<Label
 								title="Est.time"
-								value={`${offer.duration} days`}
+								value={`${offer.customerDisplayDuration} days`}
 								color={offer.duration > 6 ? 'primary' : 'secondary'}
 							/>
 						</div>

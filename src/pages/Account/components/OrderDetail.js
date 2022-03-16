@@ -333,7 +333,7 @@ function OrderDetail(props) {
 					<div className="c-order-detail-bill__item">
 						<span>{t('account.estimatedDeliveryDate')}</span>
 						<span>
-							{Number(pickedOffer.duration) + 3} {t('account.days')}
+							{Number(pickedOffer.customerDisplayDuration)} {t('account.days')}
 						</span>
 					</div>
 				</div>
