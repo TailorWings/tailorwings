@@ -136,7 +136,12 @@ function OnlineMethod(props) {
 		const idx = measurementStates.findIndex((m) => !m.value);
 		if (idx >= 0) {
 			swiperRef.current.swiper.slideTo(idx);
+		} else {
+			var param = {};
+			measurementStates.forEach(m => param[m.id] = Number(m.value));
+			onMeasurementConfirm(param);
 		}
+
 	};
 
 	if (!measurementStates || !onMeasurementConfirm) return <Fragment />;
@@ -298,7 +303,7 @@ function OnlineMethod(props) {
 				<Fragment />
 			)}
 
-			<ProcessAction onNextClick={onPageNextClick} backLink="/fabric" formID="msmt-form" />
+			<ProcessAction onNextClick={onPageNextClick} backLink="/fabric" />
 		</div>
 	);
 }
