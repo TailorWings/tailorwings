@@ -29,7 +29,7 @@ function MultipleFileUpload(props) {
 	const [alertOpen, setAlertOpen] = useState(false);
 
 	const { getRootProps, getInputProps } = useDropzone({
-		accept: 'image/jpeg, image/png, image/jpg, image/gif',
+		accept: 'image/jpeg, image/png, image/jpg, image/gif, video/mp4,video/x-m4v,video/*',
 		onDrop: (acceptedFiles) => {
 			let totalFile = [
 				...tempFiles,
@@ -85,9 +85,18 @@ function MultipleFileUpload(props) {
 	/************_END_****************/
 	/*--------------*/
 	const previewThumbs = tempFiles.map((file, index) => {
+		var  preview;
+		if (file.type.startsWith('image')) {
+			 preview = <img src={file.preview} alt="designs" />
+		} else {
+			preview = <div className='video-item'>
+						<img className='icon-play' src='/assets/icons/play-button-svgrepo-com.svg' />
+						<video src={file.preview}></video>;
+					  </div>
+		}
 		return (
 			<li className="c-multiple-file-upload-preview__item" key={index}>
-				<img src={file.preview} alt="designs" />
+				{ preview}
 				<div
 					className="c-multiple-file-upload-preview__button"
 					onClick={() => onRemoveClick(index)}
@@ -107,7 +116,7 @@ function MultipleFileUpload(props) {
 					<p className="c-multiple-file-upload__guide">
 						{t('requirement.uploadImageDescription')} <span>{t('requirement.browse')}</span>
 					</p>
-					<span className="c-multiple-file-upload__support">{t('requirement.supports')}: JPG, PNG, JPEG</span>
+					<span className="c-multiple-file-upload__support">{t('requirement.supports')}: JPG, PNG, JPEG, MP4, M4V</span>
 				</div>
 			</div>
 			<ul className="c-multiple-file-upload-preview__list">{previewThumbs}</ul>

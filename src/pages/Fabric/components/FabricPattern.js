@@ -1,16 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { Fragment, useEffect, useRef, useState } from 'react';
+import ReactDOMServer from 'react-dom/server';
+import { useTranslation } from 'react-i18next';
 import Swiper from 'react-id-swiper';
-import ListLoader from '../../../components/ComponentLoader';
-import Picker from '../../../components/Picker';
-import ProcessAction from '../../../components/ProcessAction';
-import Slider from '../../../components/Slider';
-import Title from '../../../components/Title';
-import { FABRIC_PATTERN_SUBTITLE, FABRIC_PATTERN_TITLE } from '../../../constants';
 import { PhotoSwipe } from 'react-photoswipe-2';
-import MediumButton from '../../../components/Button/MediumButton';
-import { modifyPrice } from '../../../services/Functions/commonFunctions';
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
+import ListLoader from '../../../components/ComponentLoader';
+import Slider from '../../../components/Slider';
 
 FabricPattern.propTypes = {
 	collections: PropTypes.array,
@@ -99,6 +94,11 @@ function FabricPattern(props) {
 					swiperRef.current.swiper.slideTo(0);
 				}
 				setIsPhotoSwipeOpen(false);
+			} else if (el.tagName === 'BUTTON' && el.className.includes('pswp__button')) {
+				let videoList = document.getElementsByClassName('video_ref');
+				for(let vid of videoList) {
+					vid.pause();
+				}
 			}
 		},
 	};
@@ -110,9 +110,9 @@ function FabricPattern(props) {
 					// src: pattern.image.normal,
 					w: PHOTO_SWIPE_SIZE,
 					h: PHOTO_SWIPE_SIZE,
-					html: `<div className="c-fabric-pattern__select-btn"><img src=${
-						pattern.image.normal
-					} /><button id=${index}>${t('select')}</button></div>`,
+					html: `<div className="c-fabric-pattern__select-btn">
+					${ReactDOMServer.renderToStaticMarkup(genItemHTML(pattern.image.normal))}
+					<button id=${index}>${t('select')}</button></div>`,
 				};
 			});
 			if (photos) {
@@ -123,6 +123,14 @@ function FabricPattern(props) {
 	/*********************************
 	 *  Description: handle fabric type click
 	 */
+	function genItemHTML(url, showPlayIcon = false) {
+		return isImage(url) ? 
+			<img src={url} alt="icon" /> : 
+			<div className='video-item'>
+				{showPlayIcon ? <img className='icon-play' src='/assets/icons/play-button-svgrepo-com.svg' /> : <Fragment /> }
+				<video class="video_ref" controls={!showPlayIcon} preload='false' src={url}></video>;
+			</div>
+	}
 	function onPatternSelect(clickedIndex) {
 		setStartIndex(clickedIndex);
 		setTimeout(() => {
@@ -136,7 +144,7 @@ function FabricPattern(props) {
 					return {
 						w: PHOTO_SWIPE_SIZE,
 						h: PHOTO_SWIPE_SIZE,
-						html: `<div className="c-fabric-pattern__select-btn"><img src=${img} /><button className="select-btn" id=${index}>${t(
+						html: `<div className="c-fabric-pattern__select-btn">${ReactDOMServer.renderToStaticMarkup(genItemHTML(img))}<button className="select-btn" id=${index}>${t(
 							'select'
 						)}</button></div>`,
 					};
@@ -148,9 +156,9 @@ function FabricPattern(props) {
 					// src: pattern.image.normal,
 					w: PHOTO_SWIPE_SIZE,
 					h: PHOTO_SWIPE_SIZE,
-					html: `<div className="c-fabric-pattern__select-btn"><img src=${
-						selectedPattern.image.normal
-					} /><button className="select-btn" id=${0}>${t('select')}</button></div>`,
+					html: `<div className="c-fabric-pattern__select-btn">
+					${ReactDOMServer.renderToStaticMarkup(genItemHTML(selectedPattern.image.normal))}
+					<button className="select-btn" id=${0}>${t('select')}</button></div>`,
 				},
 			]);
 		}
@@ -161,6 +169,10 @@ function FabricPattern(props) {
 	const handlePhotoSwipeClose = () => {
 		setIsPhotoSwipeOpen(false);
 	};
+	function isImage(url) {
+		const extension = url.substring(url.lastIndexOf('/')).split('.')[1].split('?')[0];
+		return ['jpeg', 'png', 'jpg', 'gif'].indexOf(extension) >= 0;
+	}
 	/*--------------*/
 	if (!collections || !onCollectionClick || !onPatternClick) return <Fragment />;
 	return (
@@ -184,7 +196,10 @@ function FabricPattern(props) {
 											}`}
 											onClick={() => onPatternSelect(index)}
 										>
-											{pattern.image ? <img src={pattern.image.normal} alt="icon" /> : <Fragment />}
+											{pattern.image ? 
+												genItemHTML(pattern.image.normal, true)
+											:
+											<Fragment />}
 										</li>
 									</div>
 								);

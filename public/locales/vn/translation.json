@@ -17,7 +17,7 @@
 	"requirement": {
 		"title": "Bạn muốn đặt may gì?",
 		"description": "Cung cấp ít nhất 03 hình ảnh của thiết kế bạn muốn đặt may. Hình ảnh càng chi tiết sản phẩm may sẽ càng đúng với mong muốn của bạn.",
-		"uploadImageDescription": "Tải lên hình ảnh",
+		"uploadImageDescription": "Tải lên hình ảnh hoặc video",
 		"browse": "tại đây",
 		"supports": "Hỗ trợ"
 	},

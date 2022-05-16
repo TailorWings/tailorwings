@@ -17,7 +17,7 @@
     "requirement": {
         "title": "What do you want to get tailored?",
         "description": "Please send us at least 03 pictures of the design you want to make. More detail picture more better results of clothes be made.",
-        "uploadImageDescription": "Upload your image here, or",
+        "uploadImageDescription": "Upload your image/video here, or",
         "browse": "browse",
         "supports": "Supports"
     },

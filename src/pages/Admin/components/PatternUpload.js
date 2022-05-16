@@ -6,6 +6,7 @@ import { fileUpload, setDocument } from '../../../services/API/firebaseAPI';
 import { SheetJSFT } from './type';
 import firebase from 'firebase/app';
 import ListLoader from '../../../components/ComponentLoader';
+import { ACCEPTED_IMAGE_TYPES } from '../../../constants';
 
 function PatternUpload(props) {
 	const [dataArray, setDataArray] = useState(null);
@@ -66,6 +67,26 @@ function PatternUpload(props) {
 				});
 		}
 	}
+	function sortWithImageGoFirst(items) {
+		let sorted = items.sort();
+		if (ACCEPTED_IMAGE_TYPES.indexOf(sorted[0].name) >= 0) {
+			return sorted;
+		} else {
+			let idx = sorted.findIndex(i => ACCEPTED_IMAGE_TYPES.indexOf(i.name.split('.')[1]) >= 0);
+			if (idx > -1) {
+				let obj = sorted[idx];
+				sorted.splice(idx, 1);
+				sorted.unshift(obj);
+			}
+		}
+		return sorted;
+		
+	}
+	// function getRepresentativeUrl(items) {
+	// 	let sorted = items.sort();
+	// 	let firstImage = sorted.find(i => ACCEPTED_IMAGE_TYPES.indexOf(i.name.split('.')[1]) >= 0);
+	// 	return firstImage != null ? firstImage.url : sorted[0].url;
+	// }
 	function handleDataUpload() {
         let uploadedPatterns = [];
 		if (dataArray?.length > 0) {
@@ -86,11 +107,19 @@ function PatternUpload(props) {
 					);
 				});
 				if (itemRefArray.length > 0) {
-					let urls = await Promise.all(itemRefArray?.map((itemRef) => itemRef.getDownloadURL()));
+					let assetList = [];
+					for(let itemRef of itemRefArray) {
+						assetList.push(
+							{name: itemRef.name, url: (await itemRef.getDownloadURL())}
+						);
+					}
+					// let assetList = await Promise.all(itemRefArray?.map((itemRef) => {return {name: itemRef.name, url: (await itemRef.getDownloadURL())}}));
+					assetList = sortWithImageGoFirst(assetList);
+					let urls = assetList.map(a => a.url);
 					if (urls?.length > 0) {
 						let updatePattern = {
 							...data,
-							image: { ...data?.image, normal: urls.sort()[0], list: [...urls.sort()] },
+							image: { ...data?.image, normal: urls[0], list: [...urls] },
 						};
 						setDocument('patterns', updatePattern, updatePattern.id)
 							.then(() => {
@@ -113,7 +142,7 @@ function PatternUpload(props) {
 	return (
 		<div className="admin-pattern-upload">
 			<div className="admin-pattern-upload__title">
-				<h2>Image Upload</h2>
+				<h2>Image/Video Upload</h2>
 				<div className="-upload-btn" onClick={handleImageUpload}>
 					<SmallButton2 text="Upload" />
 				</div>

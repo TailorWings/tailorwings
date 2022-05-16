@@ -677,3 +677,6 @@ export const FAQ_CONTENT = [
 		answer: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis nesciunt animi quam repellat et quaerat dolorum ipsa? Voluptates perferendis repudiandae consequatur debitis veritatis, assumenda perspiciatis quisquam itaque voluptatibus aliquid nam.`,
 	},
 ];
+
+export const ACCEPTED_IMAGE_TYPES = ['jpeg', 'png', 'jpg', 'gif'];
+export const ACCEPTED_MEDIA_TYPES = ['image/jpeg, image/png, image/jpg, image/gif, video/mp4,video/x-m4v,video/*'];
