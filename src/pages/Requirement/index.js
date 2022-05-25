@@ -20,6 +20,7 @@ function RequirementPage() {
 	const [alertOpen, setAlertOpen] = useState(false);
 	const [confirmDisable, setConfirmDisable] = useState(false);
 	const [designFiles, setDesignFiles] = useState([]);
+	const [alertMsg, setAlertMsg] = useState('');
 	const { t, i18n } = useTranslation();
 	const [styles, setStyles] = useState(
 		stylesOfClothe && stylesOfClothe.length
@@ -100,12 +101,33 @@ function RequirementPage() {
 	/*********************************
 	 *  Description: handle 'Next' click
 	 */
+	function validateDesignFiles() {
+		if (!styles.some((style) => style.active)) {
+			setAlertMsg('Please select a style and upload at least an image of your design!');
+			return false;
+		}
+
+		var invalidSideList = [];
+		designFiles.forEach(design => {
+			if (['front', 'back', 'side'].indexOf(design.side) >= 0){
+				if (design.photoNotes == null || design.photoNotes.some(p => p == null)) {
+					invalidSideList.push(design.side);
+				}
+			}
+		});
+		if (invalidSideList.length > 0) {
+			setAlertMsg(`Please upload image for ${invalidSideList.join(', ')}`);
+			return false;
+		}
+		return true;
+	}
 	function handleNextClick() {
-		if (designFiles.length > 0 && !!styles.find((style) => style.active)) {
+		if (validateDesignFiles()) {
 			/*--------------*/
 			let updatedOrderDetail = { ...orderDetail };
 			updatedOrderDetail.designStyle = styles.find((style) => style.active).id || null;
-			updatedOrderDetail.designFiles = [...designFiles];
+			// updatedOrderDetail.designFiles = [...designFiles]; deprecated
+			updatedOrderDetail.localDesignFiles = [...designFiles];
 			/*--------------*/
 			const action_setOrderDetail = setOrderDetail(updatedOrderDetail);
 			dispatch(action_setOrderDetail);
@@ -129,7 +151,7 @@ function RequirementPage() {
 			<MaterialAlert
 				open={alertOpen}
 				setOpen={setAlertOpen}
-				content="Please select a style and upload at least an image of your design!"
+				content={alertMsg}
 				serverity="error"
 			/>
 		</section>

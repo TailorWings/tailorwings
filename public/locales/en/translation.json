@@ -15,8 +15,8 @@
     "companyName": "TAILOR WINGS COMPANY LIMITED / Tax code: 0316695125",
     "minImageRequirement": "Clear images will help the best sewing product.",
     "requirement": {
-        "title": "What do you want to get tailored?",
-        "description": "Please send us at least 03 pictures of the design you want to make. More detail picture more better results of clothes be made.",
+        "title": "What do you want to create?",
+        "description": "Please send us at least 2 clear pictures of the design you want. Pictures will be used as a reference to create products for you.",
         "uploadImageDescription": "Upload your image/video here, or",
         "browse": "browse",
         "supports": "Supports"
@@ -113,7 +113,10 @@
         "paymentMethod":"Payment method",
         "estimatedDeliveryDate": "Estimated Delivery Date",
         "days":"days"
-    }
-    
+    },
+    "frontPhotos": "Front photos",
+    "backPhotos": "Back photos",
+    "sidePhotos": "Side photos",
+    "otherPhotos": "Other photos"    
 
 }

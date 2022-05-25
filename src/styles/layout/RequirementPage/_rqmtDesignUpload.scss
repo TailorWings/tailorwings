@@ -1,14 +1,26 @@
 .c-rqmt-design-upload {
-	@include size(84.7rem, auto);
-	margin: 0 auto 4.8rem;
-	& > p {
-		@include textStyle(body);
+    @include size(100%, auto);
+    margin: 0 auto 4.8rem;
+
+    &>p {
+        @include textStyle(body);
+        width: 100%;
+        text-align: center;
+        margin-bottom: 68px;
+    }
+
+    @include xs {
+        @include size(100%, auto);
+    }
+
+    .write-note {
+		margin-top: 8px;
+        padding: 10px 14px;
+        background: #FFFFFF;
+        border: 1px solid #D0D5DD;
+        box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+        border-radius: 8px;
+		resize: none;
 		width: 100%;
-		text-align: center;
-		margin-bottom: 10px;
-	}
-	
-	@include xs {
-		@include size(100%, auto);
-	}
+    }
 }

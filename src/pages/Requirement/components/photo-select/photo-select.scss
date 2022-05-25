@@ -1,0 +1,26 @@
+.img-upload-container {
+    box-sizing: border-box;
+
+    /* Auto layout */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #EAECF0;
+    border-radius: 8px;
+    flex: 1 1 auto;
+    aspect-ratio: 0.7;
+    position: relative;
+
+    .ic-remove {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+    }
+    .icon {
+        width: 29.34px;
+        height: 24px;
+    }
+}
+.cursor-pointer {
+    cursor: pointer;
+}

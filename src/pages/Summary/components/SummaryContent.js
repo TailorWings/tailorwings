@@ -238,7 +238,8 @@ function SummaryContent(props) {
 				finishDate: null,
 				offers: [],
 				shippingInfo,
-				designFiles: [],
+				// designFiles: [], deprecated
+				sideDesignFiles: [],
 				designStyle,
 				fabric: {
 					...fabric,
@@ -256,75 +257,100 @@ function SummaryContent(props) {
 			};
 			let uploadOrderDetail = currentCustomer.orders ? [...currentCustomer.orders] : [];
 			/*--------------*/
-			let fileUploadPromises = orderDetail.designFiles.map((file) => {
-				return fileUpload(
-					file,
-					`image/customerDesigns/${currentCustomer.id}/${formatLink(file.name)}`
-				);
-			});
-			if (fileUploadPromises.length > 0) {
-				Promise.all(fileUploadPromises)
-					.then((results) => {
-						currentOrderDetail.designFiles = results && [...results];
-						uploadOrderDetail.push(currentOrderDetail);
-						updateDocument('customers', currentCustomer.id, 'orders', uploadOrderDetail);
-						/*--------------*/
-						if (phoneNumber) {
-							updateDocument('customers', currentCustomer.id, 'phoneNumber', phoneNumber);
-						}
-						/*--------------*/
-						const {
-							id,
-							designFiles,
-							designStyle,
-							fabric,
-							msmt,
-							notes,
-							notesVN,
-							stdSize,
-							orderDate,
-						} = currentOrderDetail;
-						let newTailorOrder = {
-							orderID: id,
-							rqmt: {
-								designFiles,
-								designStyle,
-								fabric,
-								msmt,
-								notes,
-								notesVN,
-								stdSize,
-							},
-							pickedTailor: null,
-							status: 'finding',
-							offers: null,
-							customer: {
-								id: currentCustomer.id,
-								name: currentCustomer.displayName,
-								email: currentCustomer.email,
-							},
-							orderDate,
-						};
-						setDocumentWithID('tailorOrders', newTailorOrder);
-						/*---------*/
-						setIsConfirmLoading(false);
-						const action_resetState = resetState();
-						dispatch(action_resetState);
-						/*---------*/
-						sendMail();
-						/*---------*/
-						history.push(`/account/detail?id=${orderDetailId}`);
-					})
-					.catch((error) => {
-						console.log(`error`, error);
-						setAlertOpen(true);
-						setAlertMessage('ORDER FAILED: Please try again!');
-						setIsConfirmLoading(false);
-					});
-			}
+			await submitToServer(uploadOrderDetail, currentOrderDetail, phoneNumber, orderDetailId);
 		} else {
 		}
 	}
+	async function submitToServer(uploadOrderDetail, currentOrderDetail, phoneNumber, orderDetailId) {
+		let _sideDesignFiles = [];
+		try {
+			for (let i = 0; i < orderDetail.localDesignFiles.length; i++) {
+				let design = orderDetail.localDesignFiles[i];
+				let photoWithNoteList = design.photoNotes || [];
+				// copy
+				_sideDesignFiles[i] = {
+					...design,
+					photoNotes: []
+				};
+				for (let j = 0; j < photoWithNoteList.length; j++) {
+					let photoWithNote = photoWithNoteList[j];
+					if (photoWithNote != null) {
+						let file = photoWithNote.file;
+						let downloadUrl = await fileUpload(
+							file,
+							`image/customerDesigns/${currentCustomer.id}/${formatLink(file.name)}`
+						);
+						_sideDesignFiles[i].photoNotes[j] = {
+							...photoWithNote,
+							file: undefined,
+							downloadUrl
+						};
+					}
+					
+				}
+			}
+			currentOrderDetail.sideDesignFiles = JSON.parse(JSON.stringify(_sideDesignFiles));
+			// if (fileUploadPromises.length > 0) {
+			// Promise.all(fileUploadPromises)
+			// 	.then((results) => {
+			// currentOrderDetail.designFiles = results && [...results];
+			uploadOrderDetail.push(currentOrderDetail);
+			updateDocument('customers', currentCustomer.id, 'orders', uploadOrderDetail);
+			/*--------------*/
+			if (phoneNumber) {
+				updateDocument('customers', currentCustomer.id, 'phoneNumber', phoneNumber);
+			}
+			/*--------------*/
+			const {
+				id, sideDesignFiles, designStyle, fabric, msmt, notes, notesVN, stdSize, orderDate,
+			} = currentOrderDetail;
+			let newTailorOrder = {
+				orderID: id,
+				rqmt: {
+					sideDesignFiles,
+					designStyle,
+					fabric,
+					msmt,
+					notes,
+					notesVN,
+					stdSize,
+				},
+				pickedTailor: null,
+				status: 'finding',
+				offers: null,
+				customer: {
+					id: currentCustomer.id,
+					name: currentCustomer.displayName,
+					email: currentCustomer.email,
+				},
+				orderDate,
+			};
+			setDocumentWithID('tailorOrders', newTailorOrder);
+			/*---------*/
+			setIsConfirmLoading(false);
+			const action_resetState = resetState();
+			dispatch(action_resetState);
+			/*---------*/
+			sendMail();
+			/*---------*/
+			history.push(`/account/detail?id=${orderDetailId}`);
+			// })
+			// .catch((error) => {
+			// 	console.log(`error`, error);
+			// 	setAlertOpen(true);
+			// 	setAlertMessage('ORDER FAILED: Please try again!');
+			// 	setIsConfirmLoading(false);
+			// });
+		// }
+		} catch (error) {
+			console.log(`error`, error);
+			setAlertOpen(true);
+			setAlertMessage('ORDER FAILED: Please try again!');
+			setIsConfirmLoading(false);
+		}
+		
+	}
+
 	function sendMail() {
 		if (tailors?.length > 0) {
 			let tailorEmail = tailors
