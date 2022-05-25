@@ -1,7 +1,7 @@
-import { FunctionComponent, MouseEventHandler, useEffect, useState } from "react";
-import icon from './icon.svg';
-import { useDropzone } from 'react-dropzone';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import { FunctionComponent, useEffect, useState } from "react";
+import { useDropzone } from 'react-dropzone';
+import icon from './icon.svg';
 type IFile = {
 	file: File;
 	blobUrl: string;

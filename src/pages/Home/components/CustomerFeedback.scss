@@ -1,0 +1,45 @@
+.customer-fb-container {
+    background-color: #FFFFFF;
+    padding: 96px 80px;
+    .customer-fb-content {
+        padding-inline: 40px;
+    }
+    .title {
+        margin-bottom: 64px;
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 36px;
+        line-height: 44px;
+        /* identical to box height, or 122% */
+        text-align: center;
+        letter-spacing: -0.02em;
+
+        /* Gray/900 */
+        color: #101828;
+    }
+
+    .comment {
+        margin-top: 47.5px;
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 36px;
+        line-height: 44px;
+        /* or 122% */
+        letter-spacing: -0.02em;
+    }
+}
+
+.avt {
+    width: 56px;
+    height: 56px;
+}
+
+.job-address {
+    margin-left: 16px;
+}
+
+.rating {
+    margin-top: 16px;
+}

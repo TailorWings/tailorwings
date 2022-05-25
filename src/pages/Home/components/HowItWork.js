@@ -31,12 +31,12 @@ function HomeHowItWork(props) {
 					<img src={ isENG ?  howItWork : howItWorkVN} alt="how-it-work" />
 				)}
 			</div>
-			<div className="c-home-how-it-work__title">
+			{/* <div className="c-home-how-it-work__title">
 				<Title title={t('mainTitle')} subtitle={t('mainSubTitle')} textStyle="bigCenter" />
 			</div>
 			<div onClick={handleStart && handleStart}>
 				<LargeButton text={t('getStarted')} />
-			</div>
+			</div> */}
 		</div>
 	);
 }

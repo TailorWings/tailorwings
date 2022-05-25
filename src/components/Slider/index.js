@@ -4,12 +4,12 @@ import leftArrowIcon from '../../assets/icons/slider-arrow-left.png';
 import rightArrowIcon from '../../assets/icons/slider-arrow-right.png';
 import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
-Slider.propTypes = {
-	swiperRef: PropTypes.object,
-	onSlideChange: PropTypes.func,
-	isDisplayActionBtn: PropTypes.bool,
-	onBeforeNext: PropTypes.func,
-};
+// Slider.propTypes = {
+// 	swiperRef: PropTypes.object,
+// 	onSlideChange: PropTypes.func,
+// 	isDisplayActionBtn: PropTypes.bool,
+// 	onBeforeNext: PropTypes.func,
+// };
 
 Slider.defaultProps = {
 	swiperRef: null,

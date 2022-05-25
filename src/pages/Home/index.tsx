@@ -8,23 +8,25 @@ import HomeHowItWork from './components/HowItWork';
 import { orderBy } from 'lodash';
 import { fetchAllRealTime } from '../../services/API/firebaseAPI';
 import { updateFabricTypes, updateStylesOfClothe } from '../../app/ReduxSlices/commonSlice';
+import { GetStarted } from './components/GetStarted';
+import { CustomerFeedbackComponent } from './components/CustomerFeedback';
 
 function HomePage() {
 	/*--------------*/
 	const history = useHistory();
-	const currentCustomer = useSelector((state) => state.common.currentCustomer);
+	const currentCustomer = useSelector((state) => ((state as any).common as any).currentCustomer);
 	const dispatch = useDispatch();
 	/*--------------*/
 
 	useEffect(() => {
 		let isMounted = true;
 		if (isMounted) {
-			fetchAllRealTime('stylesOfClothe', (results) => {
+			fetchAllRealTime('stylesOfClothe', (results: any) => {
 				var newList = orderBy(results, ['order'], ['asc']);
 				const action_updateStylesOfClothe = updateStylesOfClothe(newList);
 				dispatch(action_updateStylesOfClothe);
 			});
-			fetchAllRealTime('fabricTypes', (results) => {
+			fetchAllRealTime('fabricTypes', (results: any) => {
 
 				const action_updateFabricTypes = updateFabricTypes(results);
 				dispatch(action_updateFabricTypes);
@@ -51,7 +53,9 @@ function HomePage() {
 	return (
 		<div className="l-home">
 			<HomeBanner />
+			<GetStarted/>
 			<HomeHowItWork handleStart={handleStart} />
+			<CustomerFeedbackComponent/>
 			{/* <Login /> */}
 		</div>
 	);
