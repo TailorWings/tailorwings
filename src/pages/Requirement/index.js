@@ -110,7 +110,7 @@ function RequirementPage() {
 		var invalidSideList = [];
 		designFiles.forEach(design => {
 			if (['front', 'back', 'side'].indexOf(design.side) >= 0){
-				if (design.photoNotes == null || design.photoNotes.some(p => p == null)) {
+				if (design.photoNotes == null || !design.photoNotes.some(p => p != null)) {
 					invalidSideList.push(design.side);
 				}
 			}
@@ -127,6 +127,9 @@ function RequirementPage() {
 			let updatedOrderDetail = { ...orderDetail };
 			updatedOrderDetail.designStyle = styles.find((style) => style.active).id || null;
 			// updatedOrderDetail.designFiles = [...designFiles]; deprecated
+			designFiles.forEach(design => {
+				design.photoNotes = design.photoNotes.filter(p => p != null);
+			})
 			updatedOrderDetail.localDesignFiles = [...designFiles];
 			/*--------------*/
 			const action_setOrderDetail = setOrderDetail(updatedOrderDetail);
