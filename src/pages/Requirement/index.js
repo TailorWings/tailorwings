@@ -109,7 +109,7 @@ function RequirementPage() {
 
 		var invalidSideList = [];
 		designFiles.forEach(design => {
-			if (['front', 'back', 'side'].indexOf(design.side) >= 0){
+			if (['front', 'back'].indexOf(design.side) >= 0){
 				if (design.photoNotes == null || !design.photoNotes.some(p => p != null)) {
 					invalidSideList.push(design.side);
 				}
