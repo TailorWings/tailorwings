@@ -1,4 +1,12 @@
 .video-item {
+    display: flex;
+    @media (orientation: portrait) {
+        width: 90vw;
+    }
+    @media (orientation: landscape) {
+        width: auto;
+        height: 70vh;
+    }
     position: relative;
     .icon-play {
 

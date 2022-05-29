@@ -36,9 +36,13 @@
 		@include flex(center, stretch);
 		// margin: 3.25rem;
 		// margin-left: 1.42rem;
-		&__image {
-			@include size(15.7rem, 23.2rem);
+		&__container {
 			margin-left: 1.42rem;
+		}
+		&__image {
+			width: 100%;
+			height: auto;
+			aspect-ratio: 0.7;
 			border-radius: 20px;
 			background-color: $solid-gray-color;
 			overflow: hidden;

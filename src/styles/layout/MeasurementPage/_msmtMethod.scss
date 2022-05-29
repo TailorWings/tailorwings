@@ -43,6 +43,16 @@
 	&__button {
 		margin-top: auto;
 		min-width: 210px;
+		.c-small-button-1:not(.c-small-button-1--active) {
+			border: 1px solid #D0D5DD;
+			.c-small-button-1__text {
+				color: #344054;
+			}
+		}
+		.c-small-button-1__text {
+			font-weight: 500;
+		}
+		
 	}
 	&--active {
 		background-color: $subthird-color;

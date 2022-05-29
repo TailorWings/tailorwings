@@ -39,9 +39,9 @@ function MeasurementOptions(props) {
 							className="c-msmt-options-method__item"
 						>
 							<MeasurementMethod
-								name={isENG ? name : nameVN}
-								desc={isENG ? desc : descVN}
-								buttonText={isENG ? buttonText : buttonTextVN}
+								name={t(name)}
+								desc={t(desc)}
+								buttonText={t(buttonText)}
 								isActive={active}
 							/>
 						</Link>

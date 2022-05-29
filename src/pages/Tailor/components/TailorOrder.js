@@ -19,9 +19,11 @@ function TailorOrder(props) {
 				<div className="left">
 					{rqmt?.designFiles?.length > 0 ? (
 						<img src={rqmt?.designFiles[0]} alt="rqmt" />
-					) : (
-						<Fragment />
-					)}
+					) : 
+						rqmt?.sideDesignFiles?.length > 0 ?
+							<img src={rqmt.sideDesignFiles[0].photoNotes[0].downloadUrl} alt="rqmt" />
+							: <Fragment />
+					}
 				</div>
 				<div className="right">
 					<div className="right__wrapper">

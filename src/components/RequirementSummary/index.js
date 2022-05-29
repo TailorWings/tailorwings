@@ -8,6 +8,7 @@ import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 RequiremmentSummary.propTypes = {
 	designStyle: PropTypes.string,
+	sideDesignFiles: PropTypes.array,
 	designFiles: PropTypes.array,
 	fabricType: PropTypes.string,
 	fabricPattern: PropTypes.object,
@@ -15,13 +16,14 @@ RequiremmentSummary.propTypes = {
 
 RequiremmentSummary.defaultProps = {
 	designStyle: null,
+	sideDesignFiles: null,
 	designFiles: null,
 	fabricType: null,
 	fabricPattern: null,
 };
 
 function RequiremmentSummary(props) {
-	const { designStyle, designFiles, fabricType, fabricPattern } = props;
+	const { designStyle, designFiles, fabricType, fabricPattern, sideDesignFiles } = props;
 	const { t, i18n } = useTranslation();
 	const isENG = i18n.language == 'en';
 	const stylesOfClothe = useSelector((state) => state.common.stylesOfClothe);
@@ -29,7 +31,7 @@ function RequiremmentSummary(props) {
 		return find(stylesOfClothe, { id: id });
 	};
 
-	if (!designStyle || !designFiles) return <Fragment />;
+	if (!designStyle || !(designFiles || sideDesignFiles)) return <Fragment />;
 	const styleOfClothe = getStyleOfClothe(designStyle);
 	const styleOfClotheName = isENG ? styleOfClothe?.name : styleOfClothe?.nameVN;
 
@@ -54,7 +56,7 @@ function RequiremmentSummary(props) {
 					</div>
 				</div>
 
-				{designFiles.map((file, index) => {
+				{designFiles?.length > 0 ? designFiles.map((file, index) => {
 					if (index < 5) {
 						return (
 							<div key={index} className="c-rqmt-sum-product__image">
@@ -64,7 +66,46 @@ function RequiremmentSummary(props) {
 					} else {
 						return <Fragment key={index} />;
 					}
-				})}
+				})
+				: sideDesignFiles?.length > 0 ? 
+					sideDesignFiles.map((d, i) => d.photoNotes.map((p, j) => 
+					<div className='c-rqmt-sum-product__container'>
+						<div>{d.side}</div>
+						<div key={i+j} className="c-rqmt-sum-product__image">
+							<img src={p.downloadUrl} alt="product" />
+						</div>
+						<div>Note</div>
+						<textarea rows={5} disabled={true} style={{'width': '100%', 'resize': 'none'}} defaultValue={p.note}></textarea>
+					</div>
+					
+					
+					
+					)).flat()
+							
+				: <Fragment/>
+			}
+				{/* {designFiles.map((design, index) => {
+					if (index < 5) {
+						return (
+							<div>
+								{design.side}
+							{									
+
+								design.photoNotes.map(p => {
+									<div key={index} className="c-rqmt-sum-product__image">
+									
+									{p.file && <img src={file.preview || file} alt="product" />}
+									</div>
+								})
+							}
+							
+							</div>
+							
+						);
+					} else {
+						return <Fragment key={index} />;
+					}
+				})} */}
 			</div>
 			{/* <div className="c-rqmt-sum-fabric">
 				{fabricType && (

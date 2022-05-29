@@ -286,7 +286,7 @@ function OrderDetail(props) {
 	if (!currentOrderDetail) {
 		return <Redirect to="/account" />;
 	}
-	const { designFiles, designStyle, fabric, notes, notesVN, status } = currentOrderDetail;
+	const { designFiles, sideDesignFiles, designStyle, fabric, notes, notesVN, status } = currentOrderDetail;
 	const msmtList = convertToMsmtList(currentOrderDetail);
 
 	return (
@@ -342,7 +342,8 @@ function OrderDetail(props) {
 				<Accordion title={t('account.summary')} isActive={false}>
 					<div className="c-order-detail-summary__rqmt">
 						<RequirementSummary
-							designFiles={designFiles || null}
+							designFiles={designFiles}
+							sideDesignFiles={sideDesignFiles}
 							designStyle={designStyle || null}
 							fabricPattern={fabric?.pattern || null}
 							fabricType={fabric?.type || null}

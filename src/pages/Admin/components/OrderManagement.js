@@ -394,7 +394,7 @@ function OrderManagement(props) {
 				);
 				return {
 					id: order.id,
-					image: designFiles[0],
+					image: designFiles ? designFiles[0] : null,
 					customer: customer.displayName || customer.phone,
 					orderDate,
 					offers: tailorOrder?.offers || [],

@@ -10,7 +10,7 @@ const DATA: CustomerFeedback[] = [
     {
         name: 'Katie',
         address: 'England',
-        job: 'Data Engineer',
+        // job: 'Data Engineer',
         profileImageUrl: '',
         productImageUrl: 'assets/images/feedback/Katie.png',
         feedback: {
@@ -21,7 +21,7 @@ const DATA: CustomerFeedback[] = [
     {
         name: 'Annie',
         address: 'Hartland Devon',
-        job: 'Data Engineer',
+        // job: 'Data Engineer',
         profileImageUrl: '',
         productImageUrl: 'assets/images/feedback/Annie.png',
         feedback: {
@@ -32,7 +32,7 @@ const DATA: CustomerFeedback[] = [
     {
         name: 'Lydia',
         address: 'Pittsburgh',
-        job: 'Data Engineer',
+        // job: 'Data Engineer',
         // profileImageUrl: 'assets/images/feedback/Avatar.png',
         productImageUrl: 'assets/images/feedback/Lydia.png',
         feedback: {
@@ -43,7 +43,7 @@ const DATA: CustomerFeedback[] = [
     {
         name: 'Anne',
         address: 'Viet Nam',
-        job: 'Data Engineer',
+        // job: 'Data Engineer',
         // profileImageUrl: 'assets/images/feedback/Avatar.png',
         productImageUrl: 'assets/images/feedback/Anne.png',
         feedback: {
@@ -54,7 +54,7 @@ const DATA: CustomerFeedback[] = [
     {
         name: 'Evan',
         address: 'Viet Nam',
-        job: 'Data Engineer',
+        // job: 'Data Engineer',
         // profileImageUrl: 'assets/images/feedback/Avatar.png',
         productImageUrl: 'assets/images/feedback/Evan.png',
         feedback: {
@@ -139,9 +139,9 @@ function desktopUI(cfb: CustomerFeedback) {
             <Box className="avt-rating" display="flex" flexDirection="column">
                 <Box display="flex" flexDirection="row" alignItems="center">
                     {!!cfb.profileImageUrl ? <img className="avt" src={cfb.profileImageUrl} /> : <Fragment/>}
-                    <div style={{'marginLeft': cfb.profileImageUrl != '' ? '16px' : '0px'}}>
+                    <div style={{'marginLeft': !!cfb.profileImageUrl ? '16px' : '0px'}}>
                         <div className="customer-name">{cfb.name}</div>
-                        <div className="job-address">{cfb.job}, {cfb.address}</div>
+                        <div className="job-address">{!!cfb.job ? cfb.job + ', ' : ''}{cfb.address}</div>
                     </div>
                 </Box>
                 {ratingUI(cfb)}

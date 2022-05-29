@@ -105,11 +105,17 @@ function OrderItem(props) {
 	return (
 		<Link className="c-order-item" to={`/account/detail?id=${info.id}`}>
 			<div className="c-order-item__image">
-				{info.designFiles && info.designFiles.length > 0 ? (
+				{
+				info.designFiles && info.designFiles.length > 0 ? 
+				(
 					<img src={info.designFiles[0]} alt="design" />
-				) : (
-					<Fragment />
-				)}
+				) 
+				: 
+					info?.sideDesignFiles?.length > 0? 
+					<img src={info.sideDesignFiles[0].photoNotes[0].downloadUrl} alt="design" />
+					: <Fragment/>
+			
+				}
 			</div>
 			{handleContentRender()}
 		</Link>

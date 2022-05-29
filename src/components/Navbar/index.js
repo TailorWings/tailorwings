@@ -95,12 +95,13 @@ function Navbar({type}) {
 						</Link>
 					)}
 					<div className="c-navbar__right-content">
-						{ type === 'customer' ? customerLoginStatusRender() : tailorLoginStatusRender()}
-						{/* <LanguageSwitcher /> */}
-
 						<div className="c-navbar__languages">
 							<LanguagesDropdown />
 						</div>
+						{ type === 'customer' ? customerLoginStatusRender() : tailorLoginStatusRender()}
+						{/* <LanguageSwitcher /> */}
+
+						
 					</div>
 				</div>
 			</div>

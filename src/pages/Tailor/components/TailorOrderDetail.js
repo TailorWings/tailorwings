@@ -13,6 +13,7 @@ import MaterialAlert from '../../../components/MaterialAlert';
 import { updateDocument } from '../../../services/API/firebaseAPI';
 import { finalPriceCalc } from '../../../services/Functions/commonFunctions';
 import emailjs from 'emailjs-com';
+import { useTranslation } from 'react-i18next';
 
 function TailorOrderDetail() {
 	/*------------------------------*/
@@ -32,6 +33,7 @@ function TailorOrderDetail() {
 	const [currentOfferError, setCurrentOfferError] = useState({});
 	const [offerAlready, setOfferAlready] = useState(true);
 	const [alertOpen, setAlertOpen] = useState(false);
+	const t = useTranslation();
 	/*------------------------------*/
 	const sliderRef = useRef();
 	/*------------------------------*/
@@ -219,6 +221,8 @@ function TailorOrderDetail() {
 			  })
 			: null;
 	let notes = rqmt?.notes ? rqmt.notes.filter((note) => note) : [];
+	let photoNoteCount = 0;
+	rqmt.sideDesignFiles?.forEach(d => photoNoteCount = photoNoteCount + (d.photoNotes?.length ?? 0));
 	/*------------------------------*/
 	return (
 		<div className="tailor-order-detail">
@@ -228,17 +232,18 @@ function TailorOrderDetail() {
 					className={'flickity-carousel'} // default ''
 					elementType={'div'} // default 'div'
 					options={{
-						wrapAround: true,
-						prevNextButtons: false,
+						wrapAround: false,
+						prevNextButtons: true,
 						pageDots: false,
-						freeScroll: rqmt.designFiles.length > 2,
-						initialIndex: rqmt.designFiles.length > 2 ? 1 : 0,
+						freeScroll: false,
+						initialIndex: Math.min(3, photoNoteCount/2),
 					}} // takes flickity options {}
 					disableImagesLoaded={false} // default false
 					reloadOnUpdate // default false
 					static // default false
 				>
-					{rqmt.designFiles.map((file, i) => {
+					{
+					rqmt.designFiles?.length > 0 ? rqmt.designFiles?.map((file, i) => {
 						return (
 							<img
 								className="-image"
@@ -248,7 +253,31 @@ function TailorOrderDetail() {
 								key={i}
 							/>
 						);
-					})}
+					})
+					: 
+					rqmt.sideDesignFiles?.length > 0?
+					rqmt.sideDesignFiles.map(
+						d => d.photoNotes.map(
+							(p, i) => <div key={i} className='design-item'>
+								<span>{d.side}</span>
+								<img
+									className="-image"
+									src={p.downloadUrl}
+									data-flickity-lazyload={p.downloadUrl}
+									alt="design"
+									key={i}
+								/>
+								<div style={{'marginTop': '8px'}}>Note:</div>
+								<textarea rows={5} disabled={true} defaultValue={p.note}>
+								</textarea>
+							</div>
+						)
+					).flat()
+						:<Fragment/>
+				
+				}
+
+
 				</Flickity>
 			</div>
 			<div className="tailor-order-detail__wrapper">

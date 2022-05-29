@@ -30,15 +30,15 @@
     },
     "measurement": {
         "title": "Your measurement",
-        "subTitle": "Build a personalized measurement profile in minutes. Whether you are dressing for work or that style blog side hustle, get ready to be spoiled by the best fit of your life.",
+        "subTitle": "We recommend you provide measurements to get the best fit for your clothes.",
         "measureOnline": {
             "title": "Measure Online",
-            "subTitle": "Just follow the instructions and you will get a perfect fit.",
-            "buttonText": "View Guidance Images"
+            "subTitle": "Just follow these simple steps it just takes a few minutes.",
+            "buttonText": "View Guide"
         },
         "standardSize": {
             "title": "Standard Size",
-            "subTitle": "Choose your right size below",
+            "subTitle": "Choose your known standard size below.",
             "buttonText": "Pick Sizes"
         },
         "pleaseSelectSize": "Please select standard size that fit you!",
@@ -118,6 +118,9 @@
     "backPhotos": "Back photos",
     "sidePhotos": "Side photos",
     "otherPhotos": "Other photos",
-    "writeNoteHere": "Write notes"
+    "writeNoteHere": "Write notes",
+    "canTakeMeasurementsYourself": "Can't take measurements yourself? We will help you!",
+    "onlineAppointment": "Online Appointment",
+    "offlineAppointment": "Offline Appointment"
 
 }
