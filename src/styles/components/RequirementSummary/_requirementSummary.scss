@@ -6,9 +6,9 @@
 		pointer-events: none;
 		width: 12rem;
 		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		height: 100%;
+		// flex-direction: column;
+		// justify-content: space-between;
+		// height: 100%;
 		&__image{
 			@include size(12rem);
 			border-radius: 16px;

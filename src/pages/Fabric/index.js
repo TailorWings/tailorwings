@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router';
-import { setOrderDetail, setPatterns } from '../../app/ReduxSlices/commonSlice';
+import { controlLogin, setOrderDetail, setPatterns } from '../../app/ReduxSlices/commonSlice';
 import MaterialAlert from '../../components/MaterialAlert';
 import Popup from '../../components/Popup';
 import FabricContent from '../../components/Popup/FabricContent';
@@ -31,7 +31,7 @@ function FabricPage() {
 	const fabricTypes = useSelector((state) => state.common.fabricTypes);
 
 	const { t, i18n } = useTranslation();
-
+	const currentCustomer = useSelector((state) => state.common.currentCustomer);
 	/*--------------*/
 	const [alertOpen, setAlertOpen] = useState(false);
 	// const [popupShow, setPopupShow] = useState(
@@ -235,6 +235,12 @@ function FabricPage() {
 	 *  Description: handle confirm
 	 */
 	function handleConfirm() {
+
+		if (!currentCustomer) {
+			const action_controlLogin = controlLogin(true);
+			dispatch(action_controlLogin);
+			return;
+		}
 		let selectedFabricType = fabricType.find((type) => {
 			return type.active;
 		});

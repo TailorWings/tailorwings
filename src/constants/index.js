@@ -114,7 +114,7 @@ export const FABRIC_BUY_TYPES = [
 	},
 	{
 		id: 'TAILOR_WINGS_PARTNER',
-		title: "Other supplier's fabric",
+		title: "Help me buy fabric",
 		description: 'We will get in contact to help you buy fabric after you place the order.',
 		titleVN: "Vải của nhà cung cấp khác",
 		descriptionVN: 'Chúng tôi sẽ liên hệ để giúp bạn mua vải sau bước đặt hàng',

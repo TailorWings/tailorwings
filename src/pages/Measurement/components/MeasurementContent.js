@@ -1,30 +1,33 @@
 import PropTypes from 'prop-types';
 import React, { Fragment, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { setOrderDetail } from '../../../app/ReduxSlices/commonSlice';
+import { NavFooter } from '../../../components/Footer/NavFooter/NavFooter';
 import MaterialAlert from '../../../components/MaterialAlert';
 import Popup from '../../../components/Popup';
 import OnlineMsmtContent from '../../../components/Popup/OnlineMsmtContent';
 import { ONLINE_MEASUREMENTS, STANDARD_SIZES } from '../../../constants';
 import { updateDocument } from '../../../services/API/firebaseAPI';
-// import OfflineMethod from './OfflineMethod';
-import OnlineMethod from './OnlineMethod';
+import { BODY_METRICS, PRODUCT_METRICS } from '../constants/measurement';
+import { MeasurementOnline } from './online/MeasurementOnline';
 import StandardSizeMethod from './StandardSizeMethod';
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
 
 MeasurementContent.propTypes = {
 	match: PropTypes.object,
 	measurements: PropTypes.array,
+	onSubmit: PropTypes.func
 };
 
 MeasurementContent.defaultProps = {
 	match: null,
 	measurements: null,
+	submited: false
 };
 
 function MeasurementContent(props) {
-	const { match } = props;
+	const { match, onSubmit } = props;
 	const history = useHistory();
 	const orderDetail = useSelector((state) => state.common.orderDetail);
 	const currentCustomer = useSelector((state) => state.common.currentCustomer);
@@ -197,13 +200,16 @@ function MeasurementContent(props) {
 	/************_END_****************/
 
 	const [isViewFullList, setIsViewFullList] = useState(false);
-
+	var measurementOnlineFn;
 	function handleShowFullList() {
 		setIsViewFullList(true);
 	}
 
+	const [alertMsg, setAlertMsg] = useState('');
+
 	if (!match) return <Fragment />;
 	return (
+		<div>
 		<div className="c-measurement-content">
 			<Switch>
 				{/* <Route
@@ -220,11 +226,11 @@ function MeasurementContent(props) {
 					)}
 					exact
 				/> */}
-				<Route
+				{/* <Route
 					path={`${match.path}/online`}
 					component={() => (
 						<OnlineMethod
-							match={match}
+							// match={match}
 							measurements={onlineMsmt}
 							designStyle={orderDetail.designStyle}
 							onMeasurementConfirm={handleOnlineConfirm}
@@ -235,12 +241,21 @@ function MeasurementContent(props) {
 						/>
 					)}
 					exact
+				/> */}
+				<Route
+					path={`${match.path}/online`}
+					component={() => (
+						<MeasurementOnline
+							// match={match}
+						/>
+					)}
+					exact
 				/>
 				<Route
 					path={`${match.path}/standard-size`}
 					component={() => (
 						<StandardSizeMethod
-							match={match}
+							// match={match}
 							standardSizes={standardSizes}
 							onSizeClick={handleStandardSizeChange}
 							onNextClick={handleStandardConfirm}
@@ -258,8 +273,27 @@ function MeasurementContent(props) {
 			<Popup show={popupShow} setPopupShow={setPopupShow}>
 				<OnlineMsmtContent onButtonClick={handleMsmtSaving} />
 			</Popup>
+			
 		</div>
+		
+		</div>
+		
 	);
 }
 
 export default MeasurementContent;
+
+function initBodyMetric() {
+    const bodyModel = {
+        'height': null,
+        'weight': null
+    };
+    BODY_METRICS.forEach(m => bodyModel[m] = null);
+    return bodyModel;
+}
+function initProductMetric() {
+    const bodyModel = {
+    };
+    PRODUCT_METRICS.forEach(m => bodyModel[m] = null);
+    return bodyModel;
+}

@@ -23,7 +23,7 @@ function StandardSizeMethod(props) {
 
 	if (!standardSizes || !onSizeClick) return <Fragment />;
 	return (
-		<div className="c-msmt-standard-size">
+		<div className="c-msmt-standard-size container">
 			<p className="c-msmt-standard-size__title">{t('measurement.listOfStandardSizes')}</p>
 			<div className="c-msmt-standard-size__selection">
 				<Picker list={standardSizes} onItemClick={onSizeClick} />

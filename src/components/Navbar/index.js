@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import MediumButton from '../Button/MediumButton';
 import AvatarDropdown from '../Dropdown/AccountDropdown';
 import LanguagesDropdown from '../Dropdown/LanguagesDropdown';
-import logo from '../../assets/images/logo.svg';
+import {ReactComponent as Logo} from '../../assets/images/logo.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { controlLogin } from '../../app/ReduxSlices/commonSlice';
 import Login from '../Login';
@@ -89,9 +89,9 @@ function Navbar({type}) {
 		<nav className="c-navbar">
 			<div className="wrapper">
 				<div className="container c-navbar__container">
-					{logo && (
+					{Logo && (
 						<Link to="/" style={{display: 'flex'}}>
-							<img src={logo} alt="logo" className="c-navbar__logo" />
+							<Logo className='c-navbar__logo'/>
 						</Link>
 					)}
 					<div className="c-navbar__right-content">

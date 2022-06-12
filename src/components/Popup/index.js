@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import reactDom from 'react-dom';
 
-Popup.propTypes = {
-	show: PropTypes.bool,
-	setPopupShow: PropTypes.func,
-	isBackdropClick: PropTypes.bool,
-};
+// Popup.propTypes = {
+// 	show: PropTypes.bool,
+// 	setPopupShow: PropTypes.func,
+// 	isBackdropClick: PropTypes.bool,
+// };
 
 Popup.defaultProps = {
 	show: false,

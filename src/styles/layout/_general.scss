@@ -10,8 +10,15 @@
 	padding: 0 2rem;
 }
 
+// .page-content {
+// 	min-height: calc(100vh - 65px); // minus header's height
+// 	.container {
+// 		height: 100%;
+// 	}
+// }
+
 .content {
-	min-height: 100vh;
+	min-height: calc(100vh - 65px);
 	overflow: hidden;
 }
 

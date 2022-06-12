@@ -15,7 +15,10 @@
 	}
 	&__logo {
 		display: inline-block;
-		filter: invert(58%) sepia(80%) saturate(1240%) hue-rotate(341deg) brightness(99%) contrast(96%);
+		path {
+			fill: $primary-color;
+		}
+		// filter: invert(58%) sepia(80%) saturate(1240%) hue-rotate(341deg) brightness(99%) contrast(96%);
 		@include size(18rem, 2.1rem);
 	}
 	&__account {

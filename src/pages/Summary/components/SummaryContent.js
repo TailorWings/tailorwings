@@ -39,6 +39,8 @@ import { useTranslation, withTranslation, Trans } from 'react-i18next';
 import ShippingForm from '../../../components/Form/ShippingForm';
 import Accordion from '../../../components/Accordion';
 import PaymentInfo from '../../../components/PaymentInfo';
+import TextInput from '../../TestForm/TextInput';
+import { Grid } from '@material-ui/core';
 
 SummaryContent.propTypes = {
 	msmtMethod: PropTypes.object,
@@ -101,6 +103,7 @@ function SummaryContent(props) {
 			setShippingInfo(currentCustomer.shippingInfo);
 		}
 	}, [currentCustomer]);
+
 	useEffect(() => {
 		if (orderDetail) {
 			/*--------------*/
@@ -137,6 +140,8 @@ function SummaryContent(props) {
 			}
 		}
 	}, [orderDetail, orderDetail.stdSize]);
+
+
 	useEffect(() => {
 		async function fetchTailor() {
 			let tailors = await fetchAll('tailors');
@@ -154,7 +159,27 @@ function SummaryContent(props) {
 		let renderComponent = <Fragment />;
 		switch (msmtMethod.method) {
 			case 'online':
-				renderComponent = <OnlineMeasurement measurements={onlineMsmt} />;
+				// renderComponent = <OnlineMeasurement measurements={onlineMsmt} />;
+				renderComponent = <div className="c-online-msmt-sum">
+					<Grid container spacing={2}>
+					{Object.keys(orderDetail.msmt).map((metricKey, index) => {
+						return (
+							<Grid item>
+								<TextInput
+											label={t(metricKey)}
+											value={orderDetail.msmt[metricKey]}
+											suffix="(cm)"
+											disabled
+											maxlength="3"
+										/>
+							</Grid>
+						);
+					})}
+
+					</Grid>
+					
+				</div>
+				
 				break;
 			// case 'offline':
 			// 	renderComponent = <OfflineMeasurement estimatedSize={TEST_ESTIMATE_SIZE_SUM} />;
@@ -437,10 +462,12 @@ function SummaryContent(props) {
 			<div className="c-summary-content__title">
 				<Title title={t('summary.summary')} subtitle={t('summary.description')} />
 			</div>
+
 			<div className="c-summary-content__rqmt">
 				<RequiremmentSummary
 					designStyle={orderDetail.designStyle}
-					designFiles={orderDetail.designFiles}
+					// designFiles={orderDetail.designFiles}
+					sideDesignFiles={orderDetail.localDesignFiles}
 					fabricType={orderDetail.fabric.type}
 					fabricPattern={orderDetail.fabric.pattern}
 				/>

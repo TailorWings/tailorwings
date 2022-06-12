@@ -24,7 +24,7 @@ function MeasurementOptions(props) {
 	const { match, methods, onMethodClick } = props;
 	if (!match || !methods || !onMethodClick) return <Fragment />;
 	return (
-		<div className="c-msmt-options">
+		<div className="c-msmt-options container">
 			<div className="c-msmt-options__title">
 				<Title title={t('measurement.title')} subtitle={t('measurement.subTitle')} />
 			</div>

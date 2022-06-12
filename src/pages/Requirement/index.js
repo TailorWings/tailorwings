@@ -8,6 +8,8 @@ import RqmtDesignStyle from './components/RqmtDesignStyle';
 import RqmtDesignUpload from './components/RqmtDesignUpload';
 import RqmtFooter from './components/RqmtFooter';
 import { useTranslation, withTranslation, Trans } from 'react-i18next';
+import { NavFooter } from '../../components/Footer/NavFooter/NavFooter';
+import { Box } from '@material-ui/core';
 
 function RequirementPage() {
 	const history = useHistory();
@@ -25,12 +27,12 @@ function RequirementPage() {
 	const [styles, setStyles] = useState(
 		stylesOfClothe && stylesOfClothe.length
 			? stylesOfClothe.map((style) => {
-					return {
-						id: style.id,
-						name: i18n.language == 'en' ? style.name : style.nameVN,
-						active: false,
-					};
-			  })
+				return {
+					id: style.id,
+					name: i18n.language == 'en' ? style.name : style.nameVN,
+					active: false,
+				};
+			})
 			: []
 	);
 	/*--------------*/
@@ -45,15 +47,15 @@ function RequirementPage() {
 		setStyles(
 			stylesOfClothe && stylesOfClothe.length
 				? stylesOfClothe.map((style) => {
-						return {
-							id: style.id,
-							name: i18n.language == 'en' ? style.name : style.nameVN,
-							active: false,
-						};
+					return {
+						id: style.id,
+						name: i18n.language == 'en' ? style.name : style.nameVN,
+						active: false,
+					};
 				})
 				: []
 		);
-	}, i18n.language);
+	}, [i18n.language]);
 
 	useEffect(() => {
 		if (orderDetail) {
@@ -109,7 +111,7 @@ function RequirementPage() {
 
 		var invalidSideList = [];
 		designFiles.forEach(design => {
-			if (['front', 'back'].indexOf(design.side) >= 0){
+			if (['front', 'back'].indexOf(design.side) >= 0) {
 				if (design.photoNotes == null || !design.photoNotes.some(p => p != null)) {
 					invalidSideList.push(design.side);
 				}
@@ -143,21 +145,31 @@ function RequirementPage() {
 	/************_END_****************/
 	// if (!currentCustomer) return <Redirect to="/" />;
 	return (
-		<section className="l-requirement container">
-			<RqmtDesignStyle styles={styles} onStyleClick={handleStylesStatus} />
-			{styles?.find((style) => style.active) && (
-				<>
-					<RqmtDesignUpload setDesignFiles={setDesignFiles} />
-					<RqmtFooter onNextClick={handleNextClick} disabled={confirmDisable} />
-				</>
-			)}
-			<MaterialAlert
-				open={alertOpen}
-				setOpen={setAlertOpen}
-				content={alertMsg}
-				serverity="error"
-			/>
-		</section>
+		<Box className='content' display='flex' flexDirection='column'>
+			<Box flex={1} className="l-requirement container">
+				<RqmtDesignStyle styles={styles} onStyleClick={handleStylesStatus} />
+				{styles?.find((style) => style.active) && (
+					<>
+						<RqmtDesignUpload setDesignFiles={setDesignFiles} />
+
+						{/* <RqmtFooter onNextClick={handleNextClick} disabled={confirmDisable} /> */}
+					</>
+				)}
+				<MaterialAlert
+					open={alertOpen}
+					setOpen={setAlertOpen}
+					content={alertMsg}
+					serverity="error"
+				/>
+			</Box>
+			<NavFooter 
+			backLabel={t('back')} 
+			nextLabel={t('chooseFabric')}
+			onBackClicked={() => history.goBack()}
+			onNextClicked={() => handleNextClick()}
+			></NavFooter>
+		</Box>
+
 	);
 }
 

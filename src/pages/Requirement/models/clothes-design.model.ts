@@ -8,6 +8,8 @@ export enum SideEnum {
 export interface PhotoWithNote {
     file: File;
     note?: string;
+    downloadUrl?: string;
+    blobUrl?: string;
 }
 export interface ClothesDesign {
     side: SideEnum;
