@@ -81,8 +81,8 @@ function MeasurementPage() {
 	function onSubmit(values: any) {
 		console.log(values);
 	}
-	function smallButton(text: string) {
-		return <SmallButton2 text={t(text)}></SmallButton2>;
+	function smallButton(text: string, link: string) {
+		return <SmallButton2 onClick={() => window.open(link, "_blank")} text={t(text)}></SmallButton2>;
 	}
 	/************_END_****************/
 	// if (!currentCustomer) return <Redirect to="/" />;
@@ -93,10 +93,10 @@ function MeasurementPage() {
 				<span className='question'>{t('canTakeMeasurementsYourself')}</span>
 				<div className='button-container'>
 					<div>
-						{smallButton('onlineAppointment')}
+						{smallButton('onlineAppointment', "http://m.me/TailorWings")}
 					</div>
 					<div className='btn-offline'>
-						{smallButton('offlineAppointment')}
+						{smallButton('offlineAppointment', "https://calendly.com/tailorwings/15min")}
 					</div>
 				</div>
 

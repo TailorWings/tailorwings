@@ -135,6 +135,7 @@ export const BodyMeasurement: FunctionComponent<BodyMeasurementProps> = (props: 
                             label={t('weight')}
                             {...registerFn('weight')}
                             value={dataModel.weight}
+                            unit='kg'
                             onChange={(val) => updateModel('weight', val)}
                         ></MeasurementInput>
                     </div>
@@ -175,7 +176,7 @@ export const BodyMeasurement: FunctionComponent<BodyMeasurementProps> = (props: 
                                 value={dataModel[metric]}></MeasurementInput>
                         </div>
                         <div className="metric-image">
-                            <img src={bodyGuide} />
+                        <img src={'/assets/images/Body_Measurement/' + metric + '.png'} />
                         </div>
                         <div className="metric-description">
                             {t(metric + 'Description')}
@@ -200,7 +201,7 @@ export const BodyMeasurement: FunctionComponent<BodyMeasurementProps> = (props: 
                                 value={dataModel[metric]}></MeasurementInput>
                         </div>
                         <div className="metric-image">
-                            <img src={bodyGuide} />
+                        <img src={'/assets/images/Body_Measurement/' + metric + '.png'} />
                         </div>
                         <div className="metric-description">
                             {t(metric + 'Description')}

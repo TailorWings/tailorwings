@@ -6,6 +6,7 @@ interface MeasurementInputProps {
     className?: string;
     label: string;
     value?: any;
+    unit?: string;
     onChange?: (newValue: any) => void;
 }
 
@@ -16,7 +17,7 @@ export const MeasurementInput: FunctionComponent<MeasurementInputProps> = (props
         <div className="input-with-suffix">
             <input value={props.value ?? ''} onChange={(e) => onChange(e.target.value)}></input>
             <div className="suffix">
-                <span>cm</span>
+                <span>{props.unit ? props.unit : 'cm'}</span>
                 <img className="arrow-icon" src={arrow} />
             </div>
         </div>

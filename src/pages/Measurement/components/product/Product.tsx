@@ -137,7 +137,7 @@ export const ProductMeasurement: FunctionComponent<ProductMeasurementProps> = (p
                                 value={dataModel[metric]}></MeasurementInput>
                         </div>
                         <div className="metric-image">
-                            <img src={bodyGuide} />
+                        <img src={'/assets/images/Product_Measurement/' + metric + '.png'} />
                         </div>
                         <div className="metric-description">
                             {t(metric + 'Description')}
@@ -163,7 +163,7 @@ export const ProductMeasurement: FunctionComponent<ProductMeasurementProps> = (p
                                 value={dataModel[metric]}></MeasurementInput>
                         </div>
                         <div className="metric-image">
-                            <img src={bodyGuide} />
+                        <img src={'/assets/images/Product_Measurement/' + metric + '.png'} />
                         </div>
                         <div className="metric-description">
                             {t(metric + 'Description')}

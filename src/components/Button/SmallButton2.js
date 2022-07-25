@@ -6,6 +6,7 @@ import classNames from 'classnames';
 SmallButton2.propTypes = {
 	text: PropTypes.string,
 	isActive: PropTypes.bool,
+	onClick: PropTypes.func
 };
 
 SmallButton2.defaultProps = {
@@ -14,9 +15,9 @@ SmallButton2.defaultProps = {
 };
 
 function SmallButton2(props) {
-	const { text, isActive } = props;
+	const { text, isActive, onClick } = props;
 	return (
-		<button className={classNames('c-small-button-2', { 'c-small-button-2--active': isActive })}>
+		<button onClick={() => onClick != null ? onClick() : null} className={classNames('c-small-button-2', { 'c-small-button-2--active': isActive })}>
 			<span className="c-small-button-2__text">{text}</span>
 		</button>
 	);
