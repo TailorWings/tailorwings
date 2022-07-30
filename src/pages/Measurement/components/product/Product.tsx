@@ -2,13 +2,12 @@ import { Box, Grid } from "@material-ui/core";
 import { Fragment, FunctionComponent, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
-import { PRODUCT_METRICS } from "../../constants/measurement";
-import { MeasurementInput } from "../input/MeasurementInput";
-import bodyGuide from './body_guide.png';
 import Swiper from 'react-id-swiper';
+import { useSelector } from "react-redux";
 import Slider from "../../../../components/Slider";
 import { useWindowSize } from "../../../../hooks/WindowResizeHook";
+import { PRODUCT_METRICS, STYLE_PRODUCT_METRICS_MAP } from "../../constants/measurement";
+import { MeasurementInput } from "../input/MeasurementInput";
 
 type ProductMeasurementProps = {
     setMetric?: (metrics: any) => void;
@@ -42,14 +41,15 @@ export const ProductMeasurement: FunctionComponent<ProductMeasurementProps> = (p
     /// STATES
     const orderDetail = useSelector((state) => (state as any).common.orderDetail);
     const currentCustomer = useSelector((state) => (state as any).common.currentCustomer);
-    const [dataModel, setDataModel] = useState(initModel({}));
+    const ProductMetricList = getProductMetrics(orderDetail.designStyle);
+    const [dataModel, setDataModel] = useState(initModel({}, ProductMetricList));
     const { register, reset, handleSubmit, getValues, setValue, formState: { errors, isValid }, trigger } = useForm({
         defaultValues: { ...dataModel },
         mode: 'all',
         'reValidateMode': 'onChange'
     });
     const [isShowMoreClicked, setIsShowMoreClicked] = useState(false);
-    const [itemsToShow, setItemsToShow] = useState(isShowMoreClicked ? PRODUCT_METRICS.length : 4);
+    const [itemsToShow, setItemsToShow] = useState(isShowMoreClicked ? ProductMetricList.length : 4);
 
     let isSubmited = (submitedCount ?? 0) > 0;
 
@@ -58,7 +58,7 @@ export const ProductMeasurement: FunctionComponent<ProductMeasurementProps> = (p
     /// EFFECTS
     useEffect(() => {
         if (isShowMoreClicked) {
-            setItemsToShow(PRODUCT_METRICS.length);
+            setItemsToShow(ProductMetricList.length);
         } else {
             setItemsToShow(4);
         }
@@ -126,7 +126,7 @@ export const ProductMeasurement: FunctionComponent<ProductMeasurementProps> = (p
     function mobileUI() {
         return <div style={{'marginTop': '32px'}}><Slider swiperRef={swiperRef}>
             <Swiper {...params} ref={swiperRef}>
-                {PRODUCT_METRICS.map((metric, i) =>
+                {ProductMetricList.map((metric, i) =>
                     <div key={i}>
                         <div>
                             <MeasurementInput
@@ -153,7 +153,7 @@ export const ProductMeasurement: FunctionComponent<ProductMeasurementProps> = (p
         return <Box className="body-metric-container">
             <Grid container spacing={3}>
                 {Array(itemsToShow).fill(1).map((_, i) => {
-                    var metric = PRODUCT_METRICS[i]; return <Grid key={i} item md={3}>
+                    var metric = ProductMetricList[i]; return <Grid key={i} item md={3}>
                         <div>
                             <MeasurementInput
                                 className={isSubmited && errors[metric] != null ? 'has-error' : ''}
@@ -172,17 +172,20 @@ export const ProductMeasurement: FunctionComponent<ProductMeasurementProps> = (p
                 })}
             </Grid>
             <Box display='flex' justifyContent='center'>
-                <div onClick={() => setIsShowMoreClicked(!isShowMoreClicked)} className="show-more">{t(isShowMoreClicked ? 'showLess' : 'showMore')} {!isShowMoreClicked ? <span>&nbsp;({PRODUCT_METRICS.length - itemsToShow})</span> : <Fragment />}</div>
+                <div onClick={() => setIsShowMoreClicked(!isShowMoreClicked)} className="show-more">{t(isShowMoreClicked ? 'showLess' : 'showMore')} {!isShowMoreClicked ? <span>&nbsp;({ProductMetricList.length - itemsToShow})</span> : <Fragment />}</div>
             </Box>
         </Box>;
     }
 }
 
-function initModel(existingValues: any) {
+function initModel(existingValues: any, metricList: string[]) {
     existingValues = existingValues || {};
     const model: { [key: string]: number | null; } = {
     };
-    PRODUCT_METRICS.forEach(m => model[m] = existingValues[m] ?? '');
+    metricList.forEach(m => model[m] = existingValues[m] ?? '');
 
     return model;
+}
+function getProductMetrics(style: string): string[] {
+    return STYLE_PRODUCT_METRICS_MAP[style] ?? PRODUCT_METRICS;
 }
