@@ -153,10 +153,21 @@ function OrderManagement(props) {
 									}
 									/*------------------------------*/
 									let pickedOffer = tailorOrder?.offers?.find((offer) => offer?.picked);
-									const { designFiles, customer, orderDate } = order;
+									const { designFiles, customer, orderDate, sideDesignFiles } = order;
+									const photoNotes = sideDesignFiles?.find(s => s.side === 'front')?.photoNotes;
+									let representImage;
+									if (photoNotes?.length > 0) {
+										// front side photo is mandatory
+										representImage = photoNotes[0].downloadUrl;
+									}
+									if (representImage == null) {
+										console.log('This order was created before applying the side images feature');
+									} else {
+										console.log(representImage);
+									}
 									return {
 										id: order.id,
-										image: designFiles[0],
+										image: representImage,
 										customer: customer?.displayName || customer?.phone || 'none',
 										orderDate,
 										tailor: pickedOffer?.tailor?.name || '',
@@ -498,6 +509,7 @@ function OrderManagement(props) {
 							<div className="c-admin-order__info --rqmt">
 								<RequiremmentSummary
 									designFiles={clickedOrder.designFiles}
+									sideDesignFiles={clickedOrder.sideDesignFiles}
 									designStyle={clickedOrder.designStyle}
 									fabricPattern={clickedOrder.fabric.pattern}
 									fabricType={clickedOrder.fabric.type}

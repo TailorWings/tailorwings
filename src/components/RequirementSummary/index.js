@@ -1,11 +1,11 @@
-import React, { Fragment, useState } from 'react';
-import PropTypes from 'prop-types';
-import SmallButton1 from '../Button/SmallButton1';
-import { FABRIC_TYPES } from '../../constants';
+import { Grid } from '@material-ui/core';
 import { find } from 'lodash';
+import PropTypes from 'prop-types';
+import { Fragment, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
-import { Box, Grid } from '@material-ui/core';
+import { FABRIC_TYPES } from '../../constants';
+import SmallButton1 from '../Button/SmallButton1';
 
 RequiremmentSummary.propTypes = {
 	designStyle: PropTypes.string,
@@ -25,13 +25,27 @@ RequiremmentSummary.defaultProps = {
 
 function RequiremmentSummary(props) {
 	const { designStyle, designFiles, fabricType, fabricPattern, sideDesignFiles } = props;
-	const [previewUrlMap, setPreviewUrlMap] = useState((function () {
-		let map = new Map();
-		sideDesignFiles.forEach(d => d.photoNotes.forEach(p => {
-			map.set(p, p.downloadUrl ?? URL.createObjectURL(p.file));
-		}))
-		return map;
-	}()));
+	const [previewImageMap, setPreviewImageMap] = useState(new Map());
+	
+
+	useEffect(() => {
+		previewImageMap.forEach((value, key) => {
+			URL.revokeObjectURL(value);
+		})
+		const map = new Map();
+		sideDesignFiles?.forEach(d => d.photoNotes.forEach(p => {
+			if (p.downloadUrl == null) {
+				map.set(p, URL.createObjectURL(p.file));
+			}
+		}));
+		setPreviewImageMap(map);
+		return ()=> {
+			map.forEach((value, key) => {
+				URL.revokeObjectURL(value);
+			});
+		}
+	}, [sideDesignFiles]);
+	
 	const { t, i18n } = useTranslation();
 	const isENG = i18n.language == 'en';
 	const stylesOfClothe = useSelector((state) => state.common.stylesOfClothe);
@@ -45,12 +59,6 @@ function RequiremmentSummary(props) {
 
 
 
-	/**
-	 * PhotoWithNote
-	 */
-	function makePreview(p) {
-		return previewUrlMap.get(p);
-	}
 	return (
 		<div className="c-rqmt-sum">
 			<div className="c-rqmt-sum-product">
@@ -92,10 +100,10 @@ function RequiremmentSummary(props) {
 				})
 				: sideDesignFiles?.length > 0 ? 
 					sideDesignFiles.map((d, i) => d.photoNotes.map((p, j) => 
-					<div key={i+j} className='c-rqmt-sum-product__container'>
+					<div key={i*2+j} className='c-rqmt-sum-product__container'>
 						<div style={{'height': '30px'}}>{t(d.side)}</div>
-						<div key={i+j} className="c-rqmt-sum-product__image">
-							<img src={makePreview(p)} alt="product" />
+						<div className="c-rqmt-sum-product__image">
+							<img src={p.downloadUrl ?? previewImageMap.get(p)} alt="product" />
 						</div>
 						<div>Note</div>
 						<textarea rows={5} disabled={true} style={{'width': '100%', 'resize': 'none'}} defaultValue={p.note}></textarea>

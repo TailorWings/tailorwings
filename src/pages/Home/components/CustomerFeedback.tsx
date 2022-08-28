@@ -96,8 +96,8 @@ export const CustomerFeedbackComponent: FunctionComponent<CustomerFeedbackProps>
         <div className="fb-container">
             <Slider swiperRef={swiperRef}>
                 <Swiper {...params} ref={swiperRef}>
-                    {DATA.map(cfb =>
-                        <div className="customer-fb-content">
+                    {DATA.map((cfb, idx) =>
+                        <div key={idx} className="customer-fb-content">
                             {!isMobile ? desktopUI(cfb) : mobileUI(cfb)}
                         </div>
                     )}
@@ -159,8 +159,8 @@ function desktopUI(cfb: CustomerFeedback) {
 function ratingUI(cfb: CustomerFeedback) {
     return <div className="rating">
         {Array.from(Array(6).keys()).map(i => i < cfb.feedback.rating ?
-            <StarIcon style={{ 'color': '#FEC84B' }} /> :
-            <StarBorderIcon />
+            <StarIcon key={i} style={{ 'color': '#FEC84B' }} /> :
+            <StarBorderIcon key={i} />
         )}
     </div>;
 }
