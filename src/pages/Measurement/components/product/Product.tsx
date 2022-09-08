@@ -49,7 +49,7 @@ export const ProductMeasurement: FunctionComponent<ProductMeasurementProps> = (p
         'reValidateMode': 'onChange'
     });
     const [isShowMoreClicked, setIsShowMoreClicked] = useState(false);
-    const [itemsToShow, setItemsToShow] = useState(isShowMoreClicked ? ProductMetricList.length : 4);
+    const [itemsToShow, setItemsToShow] = useState(isShowMoreClicked ? ProductMetricList.length : Math.min(4, ProductMetricList.length));
 
     let isSubmited = (submitedCount ?? 0) > 0;
 
@@ -60,7 +60,7 @@ export const ProductMeasurement: FunctionComponent<ProductMeasurementProps> = (p
         if (isShowMoreClicked) {
             setItemsToShow(ProductMetricList.length);
         } else {
-            setItemsToShow(4);
+            setItemsToShow(Math.min(ProductMetricList.length, 4));
         }
     }, [isShowMoreClicked]);
 

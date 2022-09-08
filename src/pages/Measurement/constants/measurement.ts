@@ -32,5 +32,7 @@ export const STYLE_PRODUCT_METRICS_MAP: { [key: string]: string[] } = {
     "dress": ['dressShirtLength', 'dressShirtNeckDepth', 'dressShirtNeckWidth', 'sleeveLength'],
     "shirts": ['dressShirtLength', 'dressShirtNeckDepth', 'dressShirtNeckWidth', 'sleeveLength'],
     "ao dai": ['dressShirtLength', 'dressShirtNeckDepth', 'dressShirtNeckWidth', 'sleeveLength'],
-    "others": ['dressShirtLength', 'dressShirtNeckDepth', 'dressShirtNeckWidth', 'sleeveLength']
+    "others": ['dressShirtLength', 'dressShirtNeckDepth', 'dressShirtNeckWidth', 'sleeveLength'],
+    "pants": ['pantsSkirtWaist', 'pantsSkirtLength'],
+    "skirts": ['pantsSkirtWaist', 'pantsSkirtLength']
 }
