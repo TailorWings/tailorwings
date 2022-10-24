@@ -18,7 +18,7 @@ export const MeasurementInput: FunctionComponent<MeasurementInputProps> = (props
             <input value={props.value ?? ''} onChange={(e) => onChange(e.target.value)}></input>
             <div className="suffix">
                 <span>{props.unit ? props.unit : 'cm'}</span>
-                <img className="arrow-icon" src={arrow} />
+                <img alt="" className="arrow-icon" src={arrow} />
             </div>
         </div>
     </Box>

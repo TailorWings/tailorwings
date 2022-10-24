@@ -176,6 +176,8 @@ function TailorManage({tailors}) {
 					setIsLoading(false);
 					console.log('Delete old avatar fail, error = ', error);
 				});
+		} else {
+			uploadAvatar(tailor);
 		}
 	};
 
@@ -540,7 +542,7 @@ function TailorManage({tailors}) {
 							<span className="c-admin-tailor-add__title">Tailored clothes</span>
 							{/* <MultipleFileUpload setFiles={onSetProductFiles} /> */}
 							<div className="admin-often-used-mgmt__image-list admin-often-used-mgmt">
-								{productList.map((image, index) => (
+								{productList?.map((image, index) => (
 									<div className="admin-often-used-mgmt__image-list__image-content" key={index}>
 										<img src={image} alt="image" />
 										<div className="-delete-btn" onClick={() => handleClickOpen(index)}>

@@ -43,6 +43,21 @@ export const fetchAll = (collection) => {
 			return result;
 		});
 };
+export const findOne = (collection, key, condition, value) => {
+	return database
+		.collection(collection)
+		.where(key, condition, value)
+		.limit(1)
+		.get()
+		.then((querySnapshot) => {
+			if (querySnapshot.docs.length > 0) {
+				const doc = querySnapshot.docs[0];
+				return doc.data();
+			} else {
+				return null;
+			}
+		});
+};
 export const fetchCondition = (collection, key, condition, value) => {
 	return database
 		.collection(collection)
@@ -159,6 +174,7 @@ export const updateDocument = (collection, docName, field, value) => {
 		})
 		.then(function () {})
 		.catch(function (error) {
+			console.error(error);
 			// The document probably doesn't exist.
 		});
 };

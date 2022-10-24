@@ -6,17 +6,18 @@ import Swiper from 'react-id-swiper';
 import { useSelector } from "react-redux";
 import Slider from "../../../../components/Slider";
 import { useWindowSize } from "../../../../hooks/WindowResizeHook";
-import { PRODUCT_METRICS, STYLE_PRODUCT_METRICS_MAP } from "../../constants/measurement";
+import { removeNullKey } from "../../../../services/Functions/utils";
+import { PRODUCT_MEASUREMENT_KEY_LIST, STYLE_PRODUCT_MEASUREMENT_MAP } from "../../constants/measurement";
 import { MeasurementInput } from "../input/MeasurementInput";
 
 type ProductMeasurementProps = {
-    setMetric?: (metrics: any) => void;
+    setMeasurement?: (measurement: { [key: string]: number }) => void;
     setFormStatus?: (isValid: boolean) => void;
     submitedCount?: number;
 }
 export const ProductMeasurement: FunctionComponent<ProductMeasurementProps> = (props: ProductMeasurementProps) => {
     const swiperRef: any = useRef(null);
-    const [width, height]  = useWindowSize();
+    const [width, height] = useWindowSize();
     const isMobile = width < 769;
     const params: any = {
         slidesPerView: 1.2,
@@ -35,21 +36,21 @@ export const ProductMeasurement: FunctionComponent<ProductMeasurementProps> = (p
         },
         on: {},
     };
-    
+
     const { t } = useTranslation();
-    const { submitedCount, setFormStatus, setMetric } = props;
+    const { submitedCount, setFormStatus, setMeasurement } = props;
     /// STATES
     const orderDetail = useSelector((state) => (state as any).common.orderDetail);
     const currentCustomer = useSelector((state) => (state as any).common.currentCustomer);
-    const ProductMetricList = getProductMetrics(orderDetail.designStyle);
-    const [dataModel, setDataModel] = useState(initModel({}, ProductMetricList));
+    const ProductMeasurementKeyList = getProductMeasurementKeyList(orderDetail.designStyle);
+    const [dataModel, setDataModel] = useState(initModel({}, ProductMeasurementKeyList));
     const { register, reset, handleSubmit, getValues, setValue, formState: { errors, isValid }, trigger } = useForm({
         defaultValues: { ...dataModel },
         mode: 'all',
         'reValidateMode': 'onChange'
     });
     const [isShowMoreClicked, setIsShowMoreClicked] = useState(false);
-    const [itemsToShow, setItemsToShow] = useState(isShowMoreClicked ? ProductMetricList.length : Math.min(4, ProductMetricList.length));
+    const [itemsToShow, setItemsToShow] = useState(isShowMoreClicked ? ProductMeasurementKeyList.length : Math.min(4, ProductMeasurementKeyList.length));
 
     let isSubmited = (submitedCount ?? 0) > 0;
 
@@ -58,9 +59,9 @@ export const ProductMeasurement: FunctionComponent<ProductMeasurementProps> = (p
     /// EFFECTS
     useEffect(() => {
         if (isShowMoreClicked) {
-            setItemsToShow(ProductMetricList.length);
+            setItemsToShow(ProductMeasurementKeyList.length);
         } else {
-            setItemsToShow(Math.min(ProductMetricList.length, 4));
+            setItemsToShow(Math.min(ProductMeasurementKeyList.length, 4));
         }
     }, [isShowMoreClicked]);
 
@@ -74,7 +75,7 @@ export const ProductMeasurement: FunctionComponent<ProductMeasurementProps> = (p
     useEffect(() => {
         Object.keys(dataModel).forEach(k => setValue(k, dataModel[k], { shouldValidate: true }));
         validate();
-        setMetric?.call(this, getValues());
+        setMeasurement?.call(this, removeNullKey(getValues()));
     }, [dataModel]);
 
 
@@ -108,8 +109,8 @@ export const ProductMeasurement: FunctionComponent<ProductMeasurementProps> = (p
     }
     function registerFn(field: string) {
         return register(field, {
-            required: true, valueAsNumber: true, validate: (value) => {
-                return value > 0;
+            required: true, valueAsNumber: true, validate: (value: number|null) => {
+                return (value ?? 0) > 0;
             }
         });
     }
@@ -124,23 +125,23 @@ export const ProductMeasurement: FunctionComponent<ProductMeasurementProps> = (p
     </div>
 
     function mobileUI() {
-        return <div style={{'marginTop': '32px'}}><Slider swiperRef={swiperRef}>
+        return <div style={{ 'marginTop': '32px' }}><Slider swiperRef={swiperRef}>
             <Swiper {...params} ref={swiperRef}>
-                {ProductMetricList.map((metric, i) =>
+                {ProductMeasurementKeyList.map((measurementKey, i) =>
                     <div key={i}>
                         <div>
                             <MeasurementInput
-                                className={isSubmited && errors[metric] != null ? 'has-error' : ''}
-                                label={`${i + 1}. ${t(metric)}`}
-                                {...registerFn(metric)}
-                                onChange={(val) => updateModel(metric, val)}
-                                value={dataModel[metric]}></MeasurementInput>
+                                className={isSubmited && errors[measurementKey] != null ? 'has-error' : ''}
+                                label={`${i + 1}. ${t(measurementKey)}`}
+                                {...registerFn(measurementKey)}
+                                onChange={(val) => updateModel(measurementKey, val)}
+                                value={dataModel[measurementKey]}></MeasurementInput>
                         </div>
                         <div className="metric-image">
-                        <img src={'/assets/images/Product_Measurement/' + metric + '.png'} />
+                            <img alt="" src={'/assets/images/Product_Measurement/' + measurementKey + '.png'} />
                         </div>
                         <div className="metric-description">
-                            {t(metric + 'Description')}
+                            {t(measurementKey + 'Description')}
                         </div>
                     </div>
                 )}
@@ -153,26 +154,26 @@ export const ProductMeasurement: FunctionComponent<ProductMeasurementProps> = (p
         return <Box className="body-metric-container">
             <Grid container spacing={3}>
                 {Array(itemsToShow).fill(1).map((_, i) => {
-                    var metric = ProductMetricList[i]; return <Grid key={i} item md={3}>
+                    var measurementKey = ProductMeasurementKeyList[i]; return <Grid key={i} item md={3}>
                         <div>
                             <MeasurementInput
-                                className={isSubmited && errors[metric] != null ? 'has-error' : ''}
-                                label={`${i + 1}. ${t(metric)}`}
-                                {...registerFn(metric)}
-                                onChange={(val) => updateModel(metric, val)}
-                                value={dataModel[metric]}></MeasurementInput>
+                                className={isSubmited && errors[measurementKey] != null ? 'has-error' : ''}
+                                label={`${i + 1}. ${t(measurementKey)}`}
+                                {...registerFn(measurementKey)}
+                                onChange={(val) => updateModel(measurementKey, val)}
+                                value={dataModel[measurementKey]}></MeasurementInput>
                         </div>
                         <div className="metric-image">
-                        <img src={'/assets/images/Product_Measurement/' + metric + '.png'} />
+                            <img alt="" src={'/assets/images/Product_Measurement/' + measurementKey + '.png'} />
                         </div>
                         <div className="metric-description">
-                            {t(metric + 'Description')}
+                            {t(measurementKey + 'Description')}
                         </div>
                     </Grid>;
                 })}
             </Grid>
             <Box display='flex' justifyContent='center'>
-                <div onClick={() => setIsShowMoreClicked(!isShowMoreClicked)} className="show-more">{t(isShowMoreClicked ? 'showLess' : 'showMore')} {!isShowMoreClicked ? <span>&nbsp;({ProductMetricList.length - itemsToShow})</span> : <Fragment />}</div>
+                <div onClick={() => setIsShowMoreClicked(!isShowMoreClicked)} className="show-more">{t(isShowMoreClicked ? 'showLess' : 'showMore')} {!isShowMoreClicked ? <span>&nbsp;({ProductMeasurementKeyList.length - itemsToShow})</span> : <Fragment />}</div>
             </Box>
         </Box>;
     }
@@ -186,6 +187,6 @@ function initModel(existingValues: any, metricList: string[]) {
 
     return model;
 }
-function getProductMetrics(style: string): string[] {
-    return STYLE_PRODUCT_METRICS_MAP[style] ?? PRODUCT_METRICS;
+function getProductMeasurementKeyList(style: string): string[] {
+    return STYLE_PRODUCT_MEASUREMENT_MAP[style] ?? PRODUCT_MEASUREMENT_KEY_LIST;
 }

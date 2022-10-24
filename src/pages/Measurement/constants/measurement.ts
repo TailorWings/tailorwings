@@ -1,4 +1,4 @@
-export const BODY_METRICS = [
+export const BODY_MEASUREMENT_KEY_LIST = [
     'chest',
     'bust',
     'waist',
@@ -18,8 +18,11 @@ export const BODY_METRICS = [
     'calf',
     'neckSize'
 ]
+export const MEASUREMENT_UNIT_MAP: {[key:string]: string} = {
+    'weight': 'kg'
+}
 
-export const PRODUCT_METRICS = [
+export const PRODUCT_MEASUREMENT_KEY_LIST = [
     'pantsSkirtWaist',
     'pantsSkirtLength',
     'dressShirtLength',
@@ -28,7 +31,7 @@ export const PRODUCT_METRICS = [
     'sleeveLength'
 ]
 
-export const STYLE_PRODUCT_METRICS_MAP: { [key: string]: string[] } = {
+export const STYLE_PRODUCT_MEASUREMENT_MAP: { [key: string]: string[] } = {
     "dress": ['dressShirtLength', 'dressShirtNeckDepth', 'dressShirtNeckWidth', 'sleeveLength'],
     "shirts": ['dressShirtLength', 'dressShirtNeckDepth', 'dressShirtNeckWidth', 'sleeveLength'],
     "ao dai": ['dressShirtLength', 'dressShirtNeckDepth', 'dressShirtNeckWidth', 'sleeveLength'],

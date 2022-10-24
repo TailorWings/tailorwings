@@ -232,12 +232,21 @@ function SummaryContent(props) {
 			dispatch(action_controlLogin);
 		}
 	}
+	function getCustomerBodyMeasurement() {
+		// bodyMetric renamed to bodyMeasurement
+        return currentCustomer.bodyMeasurement || currentCustomer.bodyMetric;
+    }
 	/************_END_****************/
 	/*********************************
 	 *  Description: handle form confirm
 	 */
 	const onConfirm = async (phoneNumber) => {
 		updateDocument('customers', currentCustomer.id, 'shippingInfo', shippingInfo);
+		/*--------------*/
+		if (phoneNumber) {
+			updateDocument('customers', currentCustomer.id, 'phoneNumber', phoneNumber);
+		}
+		/*--------------*/
 		if (orderDetail) {
 			setIsConfirmLoading(true);
 			const { designStyle, fabric, msmt, stdSize } = orderDetail;
@@ -275,18 +284,19 @@ function SummaryContent(props) {
 						  }
 						: null,
 				},
-				msmt,
+				productMeasurement: msmt,
+				bodyMeasurement: getCustomerBodyMeasurement(), // should store bodyMeasurement to Order to avoid customer's update during tailoring
+				msmt, // to be removed
 				stdSize,
 				notes: [...notes],
 				notesVN: [...notesVN]
 			};
-			let uploadOrderDetail = currentCustomer.orders ? [...currentCustomer.orders] : [];
 			/*--------------*/
-			await submitToServer(uploadOrderDetail, currentOrderDetail, phoneNumber, orderDetailId);
+			await submitToServer(currentOrderDetail, orderDetailId);
 		} else {
 		}
 	}
-	async function submitToServer(uploadOrderDetail, currentOrderDetail, phoneNumber, orderDetailId) {
+	async function submitToServer(currentOrderDetail, orderDetailId) {
 		let _sideDesignFiles = [];
 		try {
 			for (let i = 0; i < orderDetail.localDesignFiles.length; i++) {
@@ -319,15 +329,12 @@ function SummaryContent(props) {
 			// Promise.all(fileUploadPromises)
 			// 	.then((results) => {
 			// currentOrderDetail.designFiles = results && [...results];
-			uploadOrderDetail.push(currentOrderDetail);
-			updateDocument('customers', currentCustomer.id, 'orders', uploadOrderDetail);
-			/*--------------*/
-			if (phoneNumber) {
-				updateDocument('customers', currentCustomer.id, 'phoneNumber', phoneNumber);
-			}
-			/*--------------*/
+			let customerOrderList = currentCustomer.orders ? [...currentCustomer.orders] : [];
+			customerOrderList.push(currentOrderDetail);
+			updateDocument('customers', currentCustomer.id, 'orders', customerOrderList);
+			
 			const {
-				id, sideDesignFiles, designStyle, fabric, msmt, notes, notesVN, stdSize, orderDate,
+				id, sideDesignFiles, designStyle, fabric, msmt, notes, notesVN, stdSize, orderDate, productMeasurement, bodyMeasurement,
 			} = currentOrderDetail;
 			let newTailorOrder = {
 				orderID: id,
@@ -339,6 +346,8 @@ function SummaryContent(props) {
 					notes,
 					notesVN,
 					stdSize,
+					productMeasurement,
+					bodyMeasurement
 				},
 				pickedTailor: null,
 				status: 'finding',

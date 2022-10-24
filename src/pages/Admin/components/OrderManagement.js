@@ -29,6 +29,7 @@ import { modifyPrice } from '../../../services/Functions/commonFunctions';
 import TailorOffer from '../../Account/components/TailorOffer';
 import ManualOffer from './ManualOffer';
 import { useTranslation, withTranslation, Trans } from 'react-i18next';
+import { OrderMeasurementInfo } from './OrderMeasurementInfo';
 
 OrderManagement.propTypes = {
 	orders: PropTypes.object,
@@ -397,6 +398,14 @@ function OrderManagement(props) {
 			</Paper>
 		</div>;
 	}
+	function getPresentativeImage(order){
+		if (order.designFiles) {
+			return order.designFiles[0];
+		} else {
+			return order.sideDesignFiles[0].photoNotes[0].downloadUrl;
+		}
+
+	}
 
 	function getFindingOrders(isQuoted) {
 		return (orders?.finding || []).map((order) => {
@@ -406,7 +415,7 @@ function OrderManagement(props) {
 				);
 				return {
 					id: order.id,
-					image: designFiles ? designFiles[0] : null,
+					image: getPresentativeImage(order),
 					customer: customer.displayName || customer.phone,
 					orderDate,
 					offers: tailorOrder?.offers || [],
@@ -536,70 +545,10 @@ function OrderManagement(props) {
 								<Fragment />
 							)}
 							{/* NEW DESIGN */}
-							{clickedOrder.sideDesignFiles != null && clickedOrder.msmt ? (
-								<div className="c-admin-order__info --msmt">
-									<p>Body Metrics</p>
-									<div className="c-msmt-form">
-										<div className='c-msmt-form__list c-msmt-form__display-one-item'>
-										{Object.keys(clickedOrderCustomer.bodyMetric).map((metric, i) => 
-											<div key={i} className="c-msmt-form__item">
-												<div class="c-text-input">
-													<label class="c-text-input__wrapper" for="text-input-Abdomen">
-														<span class="c-text-input__suffix">(cm)</span>
-														<input type="text" required="" class="c-text-input__field" id="" disabled="" maxlength="3" placeholder="" value={clickedOrderCustomer.bodyMetric[metric]}/>
-													</label>
-													<label for="text-input-Abdomen" class="c-text-input__label">{t(metric)}</label>
-												</div>
-											</div>)}
-										</div>
-									</div>
-								</div>
-							) : (
-								<Fragment />
-							)}
-							{clickedOrder.sideDesignFiles != null && clickedOrder.msmt ? (
-								<div className="c-admin-order__info --msmt">
-									<p>Product Metrics</p>
-									<div className="c-msmt-form">
-										<div className='c-msmt-form__list c-msmt-form__display-one-item'>
-										{Object.keys(clickedOrder.msmt).map((metric, i) => 
-											<div key={i} className="c-msmt-form__item">
-												<div class="c-text-input">
-													<label class="c-text-input__wrapper" for="text-input-Abdomen">
-														<span class="c-text-input__suffix">(cm)</span>
-														<input type="text" required="" class="c-text-input__field" id="" disabled="" maxlength="3" placeholder="" value={clickedOrder.msmt[metric]}/>
-													</label>
-													<label for="text-input-Abdomen" class="c-text-input__label">{t(metric)}</label>
-												</div>
-											</div>)}
-										</div>
-									</div>
-								</div>
-							) : (
-								<Fragment />
-							)}
-
-							{clickedOrder.sideDesignFiles != null && clickedOrder.msmt ? (
-								<div className="c-admin-order__info --msmt">
-									<p>Product Metrics</p>
-									<div className="c-msmt-form">
-										<div className='c-msmt-form__list c-msmt-form__display-one-item'>
-										{Object.keys(clickedOrder.msmt).map((metric, i) => 
-											<div key={i} className="c-msmt-form__item">
-												<div class="c-text-input">
-													<label class="c-text-input__wrapper" for="text-input-Abdomen">
-														<span class="c-text-input__suffix">(cm)</span>
-														<input type="text" required="" class="c-text-input__field" id="" disabled="" maxlength="3" placeholder="" value={clickedOrder.msmt[metric]}/>
-													</label>
-													<label for="text-input-Abdomen" class="c-text-input__label">{t(metric)}</label>
-												</div>
-											</div>)}
-										</div>
-									</div>
-								</div>
-							) : (
-								<Fragment />
-							)}
+							{clickedOrder.sideDesignFiles != null ?
+								<OrderMeasurementInfo order={clickedOrder}></OrderMeasurementInfo>
+							: <Fragment/>}
+							{/* END - NEW DESIGN */}
 
 							{clickedOrder.notes ? (
 								<div className="c-admin-order__info --notes">

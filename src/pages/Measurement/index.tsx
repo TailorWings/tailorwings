@@ -9,7 +9,7 @@ import MaterialAlert from '../../components/MaterialAlert';
 import { MSMT_METHODS } from '../../constants';
 import MeasurementContent from './components/MeasurementContent';
 import MeasurementOptions from './components/MeasurementOptions';
-import { BODY_METRICS, PRODUCT_METRICS } from './constants/measurement';
+import { BODY_MEASUREMENT_KEY_LIST, PRODUCT_MEASUREMENT_KEY_LIST } from './constants/measurement';
 
 function MeasurementPage() {
 	/*--------------*/

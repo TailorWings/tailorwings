@@ -10,10 +10,11 @@ import TailorHeader from './TailorHeader';
 import Flickity from 'react-flickity-component';
 import TextInput from '../../../components/Input/TextInput';
 import MaterialAlert from '../../../components/MaterialAlert';
-import { updateDocument } from '../../../services/API/firebaseAPI';
+import { fetchCondition, findOne, updateDocument } from '../../../services/API/firebaseAPI';
 import { finalPriceCalc } from '../../../services/Functions/commonFunctions';
 import emailjs from 'emailjs-com';
 import { useTranslation } from 'react-i18next';
+import { MEASUREMENT_UNIT_MAP } from '../../Measurement/constants/measurement';
 
 function TailorOrderDetail() {
 	/*------------------------------*/
@@ -24,6 +25,9 @@ function TailorOrderDetail() {
 	const history = useHistory();
 	/*------------------------------*/
 	const tailorState = useSelector((state) => state.tailor);
+	
+	const [currentCustomer, setCurrentCustomer] = useState(null);
+	const [bodyMeasurement, setBodyMeasurement] = useState(null);
 	const [currentOrder, setCurrentOrder] = useState(null);
 	const [currentOffer, setCurrentOffer] = useState({
 		duration: '',
@@ -33,10 +37,23 @@ function TailorOrderDetail() {
 	const [currentOfferError, setCurrentOfferError] = useState({});
 	const [offerAlready, setOfferAlready] = useState(true);
 	const [alertOpen, setAlertOpen] = useState(false);
-	const t = useTranslation();
+	const {t} = useTranslation();
+	
 	/*------------------------------*/
 	const sliderRef = useRef();
 	/*------------------------------*/
+	useEffect(() => {
+		async function fetchCustomerDetail() {
+			let customer = await findOne('customers', 'email', '==', currentOrder.customer.email);
+			console.assert(customer != null, "customer must not be null");
+			setCurrentCustomer(customer);
+			const bodyMeasurement = currentOrder.rqmt.bodyMeasurement || getCustomerBodyMeasurement(customer);
+			setBodyMeasurement(bodyMeasurement);
+		}
+		if (currentOrder) {
+			fetchCustomerDetail();
+		}
+	}, [currentOrder]);
 	useEffect(() => {
 		window.scrollTo({
 			top: 0,
@@ -167,8 +184,13 @@ function TailorOrderDetail() {
 		const { rqmt } = currentOrder;
 		let wage = Number(offer?.wage) || 0;
 		let fabricNumber = Number(offer?.fabricNumber) || 0;
-		let customerHasFabric = rqmt?.fabric?.fabricBuyType == FABRIC_BUY_TYPES[1].id; // MY_OWN
-		let fabricPrice = Number(rqmt.fabric.price);
+		let customerHasFabric = rqmt?.fabric?.fabricBuyType === FABRIC_BUY_TYPES[1].id; // MY_OWN
+		let fabricPrice = 0;
+		if (rqmt?.fabric?.fabricBuyType === FABRIC_BUY_TYPES[2].id) {
+			fabricPrice = 150000;
+		} else if (rqmt.fabric.price != null) {
+			fabricPrice = Number(rqmt.fabric.price);
+		}
 		return finalPriceCalc(wage, fabricPrice, fabricNumber, customerHasFabric);
 	}
 	function sendMail() {
@@ -207,6 +229,10 @@ function TailorOrderDetail() {
 				);
 		}
 	}
+	function getCustomerBodyMeasurement(customer) {
+		// bodyMetric renamed to bodyMeasurement
+        return customer.bodyMeasurement || customer.bodyMetric;
+    }
 	/*------------------------------*/
 	if (!currentOrder) return <ListLoader />;
 	const { customer, rqmt } = currentOrder;
@@ -221,6 +247,9 @@ function TailorOrderDetail() {
 			  })
 			: null;
 	let notes = rqmt?.notes ? rqmt.notes.filter((note) => note) : [];
+	const productMeasurement = rqmt.productMeasurement || rqmt.msmt; // replace msmt by productMeasurement
+	
+
 	let photoNoteCount = 0;
 	rqmt.sideDesignFiles?.forEach(d => photoNoteCount = photoNoteCount + (d.photoNotes?.length ?? 0));
 	/*------------------------------*/
@@ -307,25 +336,59 @@ function TailorOrderDetail() {
 						{!rqmt?.fabric?.pattern && <p>Vải được cung cấp bởi khách hàng</p>}
 					</div>
 				</div>
-				<div className="tailor-order-detail__msmt">
-					<p className="tailor-order-detail__title">Số đo khách hàng</p>
-					{msmtArray ? (
-						<div className="-list">
-							{msmtArray.length > 0 &&
-								msmtArray.map((msmt) => {
-									return (
-										<div className="-item" key={msmt.id}>
-											<TailorSquareTag title={msmt.label} value={`${msmt.value} cm`} />
-										</div>
-									);
-								})}
-						</div>
-					) : (
+				{
+					rqmt?.stdSize ?
+					<div className="tailor-order-detail__msmt">
+						<p className="tailor-order-detail__title">Số đo khách hàng</p>
 						<div style={{ width: '120px' }}>
 							<TailorRoundTag text={rqmt?.stdSize || ''} />
 						</div>
-					)}
-				</div>
+					</div>
+					:
+					(
+						<Fragment>
+							{
+							bodyMeasurement ? 
+							<div className="tailor-order-detail__msmt">
+								<p className="tailor-order-detail__title">Số đo cơ thể khách hàng</p>
+								<div className="-list">
+									{Object.keys(bodyMeasurement).map((msmt) => {
+											return (
+												<div className="-item" key={msmt}>
+													<TailorSquareTag title={t(msmt)} value={`${bodyMeasurement[msmt]} ${MEASUREMENT_UNIT_MAP[msmt] ?? 'cm'}`} />
+												</div>
+											);
+										})}
+								</div>
+							</div> : <Fragment/>
+							}
+							{
+							productMeasurement ?
+								<div className="tailor-order-detail__msmt">
+									<p className="tailor-order-detail__title">Số đo sản phẩm khách hàng</p>
+									<div className="-list">
+											{Object.keys(productMeasurement).map((msmt) => {
+													return (
+														<div className="-item" key={msmt}>
+															<TailorSquareTag title={t(msmt)} value={`${productMeasurement[msmt]} ${MEASUREMENT_UNIT_MAP[msmt] ?? 'cm'}`} />
+														</div>
+													);
+												})}
+									</div>
+								</div>
+								: <Fragment/>
+							}
+
+						</Fragment>
+						
+						
+					)
+
+
+					
+				}
+				
+				
 				<div className="tailor-order-detail__notes">
 					<p className="tailor-order-detail__title">Ghi chú từ khách hàng</p>
 					{notes.length > 0 ? (

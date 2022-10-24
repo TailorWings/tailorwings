@@ -33,9 +33,8 @@ export const MeasurementOnline: FunctionComponent<MeasurementOnlineProps> = (pro
     const [loading, setLoading] = useState(false);
     const [isBodyValid, setisBodyValid] = useState(false);
     const [isProductValid, setisProductValid] = useState(false);
-    const [popupShow, setPopupShow] = useState(false);
-    const [productMetric, setProductMetric] = useState({});
-    const [bodyMetric, setBodyMetric] = useState({});
+    const [productMeasurement, setProductMeasurement] = useState({});
+    const [bodyMeasurement, setBodyMeasurement] = useState({});
     // let isBodyValid = false;
     function updateBodyStatus(val: boolean) {
         console.log('Body valid = ', val)
@@ -65,12 +64,12 @@ export const MeasurementOnline: FunctionComponent<MeasurementOnlineProps> = (pro
             setAlertMsg(`${invalidList.join(' and ')} measurement ${invalidList.length > 1 ? 'are' : 'is'} invalid`);
             setAlertOpen(true);
         } else {
-            const action_setOrderDetail = setOrderDetail({ ...orderDetail, msmt: { ...productMetric } });
+            const action_setOrderDetail = setOrderDetail({ ...orderDetail, msmt: { ...productMeasurement } });
 		    dispatch(action_setOrderDetail);
             if (currentCustomer) {
                 setLoading(true);
                 try {
-                    await updateDocument('customers', currentCustomer.id, 'bodyMetric', bodyMetric);
+                    await updateDocument('customers', currentCustomer.id, 'bodyMeasurement', bodyMeasurement);
                     setLoading(false);
                 } catch (error) {
                     console.error(error);
@@ -81,14 +80,6 @@ export const MeasurementOnline: FunctionComponent<MeasurementOnlineProps> = (pro
         }
     }
 
-    // function confirmSave(isSave: boolean) {
-    //     if (isSave) {
-    //         if (currentCustomer) {
-    //             updateDocument('customers', currentCustomer.id, 'bodyMetric', bodyMetric);
-    //         }
-    //     }
-    //             history.push(`/summary?method=online`);
-    // }
 
     return <div className="msmt-online-container">
         <Backdrop
@@ -100,12 +91,12 @@ export const MeasurementOnline: FunctionComponent<MeasurementOnlineProps> = (pro
             <BodyMeasurement
                 submitedCount={submitedCount}
                 setFormStatus={updateBodyStatus}
-                setMetric={setBodyMetric}
+                setMeasurement={setBodyMeasurement}
             ></BodyMeasurement>
             <div style={{ 'marginTop': '48px' }}>
                 <ProductMeasurement submitedCount={submitedCount}
                     setFormStatus={updateProductStatus}
-                    setMetric={setProductMetric}></ProductMeasurement>
+                    setMeasurement={setProductMeasurement}></ProductMeasurement>
             </div>
         </div>
         <NavFooter className='mt-99px' backLabel={t('back')} nextLabel={t('personalize')}

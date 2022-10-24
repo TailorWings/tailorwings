@@ -26,6 +26,7 @@ import TailorOffer from './TailorOffer';
 import { useTranslation, withTranslation, Trans } from 'react-i18next';
 import { modifyPrice } from '../../../services/Functions/commonFunctions';
 import emailjs from 'emailjs-com';
+import { OrderMeasurementInfo } from '../../Admin/components/OrderMeasurementInfo';
 
 OrderDetail.propTypes = {
 	orderList: PropTypes.array,
@@ -350,11 +351,14 @@ function OrderDetail(props) {
 						/>
 					</div>
 					<div className="c-order-detail-summary__msmt">
-						{msmtList ? (
-							<MeasurementForm measurements={msmtList} title="Your Measurements" disabled />
-						) : (
+						{
+							standardSizes?.some(s => s.active) ? 
 							<Picker list={standardSizes} />
-						)}
+							:
+							<OrderMeasurementInfo order={currentOrderDetail}></OrderMeasurementInfo>
+
+						}
+
 					</div>
 					<div className="c-order-detail-summary__note">
 						<p className="c-order-detail-summary__note-title">{t('account.requirementNote')}</p>

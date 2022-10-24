@@ -10,7 +10,7 @@ import Popup from '../../../components/Popup';
 import OnlineMsmtContent from '../../../components/Popup/OnlineMsmtContent';
 import { ONLINE_MEASUREMENTS, STANDARD_SIZES } from '../../../constants';
 import { updateDocument } from '../../../services/API/firebaseAPI';
-import { BODY_METRICS, PRODUCT_METRICS } from '../constants/measurement';
+import { BODY_MEASUREMENT_KEY_LIST, PRODUCT_MEASUREMENT_KEY_LIST } from '../constants/measurement';
 import { MeasurementOnline } from './online/MeasurementOnline';
 import StandardSizeMethod from './StandardSizeMethod';
 
@@ -283,17 +283,4 @@ function MeasurementContent(props) {
 
 export default MeasurementContent;
 
-function initBodyMetric() {
-    const bodyModel = {
-        'height': null,
-        'weight': null
-    };
-    BODY_METRICS.forEach(m => bodyModel[m] = null);
-    return bodyModel;
-}
-function initProductMetric() {
-    const bodyModel = {
-    };
-    PRODUCT_METRICS.forEach(m => bodyModel[m] = null);
-    return bodyModel;
-}
+

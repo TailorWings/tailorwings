@@ -5,14 +5,14 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import Swiper from 'react-id-swiper';
 import Slider from "../../../../components/Slider";
-import { BODY_METRICS } from "../../constants/measurement";
+import { BODY_MEASUREMENT_KEY_LIST, MEASUREMENT_UNIT_MAP } from "../../constants/measurement";
 import { MeasurementInput } from "../input/MeasurementInput";
-import bodyGuide from './body_guide.png';
 import downloadIcon from './download.png';
 import { useWindowSize } from "../../../../hooks/WindowResizeHook";
+import { removeNullKey } from "../../../../services/Functions/utils";
 
 type BodyMeasurementProps = {
-    setMetric?: (metrics: any) => void;
+    setMeasurement?: (measurement: { [key: string]: number }) => void;
     setFormStatus?: (isValid: boolean) => void;
     // setErrors?: (errors: any) => void;
     submitedCount?: number;
@@ -41,7 +41,7 @@ export const BodyMeasurement: FunctionComponent<BodyMeasurementProps> = (props: 
     };
 
     const { t } = useTranslation();
-    const { submitedCount, setFormStatus, setMetric } = props;
+    const { submitedCount, setFormStatus, setMeasurement } = props;
     /// STATES
     // const orderDetail = useSelector((state) => (state as any).common.orderDetail);
     const currentCustomer = useSelector((state) => (state as any).common.currentCustomer);
@@ -52,7 +52,7 @@ export const BodyMeasurement: FunctionComponent<BodyMeasurementProps> = (props: 
         'reValidateMode': 'onChange'
     });
     const [isShowMoreClicked, setIsShowMoreClicked] = useState(false);
-    const [itemsToShow, setItemsToShow] = useState(isShowMoreClicked ? BODY_METRICS.length : 4);
+    const [itemsToShow, setItemsToShow] = useState(isShowMoreClicked ? BODY_MEASUREMENT_KEY_LIST.length : 4);
 
     let isSubmited = (submitedCount ?? 0) > 0;
 
@@ -60,7 +60,7 @@ export const BodyMeasurement: FunctionComponent<BodyMeasurementProps> = (props: 
     /// EFFECTS
     useEffect(() => {
         if (isShowMoreClicked) {
-            setItemsToShow(BODY_METRICS.length);
+            setItemsToShow(BODY_MEASUREMENT_KEY_LIST.length);
         } else {
             setItemsToShow(4);
         }
@@ -76,7 +76,7 @@ export const BodyMeasurement: FunctionComponent<BodyMeasurementProps> = (props: 
     useEffect(() => {
         Object.keys(dataModel).forEach(k => setValue(k, dataModel[k], { shouldValidate: true }));
         validate();
-        setMetric?.call(this, getValues());
+        setMeasurement?.call(this, removeNullKey(getValues()));
     }, [dataModel]);
 
 
@@ -110,17 +110,21 @@ export const BodyMeasurement: FunctionComponent<BodyMeasurementProps> = (props: 
     }
     function registerFn(field: string) {
         return register(field, {
-            required: true, valueAsNumber: true, validate: (value) => {
-                return value > 0;
+            required: true, valueAsNumber: true, validate: (value: number| null) => {
+                return (value ?? 0) > 0;
             }
         });
     }
-    function getLatestBodyMetrics() {
-        setDataModel(currentCustomer.bodyMetric);
+    function setLatestBodyMeasurement() {
+        setDataModel(getCustomerBodyMeasurement());
     }
 
-    function hasBodyMetric() {
-        return Object.keys(currentCustomer?.bodyMetric ?? {}).length > 0;
+    function hasBodyMeasurement() {
+        return Object.keys(getCustomerBodyMeasurement() ?? {}).length > 0;
+    }
+    function getCustomerBodyMeasurement() {
+        // bodyMetric renamed to bodyMeasurement
+        return currentCustomer.bodyMeasurement || currentCustomer.bodyMetric;
     }
 
     return <form onSubmit={handleSubmit(submit)}>
@@ -128,18 +132,7 @@ export const BodyMeasurement: FunctionComponent<BodyMeasurementProps> = (props: 
             <Box display="flex" justifyContent='center'><div className="msmt-category">{t('bodyMeasurement')}</div></Box>
             <Box display="flex" justifyContent='center' style={{ 'marginTop': '14px' }}><div className="msmt-progress"></div></Box>
             <Grid className="height-weight-container" container spacing={3}>
-                <Grid className="weight-input"  item md={3} xs={6}>
-                    <div className="body-input">
-                        <MeasurementInput
-                            className={isSubmited && errors.weight != null ? 'has-error' : ''}
-                            label={t('weight')}
-                            {...registerFn('weight')}
-                            value={dataModel.weight}
-                            unit='kg'
-                            onChange={(val) => updateModel('weight', val)}
-                        ></MeasurementInput>
-                    </div>
-                </Grid>
+                
                 <Grid className="height-input" item md={3} xs={6}>
                     <div className="body-input height">
                         <MeasurementInput
@@ -151,9 +144,22 @@ export const BodyMeasurement: FunctionComponent<BodyMeasurementProps> = (props: 
                         ></MeasurementInput>
                     </div>
                 </Grid>
+                <Grid className="weight-input"  item md={3} xs={6}>
+                    <div className="body-input">
+                        <MeasurementInput
+                            className={isSubmited && errors.weight != null ? 'has-error' : ''}
+                            label={t('weight')}
+                            {...registerFn('weight')}
+                            value={dataModel.weight}
+                            unit={MEASUREMENT_UNIT_MAP['weight']}
+                            onChange={(val) => updateModel('weight', val)}
+                        ></MeasurementInput>
+                    </div>
+                </Grid>
+                
                 <Grid className="get-your-latest-measurement-container" container item md={6} xs={12} alignItems="flex-end">
-                    {hasBodyMetric() ? <div className="get-your-latest-measurement" onClick={() => getLatestBodyMetrics()}>
-                        <img className="download-icon" src={downloadIcon} />
+                    {hasBodyMeasurement() ? <div className="get-your-latest-measurement" onClick={() => setLatestBodyMeasurement()}>
+                        <img alt="" className="download-icon" src={downloadIcon} />
                         <span className="text">{t('getYourLatestMeasurement')}</span>
                     </div> : <Fragment/>}
                 </Grid>
@@ -165,7 +171,7 @@ export const BodyMeasurement: FunctionComponent<BodyMeasurementProps> = (props: 
     function mobileUI() {
         return <div style={{'marginTop': '32px'}}><Slider swiperRef={swiperRef}>
             <Swiper {...params} ref={swiperRef}>
-                {BODY_METRICS.map((metric, i) =>
+                {BODY_MEASUREMENT_KEY_LIST.map((metric, i) =>
                     <div key={i}>
                         <div>
                             <MeasurementInput
@@ -176,7 +182,7 @@ export const BodyMeasurement: FunctionComponent<BodyMeasurementProps> = (props: 
                                 value={dataModel[metric]}></MeasurementInput>
                         </div>
                         <div className="metric-image">
-                        <img src={'/assets/images/Body_Measurement/' + metric + '.png'} />
+                        <img alt="" src={'/assets/images/Body_Measurement/' + metric + '.png'} />
                         </div>
                         <div className="metric-description">
                             {t(metric + 'Description')}
@@ -191,26 +197,26 @@ export const BodyMeasurement: FunctionComponent<BodyMeasurementProps> = (props: 
         return <Box className="body-metric-container">
             <Grid container spacing={3}>
                 {Array(itemsToShow).fill(1).map((_, i) => {
-                    var metric = BODY_METRICS[i]; return <Grid key={i} item md={3}>
+                    var measurementKey = BODY_MEASUREMENT_KEY_LIST[i]; return <Grid key={i} item md={3}>
                         <div>
                             <MeasurementInput
-                                className={isSubmited && errors[metric] != null ? 'has-error' : ''}
-                                label={`${i + 1}. ${t(metric)}`}
-                                {...registerFn(metric)}
-                                onChange={(val) => updateModel(metric, val)}
-                                value={dataModel[metric]}></MeasurementInput>
+                                className={isSubmited && errors[measurementKey] != null ? 'has-error' : ''}
+                                label={`${i + 1}. ${t(measurementKey)}`}
+                                {...registerFn(measurementKey)}
+                                onChange={(val) => updateModel(measurementKey, val)}
+                                value={dataModel[measurementKey]}></MeasurementInput>
                         </div>
                         <div className="metric-image">
-                        <img src={'/assets/images/Body_Measurement/' + metric + '.png'} />
+                        <img alt="" src={'/assets/images/Body_Measurement/' + measurementKey + '.png'} />
                         </div>
                         <div className="metric-description">
-                            {t(metric + 'Description')}
+                            {t(measurementKey + 'Description')}
                         </div>
                     </Grid>;
                 })}
             </Grid>
             <Box display='flex' justifyContent='center'>
-                <div onClick={() => setIsShowMoreClicked(!isShowMoreClicked)} className="show-more">{t(isShowMoreClicked ? 'showLess' : 'showMore')} {!isShowMoreClicked ? <span>&nbsp;({BODY_METRICS.length - itemsToShow})</span> : <Fragment />}</div>
+                <div onClick={() => setIsShowMoreClicked(!isShowMoreClicked)} className="show-more">{t(isShowMoreClicked ? 'showLess' : 'showMore')} {!isShowMoreClicked ? <span>&nbsp;({BODY_MEASUREMENT_KEY_LIST.length - itemsToShow})</span> : <Fragment />}</div>
             </Box>
         </Box>;
     }
@@ -222,7 +228,7 @@ function initModel(existingValues: any) {
         'height': null,
         'weight': null
     };
-    BODY_METRICS.forEach(m => bodyModel[m] = existingValues[m] ?? '');
+    BODY_MEASUREMENT_KEY_LIST.forEach(m => bodyModel[m] = existingValues[m] ?? '');
 
     return bodyModel;
 }
